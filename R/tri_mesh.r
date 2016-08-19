@@ -19,7 +19,8 @@ path2seg <- function(x) {
 #' if (require(rworldxtra)) {
 #'
 #' data(countriesHigh)
-#' a <- subset(countriesHigh, SOVEREIGNT == "Australia")
+#' sv <- "Canada"
+#' a <- subset(countriesHigh, SOVEREIGNT == sv)
 #' b <- tri_mesh(a)
 #' }
 tri_mesh <- function(x, ...) {

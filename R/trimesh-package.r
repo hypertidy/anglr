@@ -10,7 +10,7 @@
 #'
 #' @section II. Plotting:
 #' \tabular{ll}{
-#'  \code{\link{plot.trimesh}} \tab plot in 3D \cr
+#'  \code{\link{plot.trimesh}} \tab plot in 3D, by default just in the plane \cr
 #' }
 #'
 NULL
