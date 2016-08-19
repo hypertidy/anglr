@@ -56,6 +56,9 @@ tri_mesh.SpatialPolygons <- function(x, ...) {
   tabs$o <- tabs$o[1,]  ## FIX ME
   tabs$t <- tibble::tibble(triangle_ = seq(nrow(tr$T)), object_ = tabs$o$object_[1])
   tabs$tXv <- tibble::tibble(triangle_ = rep(tabs$t$triangle_, each = 3), vertex_ = as.vector(t(tr$T)))
+  
+  ## finally add longitude and latitude
+  tabs$meta <- tibble(proj = pr4, x = "x_", y = "y_")
   class(tabs) <- "trimesh"
   tabs
 }
@@ -80,6 +83,36 @@ th3d <- function() {
 plot.trimesh <- function(x, ...) {
   tt <- th3d()
   tt$vb <- t(cbind(x$v$x_, x$v$y_, 0, 1))
+  tt$it <- t(matrix(x$tXv$vertex_, ncol = 3, byrow = TRUE))
+  rgl::shade3d(tt, ...)
+  invisible(tt)
+}
+
+#' Title
+#'
+#' @param x 
+#' @param halo 
+#' @param ... 
+#' @param rad 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+globe <- function(x, ...) {
+  UseMethod("globe")
+}
+
+#' @rdname globe
+#' @export
+globe.trimesh <- function(x, halo = FALSE, ..., rad = 1) {
+  gproj <- sprintf("+proj=geocent +a=%f +b=%f", rad, rad)
+  p4 <- x$meta$proj[1]
+  ll <- cbind(as.matrix(x$v[, c("x_", "y_")]), 0)
+  if (grepl("longlat", p4)) ll <- ll * pi / 180
+  xyz <- proj4::ptransform(ll, src.proj = p4, dst.proj = gproj)
+  tt <- th3d()
+  tt$vb <- t(cbind(xyz, 1))
   tt$it <- t(matrix(x$tXv$vertex_, ncol = 3, byrow = TRUE))
   rgl::shade3d(tt, ...)
   invisible(tt)

@@ -23,12 +23,4 @@ Create triangle mesh structures from various inputs.
 \details{
 Methods exist for SpatialPolygons, ...
 }
-\examples{
-if (require(rworldxtra)) {
-
-data(countriesHigh)
-a <- subset(countriesHigh, SOVEREIGNT == "Australia")
-b <- tri_mesh(a)
-}
-}
 
