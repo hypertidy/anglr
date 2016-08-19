@@ -10,13 +10,16 @@ globe(x, ...)
 \method{globe}{trimesh}(x, halo = FALSE, ..., rad = 1)
 }
 \arguments{
-\item{x}{}
+\item{x}{object from tri_mesh}
 
-\item{...}{}
+\item{...}{passed to plot}
 
-\item{halo}{}
+\item{halo}{show the radius}
 
-\item{rad}{}
+\item{rad}{radius}
+}
+\value{
+the mesh object, invisibly
 }
 \description{
 Title

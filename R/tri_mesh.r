@@ -14,8 +14,6 @@ path2seg <- function(x) {
 #'
 #' @return a list of tibble data frames, using the gris-map_table model
 #' @export
-#'
-
 tri_mesh <- function(x, ...) {
   UseMethod("tri_mesh")
 }
@@ -25,6 +23,7 @@ tri_mesh <- function(x, ...) {
 #' @importFrom sp over SpatialPoints proj4string CRS
 #' @importFrom dplyr inner_join
 #' @importFrom RTriangle pslg triangulate
+#' @importFrom sp geometry
 #' @importFrom spbabel map_table
 #' @importFrom tibble tibble
 tri_mesh.SpatialPolygons <- function(x, ...) {
@@ -44,11 +43,27 @@ tri_mesh.SpatialPolygons <- function(x, ...) {
   ## FIXME: need to pick sensible behaviour for a
   tr <- RTriangle::triangulate(ps)
 
-  ## process the holes
-  centroids <- t(apply(tr$T, 1, function(x) apply(tr$P[x, ], 2, mean)))
-  badtris <- is.na(over(SpatialPoints(centroids, proj4string = CRS(pr4)),
-                        x0)[[1]])
-  ## trace and remove any unused triangles
+  ## process the holes if needed
+  ## may be quicker than testing entire object
+  if (any(!tabs$b$island_)) {
+    
+#    holes <- spbabel::sp(tabs$b %>% 
+ #                          dplyr::filter(!island_) %>% 
+  #                         inner_join(tabs$bXv, "branch_") %>% 
+   #                        inner_join(tabs$v, "vertex_"))
+    holes <- spbabel::sp(dplyr::inner_join(dplyr::inner_join(dplyr::filter_(tabs$b, quote(!island_)), tabs$bXv, "branch_"), 
+                               tabs$v, "vertex_"))
+  ## no contest
+   ## system.time({  centroids <- t(apply(tr$T, 1, function(x) apply(tr$P[x, ], 2, mean)))})
+  #system.time({ 
+    centroids <- matrix(unlist(lapply(split(tr$P[t(tr$T), ], rep(seq(nrow(tr$T)), each = 3)), .colMeans, 3, 2)), 
+               ncol = 2, byrow = TRUE)
+  #})
+  
+    badtris <- !is.na(over(SpatialPoints(centroids),
+                    sp::geometry(holes)))
+  }
+ ## trace and remove any unused triangles
   if (any(badtris)) tr$T <- tr$T[!badtris, ]
 
   tabs$v <- tibble::tibble(x_ = tr$P[,1], y_ = tr$P[,2], vertex_ = seq(nrow(tr$P)))
@@ -79,26 +94,26 @@ th3d <- function() {
 #' @return the rgl mesh3d object, invisibly
 #' @export
 #' @importFrom rgl shade3d
-
 plot.trimesh <- function(x, ...) {
   tt <- th3d()
   tt$vb <- t(cbind(x$v$x_, x$v$y_, 0, 1))
   tt$it <- t(matrix(x$tXv$vertex_, ncol = 3, byrow = TRUE))
+  if (!requireNamespace("rgl", quietly = TRUE))
+    stop("rgl required")
   rgl::shade3d(tt, ...)
   invisible(tt)
 }
 
 #' Title
 #'
-#' @param x 
-#' @param halo 
-#' @param ... 
-#' @param rad 
+#' @param x object from tri_mesh
+#' @param halo show the radius
+#' @param ... passed to plot
+#' @param rad radius
 #'
-#' @return
+#' @return the mesh object, invisibly
 #' @export
 #'
-#' @examples
 globe <- function(x, ...) {
   UseMethod("globe")
 }
@@ -114,6 +129,8 @@ globe.trimesh <- function(x, halo = FALSE, ..., rad = 1) {
   tt <- th3d()
   tt$vb <- t(cbind(xyz, 1))
   tt$it <- t(matrix(x$tXv$vertex_, ncol = 3, byrow = TRUE))
+  if (!requireNamespace("rgl", quietly = TRUE))
+    stop("rgl required")
   rgl::shade3d(tt, ...)
   invisible(tt)
 }
