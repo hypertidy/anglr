@@ -21,7 +21,7 @@ Work in progress, everything very fragile at the moment. Particular todos:
 
 - systematize the structure vs. relation indexes, right now it's just pure luck
 - sort out multi-objects, and creating multi-object rgl scenes for SpDFs
-- etc.
+- default plotting aesthetics, user control
 
 
 

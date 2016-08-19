@@ -1,7 +1,7 @@
 Package: trimesh
 Type: Package
 Title: Create Triangle Mesh
-Version: 0.1.0
+Version: 0.1.0.9001
 Authors@R: person("Michael D.","Sumner", role = c("aut", "cre"), email =
     "mdsumner@gmail.com")
 Description: Create tidy tables for topological, triangulated data structures.
