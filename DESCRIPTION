@@ -1,0 +1,20 @@
+Package: trimesh
+Type: Package
+Title: Create Triangle Mesh
+Version: 0.1.0.9001
+Authors@R: person("Michael D.","Sumner", role = c("aut", "cre"), email =
+    "mdsumner@gmail.com")
+Description: Create tidy tables for topological, triangulated data structures.
+License: GPL-3
+Imports:
+    dplyr,
+    rgl,
+    RTriangle,
+    sp,
+    spbabel,
+    tibble
+Suggests: rworldxtra,
+    testthat
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 5.0.1
