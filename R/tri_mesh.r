@@ -15,14 +15,7 @@ path2seg <- function(x) {
 #' @return a list of tibble data frames, using the gris-map_table model
 #' @export
 #'
-#' @examples
-#' if (require(rworldxtra)) {
-#'
-#' data(countriesHigh)
-#' sv <- "Canada"
-#' a <- subset(countriesHigh, SOVEREIGNT == sv)
-#' b <- tri_mesh(a)
-#' }
+
 tri_mesh <- function(x, ...) {
   UseMethod("tri_mesh")
 }
@@ -83,13 +76,7 @@ th3d <- function() {
 #' @return the rgl mesh3d object, invisibly
 #' @export
 #' @importFrom rgl shade3d
-#' @examples
-#' example(tri_mesh)
-#' if(exists("b") { 
-#'  if (!interactive()) {
-#'  options(rgl.useNULL=TRUE)
-#'  }
-#'  plot(b)}
+
 plot.trimesh <- function(x, ...) {
   tt <- th3d()
   tt$vb <- t(cbind(x$v$x_, x$v$y_, 0, 1))
