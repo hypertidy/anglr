@@ -4,9 +4,9 @@
 language: R
 sudo: required
 before_install: 
-  echo "options(repos = c(CRAN='http://cran.rstudio.com'))" > ~/.Rprofile
+  echo "options(repos = c(CRAN='http://cloud.r-project.org'))" > ~/.Rprofile
 r_binary_packages:
   - proj4
-  
+  - rgl
 after_success:
   - Rscript -e 'covr::codecov()'
