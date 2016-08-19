@@ -8,7 +8,7 @@ test_that("simple plot", {
   expect_silent({
     a <- subset(countriesHigh, SOVEREIGNT == "Australia")
     b <- tri_mesh(a)
-    plot(b)
+    if (interactive()) {plot(b)}
 
   })
 })

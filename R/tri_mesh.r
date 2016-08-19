@@ -84,7 +84,7 @@ th3d <- function() {
 #' @importFrom rgl shade3d
 #' @examples
 #' example(tri_mesh)
-#' if(exists("b")) plot(b)
+#' if(exists("b") & interactive()) { plot(b)}
 plot.trimesh <- function(x, ...) {
   tt <- th3d()
   tt$vb <- t(cbind(x$v$x_, x$v$y_, 0, 1))
