@@ -10,3 +10,6 @@ apt_packages:
 before_install:
   - "export RGL_USE_NULL=TRUE"
 
+after_success:
+  - Rscript -e 'covr::codecov()'
+
