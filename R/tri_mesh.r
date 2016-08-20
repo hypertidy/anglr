@@ -110,7 +110,7 @@ th3d <- function() {
 #' @examples
 #' example(tri_mesh)
 #' if(exists("b")) { 
-#'  ##plot(b)
+#'  plot(b)
 #'  }
 plot.trimesh <- function(x, ...) {
   tt <- th3d()
