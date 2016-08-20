@@ -66,6 +66,10 @@ tri_mesh.SpatialPolygons <- function(x, ...) {
   #system.time({ 
     centroids <- matrix(unlist(lapply(split(tr$P[t(tr$T), ], rep(seq(nrow(tr$T)), each = 3)), .colMeans, 3, 2)), 
                ncol = 2, byrow = TRUE)
+    ## marginally faster than matrix split
+    #centroids <- setNames(as_tibble(tr$P[t(tr$T), ]), c("x", "y")) %>% 
+    #  mutate(g = rep(seq(nrow(tr$T)), each = 3)) %>% 
+    #  group_by(g) %>% summarize(x = mean(x), y = mean(y))
   #})
   
     badtris <- !is.na(over(SpatialPoints(centroids),
