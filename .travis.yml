@@ -5,5 +5,5 @@ sudo: false
 cache: packages
 
 before_install:
-  - "export RGL_USE_NULL=TRUE
+  - "export RGL_USE_NULL=TRUE"
 
