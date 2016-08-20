@@ -1,12 +1,9 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
-## copy SGAT
 language: R
-sudo: required
-before_install: 
-  echo "options(repos = c(CRAN='http://cloud.r-project.org'))" > ~/.Rprofile
-r_binary_packages:
-  - proj4
-  - rgl
-after_success:
-  - Rscript -e 'covr::codecov()'
+sudo: false
+cache: packages
+
+before_install:
+  - "export RGL_USE_NULL=TRUE
+
