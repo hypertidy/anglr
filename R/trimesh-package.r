@@ -10,6 +10,7 @@
 #'
 #' @section II. Plotting:
 #' \tabular{ll}{
+#'  \code{\link{globe}} \tab plot in 3D on the surface of a globe, based on the data in longitude-latitude form \cr
 #'  \code{\link{plot.trimesh}} \tab plot in 3D, by default just in the plane \cr
 #' }
 #'
