@@ -110,7 +110,7 @@ th3d <- function() {
 #' @examples
 #' example(tri_mesh)
 #' if(exists("b")) { 
-#'  plot(b)
+#'  ##plot(b)
 #'  }
 plot.trimesh <- function(x, ...) {
   tt <- th3d()
@@ -134,7 +134,7 @@ plot.trimesh <- function(x, ...) {
 #' @examples
 #' example(tri_mesh)
 #' if(exists("b")) { 
-#'  globe(b, halo = TRUE)
+#'  ##globe(b, halo = TRUE)
 #'  }
 globe <- function(x, ...) {
   UseMethod("globe")
