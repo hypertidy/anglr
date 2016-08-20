@@ -19,8 +19,9 @@ Particular todos:
 Build notes
 -----------
 
-Travis needs libproj-dev installed, via .travis.yml (CRAN does not) R-hub needs SystemRequirements: PROJ.4
-
-All need export RGL\_USE\_NULL=TRUE
+-   Travis needs libproj-dev installed, via .travis.yml (CRAN does not)
+-   R-hub needs SystemRequirements: PROJ.4
+-   All need export RGL\_USE\_NULL=TRUE
+-   plot in examples is fine, no need for ptions use null (travis)
 
 Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
