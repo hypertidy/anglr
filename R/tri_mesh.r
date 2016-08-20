@@ -43,7 +43,7 @@ tri_mesh.SpatialPolygons <- function(x, ...) {
   #spbabel:::semi_cascade
   tabs$v$countingIndex <- seq(nrow(tabs$v))
   nonuq <- dplyr::inner_join(tabs$bXv, tabs$v, "vertex_")
-  #> Joining, by = "vertex_"
+
   ps <- RTriangle::pslg(P = as.matrix(tabs$v[, c("x_", "y_")]),
              S = do.call(rbind, lapply(split(nonuq, nonuq$branch_),
                                        function(x) path2seg(x$countingIndex))))
@@ -54,29 +54,15 @@ tri_mesh.SpatialPolygons <- function(x, ...) {
   ## process the holes if needed
   ## may be quicker than testing entire object
   if (any(!tabs$b$island_)) {
-    
-#    holes <- spbabel::sp(tabs$b %>% 
- #                          dplyr::filter(!island_) %>% 
-  #                         inner_join(tabs$bXv, "branch_") %>% 
-   #                        inner_join(tabs$v, "vertex_"))
     holes <- spbabel::sp(dplyr::inner_join(dplyr::inner_join(dplyr::filter_(tabs$b, quote(!island_)), tabs$bXv, "branch_"), 
                                tabs$v, "vertex_"))
-  ## no contest
-   ## system.time({  centroids <- t(apply(tr$T, 1, function(x) apply(tr$P[x, ], 2, mean)))})
-  #system.time({ 
     centroids <- matrix(unlist(lapply(split(tr$P[t(tr$T), ], rep(seq(nrow(tr$T)), each = 3)), .colMeans, 3, 2)), 
                ncol = 2, byrow = TRUE)
-    ## marginally faster than matrix split
-    #centroids <- setNames(as_tibble(tr$P[t(tr$T), ]), c("x", "y")) %>% 
-    #  mutate(g = rep(seq(nrow(tr$T)), each = 3)) %>% 
-    #  group_by(g) %>% summarize(x = mean(x), y = mean(y))
-  #})
-  
-    badtris <- !is.na(over(SpatialPoints(centroids),
-                    sp::geometry(holes)))
+
+    badtris <- !is.na(over(SpatialPoints(centroids), sp::geometry(holes)))
     if (any(badtris)) tr$T <- tr$T[!badtris, ]
-    
   }
+  
  ## trace and remove any unused triangles
 
   tabs$v <- tibble::tibble(x_ = tr$P[,1], y_ = tr$P[,2], vertex_ = seq(nrow(tr$P)))
