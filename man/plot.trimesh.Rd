@@ -17,4 +17,10 @@ the rgl mesh3d object, invisibly
 \description{
 plot
 }
+\examples{
+example(tri_mesh)
+if(exists("b")) { 
+ plot(b)
+ }
+}
 

@@ -24,4 +24,10 @@ the mesh object, invisibly
 \description{
 Title
 }
+\examples{
+example(tri_mesh)
+if(exists("b")) { 
+ globe(b, halo = TRUE)
+ }
+}
 

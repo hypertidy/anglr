@@ -26,6 +26,14 @@ tri_mesh <- function(x, ...) {
 #' @importFrom sp geometry
 #' @importFrom spbabel map_table
 #' @importFrom tibble tibble
+#' @examples
+#' if (require(rworldxtra)) {
+#'
+#' data(countriesHigh)
+#' sv <- "Australia"
+#' a <- subset(countriesHigh, SOVEREIGNT == sv)
+#' b <- tri_mesh(a)
+#' }
 tri_mesh.SpatialPolygons <- function(x, ...) {
   pr4 <- proj4string(x)
   x0 <- x
@@ -62,9 +70,10 @@ tri_mesh.SpatialPolygons <- function(x, ...) {
   
     badtris <- !is.na(over(SpatialPoints(centroids),
                     sp::geometry(holes)))
+    if (any(badtris)) tr$T <- tr$T[!badtris, ]
+    
   }
  ## trace and remove any unused triangles
-  if (any(badtris)) tr$T <- tr$T[!badtris, ]
 
   tabs$v <- tibble::tibble(x_ = tr$P[,1], y_ = tr$P[,2], vertex_ = seq(nrow(tr$P)))
   tabs$b <- tabs$bXv <- NULL
@@ -94,6 +103,11 @@ th3d <- function() {
 #' @return the rgl mesh3d object, invisibly
 #' @export
 #' @importFrom rgl shade3d
+#' @examples
+#' example(tri_mesh)
+#' if(exists("b")) { 
+#'  plot(b)
+#'  }
 plot.trimesh <- function(x, ...) {
   tt <- th3d()
   tt$vb <- t(cbind(x$v$x_, x$v$y_, 0, 1))
@@ -113,7 +127,11 @@ plot.trimesh <- function(x, ...) {
 #'
 #' @return the mesh object, invisibly
 #' @export
-#'
+#' @examples
+#' example(tri_mesh)
+#' if(exists("b")) { 
+#'  globe(b, halo = TRUE)
+#'  }
 globe <- function(x, ...) {
   UseMethod("globe")
 }
@@ -132,5 +150,6 @@ globe.trimesh <- function(x, halo = FALSE, ..., rad = 1) {
   if (!requireNamespace("rgl", quietly = TRUE))
     stop("rgl required")
   rgl::shade3d(tt, ...)
+  if (halo) rgl::spheres3d(0, 0, 0, radius = rad * 0.99, fog = FALSE, specular = "black", col = "dodgerblue", alpha = 0.4)
   invisible(tt)
 }

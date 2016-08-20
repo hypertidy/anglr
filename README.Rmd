@@ -22,7 +22,7 @@ Work in progress, everything very fragile at the moment. Particular todos:
 - systematize the structure vs. relation indexes, right now it's just pure luck
 - sort out multi-objects, and creating multi-object rgl scenes for SpDFs
 - default plotting aesthetics, user control
-
+- why are spheres so artefacty?
 
 
 Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
