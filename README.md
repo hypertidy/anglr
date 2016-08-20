@@ -4,7 +4,11 @@
 Tidy triangle meshes for spatial data
 -------------------------------------
 
-Work in progress, everything very fragile at the moment. Particular todos:
+Work in progress, everything very fragile at the moment.
+
+NOTE: there's no sense in the relation of a multi-object Spatial sp structure and the output of 'tri\_mesh'. Everything gets bundled into one "object", so plotting is fine, but thematic colours and so on will come later. Essentially it will have to be done with one rgl object per row in a Spatial\*DataFrame - much like it is done for polygons with polypath.
+
+Particular todos:
 
 -   systematize the structure vs. relation indexes, right now it's just pure luck
 -   sort out multi-objects, and creating multi-object rgl scenes for SpDFs
