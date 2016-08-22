@@ -28,6 +28,10 @@ Title
 example(tri_mesh)
 if(exists("b")) { 
  globe(b, halo = TRUE)
+ rgl::rgl.clear()
+ globe(b, halo = FALSE)
+ 
  }
+  
 }
 

@@ -18,6 +18,7 @@ test_that("holey polygons and non-holy polygons", {
   expect_silent({
     sph <- sp(holey)
     tm <- tri_mesh(sph)
+    sph$meta$proj <- "+proj=laea +ellps=wGS84"
   })
   
 })
@@ -38,7 +39,8 @@ test_that("simple plot", {
   })
  expect_silent({
    for (i in sample(seq(nrow(wrld_simpl)), 10)) {
-     globe(tri_mesh(wrld_simpl[i, ]))
+     globe(tri_mesh(wrld_simpl[i, ]), halo = as.logical(i %% 2))
+     rgl::rgl.clear()
    }
  })
 })
