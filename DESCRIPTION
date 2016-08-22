@@ -13,7 +13,8 @@ Imports:
     RTriangle,
     sp,
     spbabel,
-    tibble
+    tibble, 
+    viridis
 Suggests: 
     covr, 
     maptools,
