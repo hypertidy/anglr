@@ -22,11 +22,23 @@ test_that("holey polygons and non-holy polygons", {
   
 })
 
-
+library(maptools)
+data(wrld_simpl)
 test_that("simple plot", {
   expect_silent({
     b <- tri_mesh(a)
     plot(b)
     
   })
+  expect_silent({
+    b <- tri_mesh(a)
+    globe(b)
+    
+      rgl::rgl.clear()
+  })
+ expect_silent({
+   for (i in sample(seq(nrow(wrld_simpl)), 10)) {
+     globe(tri_mesh(wrld_simpl[i, ]))
+   }
+ })
 })

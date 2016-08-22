@@ -27,7 +27,7 @@ Title
 \examples{
 example(tri_mesh)
 if(exists("b")) { 
- ##globe(b, halo = TRUE)
+ globe(b, halo = TRUE)
  }
 }
 

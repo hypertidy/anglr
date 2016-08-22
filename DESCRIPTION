@@ -14,9 +14,11 @@ Imports:
     sp,
     spbabel,
     tibble
-Suggests: rworldxtra,
-    testthat,
-    covr
+Suggests: 
+    covr, 
+    maptools,
+    rworldxtra,
+    testthat
 SystemRequirements: PROJ.4
 Encoding: UTF-8
 LazyData: true

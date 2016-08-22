@@ -120,13 +120,14 @@ plot.trimesh <- function(x, ...) {
 #' @examples
 #' example(tri_mesh)
 #' if(exists("b")) { 
-#'  ##globe(b, halo = TRUE)
+#'  globe(b, halo = TRUE)
 #'  }
 globe <- function(x, ...) {
   UseMethod("globe")
 }
 
 #' @rdname globe
+#' @importFrom rgl ellipse3d plot3d
 #' @export
 globe.trimesh <- function(x, halo = FALSE, ..., rad = 1) {
   gproj <- sprintf("+proj=geocent +a=%f +b=%f", rad, rad)
@@ -140,6 +141,9 @@ globe.trimesh <- function(x, halo = FALSE, ..., rad = 1) {
   if (!requireNamespace("rgl", quietly = TRUE))
     stop("rgl required")
   rgl::shade3d(tt, ...)
-  if (halo) rgl::spheres3d(0, 0, 0, radius = rad * 0.99, fog = FALSE, specular = "black", col = "dodgerblue", alpha = 0.4)
+  if (halo) {
+    #rgl::spheres3d(0, 0, 0, radius = rad * 0.99, fog = FALSE, specular = "black", col = "dodgerblue", alpha = 0.4)
+    rgl::plot3d(rgl::ellipse3d(diag(3) * rad, c(0, 0, 0)), specular = "black", col = "dodgerblue", alpha = 0.4)
+    }
   invisible(tt)
 }
