@@ -1,5 +1,9 @@
 # trimesh dev
 
+* improved code coverage of tests
+
+* infrastructure and tests for globe
+
 * new function globe
 
 * performance improved for hole finding and removal from mesh
