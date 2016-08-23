@@ -132,16 +132,21 @@ trimesh_cols <- function(n) {
 #'  plot(b)
 #'  }
 plot.trimesh <- function(x, ...) {
-#  cols <- trimesh_cols(nrow(x$o))
- # for (i_obj in seq(nrow(x$o))) {
-  tt <- th3d()
-  tt$vb <- t(cbind(x$v$x_, x$v$y_, 0, 1))
-  vv <- x$v[, "vertex_"]; vv$row_n <- seq(nrow(vv))
-  index <- dplyr::inner_join(x$tXv, vv)
-  tt$it <- t(matrix(index$row_n, ncol = 3, byrow = TRUE))
+  cols <- trimesh_cols(nrow(x$o))
   if (!requireNamespace("rgl", quietly = TRUE))
     stop("rgl required")
-  rgl::shade3d(tt, ...)
+  
+  for (i_obj in seq(nrow(x$o))) {
+    xx <- x; xx$o <- xx$o[i_obj, ]
+    xx <- spbabel:::semi_cascade(xx, tables = c("o", "t", "tXv", "v"))
+    tt <- th3d()
+    tt$vb <- t(cbind(xx$v$x_, xx$v$y_, 0, 1))
+    vv <- xx$v[, "vertex_"]; vv$row_n <- seq(nrow(vv))
+    index <- dplyr::inner_join(xx$tXv, vv)
+    tt$it <- t(matrix(index$row_n, ncol = 3, byrow = TRUE))
+    rgl::shade3d(tt, col = cols[i_obj], ...)
+  
+  }
   invisible(tt)
 }
 
@@ -171,22 +176,31 @@ globe <- function(x, ...) {
 #' @importFrom rgl ellipse3d plot3d
 #' @export
 globe.trimesh <- function(x, halo = FALSE, ..., rad = 1) {
+  cols <- trimesh_cols(nrow(x$o))
+  
   gproj <- sprintf("+proj=geocent +a=%f +b=%f", rad, rad)
   p4 <- x$meta$proj[1]
-  ll <- cbind(as.matrix(x$v[, c("x_", "y_")]), 0)
+  if (!requireNamespace("rgl", quietly = TRUE))
+    stop("rgl required")
+  
+  for (i_obj in seq(nrow(x$o))) {
+    xx <- x; xx$o <- xx$o[i_obj, ]
+    xx <- spbabel:::semi_cascade(xx, tables = c("o", "t", "tXv", "v"))
+    
+  ll <- cbind(as.matrix(xx$v[, c("x_", "y_")]), 0)
   if (grepl("longlat", p4)) ll <- ll * pi / 180
   xyz <- proj4::ptransform(ll, src.proj = p4, dst.proj = gproj)
   tt <- th3d()
   tt$vb <- t(cbind(xyz, 1))
-  vv <- x$v[, "vertex_"]; vv$row_n <- seq(nrow(vv))
-  index <- dplyr::inner_join(x$tXv, vv)
+  vv <- xx$v[, "vertex_"]; vv$row_n <- seq(nrow(vv))
+  index <- dplyr::inner_join(xx$tXv, vv)
   tt$it <- t(matrix(index$row_n, ncol = 3, byrow = TRUE))
-  if (!requireNamespace("rgl", quietly = TRUE))
-    stop("rgl required")
-  rgl::shade3d(tt, ...)
+
+  rgl::shade3d(tt, col = cols[i_obj], ...)
+  }
   if (halo) {
     #rgl::spheres3d(0, 0, 0, radius = rad * 0.99, fog = FALSE, specular = "black", col = "dodgerblue", alpha = 0.4)
-    rgl::plot3d(rgl::ellipse3d(diag(3) * rad, c(0, 0, 0)), specular = "black", col = "dodgerblue", alpha = 0.4)
+    rgl::shade3d(rgl::ellipse3d(diag(3) * rad, centre = c(0, 0, 0)), specular = "black", col = "dodgerblue", alpha = 0.4)
     }
   invisible(tt)
 }
