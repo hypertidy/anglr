@@ -31,5 +31,9 @@ sv <- "Australia"
 a <- subset(countriesHigh, SOVEREIGNT == sv)
 b <- tri_mesh(a)
 }
+
+library(maptools)
+data(wrld_simpl)
+b <- tri_mesh(wrld_simpl)
 }
 

@@ -18,6 +18,40 @@ tri_mesh <- function(x, ...) {
   UseMethod("tri_mesh")
 }
 
+tri_mesh_map_table1 <- function(tabs) {
+  tabs$v$countingIndex <- seq(nrow(tabs$v))
+  nonuq <- dplyr::inner_join(tabs$bXv, tabs$v, "vertex_")
+  
+  ps <- RTriangle::pslg(P = as.matrix(tabs$v[, c("x_", "y_")]),
+                        S = do.call(rbind, lapply(split(nonuq, nonuq$branch_),
+                                                  function(x) path2seg(x$countingIndex))))
+  
+  ## FIXME: need to pick sensible behaviour for a
+  tr <- RTriangle::triangulate(ps)
+  
+  ## process the holes if needed
+  ## may be quicker than testing entire object
+  if (any(!tabs$b$island_)) {
+    holes <- spbabel::sp(dplyr::inner_join(dplyr::inner_join(dplyr::filter_(tabs$b, quote(!island_)), tabs$bXv, "branch_"), 
+                                           tabs$v, "vertex_"))
+    centroids <- matrix(unlist(lapply(split(tr$P[t(tr$T), ], rep(seq(nrow(tr$T)), each = 3)), .colMeans, 3, 2)), 
+                        ncol = 2, byrow = TRUE)
+    
+    badtris <- !is.na(over(SpatialPoints(centroids), sp::geometry(holes)))
+    if (any(badtris)) tr$T <- tr$T[!badtris, ]
+  }
+  
+  ## trace and remove any unused triangles
+  
+  tabs$v <- tibble::tibble(x_ = tr$P[,1], y_ = tr$P[,2], vertex_ = spbabel:::id_n(nrow(tr$P)))
+  tabs$b <- tabs$bXv <- NULL
+  #tabs$o <- tabs$o[1,]  ## FIX ME
+  tabs$t <- tibble::tibble(triangle_ = spbabel:::id_n(nrow(tr$T)), object_ = tabs$o$object_[1])
+  tabs$tXv <- tibble::tibble(triangle_ = rep(tabs$t$triangle_, each = 3), 
+                             vertex_ = tabs$v$vertex_[as.vector(t(tr$T))])
+  
+  tabs
+}
 #' @rdname tri_mesh
 #' @export
 #' @importFrom sp over SpatialPoints proj4string CRS
@@ -34,47 +68,43 @@ tri_mesh <- function(x, ...) {
 #' a <- subset(countriesHigh, SOVEREIGNT == sv)
 #' b <- tri_mesh(a)
 #' }
+#' 
+#' library(maptools)
+#' data(wrld_simpl)
+#' b <- tri_mesh(wrld_simpl)
 tri_mesh.SpatialPolygons <- function(x, ...) {
   pr4 <- proj4string(x)
   x0 <- x
   tabs <- spbabel::map_table(x)
 
-  ## FIXME: loop over SpatialPolygons
-  #spbabel:::semi_cascade
-  tabs$v$countingIndex <- seq(nrow(tabs$v))
-  nonuq <- dplyr::inner_join(tabs$bXv, tabs$v, "vertex_")
-
-  ps <- RTriangle::pslg(P = as.matrix(tabs$v[, c("x_", "y_")]),
-             S = do.call(rbind, lapply(split(nonuq, nonuq$branch_),
-                                       function(x) path2seg(x$countingIndex))))
-
-  ## FIXME: need to pick sensible behaviour for a
-  tr <- RTriangle::triangulate(ps)
-
-  ## process the holes if needed
-  ## may be quicker than testing entire object
-  if (any(!tabs$b$island_)) {
-    holes <- spbabel::sp(dplyr::inner_join(dplyr::inner_join(dplyr::filter_(tabs$b, quote(!island_)), tabs$bXv, "branch_"), 
-                               tabs$v, "vertex_"))
-    centroids <- matrix(unlist(lapply(split(tr$P[t(tr$T), ], rep(seq(nrow(tr$T)), each = 3)), .colMeans, 3, 2)), 
-               ncol = 2, byrow = TRUE)
-
-    badtris <- !is.na(over(SpatialPoints(centroids), sp::geometry(holes)))
-    if (any(badtris)) tr$T <- tr$T[!badtris, ]
+  ll <- vector("list", nrow(tabs$o))
+  for (i_obj in seq(nrow(tabs$o))) {
+    tabs_i <- tabs; tabs_i$o <- tabs_i$o[i_obj, ]
+    tabs_i <- spbabel:::semi_cascade(tabs_i)
+    tt_i <- tri_mesh_map_table1(tabs_i)
+   # plot.trimesh(tt_i)
+   # scan("", 1L)
+   # rgl::rgl.clear()
+    ll[[i_obj]] <- tt_i
   }
-  
- ## trace and remove any unused triangles
 
-  tabs$v <- tibble::tibble(x_ = tr$P[,1], y_ = tr$P[,2], vertex_ = seq(nrow(tr$P)))
-  tabs$b <- tabs$bXv <- NULL
-  tabs$o <- tabs$o[1,]  ## FIX ME
-  tabs$t <- tibble::tibble(triangle_ = seq(nrow(tr$T)), object_ = tabs$o$object_[1])
-  tabs$tXv <- tibble::tibble(triangle_ = rep(tabs$t$triangle_, each = 3), vertex_ = as.vector(t(tr$T)))
-  
+   outlist <- vector("list", length(ll[[1]]))
+   nms <- names(ll[[1]])
+   names(outlist) <- nms
+   for (i in seq_along(outlist)) {
+     outlist[[i]] <- dplyr::bind_rows(lapply(ll, "[[", nms[i]))
+   }
+   
+  ## renormalize the vertices
+   allverts <- dplyr::inner_join(outlist$tXv, outlist$v)
+   allverts$uvert <- as.integer(factor(paste(allverts$x_, allverts$y_, sep = "_")))
+   allverts$vertex_ <- spbabel:::id_n(length(unique(allverts$uvert)))[allverts$uvert]
+  outlist$tXv <- allverts[, c("triangle_", "vertex_")]
+  outlist$v <- dplyr::distinct_(allverts, "x_", "y_", "vertex_")
   ## finally add longitude and latitude
-  tabs$meta <- tibble(proj = pr4, x = "x_", y = "y_")
-  class(tabs) <- "trimesh"
-  tabs
+  outlist$meta <- tibble::tibble(proj = pr4, x = "x_", y = "y_")
+  class(outlist) <- "trimesh"
+  outlist
 }
 
 th3d <- function() {
@@ -84,6 +114,9 @@ th3d <- function() {
                                                                                                                                                         "shape3d"))
 }
 
+trimesh_cols <- function(n) {
+  viridis::viridis(n)
+}
 #' plot the triangles in the tables
 #'
 #' plot
@@ -99,9 +132,13 @@ th3d <- function() {
 #'  plot(b)
 #'  }
 plot.trimesh <- function(x, ...) {
+#  cols <- trimesh_cols(nrow(x$o))
+ # for (i_obj in seq(nrow(x$o))) {
   tt <- th3d()
   tt$vb <- t(cbind(x$v$x_, x$v$y_, 0, 1))
-  tt$it <- t(matrix(x$tXv$vertex_, ncol = 3, byrow = TRUE))
+  vv <- x$v[, "vertex_"]; vv$row_n <- seq(nrow(vv))
+  index <- dplyr::inner_join(x$tXv, vv)
+  tt$it <- t(matrix(index$row_n, ncol = 3, byrow = TRUE))
   if (!requireNamespace("rgl", quietly = TRUE))
     stop("rgl required")
   rgl::shade3d(tt, ...)
@@ -141,7 +178,9 @@ globe.trimesh <- function(x, halo = FALSE, ..., rad = 1) {
   xyz <- proj4::ptransform(ll, src.proj = p4, dst.proj = gproj)
   tt <- th3d()
   tt$vb <- t(cbind(xyz, 1))
-  tt$it <- t(matrix(x$tXv$vertex_, ncol = 3, byrow = TRUE))
+  vv <- x$v[, "vertex_"]; vv$row_n <- seq(nrow(vv))
+  index <- dplyr::inner_join(x$tXv, vv)
+  tt$it <- t(matrix(index$row_n, ncol = 3, byrow = TRUE))
   if (!requireNamespace("rgl", quietly = TRUE))
     stop("rgl required")
   rgl::shade3d(tt, ...)
