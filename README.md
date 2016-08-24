@@ -2,8 +2,8 @@
 [![Travis-CI Build Status](https://travis-ci.org/r-gris/rangl.svg?branch=master)](https://travis-ci.org/r-gris/rangl) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/r-gris/rangl?branch=master&svg=true)](https://ci.appveyor.com/project/r-gris/rangl) [![Coverage Status](https://img.shields.io/codecov/c/github/r-gris/rangl/master.svg)](https://codecov.io/github/r-gris/rangl?branch=master)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-Tidy triangle meshes for spatial data
--------------------------------------
+Tidy tables for spatial data
+----------------------------
 
 Work in progress, everything very fragile at the moment.
 
