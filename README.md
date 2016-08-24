@@ -31,4 +31,17 @@ rgl::rgl.open()
 globe(smesh)
 ```
 
+Holes are supported.
+
+``` r
+library(spbabel)
+data(holey)
+
+## SpatialPolygonsDataFrame
+sph <- sp(holey)
+
+glh <- tri_mesh(sph)
+plot(glh)
+```
+
 Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.

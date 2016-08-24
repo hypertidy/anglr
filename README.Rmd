@@ -45,6 +45,20 @@ globe(smesh)
 
 ```
 
+Holes are supported. 
+
+```{r,eval=FALSE}
+library(spbabel)
+data(holey)
+
+## SpatialPolygonsDataFrame
+sph <- sp(holey)
+
+glh <- tri_mesh(sph)
+plot(glh)
+
+```
+
 ```{r,eval=FALSE,include=FALSE}
 library(rangl)
 #ogrListLayers("inst/extdata/water_lake_superior_basin.gpkg")
