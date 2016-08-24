@@ -31,6 +31,8 @@ test_that("simple plot", {
     b <- tri_mesh(a)
     globe(b)
     
+    ## check that we work without a DataFrame
+    b <- tri_mesh(geometry(a))
       rgl::rgl.clear()
    for (i in sample(seq(nrow(wrld_simpl)), 10)) {
      globe(tri_mesh(wrld_simpl[i, ]), halo = as.logical(i %% 2))

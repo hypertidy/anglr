@@ -75,6 +75,11 @@ tri_mesh_map_table1 <- function(tabs) {
 tri_mesh.SpatialPolygons <- function(x, ...) {
   pr4 <- proj4string(x)
   x0 <- x
+  ## kludge for non DataFrames
+  if (! "data" %in% slotNames(x)) {
+    dummy <- data.frame(row_number = seq_along(x))
+    x <- SpatialPolygonsDataFrame(x, dummy, match.ID = FALSE)
+  }
   tabs <- spbabel::map_table(x)
 
   ll <- vector("list", nrow(tabs$o))
