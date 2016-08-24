@@ -1,7 +1,7 @@
-#' Triangle mesh
+#' Tidy tables for topological, triangulated, and other spatial data structures.
 #'
 #'
-#' @name trimesh
+#' @name rangl
 #' @docType package
 #' @section I. Creation:
 #' \tabular{ll}{

@@ -1,10 +1,10 @@
-Package: trimesh
+Package: rangl
 Type: Package
-Title: Create Triangle Mesh
+Title: Tidy Flexible Spatial
 Version: 0.1.0.9001
 Authors@R: person("Michael D.","Sumner", role = c("aut", "cre"), email =
     "mdsumner@gmail.com")
-Description: Create tidy tables for topological, triangulated data structures.
+Description: Create tidy tables for topological, triangulated, and other spatial data structures.
 License: GPL-3
 Imports:
     dplyr,

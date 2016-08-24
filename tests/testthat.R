@@ -1,4 +1,4 @@
 library(testthat)
-library(trimesh)
+library(rangl)
 
-test_check("trimesh")
+test_check("rangl")

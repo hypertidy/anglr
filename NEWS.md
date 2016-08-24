@@ -1,4 +1,6 @@
-# trimesh dev
+# rangl dev
+
+* renamed package to 'rangl'
 
 * improved code coverage of tests
 
