@@ -9,33 +9,26 @@ The basics for creating a mesh from a `SpatialPolygons` object is in place.
 
 Multiple multi-part objects are decomposed to a set of related, linked tables. Object identity is maintained with attribute metadata and this is carried through to colour aesthetics in 3D plots.
 
+Example, get some maps and plot in 3D - in plane view, or globe view.
+
 ``` r
-library(rglwidget)
+
 library(rgl)
-library(rworldmap)
-data(countriesLow)
+library(maptools)
+data(wrld_simpl)
+library(raster)
+sids <- raster::shapefile(system.file("shapes/sids.shp", package="maptools"))
+projection(sids) <- "+proj=longlat +ellps=clrk66"
 
-
+## convert to triangles and plot 
 library(rangl)
-cmesh <- tri_mesh(countriesLow[sample(nrow(countriesLow), 10), ])
+cmesh <- tri_mesh(wrld_simpl)
 plot(cmesh)
 
-#subid <- currentSubscene3d()
-#rglwidget(elementId="plot_flat")
+## convert to triangles, but wrap onto globe then plot
+smesh <- tri_mesh(sids)
+rgl::rgl.open()
+globe(smesh)
 ```
-
-Particular todos:
-
--   systematize the structure vs. relation indexes, right now it's a bit brute force
--   default plotting aesthetics use the `viridis` palette
--   the halo radius is not right . . .
-
-Build notes
------------
-
--   Travis needs libproj-dev installed, via .travis.yml (CRAN does not)
--   R-hub needs SystemRequirements: PROJ.4
--   All need export RGL\_USE\_NULL=TRUE
--   plot in examples is fine, but there's a warning from R CMD check in interactive mode (??)
 
 Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
