@@ -5,16 +5,30 @@
 Tidy tables for spatial data
 ----------------------------
 
-Work in progress, everything very fragile at the moment.
+The basics for creating a mesh from a `SpatialPolygons` object is in place.
 
-NOTE: there's no sense in the relation of a multi-object Spatial sp structure and the output of 'tri\_mesh'. Everything gets bundled into one "object", so plotting is fine, but thematic colours and so on will come later. Essentially it will have to be done with one rgl object per row in a Spatial\*DataFrame - much like it is done for polygons with polypath.
+Multiple multi-part objects are decomposed to a set of related, linked tables. Object identity is maintained with attribute metadata and this is carried through to colour aesthetics in 3D plots.
+
+``` r
+library(rglwidget)
+library(rgl)
+library(rworldmap)
+data(countriesLow)
+
+
+library(rangl)
+cmesh <- tri_mesh(countriesLow[sample(nrow(countriesLow), 10), ])
+plot(cmesh)
+
+#subid <- currentSubscene3d()
+#rglwidget(elementId="plot_flat")
+```
 
 Particular todos:
 
--   systematize the structure vs. relation indexes, right now it's just pure luck
--   sort out multi-objects, and creating multi-object rgl scenes for SpDFs
--   default plotting aesthetics, user control
--   why are spheres so artefacty?
+-   systematize the structure vs. relation indexes, right now it's a bit brute force
+-   default plotting aesthetics use the `viridis` palette
+-   the halo radius is not right . . .
 
 Build notes
 -----------
@@ -22,6 +36,6 @@ Build notes
 -   Travis needs libproj-dev installed, via .travis.yml (CRAN does not)
 -   R-hub needs SystemRequirements: PROJ.4
 -   All need export RGL\_USE\_NULL=TRUE
--   plot in examples is fine, no need for ptions use null (travis)
+-   plot in examples is fine, but there's a warning from R CMD check in interactive mode (??)
 
 Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.

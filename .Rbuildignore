@@ -6,3 +6,4 @@
 ^appveyor\.yml$
 ^CONDUCT\.md$
 ^codecov\.yml$
+^readme-figure/.*png$
