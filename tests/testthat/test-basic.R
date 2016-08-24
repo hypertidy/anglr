@@ -1,5 +1,6 @@
 library(testthat)
 context("basic")
+library(rangl)
 
 library(rworldxtra)
  data(countriesHigh)
@@ -12,35 +13,28 @@ library(rworldxtra)
 library("spbabel")
 data("holey")
 test_that("holey polygons and non-holy polygons", {
-  expect_silent({
-    b <- tri_mesh(a)
-  })
-  expect_silent({
+  expect_that(b <- tri_mesh(a), is_a("trimesh"))
     sph <- sp(holey)
-    tm <- tri_mesh(sph)
     sph$meta$proj <- "+proj=laea +ellps=wGS84"
-  })
+    
+    expect_that(  tm <- tri_mesh(sph), is_a("trimesh"))
+  
   
 })
 
 library(maptools)
 data(wrld_simpl)
 test_that("simple plot", {
-  expect_silent({
-    b <- tri_mesh(a)
+ b <- tri_mesh(a)
     plot(b)
     
-  })
-  expect_silent({
     b <- tri_mesh(a)
     globe(b)
     
       rgl::rgl.clear()
-  })
- expect_silent({
    for (i in sample(seq(nrow(wrld_simpl)), 10)) {
      globe(tri_mesh(wrld_simpl[i, ]), halo = as.logical(i %% 2))
      rgl::rgl.clear()
-   }
- })
+
+ }
 })

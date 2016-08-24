@@ -96,7 +96,7 @@ tri_mesh.SpatialPolygons <- function(x, ...) {
    }
    
   ## renormalize the vertices
-   allverts <- dplyr::inner_join(outlist$tXv, outlist$v)
+   allverts <- dplyr::inner_join(outlist$tXv, outlist$v, "vertex_")
    allverts$uvert <- as.integer(factor(paste(allverts$x_, allverts$y_, sep = "_")))
    allverts$vertex_ <- spbabel:::id_n(length(unique(allverts$uvert)))[allverts$uvert]
   outlist$tXv <- allverts[, c("triangle_", "vertex_")]
@@ -142,7 +142,7 @@ plot.trimesh <- function(x, ...) {
     tt <- th3d()
     tt$vb <- t(cbind(xx$v$x_, xx$v$y_, 0, 1))
     vv <- xx$v[, "vertex_"]; vv$row_n <- seq(nrow(vv))
-    index <- dplyr::inner_join(xx$tXv, vv)
+    index <- dplyr::inner_join(xx$tXv, vv, "vertex_")
     tt$it <- t(matrix(index$row_n, ncol = 3, byrow = TRUE))
     rgl::shade3d(tt, col = cols[i_obj], ...)
   
@@ -185,7 +185,7 @@ globe.trimesh <- function(x, halo = FALSE, ..., rad = 1) {
   
   for (i_obj in seq(nrow(x$o))) {
     xx <- x; xx$o <- xx$o[i_obj, ]
-    xx <- spbabel:::semi_cascade(xx, tables = c("o", "t", "tXv", "v"))
+    xx <- suppressMessages(spbabel:::semi_cascade(xx, tables = c("o", "t", "tXv", "v")))
     
   ll <- cbind(as.matrix(xx$v[, c("x_", "y_")]), 0)
   if (grepl("longlat", p4)) ll <- ll * pi / 180
@@ -193,7 +193,7 @@ globe.trimesh <- function(x, halo = FALSE, ..., rad = 1) {
   tt <- th3d()
   tt$vb <- t(cbind(xyz, 1))
   vv <- xx$v[, "vertex_"]; vv$row_n <- seq(nrow(vv))
-  index <- dplyr::inner_join(xx$tXv, vv)
+  index <- dplyr::inner_join(xx$tXv, vv, "vertex_")
   tt$it <- t(matrix(index$row_n, ncol = 3, byrow = TRUE))
 
   rgl::shade3d(tt, col = cols[i_obj], ...)
