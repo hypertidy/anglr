@@ -8,6 +8,7 @@ Description: Create tidy tables for topological, triangulated, and other spatial
 License: GPL-3
 Imports:
     dplyr,
+    methods,
     proj4,
     rgl,
     RTriangle,

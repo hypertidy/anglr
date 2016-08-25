@@ -7,12 +7,14 @@
 \usage{
 tri_mesh(x, ...)
 
-\method{tri_mesh}{SpatialPolygons}(x, ...)
+\method{tri_mesh}{SpatialPolygons}(x, max_area = NULL, ...)
 }
 \arguments{
 \item{x}{input data}
 
 \item{...}{arguments passed to methods}
+
+\item{max_area}{maximum area in coordinate system of x, passed to \code{\link[RTriangle]{triangulate}} 'a' argument}
 }
 \value{
 a list of tibble data frames, using the gris-map_table model
@@ -27,9 +29,11 @@ Methods exist for SpatialPolygons, ...
 if (require(rworldxtra)) {
 
 data(countriesHigh)
-sv <- "Australia"
-a <- subset(countriesHigh, SOVEREIGNT == sv)
+sv <- c("New Zealand", "Antarctica", "Papua New Guinea",
+ "Indonesia", "Malaysia", "Fiji", "Australia")
+a <- subset(countriesHigh, SOVEREIGNT \%in\% sv)
 b <- tri_mesh(a)
+#b <- tri_mesh(a, max_area = 0.1)
 }
 
 library(maptools)
