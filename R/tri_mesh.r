@@ -128,9 +128,9 @@ trimesh_cols <- function(n) {
 #' plot the triangles in the tables
 #'
 #' plot
+#'
 #' @param x object from tri_mesh
 #' @param ... args for underlying plotting
-#'
 #' @return the rgl mesh3d object, invisibly
 #' @export
 #' @importFrom rgl shade3d
@@ -139,28 +139,31 @@ trimesh_cols <- function(n) {
 #' if(exists("b")) { 
 #'  plot(b)
 #'  }
-plot.trimesh <- function(x, ...) {
-  cols <- trimesh_cols(nrow(x$o))
+plot.trimesh <- function(x,  ...) {
+  if (!"color_" %in% names(x$o)) {
+    x$o$color_ <- trimesh_cols(nrow(x$o))
+  }
+  
   if (!requireNamespace("rgl", quietly = TRUE))
     stop("rgl required")
   haveZ <- "z_" %in% names(x$v)
-  for (i_obj in seq(nrow(x$o))) {
-    xx <- x; xx$o <- xx$o[i_obj, ]
-    xx <- spbabel:::semi_cascade(xx, tables = c("o", "t", "tXv", "v"))
-    tt <- th3d()
+  tt <- th3d()
+  
+  if (haveZ) {
+    tt$vb <- t(cbind(x$v$x_, x$v$y_, x$v$z_, 1))
+  } else {
     
-    if (haveZ) {
-      tt$vb <- t(cbind(xx$v$x_, xx$v$y_, xx$v$z_, 1))
-    } else {
-   
-    tt$vb <- t(cbind(xx$v$x_, xx$v$y_, 0, 1))
- }
-    vv <- xx$v[, "vertex_"]; vv$row_n <- seq(nrow(vv))
-    index <- dplyr::inner_join(xx$tXv, vv, "vertex_")
-    tt$it <- t(matrix(index$row_n, ncol = 3, byrow = TRUE))
-    rgl::shade3d(tt, col = cols[i_obj], ...)
-    
+    tt$vb <- t(cbind(x$v$x_, x$v$y_, 0, 1))
   }
+  vv <- x$v[, "vertex_"]; vv$row_n <- seq(nrow(vv))
+  pindex <- dplyr::inner_join(dplyr::inner_join(x$o[, c("object_", "color_")], x$t), 
+                              x$tXv)
+
+  vindex <- dplyr::inner_join(x$tXv, vv, "vertex_")
+  tt$it <- t(matrix(vindex$row_n, ncol = 3, byrow = TRUE))
+  rgl::shade3d(tt, col = pindex$color_, ...)
+  
+  
   invisible(tt)
 }
 
@@ -190,34 +193,34 @@ globe <- function(x, ...) {
 #' @importFrom rgl ellipse3d plot3d
 #' @export
 globe.trimesh <- function(x, halo = FALSE, ..., rad = 1) {
-  cols <- trimesh_cols(nrow(x$o))
-  
+  if (!"color_" %in% names(x$o)) {
+    x$o$color_ <- trimesh_cols(nrow(x$o))
+  }
   gproj <- sprintf("+proj=geocent +a=%f +b=%f", rad, rad)
   p4 <- x$meta$proj[1]
   if (!requireNamespace("rgl", quietly = TRUE))
     stop("rgl required")
   haveZ <- "z_" %in% names(x$v)
-  for (i_obj in seq(nrow(x$o))) {
-    xx <- x; xx$o <- xx$o[i_obj, ]
-    xx <- suppressMessages(spbabel:::semi_cascade(xx, tables = c("o", "t", "tXv", "v")))
-    
+
     ## need to handle if we already have a "z_"
     if (haveZ) {
-      ll <- as.matrix(xx$v[, c("x_", "y_", "z_")])
-    
+      ll <- as.matrix(x$v[, c("x_", "y_", "z_")])
+      
     } else { 
-      ll <- cbind(as.matrix(xx$v[, c("x_", "y_")]), 0)
+      ll <- cbind(as.matrix(x$v[, c("x_", "y_")]), 0)
     }
     if (grepl("longlat", p4)) ll <- ll * pi / 180
     xyz <- proj4::ptransform(ll, src.proj = p4, dst.proj = gproj)
     tt <- th3d()
     tt$vb <- t(cbind(xyz, 1))
-    vv <- xx$v[, "vertex_"]; vv$row_n <- seq(nrow(vv))
-    index <- dplyr::inner_join(xx$tXv, vv, "vertex_")
+    vv <- x$v[, "vertex_"]; vv$row_n <- seq(nrow(vv))
+    pindex <- dplyr::inner_join(dplyr::inner_join(x$o[, c("object_", "color_")], x$t), 
+                                x$tXv)
+    index <- dplyr::inner_join(x$tXv, vv, "vertex_")
     tt$it <- t(matrix(index$row_n, ncol = 3, byrow = TRUE))
     
-    rgl::shade3d(tt, col = cols[i_obj], ...)
-  }
+    rgl::shade3d(tt, col = pindex$color_, ...)
+  
   if (halo) {
     #rgl::spheres3d(0, 0, 0, radius = rad * 0.99, fog = FALSE, specular = "black", col = "dodgerblue", alpha = 0.4)
     rgl::shade3d(rgl::ellipse3d(diag(3) * rad, centre = c(0, 0, 0)), specular = "black", col = "dodgerblue", alpha = 0.4)
