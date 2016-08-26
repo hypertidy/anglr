@@ -8,7 +8,7 @@ path2seg <- function(x) {
 #'
 #' Create triangle mesh structures from various inputs.
 #'
-#' Methods exist for SpatialPolygons, ...
+#' Methods exist for SpatialPolygons, rgl mesh3d(triangle) ...
 #' @param x input data
 #' @param max_area maximum area in coordinate system of x, passed to \code{\link[RTriangle]{triangulate}} 'a' argument
 #' @param ... arguments passed to methods
@@ -143,12 +143,18 @@ plot.trimesh <- function(x, ...) {
   cols <- trimesh_cols(nrow(x$o))
   if (!requireNamespace("rgl", quietly = TRUE))
     stop("rgl required")
-  haveZ <- "z_" %in% names(x)
+  haveZ <- "z_" %in% names(x$v)
   for (i_obj in seq(nrow(x$o))) {
     xx <- x; xx$o <- xx$o[i_obj, ]
     xx <- spbabel:::semi_cascade(xx, tables = c("o", "t", "tXv", "v"))
     tt <- th3d()
+    
+    if (haveZ) {
+      tt$vb <- t(cbind(xx$v$x_, xx$v$y_, xx$v$z_, 1))
+    } else {
+   
     tt$vb <- t(cbind(xx$v$x_, xx$v$y_, 0, 1))
+ }
     vv <- xx$v[, "vertex_"]; vv$row_n <- seq(nrow(vv))
     index <- dplyr::inner_join(xx$tXv, vv, "vertex_")
     tt$it <- t(matrix(index$row_n, ncol = 3, byrow = TRUE))
