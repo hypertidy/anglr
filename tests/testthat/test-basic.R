@@ -8,8 +8,6 @@ library(rworldxtra)
  a <- subset(countriesHigh, SOVEREIGNT == "Australia")
 
  
-
-
 library("spbabel")
 data("holey")
 test_that("holey polygons and non-holy polygons", {

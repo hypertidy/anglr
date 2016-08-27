@@ -53,7 +53,22 @@ tri_mesh_map_table1 <- function(tabs, max_area = NULL) {
   
   tabs
 }
-#' @rdname tri_mesh
+
+mesh.SpatialLines <- function(x, ...) {
+  pr4 <- sp::proj4string(x)
+  ## kludge for non DataFrames
+  if (! "data" %in% slotNames(x)) {
+    dummy <- data.frame(row_number = seq_along(x))
+    x <- sp::SpatialLinesDataFrame(x, dummy, match.ID = FALSE)
+  }
+  tabs <- spbabel::map_table(x)
+## no no no
+  l <- tibble(segment_ =spbabel:::id_n(nrow(tabs$b)), object_ = tabs$b$object_)
+  lXv <- tibble(vertex_ = unlist(lapply(split(tabs$bXv$vertex_, tabs$bXv$branch_), function(x) as.vector( t(path2seg(x))))))
+  
+  
+}
+' @rdname tri_mesh
 #' @export
 #' @importFrom sp geometry  over SpatialPoints proj4string CRS SpatialPolygonsDataFrame
 #' @importFrom dplyr inner_join
