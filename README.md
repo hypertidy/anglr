@@ -37,7 +37,7 @@ In examples below I use 'graticule' as well, so you might as well install that t
 install.packages("graticule")
 ```
 
-If you are still feeling adventurous, 'rangl' can be installed from Github. This will also ensure that the latest version of 'spbabel' is installed, until I get around to updating that on CRAN.
+If you are still feeling adventurou s, 'rangl' can be installed from Github. This will also ensure that the latest version of 'spbabel' is installed, until I get around to updating that on CRAN.
 
 ``` r
 devtools::install_github("r-gris/rangl")
@@ -68,10 +68,9 @@ library(raster)
 library(rangl)
 cmesh <- mesh(wrld_simpl)
 plot(cmesh)
+```
 
-## snapshot code is only for this README
-rgl.snapshot("readme-figure/README-wrld_simpl.png"); rgl.clear()
-
+``` r
 sids <- raster::shapefile(system.file("shapes/sids.shp", package="maptools"))
 projection(sids) <- "+proj=longlat +ellps=clrk66"
 
@@ -86,8 +85,6 @@ plot(globe(smesh))
 mgl <- mesh(gl)
 mgl$o$color_ <- "black"
 plot(globe(mgl), lwd = 2)
-
-rgl.snapshot("readme-figure/README-sids-globe.png"); rgl.clear()
 ```
 
 ![World simpl](readme-figure/README-wrld_simpl.png?raw=true "World simpl")
@@ -106,7 +103,6 @@ sph <- sp(holey)
 
 glh <- mesh(sph)
 plot(glh)
-rgl::rgl.snapshot("readme-figure/README-home.png"); rgl.clear()
 ```
 
 ![Holey home](readme-figure/README-home.png?raw=true "Holey home")
@@ -117,7 +113,6 @@ Lines are supported.
 ``` r
 linehouse <- as(sph, "SpatialLinesDataFrame")
 plot(mesh(linehouse))
-rgl::rgl.snapshot("readme-figure/README-lines.png"); rgl.clear()
 ```
 
 ![Liney lines](readme-figure/README-lines.png?raw=true "Liney lines")
@@ -128,7 +123,6 @@ Globe lines
 ``` r
 lmesh <- mesh(as(wrld_simpl, "SpatialLinesDataFrame"))
 plot(globe(lmesh))
-rgl::rgl.snapshot("readme-figure/README-liney-world.png"); rgl.clear()
 ```
 
 ![Liney world](readme-figure/README-liney-world.png?raw=true "Liney world")
@@ -146,7 +140,6 @@ octo <- mesh(translate3d(octahedron3d(col = "blue"), 6, 0, 0))
 plot(dod, col = viridis::viridis(5)[1], alpha = 0.3)
 plot(octo, col = viridis::viridis(5)[5], alpha = 0.3)
 bg3d("grey")
-rgl::rgl.snapshot("readme-figure/README-Platonic.png"); rgl.clear()
 ```
 
 ![Platonic](readme-figure/README-Platonic.png?raw=true "Platonic")
