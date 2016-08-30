@@ -2,12 +2,33 @@
 #'
 #' Create primitives mesh structures from various inputs.
 #'
-#' Methods exist for ...
+#' #' Methods exist for SpatialPolygons, SpatialLines, rgl mesh3d(triangle) ...
 #' @param x input data
 #' @param ... arguments passed to methods
-#' 
+#' @param max_area maximum area in coordinate system of x, passed to \code{\link[RTriangle]{triangulate}} 'a' argument
 #' @return a list of tibble data frames, using the gris-map_table model
 #' @export
+#' @examples
+#' ## -----------------------------------------------
+#' ## POLYGONS
+#' library(maptools)
+#' data(wrld_simpl)
+#' b <- mesh(wrld_simpl)
+#' plot(b)
+#' if (require(rworldxtra)) {
+#'
+#' data(countriesHigh)
+#' sv <- c("New Zealand", "Antarctica", "Papua New Guinea",
+#'  "Indonesia", "Malaysia", "Fiji", "Australia")
+#' a <- subset(countriesHigh, SOVEREIGNT %in% sv)
+#' b7 <- mesh(a, max_area = 0.5)
+#' plot(globe(b7))
+#' }
+#' ## -----------------------------------------------
+#' ## LINES
+#' l1 <- mesh(as(a, "SpatialLinesDataFrame") )
+#' plot(l1)
+#' plot(globe(l1))
 mesh <- function(x, ...) {
   UseMethod("mesh")
 }
@@ -68,7 +89,6 @@ plot.linemesh <- function(x,  ...) {
   if (!"color_" %in% names(x$o)) {
     x$o$color_ <- rangl:::trimesh_cols(nrow(x$o))
   }
-  
   if (!requireNamespace("rgl", quietly = TRUE))
     stop("rgl required")
   haveZ <- "z_" %in% names(x$v)
@@ -80,8 +100,6 @@ plot.linemesh <- function(x,  ...) {
     
     vb <- t(cbind(x$v$x_, x$v$y_, 0))
   }
-  
-
   vv <- x$v[, "vertex_"]; vv$row_n <- seq(nrow(vv))
   pindex <- dplyr::inner_join(dplyr::inner_join(x$o[, c("object_", "color_")], x$l), 
                               x$lXv)
@@ -95,9 +113,28 @@ plot.linemesh <- function(x,  ...) {
 }
 
 
-globe_x <- function(x) {
-  
-  gproj <- sprintf("+proj=geocent +a=%f +b=%f", rad, rad)
+#' Convert map coordinates to Geocentric (XYZ) coordinates. 
+#'
+#' 
+#' @param x list of tibbles, in \code{\link{mesh}} form
+#' @param gproj Geocentric PROJ.4 string, defaults to WGS84
+#' @param ... arguments to methods (none used)
+#'
+#' @return mesh object with vertices table modified
+#' @export
+#'
+#' @examples
+#' library(maptools)
+#' data(wrld_simpl)
+#' g <- globe(mesh(as(wrld_simpl, "SpatialLinesDataFrame")))
+#' plot(g, lwd = 3)
+globe <- function(x, ...) {
+  UseMethod("globe")
+}
+
+#' @export
+#' @rdname globe
+globe.default <- function(x, gproj = "+proj=geocent +ellps=WGS84", ...) {
   p4 <- x$meta$proj[1]
   haveZ <- "z_" %in% names(x$v)
   
@@ -114,6 +151,5 @@ globe_x <- function(x) {
   x$v$x_ <- xyz[,1]
   x$v$y_ <- xyz[,2]
   x$v$z_ <- xyz[,3]
-  
   x
 }
