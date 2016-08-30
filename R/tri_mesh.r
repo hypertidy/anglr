@@ -40,6 +40,7 @@ tri_mesh_map_table1 <- function(tabs, max_area = NULL) {
   tabs
 }
 
+#' @rdname mesh
 #' @export
 #' @importFrom sp geometry  over SpatialPoints proj4string CRS SpatialPolygonsDataFrame
 #' @importFrom dplyr inner_join
@@ -97,6 +98,8 @@ th3d <- function() {
 trimesh_cols <- function(n) {
   viridis::viridis(n)
 }
+
+
 #' plot the triangles in the tables
 #'
 #' plot

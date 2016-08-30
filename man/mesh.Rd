@@ -11,7 +11,7 @@ mesh(x, ...)
 
 \method{mesh}{SpatialLines}(x, ...)
 
-\method{mesh}{mesh3d}(x)
+\method{mesh}{mesh3d}(x, ...)
 
 \method{mesh}{SpatialPolygons}(x, max_area = NULL, ...)
 }
