@@ -59,6 +59,15 @@ plot(glh)
 
 ```
 
+And lines.   (Much of this is in dev). 
+
+
+```{r,eval=FALSE}
+linehouse <- as(sph, "SpatialLinesDataFrame")
+plot(mesh(linehouse))
+
+```
+
 ```{r,eval=FALSE,include=FALSE}
 library(rangl)
 #ogrListLayers("inst/extdata/water_lake_superior_basin.gpkg")

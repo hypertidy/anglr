@@ -44,6 +44,13 @@ glh <- tri_mesh(sph)
 plot(glh)
 ```
 
+And lines. (Much of this is in dev).
+
+``` r
+linehouse <- as(sph, "SpatialLinesDataFrame")
+plot(mesh(linehouse))
+```
+
 `rgl` mesh3d triangle-primitive objects are supported.
 
 Example TBD
