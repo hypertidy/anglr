@@ -5,13 +5,14 @@
 #' @docType package
 #' @section I. Creation:
 #' \tabular{ll}{
-#'  \code{\link{tri_mesh}} \tab create a triangulated mesh as tidy set of tables  \cr
+#'  \code{\link{mesh}} \tab create a triangulated mesh as tidy set of tables  \cr
 #'  }
 #'
 #' @section II. Plotting:
 #' \tabular{ll}{
-#'  \code{\link{globe}} \tab plot in 3D on the surface of a globe, based on the data in longitude-latitude form \cr
-#'  \code{\link{plot.trimesh}} \tab plot in 3D, by default just in the plane \cr
+#'  \code{\link{globe}} \tab convert X,Y planar or angular to 3D on the surface of a globe, based on the data in longitude-latitude form \cr
+#'  \code{\link{plot.trimesh}} \tab plot 2D topology in 3D \cr
+#'  \code{\link{plot.trimesh}} \tab plot 1D topology in 3D \cr
 #' }
 #'
 NULL

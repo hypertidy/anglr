@@ -1,4 +1,11 @@
-# rangl dev
+# rangl 0.2.0
+
+* removed old globe() plot behaviour, this function now just converts coordinates to geocentric XYZ
+
+* added generic "mesh()" function to convert SpatialPolygons, SpatialLines, and
+rgl 'mesh3d' objects that use triangle primitives
+
+* removed old "tri_mesh" function
 
 * renamed package to 'rangl'
 

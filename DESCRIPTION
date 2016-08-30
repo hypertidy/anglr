@@ -1,7 +1,7 @@
 Package: rangl
 Type: Package
 Title: Tidy Flexible Spatial
-Version: 0.1.0.9001
+Version: 0.2.0
 Authors@R: person("Michael D.","Sumner", role = c("aut", "cre"), email =
     "mdsumner@gmail.com")
 Description: Create tidy tables for topological, triangulated, and other spatial data structures.
