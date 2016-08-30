@@ -16,16 +16,57 @@ knitr::opts_chunk$set(
 rgl::par3d(windowRect = c(100, 100, 512 + 100, 512 +100))
 ```
 
-## Tidy tables for spatial data 
+## Tabular storage for spatial data 
 
-The basics for creating a mesh from a `SpatialPolygons` object is in place. 
+The 'rangl' package illustrates some generalizations of GIS-y tasks in R with "tables". 
+
+The basic model is to create "mesh" objects from a variety of sources: 
+
+* SpatialPolygons, SpatialLines
+* rgl 3D objects
+* --others to come-- see https://github.com/mdsumner/spbabel
 
 Multiple multi-part objects are decomposed to a set of related, linked tables. Object identity is maintained with attribute metadata and this is carried through to colour aesthetics in 3D plots.  
 
+Plot methods take those tables and generate the "indexed array" structures needed for 'rgl'. In this way we get the best of both worlds of "GIS" and "3D models". 
 
-Example, get some maps and plot in 3D - in plane view, or globe view. 
+The core work for translating "Spatial" classes is done by the unspecialized 'spbabel::map_table' function.
 
-```{r}
+## Installation
+
+This package is in active development and will see a number of breaking changes before release. 
+
+
+Also required are packages 'rgl' and 'RTriangle', so first make sure you can install and use these. 
+
+```{r,eval=FALSE}
+install.packages("rgl")
+install.packages("RTriangle")
+
+```
+
+If you are still feeling adventurous, 'rangl' can be installed from Github. This will also ensure that the latest version of 'spbabel' is installed, until I get around to updating that on CRAN. 
+
+```{r,eval=FALSE}
+devtools::install_github("r-gris/rangl")
+```
+
+## Get involved!
+
+Let me know if you have problems, or are interested in this work. See the issues tab to make suggestions or report bugs. 
+
+https://github.com/r-gris/rangl/issues
+
+
+
+## Examples
+
+Get some maps and plot in 3D - in plane view, or globe view. 
+
+**NOTE:** these examples here just show snapshots. It's much more interesting to run these yourself locally and interact with the rgl plots. 
+
+
+```{r,eval=FALSE}
 
 library(rgl)
 library(maptools)
@@ -66,9 +107,9 @@ rgl.snapshot("readme-figure/README-sids-globe.png"); rgl.clear()
 
 
 
-Holes are supported. 
+## Holes are supported. 
 
-```{r}
+```{r,eval=FALSE}
 library(spbabel)
 data(holey)
 
@@ -85,10 +126,10 @@ rgl::rgl.snapshot("readme-figure/README-home.png"); rgl.clear()
 ![Holey home](readme-figure/README-home.png?raw=true "Holey home")
 
 
-Lines are supported. 
+## Lines are supported. 
 
 
-```{r}
+```{r,eval=FALSE}
 linehouse <- as(sph, "SpatialLinesDataFrame")
 plot(mesh(linehouse))
 rgl::rgl.snapshot("readme-figure/README-lines.png"); rgl.clear()
@@ -98,9 +139,9 @@ rgl::rgl.snapshot("readme-figure/README-lines.png"); rgl.clear()
 
 ![Liney lines](readme-figure/README-lines.png?raw=true "Liney lines")
 
+## Globe lines
 
-
-```{r}
+```{r,eval=FALSE}
 lmesh <- mesh(as(wrld_simpl, "SpatialLinesDataFrame"))
 plot(globe(lmesh))
 rgl::rgl.snapshot("readme-figure/README-liney-world.png"); rgl.clear()
@@ -110,10 +151,11 @@ rgl::rgl.snapshot("readme-figure/README-liney-world.png"); rgl.clear()
 ![Liney world](readme-figure/README-liney-world.png?raw=true "Liney world")
 
 
+## Mesh3d rgl
 
 Rgl mesh3d objects that use "triangle" primitives are supported. 
 
-```{r}
+```{r,eval=FALSE}
 library(rgl)
 
 dod <- mesh(dodecahedron3d(col = "cyan"))
@@ -125,8 +167,9 @@ rgl::rgl.snapshot("readme-figure/README-Platonic.png"); rgl.clear()
 
 ```
 
-
 ![Platonic](readme-figure/README-Platonic.png?raw=true "Platonic")
+
+
 
 
 
