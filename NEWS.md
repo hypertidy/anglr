@@ -5,7 +5,7 @@
 * added generic "mesh()" function to convert SpatialPolygons, SpatialLines, and
 rgl 'mesh3d' objects (only those that use triangle primitives)
 
-* removed old "tri_mesh" function
+* deprecated "tri_mesh" function, replaced by mesh()
 
 * renamed package to 'rangl'
 
