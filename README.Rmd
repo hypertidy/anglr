@@ -13,6 +13,7 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.path = "readme-figure/README-"
 )
+rgl::par3d(windowRect = c(100, 100, 512 + 100, 512 +100))
 ```
 
 ## Tidy tables for spatial data 
@@ -30,8 +31,6 @@ library(rgl)
 library(maptools)
 data(wrld_simpl)
 library(raster)
-sids <- raster::shapefile(system.file("shapes/sids.shp", package="maptools"))
-projection(sids) <- "+proj=longlat +ellps=clrk66"
 
 ## convert to triangles and plot 
 library(rangl)
@@ -39,11 +38,24 @@ cmesh <- mesh(wrld_simpl)
 plot(cmesh)
 
 ## snapshot code is only for this README
-rgl.snapshot("readme-figure/README-wrld_simpl.png"); rgl.close()
+rgl.snapshot("readme-figure/README-wrld_simpl.png"); rgl.clear()
+
+sids <- raster::shapefile(system.file("shapes/sids.shp", package="maptools"))
+projection(sids) <- "+proj=longlat +ellps=clrk66"
+
+ex <- extent(sids) + 5
+gl <- graticule::graticule(seq(xmin(ex), xmax(ex), length = 15), 
+                           seq(ymin(ex), ymax(ex), length = 8))
+
+
 ## convert to triangles, but wrap onto globe then plot
 smesh <- mesh(sids)
 plot(globe(smesh))
-rgl.snapshot("readme-figure/README-sids-globe.png"); rgl.close()
+mgl <- mesh(gl)
+mgl$o$color_ <- "black"
+plot(globe(mgl), lwd = 2)
+
+rgl.snapshot("readme-figure/README-sids-globe.png"); rgl.clear()
 
 ```
 
@@ -65,7 +77,7 @@ sph <- sp(holey)
 
 glh <- mesh(sph)
 plot(glh)
-rgl::rgl.snapshot("readme-figure/README-home.png"); rgl.close()
+rgl::rgl.snapshot("readme-figure/README-home.png"); rgl.clear()
 
 ```
 
@@ -79,7 +91,7 @@ Lines are supported.
 ```{r}
 linehouse <- as(sph, "SpatialLinesDataFrame")
 plot(mesh(linehouse))
-rgl::rgl.snapshot("readme-figure/README-lines.png"); rgl.close()
+rgl::rgl.snapshot("readme-figure/README-lines.png"); rgl.clear()
 ```
 
 
@@ -91,7 +103,7 @@ rgl::rgl.snapshot("readme-figure/README-lines.png"); rgl.close()
 ```{r}
 lmesh <- mesh(as(wrld_simpl, "SpatialLinesDataFrame"))
 plot(globe(lmesh))
-rgl::rgl.snapshot("readme-figure/README-liney-world.png"); rgl.close()
+rgl::rgl.snapshot("readme-figure/README-liney-world.png"); rgl.clear()
 
 ```
 
@@ -109,7 +121,7 @@ octo <- mesh(translate3d(octahedron3d(col = "blue"), 6, 0, 0))
 plot(dod, col = viridis::viridis(5)[1], alpha = 0.3)
 plot(octo, col = viridis::viridis(5)[5], alpha = 0.3)
 bg3d("grey")
-rgl::rgl.snapshot("readme-figure/README-Platonic.png"); rgl.close()
+rgl::rgl.snapshot("readme-figure/README-Platonic.png"); rgl.clear()
 
 ```
 

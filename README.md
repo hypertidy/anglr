@@ -19,9 +19,6 @@ library(maptools)
 #> Checking rgeos availability: TRUE
 data(wrld_simpl)
 library(raster)
-sids <- raster::shapefile(system.file("shapes/sids.shp", package="maptools"))
-#> Warning in .local(x, ...): .prj file is missing
-projection(sids) <- "+proj=longlat +ellps=clrk66"
 
 ## convert to triangles and plot 
 library(rangl)
@@ -31,13 +28,29 @@ plot(cmesh)
 #> Joining, by = "triangle_"
 
 ## snapshot code is only for this README
-rgl.snapshot("readme-figure/README-wrld_simpl.png"); rgl.close()
+rgl.snapshot("readme-figure/README-wrld_simpl.png"); rgl.clear()
+
+sids <- raster::shapefile(system.file("shapes/sids.shp", package="maptools"))
+#> Warning in .local(x, ...): .prj file is missing
+projection(sids) <- "+proj=longlat +ellps=clrk66"
+
+ex <- extent(sids) + 5
+gl <- graticule::graticule(seq(xmin(ex), xmax(ex), length = 15), 
+                           seq(ymin(ex), ymax(ex), length = 8))
+
+
 ## convert to triangles, but wrap onto globe then plot
 smesh <- mesh(sids)
 plot(globe(smesh))
 #> Joining, by = "object_"
 #> Joining, by = "triangle_"
-rgl.snapshot("readme-figure/README-sids-globe.png"); rgl.close()
+mgl <- mesh(gl)
+mgl$o$color_ <- "black"
+plot(globe(mgl), lwd = 2)
+#> Joining, by = "object_"
+#> Joining, by = "segment_"
+
+rgl.snapshot("readme-figure/README-sids-globe.png"); rgl.clear()
 ```
 
 ![World simpl](readme-figure/README-wrld_simpl.png?raw=true "World simpl")
@@ -57,7 +70,7 @@ glh <- mesh(sph)
 plot(glh)
 #> Joining, by = "object_"
 #> Joining, by = "triangle_"
-rgl::rgl.snapshot("readme-figure/README-home.png"); rgl.close()
+rgl::rgl.snapshot("readme-figure/README-home.png"); rgl.clear()
 ```
 
 ![Holey home](readme-figure/README-home.png?raw=true "Holey home")
@@ -69,7 +82,7 @@ linehouse <- as(sph, "SpatialLinesDataFrame")
 plot(mesh(linehouse))
 #> Joining, by = "object_"
 #> Joining, by = "segment_"
-rgl::rgl.snapshot("readme-figure/README-lines.png"); rgl.close()
+rgl::rgl.snapshot("readme-figure/README-lines.png"); rgl.clear()
 ```
 
 ![Liney lines](readme-figure/README-lines.png?raw=true "Liney lines")
@@ -79,7 +92,7 @@ lmesh <- mesh(as(wrld_simpl, "SpatialLinesDataFrame"))
 plot(globe(lmesh))
 #> Joining, by = "object_"
 #> Joining, by = "segment_"
-rgl::rgl.snapshot("readme-figure/README-liney-world.png"); rgl.close()
+rgl::rgl.snapshot("readme-figure/README-liney-world.png"); rgl.clear()
 ```
 
 ![Liney world](readme-figure/README-liney-world.png?raw=true "Liney world")
@@ -98,7 +111,7 @@ plot(octo, col = viridis::viridis(5)[5], alpha = 0.3)
 #> Joining, by = "object_"
 #> Joining, by = "triangle_"
 bg3d("grey")
-rgl::rgl.snapshot("readme-figure/README-Platonic.png"); rgl.close()
+rgl::rgl.snapshot("readme-figure/README-Platonic.png"); rgl.clear()
 ```
 
 ![Platonic](readme-figure/README-Platonic.png?raw=true "Platonic")
