@@ -31,6 +31,12 @@ install.packages("rgl")
 install.packages("RTriangle")
 ```
 
+In examples below I use 'graticule' as well, so you might as well install that too.
+
+``` r
+install.packages("graticule")
+```
+
 If you are still feeling adventurous, 'rangl' can be installed from Github. This will also ensure that the latest version of 'spbabel' is installed, until I get around to updating that on CRAN.
 
 ``` r
