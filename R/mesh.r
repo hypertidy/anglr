@@ -87,7 +87,7 @@ mesh.SpatialLines <- function(x, ...) {
 #' @export
 plot.linemesh <- function(x,  ...) {
   if (!"color_" %in% names(x$o)) {
-    x$o$color_ <- rangl:::trimesh_cols(nrow(x$o))
+    x$o$color_ <- trimesh_cols(nrow(x$o))
   }
   if (!requireNamespace("rgl", quietly = TRUE))
     stop("rgl required")
