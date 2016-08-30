@@ -5,6 +5,8 @@ path2seg <- function(x) {
 
 #' Deprecated from rangl
 #' @rdname rangl-deprecated
+#' @param x nothing
+#' @param ... ignored
 #' @export
 tri_mesh <- function(x, ...) {
   .Deprecated("mesh", package= "rangl", old = "tri_mesh")

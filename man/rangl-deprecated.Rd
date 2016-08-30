@@ -6,6 +6,11 @@
 \usage{
 tri_mesh(x, ...)
 }
+\arguments{
+\item{x}{nothing}
+
+\item{...}{ignored}
+}
 \description{
 Deprecated from rangl
 }
