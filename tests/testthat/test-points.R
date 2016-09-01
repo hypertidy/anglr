@@ -14,5 +14,5 @@ test_that("points works", {
 
 
 test_that("multi-points works", {
-  expect_that(mesh(mpts), is_a("pointsmesh"))
+  expect_that(mesh(mpts), is_a("pointmesh"))
 })
