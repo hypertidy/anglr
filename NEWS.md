@@ -1,6 +1,6 @@
 # rangl dev
 
-
+* fix for spbabel now means MultiPoints are mesh()-able
 
 # rangl 0.2.0
 

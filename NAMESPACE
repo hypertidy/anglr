@@ -2,9 +2,12 @@
 
 S3method(globe,default)
 S3method(mesh,SpatialLines)
+S3method(mesh,SpatialMultiPoints)
+S3method(mesh,SpatialPoints)
 S3method(mesh,SpatialPolygons)
 S3method(mesh,mesh3d)
 S3method(plot,linemesh)
+S3method(plot,pointmesh)
 S3method(plot,trimesh)
 export(globe)
 export(mesh)

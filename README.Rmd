@@ -180,6 +180,38 @@ rgl::rgl.snapshot("readme-figure/README-Platonic.png"); rgl.clear()
 
 
 
+
+And points work!  (Don't laugh). 
+
+
+```{r}
+library(rangl)
+library(maptools)
+data(wrld_simpl)
+mpts <- as(as(wrld_simpl, "SpatialLinesDataFrame"), "SpatialMultiPointsDataFrame")
+plot(mesh(mpts))
+rgl::view3d(theta = 25, phi = 3)
+
+```
+
+```{r,include=FALSE}
+rgl::rgl.snapshot("readme-figure/README-MultiPoints.png"); rgl::rgl.clear()
+
+```
+
+![MultiPoints](readme-figure/README-MultiPoints.png?raw=true "MultiPoints")
+
+
+
+## Open topics
+
+* single-points are a bit funny, it's wasteful to copy the branches model - needs thought
+* multi-points are also a bit funny, but this will form the basis of input tracking data for some applications
+
+
+Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
+
+
 ```{r,eval=FALSE,include=FALSE}
 library(rangl)
 #ogrListLayers("inst/extdata/water_lake_superior_basin.gpkg")
@@ -189,7 +221,3 @@ lake <- tri_mesh(spdf)
 
 plot(lake)
 ```
-
-
-Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
-

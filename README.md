@@ -151,4 +151,27 @@ rgl::rgl.snapshot("readme-figure/README-Platonic.png"); rgl.clear()
 
 ![Platonic](readme-figure/README-Platonic.png?raw=true "Platonic")
 
+And points work! (Don't laugh).
+
+``` r
+library(rangl)
+library(maptools)
+#> Loading required package: sp
+#> Checking rgeos availability: TRUE
+data(wrld_simpl)
+mpts <- as(as(wrld_simpl, "SpatialLinesDataFrame"), "SpatialMultiPointsDataFrame")
+plot(mesh(mpts))
+#> Joining, by = "object_"
+#> Joining, by = "branch_"
+rgl::view3d(theta = 25, phi = 3)
+```
+
+![MultiPoints](readme-figure/README-MultiPoints.png?raw=true "MultiPoints")
+
+Open topics
+-----------
+
+-   single-points are a bit funny, it's wasteful to copy the branches model - needs thought
+-   multi-points are also a bit funny, but this will form the basis of input tracking data for some applications
+
 Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
