@@ -1,3 +1,7 @@
+# rangl dev
+
+* mesh method for trip
+
 # rangl 0.2.0
 
 * removed old globe() plot behaviour, this function now just converts coordinates to geocentric XYZ
