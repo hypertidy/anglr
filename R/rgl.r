@@ -26,5 +26,15 @@ mesh.mesh3d <- function(x, ...) {
   tXv <- tibble(vertex_ = v$vertex_[x$it], 
                 triangle_ = tt$triangle_[rep(seq(ncol(x$it)), each = 3)])
   
+  
+  
   structure(list(o = o, t = tt, tXv = tXv, v = v), class = "trimesh")
 }
+
+
+
+mesh <- function(x, ...) {
+  UseMethod("mesh")
+}
+
+#mesh.mesh3d

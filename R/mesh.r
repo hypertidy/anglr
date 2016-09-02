@@ -33,7 +33,7 @@ mesh <- function(x, ...) {
   UseMethod("mesh")
 }
 
-line_mesh_map_table1 <- function(tabs, max_area = NULL) {
+line_mesh_map_table1 <- function(tabs) {
   tabs$v$countingIndex <- seq(nrow(tabs$v))
   nonuq <- dplyr::inner_join(tabs$bXv, tabs$v, "vertex_")
   
@@ -53,6 +53,10 @@ line_mesh_map_table1 <- function(tabs, max_area = NULL) {
 #' @export
 mesh.SpatialLines <- function(x, ...) {
   pr4 <- proj4string(x)
+  if (! "data" %in% slotNames(x)) {
+    dummy <- data.frame(row_number = seq_along(x))
+    x <- sp::SpatialLinesDataFrame(x, dummy, match.ID = FALSE)
+  }
   tabs <- spbabel::map_table(x)
   ll <- vector("list", nrow(tabs$o))
   for (i_obj in seq(nrow(tabs$o))) {

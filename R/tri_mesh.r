@@ -3,7 +3,14 @@ path2seg <- function(x) {
   head(suppressWarnings(matrix(x, nrow = length(x) + 1, ncol = 2, byrow = FALSE)), -2L)
 }
 
-
+#' Deprecated from rangl
+#' @rdname rangl-deprecated
+#' @param x nothing
+#' @param ... ignored
+#' @export
+tri_mesh <- function(x, ...) {
+  .Deprecated("mesh", package= "rangl", old = "tri_mesh")
+}
 
 tri_mesh_map_table1 <- function(tabs, max_area = NULL) {
   tabs$v$countingIndex <- seq(nrow(tabs$v))
@@ -39,6 +46,7 @@ tri_mesh_map_table1 <- function(tabs, max_area = NULL) {
   
   tabs
 }
+
 #' @rdname mesh
 #' @export
 #' @importFrom sp geometry  over SpatialPoints proj4string CRS SpatialPolygonsDataFrame
@@ -97,6 +105,8 @@ th3d <- function() {
 trimesh_cols <- function(n) {
   viridis::viridis(n)
 }
+
+
 #' plot the triangles in the tables
 #'
 #' plot
