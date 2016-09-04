@@ -61,7 +61,7 @@ mesh.SpatialLines <- function(x, ...) {
   ll <- vector("list", nrow(tabs$o))
   for (i_obj in seq(nrow(tabs$o))) {
     tabs_i <- tabs; tabs_i$o <- tabs_i$o[i_obj, ]
-    tabs_i <- spbabel:::semi_cascade(tabs_i)
+    tabs_i <- semi_cascade(tabs_i)
     tt_i <- line_mesh_map_table1(tabs_i)
     # plot.trimesh(tt_i)
     # scan("", 1L)

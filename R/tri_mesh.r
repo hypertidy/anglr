@@ -68,7 +68,7 @@ mesh.SpatialPolygons <- function(x, max_area = NULL, ...) {
   ll <- vector("list", nrow(tabs$o))
   for (i_obj in seq(nrow(tabs$o))) {
     tabs_i <- tabs; tabs_i$o <- tabs_i$o[i_obj, ]
-    tabs_i <- spbabel:::semi_cascade(tabs_i)
+    tabs_i <- semi_cascade(tabs_i)
     tt_i <- tri_mesh_map_table1(tabs_i, max_area = max_area)
     # plot.trimesh(tt_i)
     # scan("", 1L)
