@@ -13,7 +13,7 @@ Imports:
     rgl,
     RTriangle,
     sp,
-    spbabel,
+    spbabel (> 0.4.0),
     tibble, 
     viridis
 Suggests: 
