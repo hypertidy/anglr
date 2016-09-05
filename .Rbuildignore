@@ -8,3 +8,4 @@
 ^codecov\.yml$
 ^readme-figure/.*png$
 ^example_topo.r$
+^docs$
