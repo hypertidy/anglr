@@ -12,6 +12,12 @@ tri_mesh <- function(x, ...) {
   .Deprecated("mesh", package= "rangl", old = "tri_mesh")
 }
 
+#' @rdname rangl-deprecated
+#' @export
+mesh <- function(x, ...) {
+  .Deprecated("rangl", package= "rangl", old = "mesh")
+}
+
 tri_mesh_map_table1 <- function(tabs, max_area = NULL) {
   tabs$v$countingIndex <- seq(nrow(tabs$v))
   nonuq <- dplyr::inner_join(tabs$bXv, tabs$v, "vertex_")
@@ -47,7 +53,7 @@ tri_mesh_map_table1 <- function(tabs, max_area = NULL) {
   tabs
 }
 
-#' @rdname mesh
+#' @rdname rangl
 #' @export
 #' @importFrom sp geometry  over SpatialPoints proj4string CRS SpatialPolygonsDataFrame
 #' @importFrom dplyr inner_join
@@ -55,7 +61,7 @@ tri_mesh_map_table1 <- function(tabs, max_area = NULL) {
 #' @importFrom spbabel map_table
 #' @importFrom tibble tibble
 #' @importFrom methods slotNames
-mesh.SpatialPolygons <- function(x, max_area = NULL, ...) {
+rangl.SpatialPolygons <- function(x, max_area = NULL, ...) {
   pr4 <- proj4string(x)
   x0 <- x
   ## kludge for non DataFrames
@@ -105,47 +111,3 @@ th3d <- function() {
 trimesh_cols <- function(n) {
   viridis::viridis(n)
 }
-
-
-#' plot the triangles in the tables
-#'
-#' plot
-#'
-#' @param x object from tri_mesh
-#' @param ... args for underlying plotting
-#' @return the rgl mesh3d object, invisibly
-#' @export
-#' @importFrom rgl shade3d
-#' @examples
-#' example(tri_mesh)
-#' if(exists("b")) { 
-#'  plot(b)
-#'  }
-plot.trimesh <- function(x,  ...) {
-  if (!"color_" %in% names(x$o)) {
-    x$o$color_ <- trimesh_cols(nrow(x$o))
-  }
-  
-  if (!requireNamespace("rgl", quietly = TRUE))
-    stop("rgl required")
-  haveZ <- "z_" %in% names(x$v)
-  tt <- th3d()
-  
-  if (haveZ) {
-    tt$vb <- t(cbind(x$v$x_, x$v$y_, x$v$z_, 1))
-  } else {
-    
-    tt$vb <- t(cbind(x$v$x_, x$v$y_, 0, 1))
-  }
-  vv <- x$v[, "vertex_"]; vv$row_n <- seq(nrow(vv))
-  pindex <- dplyr::inner_join(dplyr::inner_join(x$o[, c("object_", "color_")], x$t), 
-                              x$tXv)
-
-  vindex <- dplyr::inner_join(x$tXv, vv, "vertex_")
-  tt$it <- t(matrix(vindex$row_n, ncol = 3, byrow = TRUE))
-  rgl::shade3d(tt, col = pindex$color_, ...)
-  
-  
-  invisible(tt)
-}
-

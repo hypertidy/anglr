@@ -1,8 +1,10 @@
-# rangl dev
+# rangl 0.3.0
 
-* mesh method for trip
+* rename again, main function is called 'rangl', the term 'mesh' is too often used across R 
 
-* fix for spbabel now means MultiPoints are mesh()-able
+* rangl method for trip
+
+* fix for spbabel now means MultiPoints are rangl()-able
 
 # rangl 0.2.0
 
