@@ -15,4 +15,5 @@ test_that("points works", {
 
 test_that("multi-points works", {
   expect_that(rangl(mpts), is_a("pointmesh"))
+  expect_that(rangl(geometry(mpts)), is_a("pointmesh"))
 })
