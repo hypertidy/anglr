@@ -1,5 +1,5 @@
 
-#' @rdname mesh
+#' @rdname rangl
 #' @export
 #' @importFrom tibble as_tibble
 #' @importFrom stats setNames
@@ -8,12 +8,12 @@
 #' ## RGL TRIANGLES
 #' library(rgl)
 #' 
-#' dod <- mesh(dodecahedron3d(col = "cyan"))
-#' octo <- mesh(translate3d(octahedron3d(col = "blue"), 6, 0, 0))
+#' dod <- rangl(dodecahedron3d(col = "cyan"))
+#' octo <- rangl(translate3d(octahedron3d(col = "blue"), 6, 0, 0))
 #' plot(dod, col = viridis::viridis(5)[1], alpha = 0.3)
 #' plot(octo, col = viridis::viridis(5)[5], alpha = 0.3)
 #' bg3d("grey")
-mesh.mesh3d <- function(x, ...) {
+rangl.mesh3d <- function(x, ...) {
   stopifnot(x$primitivetype == "triangle")
   if ("ib" %in% names(x)) {
     warning("object has quad primitives as well as triangles,\n only the triangles will be carried through")
@@ -33,8 +33,8 @@ mesh.mesh3d <- function(x, ...) {
 
 
 
-mesh <- function(x, ...) {
-  UseMethod("mesh")
+rangl <- function(x, ...) {
+  UseMethod("rangl")
 }
 
 #mesh.mesh3d

@@ -20,13 +20,15 @@ rgl::par3d(windowRect = c(100, 100, 512 + 100, 512 +100))
 
 The 'rangl' package illustrates some generalizations of GIS-y tasks in R with "tables". 
 
-The basic model is to create "mesh" objects from a variety of sources: 
+The basic idea is to create "toplogical" objects from a variety of sources: 
 
-* SpatialPolygons, SpatialLines
+* SpatialPolygons, SpatialLines, SpatialMultipoints
 * rgl 3D objects
+* trip objects (animal tracking data)
 * --others to come-- see https://github.com/mdsumner/spbabel
 
-Multiple multi-part objects are decomposed to a set of related, linked tables. Object identity is maintained with attribute metadata and this is carried through to colour aesthetics in 3D plots.  
+
+Multiple multi-part objects are decomposed to a set of related, linked tables. Object identity is maintained with attribute metadata and this is carried through to colour and other aesthetics in 3D plots.  
 
 Plot methods take those tables and generate the "indexed array" structures needed for 'rgl'. In this way we get the best of both worlds of "GIS" and "3D models". 
 
@@ -72,7 +74,7 @@ Get some maps and plot in 3D - in plane view, or globe view.
 **NOTE:** these examples here just show snapshots. It's much more interesting to run these yourself locally and interact with the rgl plots. 
 
 
-```{r,eval=FALSE}
+```{r,eval=TRUE}
 
 library(rgl)
 library(maptools)
@@ -81,7 +83,7 @@ library(raster)
 
 ## convert to triangles and plot 
 library(rangl)
-cmesh <- mesh(wrld_simpl)
+cmesh <- rangl(wrld_simpl)
 plot(cmesh)
 
 ## snapshot code is only for this README
@@ -96,9 +98,9 @@ gl <- graticule::graticule(seq(xmin(ex), xmax(ex), length = 15),
 
 
 ## convert to triangles, but wrap onto globe then plot
-smesh <- mesh(sids)
+smesh <- rangl(sids)
 plot(globe(smesh))
-mgl <- mesh(gl)
+mgl <- rangl(gl)
 mgl$o$color_ <- "black"
 plot(globe(mgl), lwd = 2)
 
@@ -113,16 +115,18 @@ rgl.snapshot("readme-figure/README-sids-globe.png"); rgl.clear()
 
 
 
-## Holes are supported. 
+## Holes are trivially supported. 
 
-```{r,eval=FALSE}
+It's trivial to have "holes", because there are no "holes" because we have a true surface, composed of 2D primitives (triangles). 
+
+```{r,eval=TRUE}
 library(spbabel)
 data(holey)
 
 ## SpatialPolygonsDataFrame
 sph <- sp(holey)
 
-glh <- mesh(sph)
+glh <- rangl(sph)
 plot(glh)
 rgl::rgl.snapshot("readme-figure/README-home.png"); rgl.clear()
 
@@ -135,9 +139,9 @@ rgl::rgl.snapshot("readme-figure/README-home.png"); rgl.clear()
 ## Lines are supported. 
 
 
-```{r,eval=FALSE}
+```{r,eval=TRUE}
 linehouse <- as(sph, "SpatialLinesDataFrame")
-plot(mesh(linehouse))
+plot(rangl(linehouse))
 rgl::rgl.snapshot("readme-figure/README-lines.png"); rgl.clear()
 ```
 
@@ -147,8 +151,8 @@ rgl::rgl.snapshot("readme-figure/README-lines.png"); rgl.clear()
 
 ## Globe lines
 
-```{r,eval=FALSE}
-lmesh <- mesh(as(wrld_simpl, "SpatialLinesDataFrame"))
+```{r,eval=TRUE}
+lmesh <- rangl(as(wrld_simpl, "SpatialLinesDataFrame"))
 plot(globe(lmesh))
 rgl::rgl.snapshot("readme-figure/README-liney-world.png"); rgl.clear()
 
@@ -161,11 +165,11 @@ rgl::rgl.snapshot("readme-figure/README-liney-world.png"); rgl.clear()
 
 Rgl mesh3d objects that use "triangle" primitives are supported. 
 
-```{r,eval=FALSE}
+```{r,eval=TRUE}
 library(rgl)
 
-dod <- mesh(dodecahedron3d(col = "cyan"))
-octo <- mesh(translate3d(octahedron3d(col = "blue"), 6, 0, 0))
+dod <- rangl(dodecahedron3d(col = "cyan"))
+octo <- rangl(translate3d(octahedron3d(col = "blue"), 6, 0, 0))
 plot(dod, col = viridis::viridis(5)[1], alpha = 0.3)
 plot(octo, col = viridis::viridis(5)[5], alpha = 0.3)
 bg3d("grey")
@@ -178,7 +182,7 @@ rgl::rgl.snapshot("readme-figure/README-Platonic.png"); rgl.clear()
 
 
 
-
+## Points
 
 
 And points work!  (Don't laugh). 
@@ -189,7 +193,7 @@ library(rangl)
 library(maptools)
 data(wrld_simpl)
 mpts <- as(as(wrld_simpl, "SpatialLinesDataFrame"), "SpatialMultiPointsDataFrame")
-plot(mesh(mpts))
+plot(rangl(mpts))
 rgl::view3d(theta = 25, phi = 3)
 
 ```
@@ -202,6 +206,17 @@ rgl::rgl.snapshot("readme-figure/README-MultiPoints.png"); rgl::rgl.clear()
 ![MultiPoints](readme-figure/README-MultiPoints.png?raw=true "MultiPoints")
 
 
+## Trips
+
+Trust me. 
+
+```{r,eval=FALSE}
+library(trip)
+example(trip)
+plot(tr)
+```
+
+
 
 ## Open topics
 
@@ -212,12 +227,3 @@ rgl::rgl.snapshot("readme-figure/README-MultiPoints.png"); rgl::rgl.clear()
 Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
 
 
-```{r,eval=FALSE,include=FALSE}
-library(rangl)
-#ogrListLayers("inst/extdata/water_lake_superior_basin.gpkg")
-spdf <- rgdal::readOGR("inst/extdata/water_lake_superior_basin.gpkg", "lake_superior_basin")
-
-lake <- tri_mesh(spdf)
-
-plot(lake)
-```

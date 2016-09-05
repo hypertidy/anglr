@@ -1,6 +1,6 @@
-#' Generate primitives mesh
+#' Generate primitive-based spatial structures
 #'
-#' Create primitives mesh structures from various inputs.
+#' Create primitive-based "mesh" structures from various inputs.
 #'
 #' #' Methods exist for SpatialPolygons, SpatialLines, rgl mesh3d(triangle) ...
 #' @param x input data
@@ -13,7 +13,7 @@
 #' ## POLYGONS
 #' library(maptools)
 #' data(wrld_simpl)
-#' b <- mesh(wrld_simpl)
+#' b <- rangl(wrld_simpl)
 #' plot(b)
 #' if (require(rworldxtra)) {
 #'
@@ -21,16 +21,16 @@
 #' sv <- c("New Zealand", "Antarctica", "Papua New Guinea",
 #'  "Indonesia", "Malaysia", "Fiji", "Australia")
 #' a <- subset(countriesHigh, SOVEREIGNT %in% sv)
-#' b7 <- mesh(a, max_area = 0.5)
+#' b7 <- rangl(a, max_area = 0.5)
 #' plot(globe(b7))
 #' }
 #' ## -----------------------------------------------
 #' ## LINES
-#' l1 <- mesh(as(a, "SpatialLinesDataFrame") )
+#' l1 <- rangl(as(a, "SpatialLinesDataFrame") )
 #' plot(l1)
 #' plot(globe(l1))
-mesh <- function(x, ...) {
-  UseMethod("mesh")
+rangl <- function(x, ...) {
+  UseMethod("rangl")
 }
 
 line_mesh_map_table1 <- function(tabs) {
@@ -49,9 +49,9 @@ line_mesh_map_table1 <- function(tabs) {
   
   tabs
 }
-#' @rdname mesh
+#' @rdname rangl
 #' @export
-mesh.SpatialLines <- function(x, ...) {
+rangl.SpatialLines <- function(x, ...) {
   pr4 <- proj4string(x)
   if (! "data" %in% slotNames(x)) {
     dummy <- data.frame(row_number = seq_along(x))
@@ -88,72 +88,6 @@ mesh.SpatialLines <- function(x, ...) {
   outlist
 }
 
-#' @export
-plot.linemesh <- function(x,  ...) {
-  if (!"color_" %in% names(x$o)) {
-    x$o$color_ <- trimesh_cols(nrow(x$o))
-  }
-  if (!requireNamespace("rgl", quietly = TRUE))
-    stop("rgl required")
-  haveZ <- "z_" %in% names(x$v)
-  #tt <- th3d()
-  
-  if (haveZ) {
-    vb <- t(cbind(x$v$x_, x$v$y_, x$v$z_))
-  } else {
-    
-    vb <- t(cbind(x$v$x_, x$v$y_, 0))
-  }
-  vv <- x$v[, "vertex_"]; vv$row_n <- seq(nrow(vv))
-  pindex <- dplyr::inner_join(dplyr::inner_join(x$o[, c("object_", "color_")], x$l), 
-                              x$lXv)
-  
-  vindex <- dplyr::inner_join(x$lXv, vv, "vertex_")
-  itex <- t(matrix(vindex$row_n, ncol = 2, byrow = TRUE))
-  rgl::segments3d(t(vb)[itex,], col = pindex$color_, ...)
-  
-  
-  invisible(list(v = vb, it = itex))
-}
 
 
-#' Convert map coordinates to Geocentric (XYZ) coordinates. 
-#'
-#' 
-#' @param x list of tibbles, in \code{\link{mesh}} form
-#' @param gproj Geocentric PROJ.4 string, defaults to WGS84
-#' @param ... arguments to methods (none used)
-#'
-#' @return mesh object with vertices table modified
-#' @export
-#'
-#' @examples
-#' library(maptools)
-#' data(wrld_simpl)
-#' g <- globe(mesh(as(wrld_simpl, "SpatialLinesDataFrame")))
-#' plot(g, lwd = 3)
-globe <- function(x, ...) {
-  UseMethod("globe")
-}
 
-#' @export
-#' @rdname globe
-globe.default <- function(x, gproj = "+proj=geocent +ellps=WGS84", ...) {
-  p4 <- x$meta$proj[1]
-  haveZ <- "z_" %in% names(x$v)
-  
-  ## need to handle if we already have a "z_"
-  if (haveZ) {
-    ll <- as.matrix(x$v[, c("x_", "y_", "z_")])
-    
-  } else { 
-    ll <- cbind(as.matrix(x$v[, c("x_", "y_")]), 0)
-  }
-  
-  if (grepl("longlat", p4)) ll <- ll * pi / 180
-  xyz <- proj4::ptransform(ll, src.proj = p4, dst.proj = gproj)
-  x$v$x_ <- xyz[,1]
-  x$v$y_ <- xyz[,2]
-  x$v$z_ <- xyz[,3]
-  x
-}
