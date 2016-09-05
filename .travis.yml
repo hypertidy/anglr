@@ -13,3 +13,5 @@ before_install:
 after_success:
   - Rscript -e 'covr::codecov()'
 
+r_binary_packages:
+  - rgdal
