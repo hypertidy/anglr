@@ -23,12 +23,12 @@ semi_cascade <- function(x, ..., tables = c("o", "b", "bXv", "v")) {
   x
 }
 
-inner_cascade <- function(x, ..., tables = c("o", "b", "bXv", "v")) {
-  first <- dplyr::filter(x[[tables[1]]], ...)
-  #x[[1]] <- last <- first 
-  tables <- tables[-1]
-  for (itab in tables) {
-    first <-  dplyr::inner_join(x[[itab]], first)
-  }
-  first
-}
+# inner_cascade <- function(x, ..., tables = c("o", "b", "bXv", "v")) {
+#   first <- dplyr::filter(x[[tables[1]]], ...)
+#   #x[[1]] <- last <- first 
+#   tables <- tables[-1]
+#   for (itab in tables) {
+#     first <-  dplyr::inner_join(x[[itab]], first)
+#   }
+#   first
+# }
