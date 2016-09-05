@@ -20,7 +20,8 @@ Suggests:
     covr, 
     maptools,
     rworldxtra,
-    testthat
+    testthat, 
+    trip
 SystemRequirements: PROJ.4
 Encoding: UTF-8
 LazyData: true
