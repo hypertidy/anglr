@@ -18,10 +18,12 @@ Multiple multi-part objects are decomposed to a set of related, linked tables. O
 
 Plot methods take those tables and generate the "indexed array" structures needed for 'rgl'. In this way we get the best of both worlds of "GIS" and "3D models".
 
+Ongoing design
+--------------
+
 The core work for translating "Spatial" classes is done by the unspecialized 'spbabel::map\_table' function.
 
-Installation
-------------
+This is likely to be replaced by a 'primitives()' function that takes any lines or polygons data and returns just the linked edges. \#\# Installation
 
 This package is in active development and will see a number of breaking changes before release.
 
