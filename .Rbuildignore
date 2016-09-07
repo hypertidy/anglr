@@ -10,3 +10,4 @@
 ^example_topo.r$
 ^docs$
 ^prepare_package.r$
+^data-raw$
