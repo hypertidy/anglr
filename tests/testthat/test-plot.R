@@ -8,6 +8,8 @@ library(spbabel)
 sph <- sp(holey)
 spl <- as(sph, "SpatialLinesDataFrame")
 spp <- as(spl, "SpatialMultiPointsDataFrame")
+spz <- rangl(spp)
+spz$v$z_ <- 10
 sp0 <- as(spl, "SpatialPointsDataFrame")
 splz <- rangl(spl)
 splz$v$z_ <- rnorm(nrow(splz$v))
@@ -17,5 +19,6 @@ test_that("plot works", {
   expect_that(plot(rangl(sph)), is_a("mesh3d"))
   expect_that(plot(rangl(sp0)), throws_error("you don't really need this function"))
   expect_that(plot(splz), is_a("list"))
-  
+  expect_that(plot(rangl(spp)), is_a("list"))
+  expect_that(plot(spz), is_a("list"))
 })
