@@ -196,12 +196,13 @@ rgl::view3d(theta = 25, phi = 3)
 Trips
 -----
 
-Trust me.
+Trust me, more soon.
 
 ``` r
 library(trip)
 example(trip)
-plot(tr)
+mtr <- rangl(tr)
+plot(mtr)
 ```
 
 Open topics

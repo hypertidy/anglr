@@ -211,12 +211,14 @@ rgl::rgl.snapshot("readme-figure/README-MultiPoints.png"); rgl::rgl.clear()
 
 ## Trips
 
-Trust me. 
+Trust me, more soon. 
 
 ```{r,eval=FALSE}
 library(trip)
 example(trip)
-plot(tr)
+mtr <- rangl(tr)
+plot(mtr)
+
 ```
 
 

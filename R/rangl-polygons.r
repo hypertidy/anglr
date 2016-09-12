@@ -94,7 +94,7 @@ rangl.SpatialPolygons <- function(x, max_area = NULL, ...) {
   allverts$uvert <- as.integer(factor(paste(allverts$x_, allverts$y_, sep = "_")))
   allverts$vertex_ <- spbabel:::id_n(length(unique(allverts$uvert)))[allverts$uvert]
   outlist$tXv <- allverts[, c("triangle_", "vertex_")]
-  outlist$v <- dplyr::distinct_(allverts, "x_", "y_", "vertex_")
+  outlist$v <- dplyr::distinct_(allverts,  "vertex_", .keep_all = TRUE)[, c("x_", "y_", "vertex_")]
   ## finally add longitude and latitude
   outlist$meta <- tibble::tibble(proj = pr4, x = "x_", y = "y_")
   class(outlist) <- "trimesh"
