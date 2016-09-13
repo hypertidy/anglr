@@ -76,7 +76,13 @@
 
 <p>The core work for translating &ldquo;Spatial&rdquo; classes is done by the unspecialized &#39;spbabel::map_table&#39; function.</p>
 
-<p>This is likely to be replaced by a &#39;primitives()&#39; function that takes any lines or polygons data and returns just the linked edges. ## Installation</p>
+<p>This is likely to be replaced by a &#39;primitives()&#39; function that takes any lines or polygons data and returns just the linked edges. Crucially, polygons and lines are described by the same 1D primitives, and this is easy to do. Harder is to generate 2D primitives and for that we rely on <a href="https://www.cs.cmu.edu/%7Equake/triangle.html">Jonathan Richard Shewchuk&#39;s Triangle</a>.</p>
+
+<p>Triangulation is with <code>RTriangle</code> package using &ldquo;constrained mostly-Delaunay Triangulation&rdquo; from the Triangle library, but could alternatively use <code>rgl</code> with its ear clipping algorithm.</p>
+
+<p>(With RTriangle we can set a max area for the triangles, so it can wrap around curves like globes and hills.)</p>
+
+<h2>Installation</h2>
 
 <p>This package is in active development and will see a number of breaking changes before release.</p>
 
@@ -155,7 +161,7 @@ rgl.snapshot(&quot;readme-figure/README-sids-globe.png&quot;); rgl.clear()
 
 <h2>Holes are trivially supported.</h2>
 
-<p>It&#39;s trivial to have &ldquo;holes&rdquo;, because there are no &ldquo;holes&rdquo; because we have a true surface, composed of 2D primitives (triangles).</p>
+<p>It&#39;s trivial to have &ldquo;holes&rdquo;, because there are no holes, because we have a true surface, composed of 2D primitives (triangles).</p>
 
 <pre><code class="r">library(spbabel)
 data(holey)
@@ -214,6 +220,8 @@ rgl::rgl.snapshot(&quot;readme-figure/README-Platonic.png&quot;); rgl.clear()
 
 <p><img src="readme-figure/README-Platonic.png?raw=true" alt="Platonic" title="Platonic"/></p>
 
+<p>To complete the support for these rgl objects we need quads, and to allows a mix of quads and triangles in one data set (that&#39;s what <code>extrude3d</code> uses).</p>
+
 <h2>Points</h2>
 
 <p>And points work! (Don&#39;t laugh).</p>
@@ -232,7 +240,7 @@ rgl::view3d(theta = 25, phi = 3)
 
 <h2>Trips</h2>
 
-<p>The soon to be released update to trip includes a &#39;walrus818&#39; data set courtesy of Anthony Fischbach.</p>
+<p>The soon to be released update to trip includes a &#39;walrus818&#39; data set courtesy of Anthony Fischbach. Zoom around and see if you can find them.</p>
 
 <pre><code class="r">library(trip)
 library(rangl)
@@ -270,6 +278,22 @@ rgl::rgl.snapshot(&quot;readme-figure/README-walrus.png&quot;); rgl.clear()
 </code></pre>
 
 <p><img src="readme-figure/README-walrus.png?raw=true" alt="Walrus" title="Walrus"/></p>
+
+<h2>Rasters</h2>
+
+<p>Single layer rasters are supported.</p>
+
+<pre><code class="r">wrld &lt;- rasterize(wrld_simpl, raster())
+plot(rangl(wrld/10))
+rgl::rgl.snapshot(&quot;readme-figure/README-raster.png&quot;); rgl.clear()
+
+plot(globe(rangl(wrld*100000)), specular = &quot;black&quot;)
+rgl::rgl.snapshot(&quot;readme-figure/README-rasterglobe.png&quot;); rgl.clear()
+</code></pre>
+
+<p><img src="readme-figure/README-raster.png?raw=true" alt="Raster" title="Raster"/></p>
+
+<p><img src="readme-figure/README-rasterglobe.png?raw=true" alt="RasterGlobe" title="RasterGlobe"/></p>
 
 <h2>Open topics</h2>
 

@@ -193,8 +193,15 @@ a list of tibble data frames, using the gris-map_table model
 <strong class='message'>Joining, by = &quot;segment_&quot;</strong>
 <div class='input'><span class="comment">## -----------------------------------------------</span>
 <span class="comment">## RGL TRIANGLES</span>
-<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/library'>library</a></span><span class="keyword">(</span><span class="symbol">rgl</span><span class="keyword">)</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/library'>library</a></span><span class="keyword">(</span><span class="symbol">rgl</span><span class="keyword">)</span></div>
+<strong class='message'>
+Attaching package: ‘rgl’
+</strong>
+<strong class='message'>The following object is masked from ‘package:rgeos’:
 
+    triangulate
+</strong>
+<div class='input'>
 <span class="symbol">dod</span> <span class="assignement">&lt;-</span> <span class="functioncall"><a href='rangl.html'>rangl</a></span><span class="keyword">(</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/rgl/topics/mesh3d'>dodecahedron3d</a></span><span class="keyword">(</span><span class="argument">col</span> <span class="argument">=</span> <span class="string">"cyan"</span><span class="keyword">)</span><span class="keyword">)</span>
 <span class="symbol">octo</span> <span class="assignement">&lt;-</span> <span class="functioncall"><a href='rangl.html'>rangl</a></span><span class="keyword">(</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/rgl/topics/matrices'>translate3d</a></span><span class="keyword">(</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/rgl/topics/mesh3d'>octahedron3d</a></span><span class="keyword">(</span><span class="argument">col</span> <span class="argument">=</span> <span class="string">"blue"</span><span class="keyword">)</span><span class="keyword">,</span> <span class="number">6</span><span class="keyword">,</span> <span class="number">0</span><span class="keyword">,</span> <span class="number">0</span><span class="keyword">)</span><span class="keyword">)</span>
 <span class="functioncall"><a href='plot-rangl.html'>plot</a></span><span class="keyword">(</span><span class="symbol">dod</span><span class="keyword">,</span> <span class="argument">col</span> <span class="argument">=</span> <span class="package">viridis</span><span class="keyword">::</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/viridis/topics/viridis'>viridis</a></span><span class="keyword">(</span><span class="number">5</span><span class="keyword">)</span><span class="keyword">[</span><span class="number">1</span><span class="keyword">]</span><span class="keyword">,</span> <span class="argument">alpha</span> <span class="argument">=</span> <span class="number">0.3</span><span class="keyword">)</span></div>
