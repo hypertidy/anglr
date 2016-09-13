@@ -80,7 +80,7 @@ rangl.SpatialLines <- function(x, ...) {
   outlist$lXv <- allverts[, c("segment_", "vertex_")]
   outlist$v <- dplyr::distinct_(allverts, "x_", "y_", "vertex_")
   ## finally add longitude and latitude
-  outlist$meta <- tibble::tibble(proj = pr4, x = "x_", y = "y_")
+  outlist$meta <- tibble::tibble(proj = pr4, x = "x_", y = "y_", ctime = format(Sys.time(), tz = "UTC"))
   class(outlist) <- "linemesh"
   outlist
 }
