@@ -12,6 +12,8 @@
 \item{z}{\code{\link[raster]{raster}}, by default \code{x} is used}
 
 \item{na.rm}{remove missing values}
+
+\item{...}{unused}
 }
 \value{
 quad_mesh
