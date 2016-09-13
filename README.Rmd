@@ -247,6 +247,23 @@ rgl::rgl.snapshot("readme-figure/README-walrus.png"); rgl.clear()
 ![Walrus](readme-figure/README-walrus.png?raw=true "Walrus")
 
 
+## Rasters
+
+Single layer rasters are supported. 
+
+```{r}
+wrld <- rasterize(wrld_simpl, raster())
+plot(rangl(wrld/10))
+rgl::rgl.snapshot("readme-figure/README-raster.png"); rgl.clear()
+
+plot(globe(rangl(wrld*100000)), specular = "black")
+rgl::rgl.snapshot("readme-figure/README-rasterglobe.png"); rgl.clear()
+
+```
+
+![Raster](readme-figure/README-raster.png?raw=true "Raster")
+
+![RasterGlobe](readme-figure/README-rasterglobe.png?raw=true "RasterGlobe")
 
 ## Open topics
 

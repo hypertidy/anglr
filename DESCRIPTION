@@ -10,6 +10,7 @@ Imports:
     dplyr,
     methods,
     proj4,
+    raster,
     rgl,
     RTriangle,
     sp,
