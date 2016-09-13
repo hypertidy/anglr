@@ -4,7 +4,7 @@
 #' @param x \code{\link[raster]{raster}}
 #' @param z \code{\link[raster]{raster}}, by default \code{x} is used
 #' @param na.rm remove missing values
-#'
+#' @param ... unused
 #' @return quad_mesh
 #' @export
 #' @importFrom raster projection values xmin xmax ymin ymax
