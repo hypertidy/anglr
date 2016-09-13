@@ -64,8 +64,6 @@ Get some maps and plot in 3D - in plane view, or globe view.
 
 library(rgl)
 library(maptools)
-#> Loading required package: sp
-#> Checking rgeos availability: TRUE
 data(wrld_simpl)
 library(raster)
 
