@@ -23,7 +23,14 @@ Ongoing design
 
 The core work for translating "Spatial" classes is done by the unspecialized 'spbabel::map\_table' function.
 
-This is likely to be replaced by a 'primitives()' function that takes any lines or polygons data and returns just the linked edges. \#\# Installation
+This is likely to be replaced by a 'primitives()' function that takes any lines or polygons data and returns just the linked edges. Crucially, polygons and lines are described by the same 1D primitives, and this is easy to do. Harder is to generate 2D primitives and for that we rely on [Jonathan Richard Shewchuk's Triangle](https://www.cs.cmu.edu/~quake/triangle.html).
+
+Triangulation is with `RTriangle` package using "constrained mostly-Delaunay Triangulation" from the Triangle library, but could alternatively use `rgl` with its ear clipping algorithm.
+
+(With RTriangle we can set a max area for the triangles, so it can wrap around curves like globes and hills.)
+
+Installation
+------------
 
 This package is in active development and will see a number of breaking changes before release.
 
@@ -64,6 +71,8 @@ Get some maps and plot in 3D - in plane view, or globe view.
 
 library(rgl)
 library(maptools)
+#> Loading required package: sp
+#> Checking rgeos availability: TRUE
 data(wrld_simpl)
 library(raster)
 
@@ -107,7 +116,7 @@ rgl.snapshot("readme-figure/README-sids-globe.png"); rgl.clear()
 Holes are trivially supported.
 ------------------------------
 
-It's trivial to have "holes", because there are no "holes" because we have a true surface, composed of 2D primitives (triangles).
+It's trivial to have "holes", because there are no holes, because we have a true surface, composed of 2D primitives (triangles).
 
 ``` r
 library(spbabel)
@@ -173,6 +182,8 @@ rgl::rgl.snapshot("readme-figure/README-Platonic.png"); rgl.clear()
 
 ![Platonic](readme-figure/README-Platonic.png?raw=true "Platonic")
 
+To complete the support for these rgl objects we need quads, and to allows a mix of quads and triangles in one data set (that's what `extrude3d` uses).
+
 Points
 ------
 
@@ -194,7 +205,7 @@ rgl::view3d(theta = 25, phi = 3)
 Trips
 -----
 
-The soon to be released update to trip includes a 'walrus818' data set courtesy of Anthony Fischbach.
+The soon to be released update to trip includes a 'walrus818' data set courtesy of Anthony Fischbach. Zoom around and see if you can find them.
 
 ``` r
 library(trip)
