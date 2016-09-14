@@ -263,6 +263,42 @@ rgl::rgl.snapshot("readme-figure/README-rasterglobe.png"); rgl.clear()
 
 ![RasterGlobe](readme-figure/README-rasterglobe.png?raw=true "RasterGlobe")
 
+Spatially explicit ecosystem model (Atlantis)
+---------------------------------------------
+
+Still a work in progress, but this is what an Atlantis model "really" looks like.
+
+``` r
+## Spatially explicit ecosystem model (Atlantis)
+
+
+library(rbgm)
+bgm <- bgmfile(bgmfiles::bgmfiles("antarctica_99"))
+
+bgm$boxes$botz
+cols <- viridis::viridis(nrow(bgm$boxes))
+for (i in seq(nrow(bgm$boxes))) {
+#x <- sp::spTransform(boxSpatial(bgm)[i, ], "+proj=laea +lat_0=-65 +lon_0=100")
+x <- boxSpatial(bgm)[i, ]
+dz <- rbgm:::build_dz(x$botz)
+#z0 <- 0
+alp <- seq(0.05, 0.9, length = length(dz))
+for (zi in seq_along(dz)) {
+  if (dz[zi] > 0) {
+    p <- spbabel::sptable(x)[, c("x_", "y_")]
+    rglobj <- rgl::extrude3d(p, thickness = dz[zi])
+    rglobj$vb[3,] <- rglobj$vb[3,] - sum(dz[seq(zi)])
+   # print(sum(dz[seq(zi)]))
+    rgl::shade3d(rglobj, col = cols[i], alpha = alp[zi], 
+                 specular = "black")
+  }
+}
+}
+rgl::aspect3d(1, 1, 1.2)
+```
+
+![Atlantis-antarctica\_99](readme-figure/antarctica_99_2.png?raw=true "Atlantis-antarctica_99")
+
 Open topics
 -----------
 
