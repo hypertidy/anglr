@@ -4,7 +4,7 @@
 \alias{plot.quad_mesh}
 \title{Title}
 \usage{
-plot.quad_mesh(x, ...)
+\method{plot}{quad_mesh}(x, ...)
 }
 \arguments{
 \item{x}{quad_mesh}

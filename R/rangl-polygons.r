@@ -1,5 +1,6 @@
 #' @importFrom utils head
 path2seg <- function(x) {
+  ## this is a trick of array logic to generate paired indexes from a sequence
   head(suppressWarnings(matrix(x, nrow = length(x) + 1, ncol = 2, byrow = FALSE)), -2L)
 }
 
@@ -18,34 +19,52 @@ mesh <- function(x, ...) {
   .Deprecated("rangl", package= "rangl", old = "mesh")
 }
 
+## this internal function does the decomposition to primitives of a 
+##  single Spatial object, i.e. a "multipolygon"
+## we need to do it one object at a time otherwise keeping track
+## of the input versus add vertices is harder (but maybe possible later)
 tri_mesh_map_table1 <- function(tabs, max_area = NULL) {
+  ## the row index of the vertices
+  ## we need this in the triangulation
   tabs$v$countingIndex <- seq(nrow(tabs$v))
+  ## join the vertex-instances to the vertices table
+  ## so, i.e. expand out the duplicated x/y coordinates
   nonuq <- dplyr::inner_join(tabs$bXv, tabs$v, "vertex_")
   
+  ## create Triangle's Planar Straight Line Graph
+  ## which is an index matrix S of every vertex pair P
   ps <- RTriangle::pslg(P = as.matrix(tabs$v[, c("x_", "y_")]),
                         S = do.call(rbind, lapply(split(nonuq, nonuq$branch_),
                                                   function(x) path2seg(x$countingIndex))))
   
-  ## FIXME: need to pick sensible behaviour for a
+  ## build the triangulation, with input max_area (defaults to NULL)
   tr <- RTriangle::triangulate(ps, a = max_area)
   
-  ## process the holes if needed
-  ## may be quicker than testing entire object
+  ## process the holes if present
   if (any(!tabs$b$island_)) {
+    ## filter out all the hole geometry and build an sp polygon object with it
+    ## this 
+    ##   filters all the branches that are holes
+    ##   joins on the vertex instance index
+    ##   joins on the vertex values
+    ##   recomposes a SpatialPolygonsDataFrame using the spbabel::sp convention
     holes <- spbabel::sp(dplyr::inner_join(dplyr::inner_join(dplyr::filter_(tabs$b, quote(!island_)), tabs$bXv, "branch_"), 
                                            tabs$v, "vertex_"))
+    ## centroid of every triangle
     centroids <- matrix(unlist(lapply(split(tr$P[t(tr$T), ], rep(seq(nrow(tr$T)), each = 3)), .colMeans, 3, 2)), 
                         ncol = 2, byrow = TRUE)
-    
+    ## sp::over() is very efficient, but has to use high-level objects as input
     badtris <- !is.na(over(SpatialPoints(centroids), sp::geometry(holes)))
+    ## presumably this will always be true inside this block (but should check some time)
     if (any(badtris)) tr$T <- tr$T[!badtris, ]
   }
   
   ## trace and remove any unused triangles
-  
+  ## the raw vertices with a unique vertex_ id
   tabs$v <- tibble::tibble(x_ = tr$P[,1], y_ = tr$P[,2], vertex_ = spbabel:::id_n(nrow(tr$P)))
+  ## drop the path topology
   tabs$b <- tabs$bXv <- NULL
-  #tabs$o <- tabs$o[1,]  ## FIX ME
+  ## add triangle topology
   tabs$t <- tibble::tibble(triangle_ = spbabel:::id_n(nrow(tr$T)), object_ = tabs$o$object_[1])
   tabs$tXv <- tibble::tibble(triangle_ = rep(tabs$t$triangle_, each = 3), 
                              vertex_ = tabs$v$vertex_[as.vector(t(tr$T))])
