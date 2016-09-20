@@ -51,7 +51,10 @@ plot.quad_mesh <- function(x, ...) {
   ob <- mkq_3d()
   ob$vb <- t(cbind(as.matrix(x$v[, c("x_", "y_", "z_")]), 1))
   ob$ib <- matrix(x$qXv$vertex_, nrow = 4)
-  invisible(rgl::shade3d(ob, col = trimesh_cols(nrow(x$qd))[ob$ib], ...))
+  ob$material$col <- trimesh_cols(nrow(x$qd))[ob$ib]
+  #rgl::shade3d(ob, col = trimesh_cols(nrow(x$qd))[ob$ib], ...)
+  rgl::shade3d(ob, ...)
+  ob
 }
 
 mkq_3d <- function() {
