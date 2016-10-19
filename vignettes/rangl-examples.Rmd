@@ -11,13 +11,18 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-  
-  ```{r, echo = FALSE}
+
+
+```{r setup, echo=FALSE, results="asis"}
+source("setup.R")
+knitr::opts_chunk$set(rgl.newwindow = TRUE)
+set.seed(123)
+```
+
+```{r, echo = FALSE, message = FALSE}
 knitr::opts_chunk$set(
 collapse = TRUE,
-comment = "#>",
-fig.path = "vignettes/readme-figure/README-"
-)
+comment = "#>")
 rgl::par3d(windowRect = c(100, 100, 512 + 100, 512 +100))
 library(raster)
 library(maptools)
@@ -32,7 +37,7 @@ Get some maps and plot in 3D - in plane view, or globe view.
 
 
 
-```{r,eval=TRUE}
+```{r,eval=TRUE, webgl=TRUE}
 
 library(rgl)
 library(maptools)
@@ -45,15 +50,9 @@ cmesh <- rangl(wrld_simpl)
 plot(cmesh)
 ```
 
-```{r,echo=FALSE}
-subid <- currentSubscene3d()
-rglwidget(elementId="wrld_simpl")
-rgl.close()
-```
 
 
-
-```{r}
+```{r, webgl=TRUE}
 sids <- raster::shapefile(system.file("shapes/sids.shp", package="maptools"))
 projection(sids) <- "+proj=longlat +ellps=clrk66"
 
@@ -70,17 +69,13 @@ mgl$o$color_ <- "black"
 plot(globe(mgl), lwd = 2)
 ```
 
-```{r,echo=FALSE}
-subid <- currentSubscene3d()
-rglwidget(elementId="sids")
-rgl.close()
-```
+
 
 ## Holes are (trivially) supported. 
 
 It's trivial to have "holes", because there are no holes, because we have a true surface, composed of 2D primitives (triangles). 
 
-```{r,eval=TRUE}
+```{r,eval=TRUE, webgl=TRUE}
 library(spbabel)
 data(holey)
 
@@ -91,42 +86,27 @@ glh <- rangl(sph)
 plot(glh)
 ```
 
-```{r,echo=FALSE}
-subid <- currentSubscene3d()
-rglwidget(elementId="hole-sweet-hole")
-rgl.close()
-```
 
 
 
 ## Lines are supported. 
 
 
-```{r,eval=TRUE}
+```{r, webgl=TRUE}
 linehouse <- as(sph, "SpatialLinesDataFrame")
 plot(rangl(linehouse))
 ```
 
-```{r,echo=FALSE}
-subid <- currentSubscene3d()
-rglwidget(elementId="line-house")
-rgl.close()
-```
 
 
 
 ## Globe lines
 
-```{r,eval=TRUE}
+```{r, webgl=TRUE}
 lmesh <- rangl(as(wrld_simpl, "SpatialLinesDataFrame"))
 plot(globe(lmesh))
 ```
 
-```{r,echo=FALSE}
-subid <- currentSubscene3d()
-rglwidget(elementId="globe-lines")
-rgl.close()
-```
 
 
 
@@ -135,7 +115,7 @@ rgl.close()
 
 Rgl mesh3d objects that use "triangle" primitives are supported. 
 
-```{r,eval=TRUE}
+```{r,webgl=TRUE}
 library(rgl)
 
 dod <- rangl(dodecahedron3d(col = "cyan"))
@@ -145,11 +125,6 @@ plot(octo, col = viridis::viridis(5)[5], alpha = 0.3)
 bg3d("grey")
 ```
 
-```{r,echo=FALSE}
-subid <- currentSubscene3d()
-rglwidget(elementId="model-3d")
-rgl.close()
-```
 
 
 To complete the support for these rgl objects we need quads, and to allows a mix of quads and triangles in one data set (that's what `extrude3d` uses). Extrusion is a bit limiting so it's unclear how useful this is (yes it is common, though). See `rgl::extrude3d` for the most readily available method in R. 
@@ -161,7 +136,7 @@ To complete the support for these rgl objects we need quads, and to allows a mix
 And points work!  (Don't laugh). 
 
 
-```{r}
+```{r, webgl=TRUE}
 library(rangl)
 library(maptools)
 data(wrld_simpl)
@@ -170,18 +145,12 @@ plot(rangl(mpts))
 rgl::view3d(theta = 25, phi = 3)
 ```
 
-```{r,echo=FALSE}
-subid <- currentSubscene3d()
-rglwidget(elementId="points-work")
-rgl.close()
-```
-
 
 ## Trips
 
 The trip package includes  a 'walrus818' data set courtesy of Anthony Fischbach.  Zoom around and see if you can find them. 
 
-```{r,eval=FALSE}
+```{r, webgl=TRUE}
 library(trip)
 library(rangl)
 data(walrus818)
@@ -207,92 +176,6 @@ um <- structure(c(0.934230506420135, 0.343760699033737, 0.0950899347662926,
                   0, -0.188255190849304, 0.24880850315094, 0.950081348419189, 0, 
                   0, 0, 0, 1), .Dim = c(4L, 4L))
 par3d(userMatrix = um)
-rgl::rgl.snapshot("vignettes/readme-figure/README-walrus.png"); rgl.close()
 
 ```
-
-![Walrus](readme-figure/README-walrus.png)
-
-
-## Rasters
-
-Single layer rasters are supported. 
-
-```{r, eval=FALSE}
-wrld <- rasterize(wrld_simpl, raster())
-plot(rangl(wrld/10))
-rgl::rgl.snapshot("vignettes/readme-figure/README-raster.png"); rgl.close()
-
-plot(globe(rangl(wrld*100000)), specular = "black")
-rgl::rgl.snapshot("vignettes/readme-figure/README-rasterglobe.png");
-rgl.close()
-
-```
-
-![Raster](readme-figure/README-raster.png)
-
-![RasterGlobe](readme-figure/README-rasterglobe.png)
-
-```{r, eval=FALSE}
-library(marmap) ## has topo data
-data(hawaii)
-hraster <- setExtent(flip(t(raster(unclass(hawaii))), "y"),  extent(unlist(lapply(attr(hawaii, "dimnames"), function(x) as.numeric(c(head(x, 1), tail(x, 1)))))))
-
-projection(hraster) <- "+proj=longlat +ellps=WGS84"
-## use radius rather than vertical exaggeration in geocentric view
-harangued <- rangl(hraster)
-
-plot(globe(harangued, gproj = "+proj=geocent +a=12756"), col = "grey")
-plot(globe(rangl(setValues(hraster, 0)), "+proj=geocent +a=12756"), col = "blue", alpha = 0.3)
-bg3d("darkgrey")
-um <- structure(c(0.482606261968613, -0.547331035137177, -0.683754205703735, 
-0, -0.861825466156006, -0.435853540897369, -0.259400486946106, 
-0, -0.156038910150528, 0.714465141296387, -0.682049512863159, 
-0, 0, 0, 0, 1), .Dim = c(4L, 4L))
-par3d(userMatrix = um)
-
-rgl::rgl.snapshot("vignettes/readme-figure/README-example-hawaii.png"); rgl.close()
-
-```
-
-![Raster](readme-figure/README-example-hawaii.png)
-
-
-## Spatially explicit ecosystem model (Atlantis)
-
-Still a work in progress, but this is what an Atlantis model "really" looks like. 
-
-```{r, eval=FALSE}
-## Spatially explicit ecosystem model (Atlantis)
-
-
-library(rbgm)
-bgm <- bgmfile(bgmfiles::bgmfiles("antarctica_99"))
-
-bgm$boxes$botz
-cols <- viridis::viridis(nrow(bgm$boxes))
-for (i in seq(nrow(bgm$boxes))) {
-  #x <- sp::spTransform(boxSpatial(bgm)[i, ], "+proj=laea +lat_0=-65 +lon_0=100")
-  x <- boxSpatial(bgm)[i, ]
-  dz <- rbgm:::build_dz(x$botz)
-  #z0 <- 0
-  alp <- seq(0.05, 0.9, length = length(dz))
-  for (zi in seq_along(dz)) {
-    if (dz[zi] > 0) {
-      p <- spbabel::sptable(x)[, c("x_", "y_")]
-      rglobj <- rgl::extrude3d(p, thickness = dz[zi])
-      rglobj$vb[3,] <- rglobj$vb[3,] - sum(dz[seq(zi)])
-      # print(sum(dz[seq(zi)]))
-      rgl::shade3d(rglobj, col = cols[i], alpha = alp[zi], 
-                   specular = "black")
-    }
-  }
-}
-rgl::aspect3d(1, 1, 1.2)
-```
-
-![Atlantis-antarctica_99](readme-figure/antarctica_99_2.png)
-
-
-
 
