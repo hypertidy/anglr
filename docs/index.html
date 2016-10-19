@@ -43,10 +43,12 @@
 <h2>Tabular storage for spatial data</h2>
 <p>The &lsquo;rangl&rsquo; package illustrates some generalizations of GIS-y tasks in R with &ldquo;tables&rdquo;.</p>
 <p>The basic idea is to create &ldquo;toplogical&rdquo; objects from a variety of sources including:</p>
-<ul><li>SpatialPolygons, SpatialLines, SpatialMultipoints</li>
-<li>rgl 3D objects</li>
-<li>trip objects (animal tracking data) and other related &ldquo;trajectory&rdquo; data</li>
-<li>model structures for spatially explicit ecosystem models &ndash;others to come&ndash; see <a href="https://github.com/mdsumner/spbabel" class="uri">https://github.com/mdsumner/spbabel</a></li>
+<ul><li>vector Spatial data, from <code>sp</code> and family</li>
+<li>raster grid data</li>
+<li>general 3D objects (including <code>rgl</code>)</li>
+<li><code>trip objects</code> (animal tracking data) and other related &ldquo;trajectory&rdquo; data</li>
+<li>model structures for spatially explicit ecosystem models</li>
+<li>&ndash;others to come&ndash; see <a href="https://github.com/mdsumner/spbabel" class="uri">https://github.com/mdsumner/spbabel</a></li>
 </ul><p>The topology comes from two related aspects. The first is decomposing what are usually <em>paths of coordinates</em> defining lines or polygons into the more general topological primitives. The second is a de-duplication of shared vertices into a single <strong>vertex pool</strong> that is referenced by primitives. This is not what is always meant when people say &ldquo;topology&rdquo; in a GIS context, but the topic is too complex and fragmented to summarize in brief here.</p>
 <p>Multiple multi-part objects are decomposed to a set of related, linked tables. Object identity is maintained with attribute metadata and this is carried through to colour and other aesthetics in plots. The nice thing is that the structures used for general visualization correspond to handy structures for a lot of modelling and analyses. It also happens that the easiest way to prove that it works is to plot it, so it&rsquo;s a good place to start, &ldquo;eye-candy&rdquo; snubs aside.</p>
 <p>There is plenty of evidence around for the need for this kind of approach to data structures, we can see it in PostGIS Topology when simple features is not enough, in geometry generators for QGIS, in coordinate space munching by ggplot2, and in the wonderful discussions of topology and projections by Mike Bostock.</p>
@@ -79,7 +81,7 @@
 </div>
 <div id="examples" class="section level2">
 <h2>Examples</h2>
-<p>See the [package vignettes].</p>
+<p>See the <a href="https://r-gris.github.io/rangl/articles/index.html">package vignettes</a>.</p>
 </div>
 <div id="open-topics" class="section level2">
 <h2>Open topics</h2>
