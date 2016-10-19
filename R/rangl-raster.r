@@ -1,6 +1,6 @@
 #' Raster rangl
 #' 
-#' Colours not supported, this just gives the virids palette sequentially. 
+#' Colours not supported, this just gives the viridis palette sequentially. 
 #' @param x \code{\link[raster]{raster}}
 #' @param z \code{\link[raster]{raster}}, by default \code{x} is used
 #' @param na.rm remove missing values

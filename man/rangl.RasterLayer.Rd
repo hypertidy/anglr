@@ -19,7 +19,7 @@
 quad_mesh
 }
 \description{
-Colours not supported, this just gives the virids palette sequentially.
+Colours not supported, this just gives the viridis palette sequentially.
 }
 \examples{
 library(raster)
