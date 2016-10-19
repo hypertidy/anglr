@@ -8,11 +8,11 @@
 \alias{plot.trimesh}
 \title{plot the triangles in the tables}
 \usage{
-plot.trimesh(x, ...)
+\method{plot}{trimesh}(x, ...)
 
-plot.linemesh(x, ...)
+\method{plot}{linemesh}(x, ...)
 
-plot.pointmesh(x, ...)
+\method{plot}{pointmesh}(x, ...)
 }
 \arguments{
 \item{x}{object from \code{\link{rangl}}}
