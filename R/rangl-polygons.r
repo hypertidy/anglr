@@ -131,7 +131,7 @@ ranglPoly <- function(x, max_area = NULL, ...) {
   }
   tabs <- spbabel::map_table(x)
   
-  outlist <- rangl:::tri_mesh_map_table1(tabs, max_area = max_area)
+  outlist <- tri_mesh_map_table1(tabs, max_area = max_area)
   
     ## renormalize the vertices
   allverts <- dplyr::inner_join(outlist$tXv, outlist$v, "vertex_")

@@ -3,20 +3,20 @@ title: "Examples with rangl"
 author: "Michael D. Sumner"
 date: "`r Sys.Date()`"
 output:
-  rmarkdown::html_vignette:
-    fig_width: 7
-    fig_height: 7
+rmarkdown::html_vignette:
+fig_width: 7
+fig_height: 7
 vignette: >
   %\VignetteIndexEntry{Examples with rangl}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
----
-
-```{r, echo = FALSE}
+  ---
+  
+  ```{r, echo = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "readme-figure/README-"
+collapse = TRUE,
+comment = "#>",
+fig.path = "readme-figure/README-"
 )
 rgl::par3d(windowRect = c(100, 100, 512 + 100, 512 +100))
 ```
@@ -40,7 +40,12 @@ plot(cmesh)
 
 ## snapshot code is only for this README
 rgl.snapshot("readme-figure/README-wrld_simpl.png"); rgl.clear()
+```
 
+![World simpl](readme-figure/README-wrld_simpl.png?raw=true "World simpl")
+
+
+```{r}
 sids <- raster::shapefile(system.file("shapes/sids.shp", package="maptools"))
 projection(sids) <- "+proj=longlat +ellps=clrk66"
 
@@ -61,10 +66,7 @@ rgl.snapshot("readme-figure/README-sids-globe.png"); rgl.clear()
 ```
 
 
-![World simpl](readme-figure/README-wrld_simpl.png?raw=true "World simpl")
-
 ![SIDS globe](readme-figure/README-sids-globe.png?raw=true "SIDS globe")
-
 
 
 ## Holes are trivially supported. 
@@ -86,6 +88,7 @@ rgl::rgl.snapshot("readme-figure/README-home.png"); rgl.clear()
 
 
 ![Holey home](readme-figure/README-home.png?raw=true "Holey home")
+
 
 
 ## Lines are supported. 
@@ -113,6 +116,8 @@ rgl::rgl.snapshot("readme-figure/README-liney-world.png"); rgl.clear()
 ![Liney world](readme-figure/README-liney-world.png?raw=true "Liney world")
 
 
+
+
 ## Mesh3d rgl
 
 Rgl mesh3d objects that use "triangle" primitives are supported. 
@@ -131,7 +136,10 @@ rgl::rgl.snapshot("readme-figure/README-Platonic.png"); rgl.clear()
 
 ![Platonic](readme-figure/README-Platonic.png?raw=true "Platonic")
 
-To complete the support for these rgl objects we need quads, and to allows a mix of quads and triangles in one data set (that's what `extrude3d` uses).
+To complete the support for these rgl objects we need quads, and to allows a mix of quads and triangles in one data set (that's what `extrude3d` uses). Extrusion is a bit limiting so it's unclear how useful this is (yes it's common though). 
+
+
+
 
 
 ## Points
@@ -160,7 +168,7 @@ rgl::rgl.snapshot("readme-figure/README-MultiPoints.png"); rgl::rgl.clear()
 
 ## Trips
 
-The soon to be released update to trip includes a 'walrus818' data set courtesy of Anthony Fischbach.  Zoom around and see if you can find them. 
+The trip package includes  a 'walrus818' data set courtesy of Anthony Fischbach.  Zoom around and see if you can find them. 
 
 ```{r,eval=TRUE}
 library(trip)
@@ -185,9 +193,9 @@ w$color_ <- sample(viridis::inferno(nrow(w)))
 plot(rangl(w), specular = "black")
 plot(rangl(walrus))
 um <- structure(c(0.934230506420135, 0.343760699033737, 0.0950899347662926, 
-0, -0.302941381931305, 0.905495941638947, -0.297159105539322, 
-0, -0.188255190849304, 0.24880850315094, 0.950081348419189, 0, 
-0, 0, 0, 1), .Dim = c(4L, 4L))
+                  0, -0.302941381931305, 0.905495941638947, -0.297159105539322, 
+                  0, -0.188255190849304, 0.24880850315094, 0.950081348419189, 0, 
+                  0, 0, 0, 1), .Dim = c(4L, 4L))
 par3d(userMatrix = um)
 rgl::rgl.snapshot("readme-figure/README-walrus.png"); rgl.clear()
 
@@ -229,23 +237,27 @@ bgm <- bgmfile(bgmfiles::bgmfiles("antarctica_99"))
 bgm$boxes$botz
 cols <- viridis::viridis(nrow(bgm$boxes))
 for (i in seq(nrow(bgm$boxes))) {
-#x <- sp::spTransform(boxSpatial(bgm)[i, ], "+proj=laea +lat_0=-65 +lon_0=100")
-x <- boxSpatial(bgm)[i, ]
-dz <- rbgm:::build_dz(x$botz)
-#z0 <- 0
-alp <- seq(0.05, 0.9, length = length(dz))
-for (zi in seq_along(dz)) {
-  if (dz[zi] > 0) {
-    p <- spbabel::sptable(x)[, c("x_", "y_")]
-    rglobj <- rgl::extrude3d(p, thickness = dz[zi])
-    rglobj$vb[3,] <- rglobj$vb[3,] - sum(dz[seq(zi)])
-   # print(sum(dz[seq(zi)]))
-    rgl::shade3d(rglobj, col = cols[i], alpha = alp[zi], 
-                 specular = "black")
+  #x <- sp::spTransform(boxSpatial(bgm)[i, ], "+proj=laea +lat_0=-65 +lon_0=100")
+  x <- boxSpatial(bgm)[i, ]
+  dz <- rbgm:::build_dz(x$botz)
+  #z0 <- 0
+  alp <- seq(0.05, 0.9, length = length(dz))
+  for (zi in seq_along(dz)) {
+    if (dz[zi] > 0) {
+      p <- spbabel::sptable(x)[, c("x_", "y_")]
+      rglobj <- rgl::extrude3d(p, thickness = dz[zi])
+      rglobj$vb[3,] <- rglobj$vb[3,] - sum(dz[seq(zi)])
+      # print(sum(dz[seq(zi)]))
+      rgl::shade3d(rglobj, col = cols[i], alpha = alp[zi], 
+                   specular = "black")
+    }
   }
-}
 }
 rgl::aspect3d(1, 1, 1.2)
 ```
 
 ![Atlantis-antarctica_99](readme-figure/antarctica_99_2.png?raw=true "Atlantis-antarctica_99")
+
+
+
+
