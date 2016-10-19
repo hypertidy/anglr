@@ -20,9 +20,12 @@ The topology comes from two related aspects. The first is decomposing what are u
 
 Multiple multi-part objects are decomposed to a set of related, linked tables. Object identity is maintained with attribute metadata and this is carried through to colour and other aesthetics in plots. The nice thing is that the structures used for general visualization correspond to handy structures for a lot of modelling and analyses. It also happens that the easiest way to prove that it works is to plot it, so it's a good place to start, "eye-candy" snubs aside.
 
-There is plenty of evidence around for the need for this kind of approach to data structures, we can see it in PostGIS Topology when simple features is not enough, in geometry generators for QGIS, in coordinate space munching by ggplot2, and in the wonderful discussions of topology and projections by Mike Bostock.
-
 Plot methods take those tables and generate the "indexed array" structures needed for 'rgl'. The tables use globally unique IDs to ensure that we can subset and recombine data sets arbitrarily without constantly updating structural indexes. The tables can also be back-ended by whatever database engine is appropriate, so we can leverage that power as we like without having to push through shoe-horn ourselves through someone's definition of how spatial data is supposed to be stored. Analytical methods can either use the graphics structure index model or the relational table model. In this way we get the best of both worlds of "GIS" and "3D models".
+
+Why?
+----
+
+There is plenty of evidence around for the need for this kind of approach to data structures, we can see it in PostGIS Topology when simple features is not enough, in geometry generators for QGIS, in coordinate space munching by ggplot2, and in the wonderful discussions of topology and projections by Mike Bostock. This project certainly doesn't solve or unify all aspects, but it has a utility for a wide variety of concerns and I hope this helps spur discussion about the future of spatial data handling generally.
 
 Ongoing design
 --------------
