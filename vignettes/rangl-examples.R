@@ -6,9 +6,7 @@ set.seed(123)
 ## ---- echo = FALSE, message = FALSE--------------------------------------
 knitr::opts_chunk$set(
 collapse = TRUE,
-comment = "#>",
-fig.path = "vignettes/readme-figure/README-"
-)
+comment = "#>")
 rgl::par3d(windowRect = c(100, 100, 512 + 100, 512 +100))
 library(raster)
 library(maptools)
@@ -102,6 +100,5 @@ um <- structure(c(0.934230506420135, 0.343760699033737, 0.0950899347662926,
                   0, -0.188255190849304, 0.24880850315094, 0.950081348419189, 0, 
                   0, 0, 0, 1), .Dim = c(4L, 4L))
 par3d(userMatrix = um)
-##rgl::rgl.snapshot("vignettes/readme-figure/README-walrus.png"); rgl.close()
 
 

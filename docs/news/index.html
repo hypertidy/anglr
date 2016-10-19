@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference â€¢ rangl</title>
+<title>All news â€¢ rangl</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -71,32 +71,53 @@
       
       </header>
 
-      <div class="page-header">
-  <h1>Function reference <small>version&nbsp;0.4.0</small></h1>
-</div>
-
-<div class="row">
+      <div class="row">
   <div class="col-md-9">
-    <div class="section ">
-      <h2>All functions</h2>
-      <p class="section-desc"></p>
+    <div id="rangl-0.4.0" class="section level1">
+<h1>rangl 0.4.0</h1>
+<ul><li><p>points now have meta table (it was missing), and singular points are now supported</p></li>
+<li><p>raster package is now an Import</p></li>
+<li><p>added support for RasterLayer</p></li>
+<li><p>fixed globe to keep PROJ.4</p></li>
+<li><p>quashed a major bug introduced by use of dplyr::distinct, best to use factor unique classifier on character versions of coords</p></li>
+<li><p>several cleanup fixes</p></li>
+</ul></div>
+    <div id="rangl-0.3.0" class="section level1">
+<h1>rangl 0.3.0</h1>
+<ul><li><p>rename again, main function is called ‘rangl’, the term ‘mesh’ is too often used across R</p></li>
+<li><p>rangl method for trip</p></li>
+<li><p>fix for spbabel now means MultiPoints are rangl()-able</p></li>
+</ul></div>
+    <div id="rangl-0.2.0" class="section level1">
+<h1>rangl 0.2.0</h1>
+<ul><li><p>removed old globe() plot behaviour, this function now just converts coordinates to geocentric XYZ</p></li>
+<li><p>added generic “mesh()” function to convert SpatialPolygons, SpatialLines, and rgl ‘mesh3d’ objects (only those that use triangle primitives)</p></li>
+<li><p>deprecated “tri_mesh” function, replaced by mesh()</p></li>
+<li><p>renamed package to ‘rangl’</p></li>
+<li><p>improved code coverage of tests</p></li>
+<li><p>infrastructure and tests for globe</p></li>
+<li><p>new function globe</p></li>
+<li><p>performance improved for hole finding and removal from mesh</p></li>
+<li><p>achieved working package scaffolding</p></li>
+</ul></div>
+    <div id="trimesh-0.1.0" class="section level1">
+<h1>trimesh 0.1.0</h1>
+<ul><li>first release to Github</li>
+</ul></div>
+  </div>
 
-      <dl class="dl-horizontal">
-        <dt><a href="globe.html">globe</a></dt><dt><a href="globe.html">globe.default</a></dt>
-        <dd>Convert map coordinates to Geocentric (XYZ) coordinates.</dd>
-        <dt><a href="plot-rangl.html">plot</a></dt><dt><a href="plot-rangl.html">plot-rangl</a></dt><dt><a href="plot-rangl.html">plot.linemesh</a></dt><dt><a href="plot-rangl.html">plot.pointmesh</a></dt><dt><a href="plot-rangl.html">plot.trimesh</a></dt>
-        <dd>plot the triangles in the tables</dd>
-        <dt><a href="plot.quad_mesh.html">plot.quad_mesh</a></dt>
-        <dd>Title</dd>
-        <dt><a href="rangl-deprecated.html">mesh</a></dt><dt><a href="rangl-deprecated.html">tri_mesh</a></dt>
-        <dd>Deprecated from rangl</dd>
-        <dt><a href="rangl.RasterLayer.html">rangl.RasterLayer</a></dt>
-        <dd>Raster rangl</dd>
-        <dt><a href="rangl.html">rangl</a></dt><dt><a href="rangl.html">rangl-package</a></dt><dt><a href="rangl.html">rangl.SpatialLines</a></dt><dt><a href="rangl.html">rangl.SpatialMultiPoints</a></dt><dt><a href="rangl.html">rangl.SpatialPoints</a></dt><dt><a href="rangl.html">rangl.SpatialPolygons</a></dt><dt><a href="rangl.html">rangl.mesh3d</a></dt><dt><a href="rangl.html">rangl.trip</a></dt>
-        <dd>Generate primitive-based spatial structures</dd>
-      </dl>
+  <div class="col-md-3 hidden-xs">
+    <div id="tocnav">
+      <h2>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+        <li><a href="#rangl-0.4.0">0.4.0</a></li>
+        <li><a href="#rangl-0.3.0">0.3.0</a></li>
+        <li><a href="#rangl-0.2.0">0.2.0</a></li>
+        <li><a href="#trimesh-0.1.0">0.1.0</a></li>
+      </ul>
     </div>
   </div>
+
 </div>
 
       <footer>

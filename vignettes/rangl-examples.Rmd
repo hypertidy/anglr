@@ -28,11 +28,14 @@ library(raster)
 library(maptools)
 ```
 
+# Introduction
+
+The 'rangl' package illustrates some generalizations of GIS-y and topology tasks in R with "tables". See the [package project](https://github.com/r-gris/rangl/blob/master/README.md) for more information. 
 
 
 Get some maps and plot in 3D - in plane view, or globe view. 
 
-**NOTE:** some of these examples here just show snapshots. It's much more interesting to run these yourself locally and interact with the rgl plots. 
+**NOTE:** these plots are interactive, but performance and quality will be better (for now) if run locally. 
 
 
 
@@ -111,7 +114,7 @@ plot(globe(lmesh))
 
 
 
-## Mesh3d rgl
+## rgl objects
 
 Rgl mesh3d objects that use "triangle" primitives are supported. 
 
