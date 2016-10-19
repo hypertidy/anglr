@@ -17,14 +17,18 @@ Imports:
     spbabel (> 0.4.0),
     tibble, 
     viridis
-Suggests: 
+Suggests:
     covr, 
+    graticule,
     maptools,
     rworldxtra,
     testthat, 
-    trip
+    trip,
+    knitr,
+    rmarkdown
 SystemRequirements: PROJ.4
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 5.0.1
 Remotes: mdsumner/spbabel, mdsumner/trip
+VignetteBuilder: knitr
