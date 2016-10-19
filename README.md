@@ -9,10 +9,12 @@ The 'rangl' package illustrates some generalizations of GIS-y tasks in R with "t
 
 The basic idea is to create "toplogical" objects from a variety of sources including:
 
--   SpatialPolygons, SpatialLines, SpatialMultipoints
--   rgl 3D objects
--   trip objects (animal tracking data) and other related "trajectory" data
--   model structures for spatially explicit ecosystem models --others to come-- see <https://github.com/mdsumner/spbabel>
+-   vector Spatial data, from `sp` and family
+-   raster grid data
+-   general 3D objects (including `rgl`)
+-   `trip objects` (animal tracking data) and other related "trajectory" data
+-   model structures for spatially explicit ecosystem models
+-   --others to come-- see <https://github.com/mdsumner/spbabel>
 
 The topology comes from two related aspects. The first is decomposing what are usually *paths of coordinates* defining lines or polygons into the more general topological primitives. The second is a de-duplication of shared vertices into a single **vertex pool** that is referenced by primitives. This is not what is always meant when people say "topology" in a GIS context, but the topic is too complex and fragmented to summarize in brief here.
 
@@ -69,7 +71,7 @@ Let me know if you have problems, or are interested in this work. See the issues
 Examples
 --------
 
-See the \[package vignettes\].
+See the [package vignettes](https://r-gris.github.io/rangl/articles/index.html).
 
 Open topics
 -----------
