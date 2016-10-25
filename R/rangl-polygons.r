@@ -4,20 +4,7 @@ path2seg <- function(x) {
   head(suppressWarnings(matrix(x, nrow = length(x) + 1, ncol = 2, byrow = FALSE)), -2L)
 }
 
-#' Deprecated from rangl
-#' @rdname rangl-deprecated
-#' @param x nothing
-#' @param ... ignored
-#' @export
-tri_mesh <- function(x, ...) {
-  .Deprecated("mesh", package= "rangl", old = "tri_mesh")
-}
 
-#' @rdname rangl-deprecated
-#' @export
-mesh <- function(x, ...) {
-  .Deprecated("rangl", package= "rangl", old = "mesh")
-}
 
 ## this internal function does the decomposition to primitives of a 
 ##  single Spatial object, i.e. a "multipolygon"
