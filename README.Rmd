@@ -10,37 +10,47 @@ output: github_document
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  fig.path = "readme-figure/README-"
-)
-rgl::par3d(windowRect = c(100, 100, 512 + 100, 512 +100))
+  comment = "#>")
 ```
 
 ## Tabular storage for spatial data 
 
 The 'rangl' package illustrates some generalizations of GIS-y tasks in R with "tables". 
 
-The basic idea is to create "toplogical" objects from a variety of sources: 
+The basic idea is to create "toplogical" objects from a variety of sources including: 
 
-* SpatialPolygons, SpatialLines, SpatialMultipoints
-* rgl 3D objects
-* trip objects (animal tracking data)
+* vector Spatial data, from `sp` and family
+* raster grid data
+* general 3D objects (including `rgl`)
+* `trip objects` (animal tracking data) and other related "trajectory" data
+* model structures for spatially explicit ecosystem models
 * --others to come-- see https://github.com/mdsumner/spbabel
 
 
-Multiple multi-part objects are decomposed to a set of related, linked tables. Object identity is maintained with attribute metadata and this is carried through to colour and other aesthetics in 3D plots.  
+The topology comes from two related aspects. The first is decomposing what are usually *paths of coordinates* defining lines or polygons into the more general topological primitives. The second is a de-duplication of shared vertices into a single **vertex pool** that is referenced by primitives. This is not what is always meant when people say "topology" in a GIS context, but the topic is too complex and fragmented to summarize in brief here. 
 
-Plot methods take those tables and generate the "indexed array" structures needed for 'rgl'. In this way we get the best of both worlds of "GIS" and "3D models". 
+Multiple multi-part objects are decomposed to a set of related, linked tables. Object identity is maintained with attribute metadata and this is carried through to colour and other aesthetics in plots. The nice thing is that the structures used for general visualization correspond to handy structures for a lot of modelling and analyses. It also happens that the easiest way to prove that it works is to plot it, so it's a good place to start, "eye-candy" snubs aside. 
+
+
+Plot methods take those tables and generate the "indexed array" structures needed for 'rgl'. The tables use globally unique IDs to ensure that we can subset and recombine data sets arbitrarily without constantly updating structural indexes. The tables can also be back-ended by whatever database engine is appropriate, so we can leverage that power as we like without having to push through shoe-horn ourselves through someone's definition of how spatial data is supposed to be stored.  Analytical methods can either use the graphics structure index model or the relational table model. In this way we get the best of both worlds of "GIS" and "3D models". 
+
+## Why?
+
+There is plenty of evidence around for the need for this kind of approach to data structures, we can see it in PostGIS Topology when simple features is not enough, in geometry generators for QGIS, in coordinate space munching by ggplot2, and in the wonderful discussions of topology and projections by Mike Bostock. This project certainly doesn't solve or unify all aspects, but it has a utility for a wide variety of concerns and I hope this helps spur discussion about the future of spatial data handling generally. 
 
 ## Ongoing design
 
 The core work for translating "Spatial" classes is done by the unspecialized 'spbabel::map_table' function.
 
-This is likely to be replaced by a 'primitives()' function that takes any lines or polygons data and returns just the linked edges. 
+This is likely to be replaced by a 'primitives()' function that takes any lines or polygons data and returns just the linked edges. Crucially, polygons and lines are described by the same 1D primitives, and this is easy to do. Harder is to generate 2D primitives and for that we rely on [Jonathan Richard Shewchuk's Triangle](https://www.cs.cmu.edu/~quake/triangle.html). 
+
+Triangulation is with `RTriangle` package using "constrained mostly-Delaunay Triangulation" from the Triangle library, but could alternatively use `rgl` with its ear clipping algorithm. 
+
+(With RTriangle we can set a max area for the triangles, so it can wrap around curves like globes and hills.)
+
 ## Installation
 
 This package is in active development and will see a number of breaking changes before release. 
-
 
 Also required are packages 'rgl' and 'RTriangle', so first make sure you can install and use these. 
 
@@ -50,13 +60,15 @@ install.packages("RTriangle")
 
 ```
 
-In examples below I use 'graticule' as well, so you might as well install that too. 
+In examples below I use 'graticule', 'trip', and 'rbgm', but these aren't strictly required by the package, only for some examples. 
 
 ```{r,eval=FALSE}
 install.packages("graticule")
+install.packages("trip")
+install.packages("rbgm")
 ```
 
-If you are still feeling adventurous, 'rangl' can be installed from Github. This will also ensure that the latest version of 'spbabel' is installed, until I get around to updating that on CRAN. 
+If you are feeling adventurous, 'rangl' can be installed from Github. 
 
 ```{r,eval=FALSE}
 devtools::install_github("r-gris/rangl")
@@ -72,162 +84,13 @@ https://github.com/r-gris/rangl/issues
 
 ## Examples
 
-Get some maps and plot in 3D - in plane view, or globe view. 
-
-**NOTE:** these examples here just show snapshots. It's much more interesting to run these yourself locally and interact with the rgl plots. 
-
-
-```{r,eval=TRUE}
-
-library(rgl)
-library(maptools)
-data(wrld_simpl)
-library(raster)
-
-## convert to triangles and plot 
-library(rangl)
-cmesh <- rangl(wrld_simpl)
-plot(cmesh)
-
-## snapshot code is only for this README
-rgl.snapshot("readme-figure/README-wrld_simpl.png"); rgl.clear()
-
-sids <- raster::shapefile(system.file("shapes/sids.shp", package="maptools"))
-projection(sids) <- "+proj=longlat +ellps=clrk66"
-
-ex <- extent(sids) + 5
-gl <- graticule::graticule(seq(xmin(ex), xmax(ex), length = 15), 
-                           seq(ymin(ex), ymax(ex), length = 8))
-
-
-## convert to triangles, but wrap onto globe then plot
-smesh <- rangl(sids)
-plot(globe(smesh))
-mgl <- rangl(gl)
-mgl$o$color_ <- "black"
-plot(globe(mgl), lwd = 2)
-
-rgl.snapshot("readme-figure/README-sids-globe.png"); rgl.clear()
-
-```
-
-
-![World simpl](readme-figure/README-wrld_simpl.png?raw=true "World simpl")
-
-![SIDS globe](readme-figure/README-sids-globe.png?raw=true "SIDS globe")
-
-
-
-## Holes are trivially supported. 
-
-It's trivial to have "holes", because there are no "holes" because we have a true surface, composed of 2D primitives (triangles). 
-
-```{r,eval=TRUE}
-library(spbabel)
-data(holey)
-
-## SpatialPolygonsDataFrame
-sph <- sp(holey)
-
-glh <- rangl(sph)
-plot(glh)
-rgl::rgl.snapshot("readme-figure/README-home.png"); rgl.clear()
-
-```
-
-
-![Holey home](readme-figure/README-home.png?raw=true "Holey home")
-
-
-## Lines are supported. 
-
-
-```{r,eval=TRUE}
-linehouse <- as(sph, "SpatialLinesDataFrame")
-plot(rangl(linehouse))
-rgl::rgl.snapshot("readme-figure/README-lines.png"); rgl.clear()
-```
-
-
-
-![Liney lines](readme-figure/README-lines.png?raw=true "Liney lines")
-
-## Globe lines
-
-```{r,eval=TRUE}
-lmesh <- rangl(as(wrld_simpl, "SpatialLinesDataFrame"))
-plot(globe(lmesh))
-rgl::rgl.snapshot("readme-figure/README-liney-world.png"); rgl.clear()
-
-```
-
-![Liney world](readme-figure/README-liney-world.png?raw=true "Liney world")
-
-
-## Mesh3d rgl
-
-Rgl mesh3d objects that use "triangle" primitives are supported. 
-
-```{r,eval=TRUE}
-library(rgl)
-
-dod <- rangl(dodecahedron3d(col = "cyan"))
-octo <- rangl(translate3d(octahedron3d(col = "blue"), 6, 0, 0))
-plot(dod, col = viridis::viridis(5)[1], alpha = 0.3)
-plot(octo, col = viridis::viridis(5)[5], alpha = 0.3)
-bg3d("grey")
-rgl::rgl.snapshot("readme-figure/README-Platonic.png"); rgl.clear()
-
-```
-
-![Platonic](readme-figure/README-Platonic.png?raw=true "Platonic")
-
-
-
-
-## Points
-
-
-And points work!  (Don't laugh). 
-
-
-```{r}
-library(rangl)
-library(maptools)
-data(wrld_simpl)
-mpts <- as(as(wrld_simpl, "SpatialLinesDataFrame"), "SpatialMultiPointsDataFrame")
-plot(rangl(mpts))
-rgl::view3d(theta = 25, phi = 3)
-
-```
-
-```{r,include=FALSE}
-rgl::rgl.snapshot("readme-figure/README-MultiPoints.png"); rgl::rgl.clear()
-
-```
-
-![MultiPoints](readme-figure/README-MultiPoints.png?raw=true "MultiPoints")
-
-
-## Trips
-
-Trust me, more soon. 
-
-```{r,eval=FALSE}
-library(trip)
-example(trip)
-mtr <- rangl(tr)
-plot(mtr)
-
-```
-
-
+See the [package vignettes](https://r-gris.github.io/rangl/articles/index.html). 
 
 ## Open topics
 
 * single-points are a bit funny, it's wasteful to copy the branches model - needs thought
 * multi-points are also a bit funny, but this will form the basis of input tracking data for some applications
-
+* UUIDs- unique IDs are not done very well, they are maybe ... 1) not unique enough, 2) over-used for vertices/branches, 3) unnecessary for general storage, maybe we should always flip back to structural *after* merge/transmission operations. 
 
 Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
 

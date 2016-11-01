@@ -1,29 +1,34 @@
 Package: rangl
 Type: Package
 Title: Tidy Flexible Spatial
-Version: 0.3.0
+Version: 0.4.0
 Authors@R: person("Michael D.","Sumner", role = c("aut", "cre"), email =
     "mdsumner@gmail.com")
-Description: Create tidy tables for topological, triangulated, and other spatial data structures.
+Description: Tabular storage for topological data structures based on primitives.
 License: GPL-3
 Imports:
     dplyr,
     methods,
     proj4,
+    raster,
     rgl,
     RTriangle,
     sp,
     spbabel (> 0.4.0),
     tibble, 
     viridis
-Suggests: 
+Suggests:
     covr, 
+    graticule,
     maptools,
     rworldxtra,
     testthat, 
-    trip
+    trip,
+    knitr,
+    rmarkdown
 SystemRequirements: PROJ.4
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 5.0.1
-Remotes: mdsumner/spbabel
+Remotes: mdsumner/spbabel, mdsumner/trip
+VignetteBuilder: knitr

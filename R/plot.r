@@ -1,8 +1,10 @@
-
-#' plot the triangles in the tables
+#' Plot objects in OpenGL
+#' 
+#' Plot using the \code{\link[rgl]{rgl-package}}. 
 #'
-#' plot
-#'
+#' The data structures from \code{\link{rangl}} are converted to their analogous forms
+#' used by the \code{\link[rgl]{rgl}} package and plotted. These plot methods return
+#' the rgl form invisibly. 
 #' @param x object from \code{\link{rangl}}
 #' @param ... args for underlying plotting
 #' @return the rgl mesh3d object, invisibly
@@ -100,4 +102,17 @@ plot.pointmesh <- function(x,  ...) {
   
   
   invisible(list(v = vb, material = list(col = pindex$color_)))
+}
+
+
+#' @rdname plot-rangl
+#' @examples
+#' example(rangl.RasterLayer)
+#' plot(w)
+plot.quad_mesh <- function(x, ...) {
+  ## etc blah
+  ob <- mkq_3d()
+  ob$vb <- t(cbind(as.matrix(x$v[, c("x_", "y_", "z_")]), 1))
+  ob$ib <- matrix(x$qXv$vertex_, nrow = 4)
+  invisible(rgl::shade3d(ob, col = trimesh_cols(nrow(x$qd))[ob$ib], ...))
 }
