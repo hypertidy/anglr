@@ -20,6 +20,8 @@ rmarkdown::render("README.Rmd", "all")
 # Check spelling mistakes
 devtools::spell_check()
 
+pkgdown::build_site()
+
 # Run R CMD check
 devtools::check()
 # The above will also run the unit tests using testthat
