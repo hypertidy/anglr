@@ -1,3 +1,19 @@
+# rangl 0.4.0
+
+* old functions made defunct
+
+* points now have meta table (it was missing), and singular points are now supported
+
+* raster package is now an Import
+
+* added support for RasterLayer
+
+* fixed globe to keep PROJ.4
+
+* quashed a major bug introduced by use of dplyr::distinct, best to use factor unique classifier on character versions of coords
+
+* several cleanup fixes
+
 # rangl 0.3.0
 
 * rename again, main function is called 'rangl', the term 'mesh' is too often used across R 

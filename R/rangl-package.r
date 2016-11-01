@@ -1,18 +1,17 @@
 #' Tidy tables for topological spatial data structures.
 #'
-#' The 'rangl' package helps transcend the following problems in R and GIS generally: 
-#' 
+#' The 'rangl' package helps transcend the following general limitations:  
 #' \itemize{
 #'  \item coordinates beyond X and Y, or longitude and latitude
-#'  \item attributes stored where appropriate, on vertices, primitives, branches, or objects
-#'  \item topology and geometry are not conflated
+#'  \item storing attributes on vertices, primitives, branches (parts), or objects
+#'  \item topology and geometry are properly separated
 #'  \item spatial data can be properly represented as a graph of spatial primitives
 #'  \item polygons as true surfaces, not just glorified lines with a path-filling rule
 #'  \item TBD higher dimensional primitives are possible
 #'  \item TBD n-dimensional rasters with curvilinear coordinates, and the discrete-continuous distinction 
 #' }
 #'
-#' @name rangl
+#' @name rangl-package
 #' @docType package
 #' @section I. Creation:
 #' \tabular{ll}{
