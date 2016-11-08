@@ -1,9 +1,14 @@
 ---
-title: "R polygons - simple features and the zoo"
-output:
-  html_document: default
-  html_notebook: default
+title: "Simple features and the R spatial zoo"
+author: "Michael Sumner"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{sf zoo}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
+
 
 ## Base graphics
 
@@ -88,7 +93,7 @@ These are the nodes in the graph, we need to traverse the edges to determine the
 x1 <- st_read(system.file("shape/nc.shp", package="sf"), "nc", crs = 4267)
 mp <- spbabel::map_table(x1)
 
-nodes <- mp$v %>% select(vertex_) %>% inner_join(mp$bXv) %>% distinct(vertex_, branch_) %>% group_by(vertex_) %>% mutate(nb = n()) %>%  ungroup() %>% filter(nb > 2) %>% distinct(vertex_) %>% inner_join(mp$v)
+nodes <- mp$v %>% dplyr::select(vertex_) %>% inner_join(mp$bXv) %>% distinct(vertex_, branch_) %>% group_by(vertex_) %>% mutate(nb = n()) %>%  ungroup() %>% filter(nb > 2) %>% distinct(vertex_) %>% inner_join(mp$v)
 plot(x1)
 points(nodes$x_, nodes$y_, cex = 0.9)
 ```
