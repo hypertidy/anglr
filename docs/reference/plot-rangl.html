@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>plot the triangles in the tables — plot-rangl â€¢ rangl</title>
+<title>plot-rangl. rangl</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -72,13 +72,13 @@
       </header>
 
       <div class="page-header">
-  <h1>plot the triangles in the tables</h1>
+  <h1>Plot objects in OpenGL</h1>
 </div>
 
 <div class="row">
   <div class="col-md-9">
     
-    <p>plot</p>
+    <p>Plot using the <code><a href='http://www.rdocumentation.org/packages/rgl-package/topics/rgl'>rgl-package</a></code>.</p>
     
 
     <pre><span class='co'># S3 method for trimesh</span>
@@ -88,12 +88,15 @@
 <span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for pointmesh</span>
+<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for quad_mesh</span>
 <span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2>Arguments</h2>
     <dl class="dl-horizontal">
       <dt>x</dt>
-      <dd>object from <code><a href='rangl.html'>rangl</a></code></dd>
+      <dd>object from <code>rangl</code></dd>
       <dt>...</dt>
       <dd>args for underlying plotting</dd>
     </dl>
@@ -103,12 +106,22 @@
 
       <p>the rgl mesh3d object, invisibly</p>
     </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p>The data structures from <code>rangl</code> are converted to their analogous forms
+used by the <code><a href='http://www.rdocumentation.org/packages/rgl-package/topics/rgl'>rgl</a></code> package and plotted. These plot methods return
+the rgl form invisibly.</p>
+    </div>
     
     <h2 id="examples">Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>example</span>(<span class='no'>rangl</span>)</div><div class='output'><strong class='text-warning'>Warning message:
 no help found for ‘rangl’</strong></div><div class='input'><span class='kw'>if</span>(<span class='fu'>exists</span>(<span class='st'>"b"</span>)) {
  <span class='fu'>plot</span>(<span class='no'>b</span>)
- }</div></pre>
+ }
+<span class='fu'>example</span>(<span class='no'>rangl.RasterLayer</span>)</div><div class='output'><strong class='text-warning'>Warning message:
+no help found for ‘rangl.RasterLayer’</strong></div><div class='input'><span class='fu'>plot</span>(<span class='no'>w</span>)</div><strong class='error'>Error in plot(w): object &#39;w&#39; not found</strong></pre>
   </div>
   <div class="col-md-3">
   </div>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Convert map coordinates to Geocentric (XYZ) coordinates. — globe â€¢ rangl</title>
+<title>globe. rangl</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -89,7 +89,7 @@
     <h2>Arguments</h2>
     <dl class="dl-horizontal">
       <dt>x</dt>
-      <dd>list of tibbles, in <code><a href='rangl.html'>rangl</a></code> form</dd>
+      <dd>list of tibbles, in <code>rangl</code> form</dd>
       <dt>...</dt>
       <dd>arguments to methods (none used)</dd>
       <dt>gproj</dt>
@@ -105,8 +105,8 @@
     <h2 id="examples">Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>maptools</span>)
 <span class='fu'>data</span>(<span class='no'>wrld_simpl</span>)
-<span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'>globe</span>(<span class='fu'><a href='rangl.html'>rangl</a></span>(<span class='fu'>as</span>(<span class='no'>wrld_simpl</span>, <span class='st'>"SpatialLinesDataFrame"</span>)))
-<span class='fu'><a href='plot-rangl.html'>plot</a></span>(<span class='no'>g</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output'><strong class='text-info'>Joining, by = &quot;object_&quot;</strong></div><div class='output'><strong class='text-info'>Joining, by = &quot;segment_&quot;</strong></div></pre>
+<span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'>globe</span>(<span class='fu'>rangl</span>(<span class='fu'>as</span>(<span class='no'>wrld_simpl</span>, <span class='st'>"SpatialLinesDataFrame"</span>)))
+<span class='fu'>plot</span>(<span class='no'>g</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output'><strong class='text-info'>Joining, by = &quot;object_&quot;</strong></div><div class='output'><strong class='text-info'>Joining, by = &quot;segment_&quot;</strong></div></pre>
   </div>
   <div class="col-md-3">
   </div>

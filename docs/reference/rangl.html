@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generate primitive-based spatial structures — rangl â€¢ rangl</title>
+<title>rangl. rangl</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,7 +80,7 @@
     
     <p>Create primitive-based &quot;mesh&quot; structures from various inputs.</p>
 
-    <p>The &#39;rangl&#39; package helps transcend the following problems in R and GIS generally:</p>
+    <p>Colours not supported, this just gives the viridis palette sequentially.</p>
     
 
     <pre><span class='fu'>rangl</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -97,6 +97,9 @@
 <span class='co'># S3 method for SpatialPolygons</span>
 <span class='fu'>rangl</span>(<span class='no'>x</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
+<span class='co'># S3 method for RasterLayer</span>
+<span class='fu'>rangl</span>(<span class='no'>x</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>x</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+
 <span class='co'># S3 method for trip</span>
 <span class='fu'>rangl</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
@@ -111,63 +114,25 @@
       <dd>arguments passed to methods</dd>
       <dt>max_area</dt>
       <dd>maximum area in coordinate system of x, passed to <code><a href='http://www.rdocumentation.org/packages/triangulate/topics/RTriangle'>triangulate</a></code> &#39;a&#39; argument</dd>
+      <dt>z</dt>
+      <dd><code><a href='http://www.rdocumentation.org/packages/raster/topics/raster'>raster</a></code>, by default <code>x</code> is used</dd>
+      <dt>na.rm</dt>
+      <dd>remove missing values</dd>
+      <dt>...</dt>
+      <dd>unused</dd>
     </dl>
     
     <div class="Value">
       <h2>Value</h2>
 
       <p>a list of tibble data frames, using the gris-map_table model</p>
+      <p>quad_mesh</p>
     </div>
 
     <div class="Details">
       <h2>Details</h2>
 
       <p>#&#39; Methods exist for SpatialPolygons, SpatialLines, rgl mesh3d(triangle) ...</p>
-      <p><ul>
-<li> coordinates beyond X and Y, or longitude and latitude
- </li>
-<li> attributes stored where appropriate, on vertices, primitives, branches, or objects
- </li>
-<li> topology and geometry are not conflated
- </li>
-<li> spatial data can be properly represented as a graph of spatial primitives
- </li>
-<li> polygons as true surfaces, not just glorified lines with a path-filling rule
- </li>
-<li> TBD higher dimensional primitives are possible
- </li>
-<li> TBD n-dimensional rasters with curvilinear coordinates, and the discrete-continuous distinction 
-</li>
-</ul></p>
-    </div>
-
-    <div class="I. Creation">
-      <h2>I. Creation</h2>
-
-      <p></p>
-      <p><table><tr><td>
- <code>rangl</code> </td>
-</tr><tr><td> create a rangl table set from various input types  </td>
-</tr></table></p>
-    </div>
-
-    <div class="II. Plotting">
-      <h2>II. Plotting</h2>
-
-      <p></p>
-      <p><table><tr><td>
- <code><a href='globe.html'>globe</a></code> </td>
-</tr><tr><td> convert X,Y planar or angular to 3D on the surface of a globe, based on the data in longitude-latitude form </td>
-</tr><tr><td>
- <code><a href='plot-rangl.html'>plot.trimesh</a></code> </td>
-</tr><tr><td> plot 2D topology in 3D geometry space </td>
-</tr><tr><td>
- <code><a href='plot-rangl.html'>plot.linemesh</a></code> </td>
-</tr><tr><td> plot 1D topology in 3D geometry space </td>
-</tr><tr><td>
- <code><a href='plot-rangl.html'>plot.pointmesh</a></code> </td>
-</tr><tr><td> plot 0D topology in 3D geometry space </td>
-</tr></table></p>
     </div>
     
     <h2 id="examples">Examples</h2>
@@ -176,24 +141,28 @@
 <span class='fu'>library</span>(<span class='no'>maptools</span>)
 <span class='fu'>data</span>(<span class='no'>wrld_simpl</span>)
 <span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'>rangl</span>(<span class='no'>wrld_simpl</span>)
-<span class='fu'><a href='plot-rangl.html'>plot</a></span>(<span class='no'>b</span>)</div><div class='output'><strong class='text-info'>Joining, by = &quot;object_&quot;</strong></div><div class='output'><strong class='text-info'>Joining, by = &quot;triangle_&quot;</strong></div><div class='input'><span class='kw'>if</span> (<span class='fu'>require</span>(<span class='no'>rworldxtra</span>)) {
+<span class='fu'>plot</span>(<span class='no'>b</span>)</div><div class='output'><strong class='text-info'>Joining, by = &quot;object_&quot;</strong></div><div class='output'><strong class='text-info'>Joining, by = &quot;triangle_&quot;</strong></div><div class='input'><span class='kw'>if</span> (<span class='fu'>require</span>(<span class='no'>rworldxtra</span>)) {
 
 <span class='fu'>data</span>(<span class='no'>countriesHigh</span>)
 <span class='no'>sv</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='st'>"New Zealand"</span>, <span class='st'>"Antarctica"</span>, <span class='st'>"Papua New Guinea"</span>,
  <span class='st'>"Indonesia"</span>, <span class='st'>"Malaysia"</span>, <span class='st'>"Fiji"</span>, <span class='st'>"Australia"</span>)
 <span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>subset</span>(<span class='no'>countriesHigh</span>, <span class='no'>SOVEREIGNT</span> <span class='kw'>%in%</span> <span class='no'>sv</span>)
 <span class='no'>b7</span> <span class='kw'>&lt;-</span> <span class='fu'>rangl</span>(<span class='no'>a</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)
-<span class='fu'><a href='plot-rangl.html'>plot</a></span>(<span class='fu'><a href='globe.html'>globe</a></span>(<span class='no'>b7</span>))
+<span class='fu'>plot</span>(<span class='fu'>globe</span>(<span class='no'>b7</span>))
 }</div><div class='output'><strong class='text-info'>Joining, by = &quot;object_&quot;</strong></div><div class='output'><strong class='text-info'>Joining, by = &quot;triangle_&quot;</strong></div><div class='input'><span class='co'>## -----------------------------------------------</span>
 <span class='co'>## LINES</span>
 <span class='no'>l1</span> <span class='kw'>&lt;-</span> <span class='fu'>rangl</span>(<span class='fu'>as</span>(<span class='no'>a</span>, <span class='st'>"SpatialLinesDataFrame"</span>) )
-<span class='fu'><a href='plot-rangl.html'>plot</a></span>(<span class='no'>l1</span>)</div><div class='output'><strong class='text-info'>Joining, by = &quot;object_&quot;</strong></div><div class='output'><strong class='text-info'>Joining, by = &quot;segment_&quot;</strong></div><div class='input'><span class='fu'><a href='plot-rangl.html'>plot</a></span>(<span class='fu'><a href='globe.html'>globe</a></span>(<span class='no'>l1</span>))</div><div class='output'><strong class='text-info'>Joining, by = &quot;object_&quot;</strong></div><div class='output'><strong class='text-info'>Joining, by = &quot;segment_&quot;</strong></div><div class='input'><span class='co'>## -----------------------------------------------</span>
+<span class='fu'>plot</span>(<span class='no'>l1</span>)</div><div class='output'><strong class='text-info'>Joining, by = &quot;object_&quot;</strong></div><div class='output'><strong class='text-info'>Joining, by = &quot;segment_&quot;</strong></div><div class='input'><span class='fu'>plot</span>(<span class='fu'>globe</span>(<span class='no'>l1</span>))</div><div class='output'><strong class='text-info'>Joining, by = &quot;object_&quot;</strong></div><div class='output'><strong class='text-info'>Joining, by = &quot;segment_&quot;</strong></div><div class='input'><span class='fu'>library</span>(<span class='no'>raster</span>)
+<span class='no'>w</span> <span class='kw'>&lt;-</span> <span class='fu'>raster</span>(<span class='no'>volcano</span>)
+<span class='fu'>plot</span>(<span class='fu'>rangl</span>(<span class='no'>w</span>/<span class='fl'>300</span>))
+
+<span class='co'>## -----------------------------------------------</span>
 <span class='co'>## RGL TRIANGLES</span>
 <span class='fu'>library</span>(<span class='no'>rgl</span>)
 
 <span class='no'>dod</span> <span class='kw'>&lt;-</span> <span class='fu'>rangl</span>(<span class='fu'>dodecahedron3d</span>(<span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"cyan"</span>))
 <span class='no'>octo</span> <span class='kw'>&lt;-</span> <span class='fu'>rangl</span>(<span class='fu'>translate3d</span>(<span class='fu'>octahedron3d</span>(<span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"blue"</span>), <span class='fl'>6</span>, <span class='fl'>0</span>, <span class='fl'>0</span>))
-<span class='fu'><a href='plot-rangl.html'>plot</a></span>(<span class='no'>dod</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>viridis</span><span class='kw'>::</span><span class='fu'>viridis</span>(<span class='fl'>5</span>)[<span class='fl'>1</span>], <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)</div><div class='output'><strong class='text-info'>Joining, by = &quot;object_&quot;</strong></div><div class='output'><strong class='text-info'>Joining, by = &quot;triangle_&quot;</strong></div><div class='input'><span class='fu'><a href='plot-rangl.html'>plot</a></span>(<span class='no'>octo</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>viridis</span><span class='kw'>::</span><span class='fu'>viridis</span>(<span class='fl'>5</span>)[<span class='fl'>5</span>], <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)</div><div class='output'><strong class='text-info'>Joining, by = &quot;object_&quot;</strong></div><div class='output'><strong class='text-info'>Joining, by = &quot;triangle_&quot;</strong></div><div class='input'><span class='fu'>bg3d</span>(<span class='st'>"grey"</span>)</div></pre>
+<span class='fu'>plot</span>(<span class='no'>dod</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>viridis</span><span class='kw'>::</span><span class='fu'>viridis</span>(<span class='fl'>5</span>)[<span class='fl'>1</span>], <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)</div><div class='output'><strong class='text-info'>Joining, by = &quot;object_&quot;</strong></div><div class='output'><strong class='text-info'>Joining, by = &quot;triangle_&quot;</strong></div><div class='input'><span class='fu'>plot</span>(<span class='no'>octo</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>viridis</span><span class='kw'>::</span><span class='fu'>viridis</span>(<span class='fl'>5</span>)[<span class='fl'>5</span>], <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)</div><div class='output'><strong class='text-info'>Joining, by = &quot;object_&quot;</strong></div><div class='output'><strong class='text-info'>Joining, by = &quot;triangle_&quot;</strong></div><div class='input'><span class='fu'>bg3d</span>(<span class='st'>"grey"</span>)</div></pre>
   </div>
   <div class="col-md-3">
   </div>
