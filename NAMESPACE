@@ -3,6 +3,7 @@
 S3method(globe,default)
 S3method(plot,linemesh)
 S3method(plot,pointmesh)
+S3method(plot,quad_mesh)
 S3method(plot,trimesh)
 S3method(rangl,RasterLayer)
 S3method(rangl,SpatialLines)

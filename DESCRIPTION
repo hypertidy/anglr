@@ -19,9 +19,13 @@ Imports:
     viridis
 Suggests:
     covr, 
+    ggplot2,
+    ggpolypath,
     graticule,
     maptools,
+    purrr,
     rworldxtra,
+    sf,
     testthat, 
     trip,
     knitr,
@@ -30,5 +34,5 @@ SystemRequirements: PROJ.4
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 5.0.1
-Remotes: mdsumner/spbabel, mdsumner/trip
 VignetteBuilder: knitr
+Remotes: mdsumner/spbabel@develop
