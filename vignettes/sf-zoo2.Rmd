@@ -2,7 +2,10 @@
 title: "Simple features and the R spatial zoo"
 author: "Michael Sumner"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output:
+  rmarkdown::html_vignette:
+    fig_width: 7
+    fig_height: 7
 vignette: >
   %\VignetteIndexEntry{sf zoo}
   %\VignetteEngine{knitr::rmarkdown}
@@ -76,24 +79,31 @@ gg + aes(x = x_, y = y_, group = branch_, fill = object_) + ggcols + ggpolypath:
 ```{r}
 ## purrring function
 p2seg <- function(x) as_tibble(rangl:::path2seg(x$vertex_))
-BxE <- mp$bXv %>% split(.$branch_) %>% purrr::map(p2seg) %>% bind_rows(.id = "branch_")
+BxE <- mp$bXv %>% split(.$branch_) %>% purrr::map(p2seg) %>% bind_rows(.id = "branch_") 
 ggplot(BxE %>% inner_join(mp$v %>% rename(x = x_, y = y_), c("V1" = "vertex_")) %>% 
                             inner_join(mp$v, c("V2" = "vertex_"))) + 
-  geom_segment(aes(x = x, y = y, xend = x_, yend = y_, colour = branch_))
+  geom_segment(aes(x = x, y = y, xend = x_, yend = y_, colour = V1)) + guides(colour = FALSE)
 
 ```
 
 
 ## Arc-node
 
-These are the nodes in the graph, we need to traverse the edges to determine the arc-branches, and anything left is just a standalone arc. (But it's only the 3-branch nodes, we need a better rule to catch the boundaries with only 2 ... WIP). 
+These are the nodes in the graph, we need to traverse the edges to determine the arc-branches, and anything left is just a standalone arc.  This is brute-force remove duplicate edges (ignore direction), join on start vertex, end vertex, count the number of edges involved and any with 3 edges is a **Node**. 
 
 ```{r}
 ## what are the nodes?
 x1 <- st_read(system.file("shape/nc.shp", package="sf"), "nc", crs = 4267)
 mp <- spbabel::map_table(x1)
+uE <- mp$bXv %>% split(.$branch_) %>% purrr::map(p2seg) %>% bind_rows(.id = "branch_")%>% mutate(edge_ = row_number()) %>% 
+   mutate(uu = paste(pmin(V1, V2), pmax(V1, V2), sep = "_")) %>% distinct(uu, .keep_all = TRUE)
+nodes <- bind_rows(mp$v %>% dplyr::select(vertex_) %>% inner_join(uE, c("vertex_" = "V1")), 
+          mp$v %>% dplyr::select(vertex_) %>% inner_join(uE, c("vertex_" = "V2"))) %>% 
+  distinct(edge_, vertex_) %>% 
+  group_by(vertex_) %>% mutate(nb = n()) %>% ungroup() %>% 
+  filter(nb > 2) %>% distinct(vertex_) %>% inner_join(mp$v)
 
-nodes <- mp$v %>% dplyr::select(vertex_) %>% inner_join(mp$bXv) %>% distinct(vertex_, branch_) %>% group_by(vertex_) %>% mutate(nb = n()) %>%  ungroup() %>% filter(nb > 2) %>% distinct(vertex_) %>% inner_join(mp$v)
+
 plot(x1)
 points(nodes$x_, nodes$y_, cex = 0.9)
 ```
@@ -109,6 +119,13 @@ l2 <- inner_join(sc$o[2, ], sc$t) %>% split(.$triangle_) %>% purrr::map(function
 j <- lapply(l2, function(x) polygon(cbind(x$x_, x$y_), col = "firebrick"))
 
 
+
+sc <- rangl::rangl(as(x1, "Spatial"))
+plot(x1)
+for (i in seq(nrow(x1))) {
+  l1 <- inner_join(sc$o[i, ], sc$t) %>% split(.$triangle_) %>% purrr::map(function(x) inner_join(x, sc$tXv, "triangle_") %>% inner_join(sc$v, "vertex_")) 
+  j <- lapply(l1, function(x) polygon(cbind(x$x_, x$y_), border = sample(c("grey", "firebrick", viridis::viridis(5)), 1)))
+}
 ```
 
 Much to still be done. 
