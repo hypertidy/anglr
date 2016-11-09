@@ -58,7 +58,7 @@ library(maptools)
 data(wrld_simpl)
 b <- rangl(wrld_simpl)
 plot(b)
-if (require(rworldxtra)) {
+#if (require(rworldxtra)) {
 
 #data(countriesHigh)
 #sv <- c("New Zealand", "Antarctica", "Papua New Guinea",

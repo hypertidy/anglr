@@ -10,11 +10,6 @@
 #' @return the rgl mesh3d object, invisibly
 #' @export
 #' @importFrom rgl shade3d
-#' @examples
-#' #example(rangl)
-#' #if(exists("b")) { 
-#' #  plot(b)
-#' #  }
 #' @name plot-rangl
 #' @aliases plot
 plot.trimesh <- function(x,  ...) {
@@ -107,9 +102,7 @@ plot.pointmesh <- function(x,  ...) {
 
 #' @rdname plot-rangl
 #' @export
-#' @examples
-#' example(rangl.RasterLayer)
-#' plot(w)
+#' @seealso \code{\link{rangl.RasterLayer}}
 plot.quad_mesh <- function(x, ...) {
   ## etc blah
   ob <- mkq_3d()
