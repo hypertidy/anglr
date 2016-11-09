@@ -50,6 +50,7 @@ line_mesh_map_table1 <- function(tabs) {
   tabs
 }
 #' @rdname rangl
+#' @importFrom dplyr arrange distinct mutate
 #' @export
 rangl.SpatialLines <- function(x, ...) {
   pr4 <- proj4string(x)
@@ -80,7 +81,7 @@ rangl.SpatialLines <- function(x, ...) {
   outlist$lXv <- allverts[, c("segment_", "vertex_")]
   
   ## normalize segments
-  a <- outlist$lXv %>% arrange(segment_, vertex_)
+  a <- outlist$lXv %>% dplyr::arrange(segment_, vertex_)
   lista <- split(a, a$segment_)
   f <- factor(unlist(lapply(lista, function(x) paste(x$vertex_, collapse = "_"))))
   outlist$lXv <- a %>% inner_join(tibble(segment_ = names(lista), usegment = as.integer(f))) %>% mutate(segment_ = segment_[usegment]) %>% 
