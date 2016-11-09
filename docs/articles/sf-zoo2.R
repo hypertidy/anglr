@@ -1,3 +1,9 @@
+## ----setup, include=FALSE------------------------------------------------
+knitr::opts_chunk$set(echo = TRUE)
+library(spbabel)
+library(rgdal)
+library(dplyr)
+
 ## ------------------------------------------------------------------------
 p1 <- cbind(x = c(0, 0, 0.75, 1,   0.5, 0.8, 0.69, 0), 
            y = c(0, 1, 1,    0.8, 0.7, 0.6, 0,    0))
@@ -75,11 +81,123 @@ l2 <- inner_join(sc$o[2, ], sc$t) %>% split(.$triangle_) %>% purrr::map(function
 j <- lapply(l2, function(x) polygon(cbind(x$x_, x$y_), col = "firebrick"))
 
 
-
+ set.seed(75)
 sc <- rangl::rangl(as(x1, "Spatial"))
 plot(x1)
 for (i in seq(nrow(x1))) {
-  l1 <- inner_join(sc$o[i, ], sc$t) %>% split(.$triangle_) %>% purrr::map(function(x) inner_join(x, sc$tXv, "triangle_") %>% inner_join(sc$v, "vertex_")) 
+  l1 <- inner_join(sc$o[i, ], sc$t, "object_") %>% split(.$triangle_) %>% purrr::map(function(x) inner_join(x, sc$tXv, "triangle_") %>% inner_join(sc$v, "vertex_")) 
+ 
   j <- lapply(l1, function(x) polygon(cbind(x$x_, x$y_), border = sample(c("grey", "firebrick", viridis::viridis(5)), 1)))
 }
+
+## ------------------------------------------------------------------------
+#library(rworldmap)
+#data(countriesLow)
+#p <- countriesLow
+library(rgdal)
+p <- readOGR(system.file("extdata", "small_world.gpkg", package = "rangl"), "ne_110m_admin_0_countries")
+plot(p, col = viridis::viridis(nrow(p)))
+
+## ------------------------------------------------------------------------
+library(spbabel)
+(pnganz <- subset(p, name %in% c("Australia", "Indonesia", "New Zealand", "Papua New Guinea")))
+pnganz$color <- viridis::viridis(nrow(pnganz))
+plot(pnganz, col = viridis::viridis(nrow(pnganz)))
+
+## ------------------------------------------------------------------------
+str(geometry(pnganz[1, ]))
+
+
+## ------------------------------------------------------------------------
+plot(as(pnganz, "SpatialLinesDataFrame"))
+plot(as(pnganz, "SpatialLinesDataFrame"), col = viridis::viridis(nrow(pnganz), alpha = 0.7), lwd = c(2, 4), add = TRUE)
+
+str(as(geometry(pnganz[1,]), "SpatialLines"))
+
+## ------------------------------------------------------------------------
+ptabs <- spbabel::map_table(pnganz)
+print(names(ptabs))
+print(sapply(ptabs, nrow))
+
+## ------------------------------------------------------------------------
+ptabs$o
+
+## ------------------------------------------------------------------------
+ptabs$b
+
+## ------------------------------------------------------------------------
+ptabs$bXv
+
+## ------------------------------------------------------------------------
+ptabs$v
+
+## ------------------------------------------------------------------------
+ltabs <- spbabel::map_table(as(pnganz, "SpatialLinesDataFrame"))
+
+for (i in seq_along(ltabs)) {
+  writeLines("------------------------------")
+  print(ltabs[i])
+  print(ptabs[i])
+  writeLines("")
+  
+}
+
+## ------------------------------------------------------------------------
+lsegment <- rangl::rangl(as(pnganz, "SpatialLinesDataFrame"))
+as.data.frame(lapply(lsegment, nrow))
+
+## ----eval=FALSE,include=FALSE--------------------------------------------
+#  library(geosphere)
+#  library(rangl)
+#  x <- globe(rangl(SpatialMultiPoints(list(randomCoordinates(5e4)),
+#                     proj4string = CRS("+proj=longlat +ellps=WGS84 +no_defs"))),
+#             "+proj=geocent +a=1")
+#  
+#  tri <- geometry::convhulln(cbind(x$v$x_, x$v$y_, x$v$z_))
+#  rgl::triangles3d(cbind(x$v$x_, x$v$y_, x$v$z_)[t(tri), ],
+#                   specular = "black",
+#                   color = "skyblue", alpha = 0.4)
+#  
+#  plot(globe(lsegment, "+proj=geocent +a=1.1"))
+#  
+
+## ------------------------------------------------------------------------
+par(mar = rep(0, 4))
+plot(lsegment$v$x_, lsegment$v$y_, asp = 1, pch = ".", axes = FALSE)
+lines(lsegment$v$x_, lsegment$v$y_, col = viridis::viridis(4))
+
+## ------------------------------------------------------------------------
+par(mar = rep(0, 4))
+plot(lsegment$v$x_, lsegment$v$y_, asp = 1, pch = ".", axes = FALSE)
+lsegment$o$color <- viridis::viridis(nrow(lsegment$o))
+segs <- lsegment$l %>% inner_join(lsegment$o %>% select(object_, color)) %>% inner_join(lsegment$lXv) %>% select(color, vertex_) %>% inner_join(lsegment$v)
+ix <- seq(1, nrow(segs), by  = 2); segments(segs$x_[ix], segs$y_[ix], segs$x_[ix + 1], segs$y_[ix+1], col = segs$color[ix], lwd = 4)
+
+## ------------------------------------------------------------------------
+prim2D <- rangl::rangl(pnganz)
+plot(pnganz, border = "black", col = "transparent", lwd = 4)
+for (i in seq(nrow(prim2D$t))) {
+  tri <- prim2D$t[i, ] %>% inner_join(prim2D$tXv, "triangle_") %>% inner_join(prim2D$v, "vertex_") %>% select(x_, y_)
+  polygon(tri$x_, tri$y_, border = (prim2D$t[i, ] %>% inner_join(prim2D$o, "object_"))$color[1])
+}
+
+
+## ------------------------------------------------------------------------
+library(rgl)
+plot(prim2D, specular = "black")
+subid <- currentSubscene3d()
+rglwidget(elementId="pnganz")
+plot(rangl::globe(prim2D), specular = "black")
+subid <- currentSubscene3d()
+rglwidget(elementId="png_anz_globe")
+
+## ------------------------------------------------------------------------
+prim2D$v
+rangl::globe(prim2D)$v
+
+## ------------------------------------------------------------------------
+rangl::globe(prim2D)$meta[, c("proj", "ctime")]
+
+## ------------------------------------------------------------------------
+
 
