@@ -6,11 +6,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>All news. rangl</title>
+<title>All news â€¢ rangl</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
-
 <!-- Bootstrap -->
 
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -22,6 +21,7 @@
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
@@ -34,10 +34,9 @@
   </head>
 
   <body>
-    <div class="container">
+    <div class="container template-news">
       <header>
-      
-<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+      <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
@@ -50,9 +49,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">Home</a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -62,19 +58,28 @@
   <a href="../news/index.html">News</a>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
+
       
       </header>
 
       <div class="row">
+
   <div class="col-md-9">
-    <div id="rangl-0.4.0" class="section level1">
-<h1>rangl 0.4.0</h1>
+    <div class="page-header">
+      <h1>Change log <small>All releases</small></h1>
+    </div>
+
+    <div class="contents">
+    <div id="rangl-0-4-0" class="section level1">
+<h1 class="hasAnchor">
+<a href="#rangl-0-4-0" class="anchor"> </a>rangl 0.4.0</h1>
 <ul><li><p>old functions made defunct</p></li>
 <li><p>points now have meta table (it was missing), and singular points are now supported</p></li>
 <li><p>raster package is now an Import</p></li>
@@ -83,14 +88,16 @@
 <li><p>quashed a major bug introduced by use of dplyr::distinct, best to use factor unique classifier on character versions of coords</p></li>
 <li><p>several cleanup fixes</p></li>
 </ul></div>
-    <div id="rangl-0.3.0" class="section level1">
-<h1>rangl 0.3.0</h1>
+    <div id="rangl-0-3-0" class="section level1">
+<h1 class="hasAnchor">
+<a href="#rangl-0-3-0" class="anchor"> </a>rangl 0.3.0</h1>
 <ul><li><p>rename again, main function is called ‘rangl’, the term ‘mesh’ is too often used across R</p></li>
 <li><p>rangl method for trip</p></li>
 <li><p>fix for spbabel now means MultiPoints are rangl()-able</p></li>
 </ul></div>
-    <div id="rangl-0.2.0" class="section level1">
-<h1>rangl 0.2.0</h1>
+    <div id="rangl-0-2-0" class="section level1">
+<h1 class="hasAnchor">
+<a href="#rangl-0-2-0" class="anchor"> </a>rangl 0.2.0</h1>
 <ul><li><p>removed old globe() plot behaviour, this function now just converts coordinates to geocentric XYZ</p></li>
 <li><p>added generic “mesh()” function to convert SpatialPolygons, SpatialLines, and rgl ‘mesh3d’ objects (only those that use triangle primitives)</p></li>
 <li><p>deprecated “tri_mesh” function, replaced by mesh()</p></li>
@@ -101,20 +108,22 @@
 <li><p>performance improved for hole finding and removal from mesh</p></li>
 <li><p>achieved working package scaffolding</p></li>
 </ul></div>
-    <div id="trimesh-0.1.0" class="section level1">
-<h1>trimesh 0.1.0</h1>
+    <div id="trimesh-0-1-0" class="section level1">
+<h1 class="hasAnchor">
+<a href="#trimesh-0-1-0" class="anchor"> </a>trimesh 0.1.0</h1>
 <ul><li>first release to Github</li>
 </ul></div>
+    </div>
   </div>
 
-  <div class="col-md-3 hidden-xs">
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#rangl-0.4.0">0.4.0</a></li>
-        <li><a href="#rangl-0.3.0">0.3.0</a></li>
-        <li><a href="#rangl-0.2.0">0.2.0</a></li>
-        <li><a href="#trimesh-0.1.0">0.1.0</a></li>
+        <li><a href="#rangl-0-4-0">0.4.0</a></li>
+        <li><a href="#rangl-0-3-0">0.3.0</a></li>
+        <li><a href="#rangl-0-2-0">0.2.0</a></li>
+        <li><a href="#trimesh-0-1-0">0.1.0</a></li>
       </ul>
     </div>
   </div>
@@ -122,7 +131,14 @@
 </div>
 
       <footer>
-      <p>Built by <a href="http://hadley.github.io/pkgdown/">pkgdown</a>. Styled with <a href="http://getbootstrap.com">Bootstrap 3</a>.</p>
+      <div class="copyright">
+  <p>Developed by Michael D. Sumner.</p>
+</div>
+
+<div class="pkgdown">
+  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+</div>
+
       </footer>
    </div>
 
