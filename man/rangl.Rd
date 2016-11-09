@@ -38,8 +38,6 @@ rangl(x, ...)
 
 \item{na.rm}{remove missing values}
 
-\item{x}{\code{\link[raster]{raster}}}
-
 \item{...}{unused}
 }
 \value{
