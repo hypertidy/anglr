@@ -11,10 +11,10 @@
 #' @export
 #' @importFrom rgl shade3d
 #' @examples
-#' example(rangl)
-#' if(exists("b")) { 
-#'  plot(b)
-#'  }
+#' #example(rangl)
+#' #if(exists("b")) { 
+#' #  plot(b)
+#' #  }
 #' @name plot-rangl
 #' @aliases plot
 plot.trimesh <- function(x,  ...) {
@@ -106,6 +106,7 @@ plot.pointmesh <- function(x,  ...) {
 
 
 #' @rdname plot-rangl
+#' @export
 #' @examples
 #' example(rangl.RasterLayer)
 #' plot(w)

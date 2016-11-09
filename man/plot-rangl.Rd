@@ -34,10 +34,10 @@ used by the \code{\link[rgl]{rgl}} package and plotted. These plot methods retur
 the rgl form invisibly.
 }
 \examples{
-example(rangl)
-if(exists("b")) { 
- plot(b)
- }
+#example(rangl)
+#if(exists("b")) { 
+#  plot(b)
+#  }
 example(rangl.RasterLayer)
 plot(w)
 }

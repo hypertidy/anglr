@@ -17,18 +17,18 @@
 #' plot(b)
 #' if (require(rworldxtra)) {
 #'
-#' data(countriesHigh)
-#' sv <- c("New Zealand", "Antarctica", "Papua New Guinea",
-#'  "Indonesia", "Malaysia", "Fiji", "Australia")
-#' a <- subset(countriesHigh, SOVEREIGNT %in% sv)
-#' b7 <- rangl(a, max_area = 0.5)
-#' plot(globe(b7))
-#' }
+#' #data(countriesHigh)
+#' #sv <- c("New Zealand", "Antarctica", "Papua New Guinea",
+#' #  "Indonesia", "Malaysia", "Fiji", "Australia")
+#' #a <- subset(countriesHigh, SOVEREIGNT %in% sv)
+#' #b7 <- rangl(a, max_area = 0.5)
+#' #plot(globe(b7))
+#' #}
 #' ## -----------------------------------------------
 #' ## LINES
-#' l1 <- rangl(as(a, "SpatialLinesDataFrame") )
-#' plot(l1)
-#' plot(globe(l1))
+#' #l1 <- rangl(as(a, "SpatialLinesDataFrame") )
+#' #plot(l1)
+#' #plot(globe(l1))
 rangl <- function(x, ...) {
   UseMethod("rangl")
 }
