@@ -61,8 +61,8 @@ rangl.SpatialLines <- function(x, ...) {
   ll <- vector("list", nrow(tabs$o))
   for (i_obj in seq(nrow(tabs$o))) {
     tabs_i <- tabs; tabs_i$o <- tabs_i$o[i_obj, ]
-    tabs_i <- semi_cascade(tabs_i)
-    tt_i <- line_mesh_map_table1(tabs_i)
+    tabs_i <- rangl:::semi_cascade(tabs_i)
+    tt_i <- rangl:::line_mesh_map_table1(tabs_i)
     ll[[i_obj]] <- tt_i
   }
   
@@ -78,6 +78,16 @@ rangl.SpatialLines <- function(x, ...) {
   allverts$uvert <- as.integer(factor(paste(allverts$x_, allverts$y_, sep = "_")))
   allverts$vertex_ <- spbabel:::id_n(length(unique(allverts$uvert)))[allverts$uvert]
   outlist$lXv <- allverts[, c("segment_", "vertex_")]
+  
+  ## normalize segments
+  a <- outlist$lXv %>% arrange(segment_, vertex_)
+  lista <- split(a, a$segment_)
+  f <- factor(unlist(lapply(lista, function(x) paste(x$vertex_, collapse = "_"))))
+  outlist$lXv <- a %>% inner_join(tibble(segment_ = names(lista), usegment = as.integer(f))) %>% mutate(segment_ = segment_[usegment]) %>% 
+    dplyr::select(segment_, vertex_) %>% distinct()
+  outlist$l <- outlist$l %>% inner_join(tibble(segment_ = names(lista), usegment = as.integer(f))) %>% mutate(segment_ = segment_[usegment]) %>% dplyr::select(segment_, object_)
+  
+  
   outlist$v <- dplyr::distinct_(allverts, "x_", "y_", "vertex_")
   ## finally add longitude and latitude
   outlist$meta <- tibble::tibble(proj = pr4, x = "x_", y = "y_", ctime = format(Sys.time(), tz = "UTC"))
