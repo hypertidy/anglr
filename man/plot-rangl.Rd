@@ -33,12 +33,7 @@ The data structures from \code{\link{rangl}} are converted to their analogous fo
 used by the \code{\link[rgl]{rgl}} package and plotted. These plot methods return
 the rgl form invisibly.
 }
-\examples{
-#example(rangl)
-#if(exists("b")) { 
-#  plot(b)
-#  }
-example(rangl.RasterLayer)
-plot(w)
+\seealso{
+\code{\link{rangl.RasterLayer}}
 }
 
