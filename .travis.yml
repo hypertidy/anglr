@@ -15,3 +15,4 @@ after_success:
 
 r_binary_packages:
   - rgdal
+  - sf
