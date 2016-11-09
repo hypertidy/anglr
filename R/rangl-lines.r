@@ -50,7 +50,7 @@ line_mesh_map_table1 <- function(tabs) {
   tabs
 }
 #' @rdname rangl
-#' @importFrom dplyr arrange distinct mutate
+#' @importFrom dplyr %>%  arrange distinct mutate
 #' @export
 rangl.SpatialLines <- function(x, ...) {
   pr4 <- proj4string(x)
@@ -62,8 +62,8 @@ rangl.SpatialLines <- function(x, ...) {
   ll <- vector("list", nrow(tabs$o))
   for (i_obj in seq(nrow(tabs$o))) {
     tabs_i <- tabs; tabs_i$o <- tabs_i$o[i_obj, ]
-    tabs_i <- rangl:::semi_cascade(tabs_i)
-    tt_i <- rangl:::line_mesh_map_table1(tabs_i)
+    tabs_i <- semi_cascade(tabs_i)
+    tt_i <- line_mesh_map_table1(tabs_i)
     ll[[i_obj]] <- tt_i
   }
   
@@ -86,7 +86,9 @@ rangl.SpatialLines <- function(x, ...) {
   f <- factor(unlist(lapply(lista, function(x) paste(x$vertex_, collapse = "_"))))
   outlist$lXv <- a %>% inner_join(tibble(segment_ = names(lista), usegment = as.integer(f))) %>% mutate(segment_ = segment_[usegment]) %>% 
     dplyr::select(segment_, vertex_) %>% distinct()
-  outlist$l <- outlist$l %>% inner_join(tibble(segment_ = names(lista), usegment = as.integer(f))) %>% mutate(segment_ = segment_[usegment]) %>% dplyr::select(segment_, object_)
+  outlist$l <- outlist$l %>% inner_join(tibble(segment_ = names(lista), usegment = as.integer(f))) %>% 
+    mutate(segment_ = segment_[usegment]) %>% 
+    dplyr::select(segment_, object_)
   
   
   outlist$v <- dplyr::distinct_(allverts, "x_", "y_", "vertex_")
