@@ -1,4 +1,4 @@
-context("havez")
+context("Icanhavez")
 
 
 library(spbabel)
