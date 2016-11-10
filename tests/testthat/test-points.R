@@ -9,7 +9,7 @@ data(wrld_simpl)
 pts <- as(as(wrld_simpl, "SpatialLinesDataFrame"), "SpatialPointsDataFrame")
 mpts <- as(as(wrld_simpl, "SpatialLinesDataFrame"), "SpatialMultiPointsDataFrame")
 test_that("points works", {
-  expect_that(rangl(pts), throws_error("you don't really"))
+  expect_silent(rangl(pts))
 })
 
 

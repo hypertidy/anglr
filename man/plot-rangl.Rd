@@ -9,13 +9,13 @@
 \alias{plot.trimesh}
 \title{Plot objects in OpenGL}
 \usage{
-plot.trimesh(x, ...)
+\method{plot}{trimesh}(x, ...)
 
-plot.linemesh(x, ...)
+\method{plot}{linemesh}(x, ...)
 
-plot.pointmesh(x, ...)
+\method{plot}{pointmesh}(x, ...)
 
-plot.quad_mesh(x, ...)
+\method{plot}{quad_mesh}(x, ...)
 }
 \arguments{
 \item{x}{object from \code{\link{rangl}}}
@@ -33,12 +33,7 @@ The data structures from \code{\link{rangl}} are converted to their analogous fo
 used by the \code{\link[rgl]{rgl}} package and plotted. These plot methods return
 the rgl form invisibly.
 }
-\examples{
-example(rangl)
-if(exists("b")) { 
- plot(b)
- }
-example(rangl.RasterLayer)
-plot(w)
+\seealso{
+\code{\link{rangl.RasterLayer}}
 }
 

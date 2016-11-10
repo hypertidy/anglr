@@ -15,20 +15,20 @@
 #' data(wrld_simpl)
 #' b <- rangl(wrld_simpl)
 #' plot(b)
-#' if (require(rworldxtra)) {
+#' #if (require(rworldxtra)) {
 #'
-#' data(countriesHigh)
-#' sv <- c("New Zealand", "Antarctica", "Papua New Guinea",
-#'  "Indonesia", "Malaysia", "Fiji", "Australia")
-#' a <- subset(countriesHigh, SOVEREIGNT %in% sv)
-#' b7 <- rangl(a, max_area = 0.5)
-#' plot(globe(b7))
-#' }
+#' #data(countriesHigh)
+#' #sv <- c("New Zealand", "Antarctica", "Papua New Guinea",
+#' #  "Indonesia", "Malaysia", "Fiji", "Australia")
+#' #a <- subset(countriesHigh, SOVEREIGNT %in% sv)
+#' #b7 <- rangl(a, max_area = 0.5)
+#' #plot(globe(b7))
+#' #}
 #' ## -----------------------------------------------
 #' ## LINES
-#' l1 <- rangl(as(a, "SpatialLinesDataFrame") )
-#' plot(l1)
-#' plot(globe(l1))
+#' #l1 <- rangl(as(a, "SpatialLinesDataFrame") )
+#' #plot(l1)
+#' #plot(globe(l1))
 rangl <- function(x, ...) {
   UseMethod("rangl")
 }
@@ -50,6 +50,7 @@ line_mesh_map_table1 <- function(tabs) {
   tabs
 }
 #' @rdname rangl
+#' @importFrom dplyr %>%  arrange distinct mutate
 #' @export
 rangl.SpatialLines <- function(x, ...) {
   pr4 <- proj4string(x)
@@ -78,6 +79,18 @@ rangl.SpatialLines <- function(x, ...) {
   allverts$uvert <- as.integer(factor(paste(allverts$x_, allverts$y_, sep = "_")))
   allverts$vertex_ <- spbabel:::id_n(length(unique(allverts$uvert)))[allverts$uvert]
   outlist$lXv <- allverts[, c("segment_", "vertex_")]
+  
+  ## normalize segments
+  a <- outlist$lXv %>% dplyr::arrange(segment_, vertex_)
+  lista <- split(a, a$segment_)
+  f <- factor(unlist(lapply(lista, function(x) paste(x$vertex_, collapse = "_"))))
+  outlist$lXv <- a %>% inner_join(tibble(segment_ = names(lista), usegment = as.integer(f))) %>% mutate(segment_ = segment_[usegment]) %>% 
+    dplyr::select(segment_, vertex_) %>% distinct()
+  outlist$l <- outlist$l %>% inner_join(tibble(segment_ = names(lista), usegment = as.integer(f))) %>% 
+    mutate(segment_ = segment_[usegment]) %>% 
+    dplyr::select(segment_, object_)
+  
+  
   outlist$v <- dplyr::distinct_(allverts, "x_", "y_", "vertex_")
   ## finally add longitude and latitude
   outlist$meta <- tibble::tibble(proj = pr4, x = "x_", y = "y_", ctime = format(Sys.time(), tz = "UTC"))
