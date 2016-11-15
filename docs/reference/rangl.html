@@ -118,8 +118,6 @@
       <dd><code><a href='http://www.rdocumentation.org/packages/raster/topics/raster'>raster</a></code>, by default <code>x</code> is used</dd>
       <dt>na.rm</dt>
       <dd>remove missing values</dd>
-      <dt>...</dt>
-      <dd>unused</dd>
     </dl>
     
     <div class="Value">
@@ -141,18 +139,21 @@
 <span class='fu'>library</span>(<span class='no'>maptools</span>)
 <span class='fu'>data</span>(<span class='no'>wrld_simpl</span>)
 <span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'>rangl</span>(<span class='no'>wrld_simpl</span>)
-<span class='fu'>plot</span>(<span class='no'>b</span>)</div><div class='output'><strong class='text-info'>Joining, by = &quot;object_&quot;</strong></div><div class='output'><strong class='text-info'>Joining, by = &quot;triangle_&quot;</strong></div><div class='input'><span class='kw'>if</span> (<span class='fu'>require</span>(<span class='no'>rworldxtra</span>)) {
+<span class='fu'>plot</span>(<span class='no'>b</span>)</div><div class='output'><strong class='text-info'>Joining, by = &quot;object_&quot;</strong></div><div class='output'><strong class='text-info'>Joining, by = &quot;triangle_&quot;</strong></div><div class='input'><span class='co'>#if (require(rworldxtra)) {</span>
 
-<span class='fu'>data</span>(<span class='no'>countriesHigh</span>)
-<span class='no'>sv</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='st'>"New Zealand"</span>, <span class='st'>"Antarctica"</span>, <span class='st'>"Papua New Guinea"</span>,
- <span class='st'>"Indonesia"</span>, <span class='st'>"Malaysia"</span>, <span class='st'>"Fiji"</span>, <span class='st'>"Australia"</span>)
-<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>subset</span>(<span class='no'>countriesHigh</span>, <span class='no'>SOVEREIGNT</span> <span class='kw'>%in%</span> <span class='no'>sv</span>)
-<span class='no'>b7</span> <span class='kw'>&lt;-</span> <span class='fu'>rangl</span>(<span class='no'>a</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)
-<span class='fu'>plot</span>(<span class='fu'>globe</span>(<span class='no'>b7</span>))
-}</div><div class='output'><strong class='text-info'>Joining, by = &quot;object_&quot;</strong></div><div class='output'><strong class='text-info'>Joining, by = &quot;triangle_&quot;</strong></div><div class='input'><span class='co'>## -----------------------------------------------</span>
+<span class='co'>#data(countriesHigh)</span>
+<span class='co'>#sv &lt;- c("New Zealand", "Antarctica", "Papua New Guinea",</span>
+<span class='co'>#  "Indonesia", "Malaysia", "Fiji", "Australia")</span>
+<span class='co'>#a &lt;- subset(countriesHigh, SOVEREIGNT %in% sv)</span>
+<span class='co'>#b7 &lt;- rangl(a, max_area = 0.5)</span>
+<span class='co'>#plot(globe(b7))</span>
+<span class='co'>#}</span>
+<span class='co'>## -----------------------------------------------</span>
 <span class='co'>## LINES</span>
-<span class='no'>l1</span> <span class='kw'>&lt;-</span> <span class='fu'>rangl</span>(<span class='fu'>as</span>(<span class='no'>a</span>, <span class='st'>"SpatialLinesDataFrame"</span>) )
-<span class='fu'>plot</span>(<span class='no'>l1</span>)</div><div class='output'><strong class='text-info'>Joining, by = &quot;object_&quot;</strong></div><div class='output'><strong class='text-info'>Joining, by = &quot;segment_&quot;</strong></div><div class='input'><span class='fu'>plot</span>(<span class='fu'>globe</span>(<span class='no'>l1</span>))</div><div class='output'><strong class='text-info'>Joining, by = &quot;object_&quot;</strong></div><div class='output'><strong class='text-info'>Joining, by = &quot;segment_&quot;</strong></div><div class='input'><span class='fu'>library</span>(<span class='no'>raster</span>)
+<span class='co'>#l1 &lt;- rangl(as(a, "SpatialLinesDataFrame") )</span>
+<span class='co'>#plot(l1)</span>
+<span class='co'>#plot(globe(l1))</span>
+<span class='fu'>library</span>(<span class='no'>raster</span>)
 <span class='no'>w</span> <span class='kw'>&lt;-</span> <span class='fu'>raster</span>(<span class='no'>volcano</span>)
 <span class='fu'>plot</span>(<span class='fu'>rangl</span>(<span class='no'>w</span>/<span class='fl'>300</span>))
 
