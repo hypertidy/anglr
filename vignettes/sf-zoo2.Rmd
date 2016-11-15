@@ -183,7 +183,7 @@ str(geometry(pnganz[1, ]))
 
 NOTE: the `Spatial` classes here are **pre-simple features**, so they are more analogous to the structures in a shapefile in that a polygon hole's "island parent"" may be ambiguous, but this is not so important to this story. R now has simple features in the `sfr` project here, which adds Z, M and the possibility of some of the exotic types as well. https://github.com/edzer/sfr
 
-These hierarchical structures can be serialized and stored in different ways, typically they are stored as binary geoms and stored directly in a table. As the Spatial Data topic says under "Why Geoms and not More Normal Form?" this is very performant, since a small number of large records can be optimized better compared to a large number of small records. 
+These hierarchical structures can be serialized and stored in different ways, typically they are stored as binary geoms and stored directly in a table. 
 
 An interesting aspect here is that these structures don't describe the topology of the objects in any special way, these are just *paths* of coordinates, and when they are plotted or used in analysis there's a rule about how space is enclosed by a closed path. If we treat them as lines, the only difference is to not treat them as enclosed paths.  Literally the only difference in the structure of this object from the polygons version is the name of the class, and the behaviour that methods invoked for this object will provide. 
 

@@ -6,10 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot objects in OpenGL — plot-rangl â€¢ rangl</title>
+<title>plot-rangl. rangl</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
+
 <!-- Bootstrap -->
 
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -21,7 +22,6 @@
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
@@ -34,9 +34,10 @@
   </head>
 
   <body>
-    <div class="container template-reference-topic">
+    <div class="container">
       <header>
-      <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
@@ -49,6 +50,9 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">Home</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -58,84 +62,71 @@
   <a href="../news/index.html">News</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
-
       
       </header>
 
-      <div class="row">
-  <div class="col-md-9 contents">
-    <div class="page-header">
-    <h1>Plot objects in OpenGL</h1>
-    </div>
+      <div class="page-header">
+  <h1>Plot objects in OpenGL</h1>
+</div>
 
+<div class="row">
+  <div class="col-md-9">
     
-    <p>Plot using the <code><a href='http://www.rdocumentation.org/packages/rgl/topics/rgl-package'>rgl-package</a></code>.</p>
+    <p>Plot using the <code><a href='http://www.rdocumentation.org/packages/rgl-package/topics/rgl'>rgl-package</a></code>.</p>
     
 
-    <pre><span class='fu'>plot.trimesh</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre><span class='co'># S3 method for trimesh</span>
+<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
-<span class='fu'>plot.linemesh</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='co'># S3 method for linemesh</span>
+<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
-<span class='fu'>plot.pointmesh</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='co'># S3 method for pointmesh</span>
+<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
-<span class='fu'>plot.quad_mesh</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='co'># S3 method for quad_mesh</span>
+<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2>Arguments</h2>
     <dl class="dl-horizontal">
       <dt>x</dt>
-      <dd>object from <code><a href='rangl.html'>rangl</a></code></dd>
+      <dd>object from <code>rangl</code></dd>
       <dt>...</dt>
       <dd>args for underlying plotting</dd>
     </dl>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <div class="Value">
+      <h2>Value</h2>
 
-    <p>the rgl mesh3d object, invisibly</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+      <p>the rgl mesh3d object, invisibly</p>
+    </div>
 
-    <p>The data structures from <code><a href='rangl.html'>rangl</a></code> are converted to their analogous forms
-used by the <code><a href='http://www.rdocumentation.org/packages/rgl/topics/rgl-package'>rgl</a></code> package and plotted. These plot methods return
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p>The data structures from <code>rangl</code> are converted to their analogous forms
+used by the <code><a href='http://www.rdocumentation.org/packages/rgl-package/topics/rgl'>rgl</a></code> package and plotted. These plot methods return
 the rgl form invisibly.</p>
-    
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>example</span>(<span class='no'>rangl</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: no help found for ‘rangl’</span></div><div class='input'><span class='kw'>if</span>(<span class='fu'>exists</span>(<span class='st'>"b"</span>)) {
- <span class='fu'>plot</span>(<span class='no'>b</span>)
- }
-<span class='fu'>example</span>(<span class='no'>rangl.RasterLayer</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: no help found for ‘rangl.RasterLayer’</span></div><div class='input'><span class='fu'>plot</span>(<span class='no'>w</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot(w): object &#39;w&#39; not found</span></div></pre>
-  </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
+    <div class="See also">
+      <h2>See also</h2>
 
-      <li><a href="#details">Details</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+      <p><code>rangl.RasterLayer</code></p>
+    </div>
+      </div>
+  <div class="col-md-3">
   </div>
 </div>
 
       <footer>
-      <div class="copyright">
-  <p>Developed by Michael D. Sumner.</p>
-</div>
-
-<div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
-</div>
-
+      <p>Built by <a href="http://hadley.github.io/pkgdown/">pkgdown</a>. Styled with <a href="http://getbootstrap.com">Bootstrap 3</a>.</p>
       </footer>
    </div>
 

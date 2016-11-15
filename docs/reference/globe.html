@@ -103,10 +103,11 @@
     </div>
     
     <h2 id="examples">Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>maptools</span>)
-<span class='fu'>data</span>(<span class='no'>wrld_simpl</span>)
-<span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'>globe</span>(<span class='fu'>rangl</span>(<span class='fu'>as</span>(<span class='no'>wrld_simpl</span>, <span class='st'>"SpatialLinesDataFrame"</span>)))
-<span class='fu'>plot</span>(<span class='no'>g</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output'><strong class='text-info'>Joining, by = &quot;object_&quot;</strong></div><div class='output'><strong class='text-info'>Joining, by = &quot;segment_&quot;</strong></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>maptools</span>)</div><div class='output'><strong class='text-info'>Loading required package: sp</strong></div><div class='output'><strong class='text-info'>Checking rgeos availability: TRUE</strong></div><div class='input'><span class='fu'>data</span>(<span class='no'>wrld_simpl</span>)
+<span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'>globe</span>(<span class='fu'>rangl</span>(<span class='fu'>as</span>(<span class='no'>wrld_simpl</span>, <span class='st'>"SpatialLinesDataFrame"</span>)))</div><div class='output'><strong class='text-info'>Joining, by = &quot;segment_&quot;</strong></div><div class='output'><strong class='text-info'>Joining, by = &quot;segment_&quot;</strong></div><div class='input'><span class='kw'>if</span> (<span class='fu'>interactive</span>()) {
+ <span class='fu'>plot</span>(<span class='no'>g</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>3</span>)
+ }</div><div class='output'><strong class='text-info'>Joining, by = &quot;object_&quot;</strong></div><div class='output'><strong class='text-info'>Joining, by = &quot;segment_&quot;</strong></div><div class='output'><strong class='text-warning'>Warning message:
+data length [39161] is not a sub-multiple or multiple of the number of rows [19581]</strong></div></pre>
   </div>
   <div class="col-md-3">
   </div>
