@@ -221,12 +221,15 @@ Run the layer through `globe()` and print out the vertices table.
 ```{r}
 prim2D$v
 rangl::globe(prim2D)$v
+subid <- currentSubscene3d()
+rglwidget(elementId="prim2D")
 ```
 
 The only thing that happened was that the input `x_` and `y_` were converted to geocentric "x, y, z" coordinates. Under the hood this is done by driving the transformation with PROJ.4 (via the R package `proj4`). The PROJ.4 family in use is  "geocent", i.e. here the `meta` table simply records the history of transformations. 
 
 ```{r}
 rangl::globe(prim2D)$meta[, c("proj", "ctime")]
+
 ```
 
 We can otherwise do anything we like with the vertices, including reprojecting them and copying on other attributes. 
@@ -234,7 +237,7 @@ We can otherwise do anything we like with the vertices, including reprojecting t
 As an example, copy on the Etopo5 elevations, first with the default triangulation, and then with a denser version. 
 
 ```{r}
-
+## TBD
 ```
 
 
