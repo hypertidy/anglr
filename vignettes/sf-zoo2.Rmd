@@ -382,7 +382,7 @@ j <- lapply(l2, function(x) polygon(cbind(x$x_, x$y_), col = "firebrick"))
 ## this is slow but does show that we have a full and constrained triangulation
  set.seed(75)
 sc <- rangl::rangl(as(x1[24:30, ], "Spatial"))
-plot(x1[24:30, ])
+plot(x1[24:30, ], border = "black", lwd = 4)
 for (i in seq(nrow(x1))) {
   l1 <- inner_join(sc$o[i, ], sc$t, "object_") %>% split(.$triangle_) %>% purrr::map(function(x) inner_join(x, sc$tXv, "triangle_") %>% inner_join(sc$v, "vertex_")) 
  
