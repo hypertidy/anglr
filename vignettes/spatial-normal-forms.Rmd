@@ -182,8 +182,8 @@ par(mar = rep(0, 4))
 plot(lsegment$v$x_, lsegment$v$y_, asp = 1, pch = ".", axes = FALSE)
 lsegment$o$color <- viridis::viridis(nrow(lsegment$o))
 #segs <- lsegment$l %>% inner_join(lsegment$o %>% select(object_, color)) %>% inner_join(lsegment$lXv) %>% select(color, vertex_, segment_) %>% inner_join(lsegment$v)
-segs <- lsegment$lXv %>% inner_join(lsegment$l) %>% inner_join(lsegment$o %>% select(object_, color)) %>% select(color, vertex_, segment_) %>% inner_join(lsegment$v)
-ix <- seq(1, nrow(segs)-1, by  = 2); ix <- head(ix, 170); segments(segs$x_[ix], segs$y_[ix], segs$x_[ix + 1], segs$y_[ix+1], col = segs$color[ix], lwd = 4)
+segs <- lsegment$lXv %>% inner_join(lsegment$l) %>% inner_join(lsegment$o %>% dplyr::select(object_, color)) %>% dplyr::select(color, vertex_, segment_) %>% inner_join(lsegment$v)
+ix <- seq(1, nrow(segs)-1, by  = 2);  segments(segs$x_[ix], segs$y_[ix], segs$x_[ix + 1], segs$y_[ix+1], col = segs$color[ix], lwd = 4)
 ```
 
 This is not lovely code, though it is straight forward and systematic. Treated as segments we automatically get the right "topology" of our lines, we joined the object attribute down to the actual pairs of coordinates and plotted all the segments individually. We managed to keep our object-part-coordinate hierarchy, though we've chosen primitives belonging to objects rather than branches as the model. This is also convenient for the next step because line segments are what we need for generating primitives to represent the polygons as surfaces. 
@@ -196,7 +196,7 @@ Treat the polygon as segments build a triangulation, a surface of 2D triangle pr
 prim2D <- rangl::rangl(pnganz)
 plot(pnganz, border = "black", col = "transparent", lwd = 4)
 for (i in seq(nrow(prim2D$t))) {
-  tri <- prim2D$t[i, ] %>% inner_join(prim2D$tXv, "triangle_") %>% inner_join(prim2D$v, "vertex_") %>% select(x_, y_)
+  tri <- prim2D$t[i, ] %>% inner_join(prim2D$tXv, "triangle_") %>% inner_join(prim2D$v, "vertex_") %>% dplyr::select(x_, y_)
   polygon(tri$x_, tri$y_, border = (prim2D$t[i, ] %>% inner_join(prim2D$o, "object_"))$color[1])
 }
 
