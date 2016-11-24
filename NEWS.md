@@ -1,4 +1,8 @@
-# rangl dev
+# rangl 0.4.0
+
+* old functions made defunct
+
+* points now have meta table (it was missing), and singular points are now supported
 
 * raster package is now an Import
 

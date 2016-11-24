@@ -1,0 +1,229 @@
+---
+title: "Spatial normal forms"
+author: "Michael Sumner"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(spbabel)
+library(rgdal)
+library(dplyr)
+```
+
+In this document I describe a "normal-form" that provides a very general way of extending the traditional GIS forms, and is a bridge between vector and raster rather than being a different form altogether. The purpose of this document is to advocate for this general form of data organization that can be used for new extended uses of GIS. I'm not arguing that this be used in place of other optimized forms, although it can be: I am interested in operations that simply cannot be performed already. 
+
+When we talk about vector data in geo-spatial, we have at least three levels of hierarchy to consider in the data structures. 
+
+* objects (or features) - these are the things we primarily interact with and store data against
+* coordinates - these are the specific vertices, the dimensionless points that place our data in a geometry
+* branches - these are the parts that different objects are made of, they describe the way the coordinates are linked together, the topology
+
+GIS tools typically only provides direct access to the objects, though the relations between branches and coordinates can sometimes be seen. 
+
+We generally cannot store information against the branches or the coordinates, beyond what they inherently are defined by. For coordinates this is the X and Y values, and/or the longitude and latitudes, but simple features does provide the ability to store a "third" coordinate "Z" and or a measure coordinate "M".  M is typically used for "linear referencing", and not a more general multidimensional geometry (like time). 
+
+I'll use the countries example from a GeoPackage file provided here. I use R because I can tell the complete story with it, in a concrete and reproducible way. 
+
+Read in a polygon vector layer in traditional GIS form, and plot it. 
+
+```{r}
+library(rgdal)
+
+p <- readOGR("gpkg/small_world.gpkg", layer = "ne_110m_admin_0_countries", stringsAsFactors = FALSE)
+plot(p, col = viridis::viridis(nrow(p)))
+```
+
+This object `p` presents a "data frame" (i.e. a table) front-end that we can query and use at the objects level, much like in Manifold we can select a single object or row in a table. 
+
+```{r}
+library(spbabel)
+(pnganz <- subset(p, name %in% c("Australia", "Indonesia", "New Zealand", "Papua New Guinea")))
+pnganz$color <- viridis::viridis(nrow(pnganz))
+plot(pnganz, col = viridis::viridis(nrow(pnganz)))
+```
+
+Looking at the object's underlying geometric structure shows nested lists of matrixes of x,y coordinates. There is one matrix per branch,  analogous to the way that feature parts are nested in standard Geom binary forms like WKB. Each component branch stores extra information about whether it is a hole, the ring direction, a coordinate for label plotting and so on. We otherwise cannot store any more information on the component parts though. 
+
+
+```{r}
+str(geometry(pnganz[1, ]))
+
+```
+
+NOTE: the `Spatial` classes here are **pre-simple features**, so they are more analogous to the structures in a shapefile in that a polygon hole's "island parent"" may be ambiguous, but this is not so important to this story. R now has simple features in the `sfr` project here, which adds Z, M and the possibility of some of the exotic types as well. https://github.com/edzer/sfr
+
+These hierarchical structures can be serialized and stored in different ways, typically they are stored as binary geoms and stored directly in a table. 
+
+An interesting aspect here is that these structures don't describe the topology of the objects in any special way, these are just *paths* of coordinates, and when they are plotted or used in analysis there's a rule about how space is enclosed by a closed path. If we treat them as lines, the only difference is to not treat them as enclosed paths.  Literally the only difference in the structure of this object from the polygons version is the name of the class, and the behaviour that methods invoked for this object will provide. 
+
+```{r}
+plot(as(pnganz, "SpatialLinesDataFrame"))
+plot(as(pnganz, "SpatialLinesDataFrame"), col = viridis::viridis(nrow(pnganz), alpha = 0.7), lwd = c(2, 4), add = TRUE)
+
+str(as(geometry(pnganz[1,]), "SpatialLines"))
+```
+
+If we convert these data to "normal form", we actually need at least three tables, one each for the objects, the branches, and the coordinates (vertices). The `map_table` function in the `spbabel` package creates these but also adds another link table between branches and vertices to enable de-duplication of shared vertices. The de-duplication is required for triangulating the polygons, and other topological operations. 
+
+```{r}
+ptabs <- spbabel::map_table(pnganz)
+print(names(ptabs))
+print(sapply(ptabs, nrow))
+```
+
+Now it's a bit clearer how the underlying entities are put together. Each table here has a unique relational id, this allows us to subset and recombine these tables without having to convert indexes each time. 
+
+The objects. 
+
+```{r}
+ptabs$o
+```
+
+The branches record which object they belong to. 
+
+```{r}
+ptabs$b
+```
+
+The branches-link-vertex table records the relationship between vertices and branches (by default the de-duplication is done in X-Y but it could be done in other geometric spaces, e.g. in 1D time or 3D X-Y-Z or X-Y-Time). 
+
+This is the *instances of vertices* as opposed to the unique paired values of coordinates themselves. 
+
+```{r}
+ptabs$bXv
+```
+
+And finally the vertices. In this example there are fewer unique x-y vertex than there are **instance of the vertices**, not a one-to-one match. This discrepancy obviously increases greatly for layers with shared boundaries, though in this example it is mostly due to the final closing coordinate on each polygon path - it's a repeated instance, but not a repeated vertex *value*.  There is at least one shared edge in this layer, clearly the one between Indonesia and Papua New Guinea. 
+
+```{r}
+ptabs$v
+```
+
+## Polygons are just lines
+
+From this form we can see clearly that polygons and lines in GIS are really the same thing, we have *paths of coordinates* and then rules about how they are used. 
+
+If we compare each entity table side by side it's clear the only difference is whether a branch is badged as an island vs. a hole. 
+
+For points we don't need the branches or the order data, though for multipoints we do need branch. 
+
+```{r}
+ltabs <- spbabel::map_table(as(pnganz, "SpatialLinesDataFrame"))
+
+for (i in seq_along(ltabs)) {
+  writeLines("------------------------------")
+  print(ltabs[i])
+  print(ptabs[i])
+  writeLines("")
+  
+}
+```
+
+## What makes polygons different to lines? 
+
+The coordinate-path structures used above for polygons and lines are very explicit, and in traditional form cannot be used in a more abstract way. By collecting the attributes of the entities in use into their own tables we start to build this abstraction. The paths are represented as a sequence of identifiers, rather than the actual coordinate values themselves. Why do this?  We can abstract the choice of what do with those coordinate away from their storage. We also get a limited form of topology, in that a change made to one vertex coordinate attribute is reflected in all of the branches that use that vertex, analogous the Shared Edit mode in Manifold 8.0. 
+
+The next step in topological relationships is to represent each *segment* of a line rather than the entire path. To do this we need a table of segments, and a link table to store the identity of the two vertices used by those segments. 
+
+This has been implemented in the package `rangl`. 
+
+```{r}
+lsegment <- rangl::rangl(as(pnganz, "SpatialLinesDataFrame"))
+as.data.frame(lapply(lsegment, nrow))
+```
+
+
+```{r,eval=FALSE,include=FALSE}
+library(geosphere)
+library(rangl)
+x <- globe(rangl(SpatialMultiPoints(list(randomCoordinates(5e4)), 
+                   proj4string = CRS("+proj=longlat +ellps=WGS84 +no_defs"))), 
+           "+proj=geocent +a=1")
+
+tri <- geometry::convhulln(cbind(x$v$x_, x$v$y_, x$v$z_))
+rgl::triangles3d(cbind(x$v$x_, x$v$y_, x$v$z_)[t(tri), ], 
+                 specular = "black", 
+                 color = "skyblue", alpha = 0.4)
+
+plot(globe(lsegment, "+proj=geocent +a=1.1"))
+
+```
+
+This is no different for polygons when we store them as polygon paths, so then why is the segment/edge model useful? It provides a table to store metrics such as the length of the segment, its duration in time, and other information. The segment/edge model is also a required precursor for building a triangulated mesh. This brings us to an important stage of the story. 
+
+## Polygons are not composed of primitives
+
+Lines and polygons are stored as paths of coordinates, but lines can be decomposed to a more abstract form. Once in this form we can (in R) plot the lines much more quickly as segments, each with their own individual properties. 
+
+```{r}
+par(mar = rep(0, 4))
+plot(lsegment$v$x_, lsegment$v$y_, asp = 1, pch = ".", axes = FALSE)
+lines(lsegment$v$x_, lsegment$v$y_, col = viridis::viridis(4))
+```
+
+Not surprisingly, our connected line doesn't make much sense, but worse our attempts at applying multiple colours was completely unsuccessful. Segments to the rescue. 
+
+```{r}
+par(mar = rep(0, 4))
+plot(lsegment$v$x_, lsegment$v$y_, asp = 1, pch = ".", axes = FALSE)
+lsegment$o$color <- viridis::viridis(nrow(lsegment$o))
+segs <- lsegment$l %>% inner_join(lsegment$o %>% select(object_, color)) %>% inner_join(lsegment$lXv) %>% select(color, vertex_) %>% inner_join(lsegment$v)
+ix <- seq(1, nrow(segs), by  = 2); segments(segs$x_[ix], segs$y_[ix], segs$x_[ix + 1], segs$y_[ix+1], col = segs$color[ix], lwd = 4)
+```
+
+This is not lovely code, though it is straight forward and systematic. Treated as segments we automatically get the right "topology" of our lines, we joined the object attribute down to the actual pairs of coordinates and plotted all the segments individually. We managed to keep our object-part-coordinate hierarchy, though we've chosen primitives belonging to objects rather than branches as the model. This is also convenient for the next step because line segments are what we need for generating primitives to represent the polygons as surfaces. 
+
+## Constrained polygon triangulation starts with line primitives
+
+Treat the polygon as segments build a triangulation, a surface of 2D triangle primitives. 
+
+```{r}
+prim2D <- rangl::rangl(pnganz)
+plot(pnganz, border = "black", col = "transparent", lwd = 4)
+for (i in seq(nrow(prim2D$t))) {
+  tri <- prim2D$t[i, ] %>% inner_join(prim2D$tXv, "triangle_") %>% inner_join(prim2D$v, "vertex_") %>% select(x_, y_)
+  polygon(tri$x_, tri$y_, border = (prim2D$t[i, ] %>% inner_join(prim2D$o, "object_"))$color[1])
+}
+
+```
+
+The plot loop above is very inefficient, but it's purely to illustrate that we have the shapes in the right form. This is used in rangl to plot the shapes in 3D, either in native planar form or as a surface of a globe. 
+
+```{r}
+library(rgl)
+plot(prim2D, specular = "black")
+subid <- currentSubscene3d()
+rglwidget(elementId="pnganz")
+plot(rangl::globe(prim2D), specular = "black")
+subid <- currentSubscene3d()
+rglwidget(elementId="png_anz_globe")
+```
+
+Why do this? It's not just to plot a globe, but to see why it's helpful to see what the function `globe()` does. 
+
+Run the layer through `globe()` and print out the vertices table. 
+
+```{r}
+prim2D$v
+rangl::globe(prim2D)$v
+```
+
+The only thing that happened was that the input `x_` and `y_` were converted to geocentric "x, y, z" coordinates. Under the hood this is done by driving the transformation with PROJ.4 (via the R package `proj4`). The PROJ.4 family in use is  "geocent", i.e. here the `meta` table simply records the history of transformations. 
+
+```{r}
+rangl::globe(prim2D)$meta[, c("proj", "ctime")]
+```
+
+We can otherwise do anything we like with the vertices, including reprojecting them and copying on other attributes. 
+
+As an example, copy on the Etopo5 elevations, first with the default triangulation, and then with a denser version. 
+
+```{r}
+
+```
