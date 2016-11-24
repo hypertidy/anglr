@@ -4,20 +4,7 @@ path2seg <- function(x) {
   head(suppressWarnings(matrix(x, nrow = length(x) + 1, ncol = 2, byrow = FALSE)), -2L)
 }
 
-#' Deprecated from rangl
-#' @rdname rangl-deprecated
-#' @param x nothing
-#' @param ... ignored
-#' @export
-tri_mesh <- function(x, ...) {
-  .Deprecated("mesh", package= "rangl", old = "tri_mesh")
-}
 
-#' @rdname rangl-deprecated
-#' @export
-mesh <- function(x, ...) {
-  .Deprecated("rangl", package= "rangl", old = "mesh")
-}
 
 ## this internal function does the decomposition to primitives of a 
 ##  single Spatial object, i.e. a "multipolygon"
@@ -109,6 +96,31 @@ rangl.SpatialPolygons <- function(x, max_area = NULL, ...) {
   }
   
   ## renormalize the vertices
+  allverts <- dplyr::inner_join(outlist$tXv, outlist$v, "vertex_")
+  allverts$uvert <- as.integer(factor(paste(allverts$x_, allverts$y_, sep = "_")))
+  allverts$vertex_ <- spbabel:::id_n(length(unique(allverts$uvert)))[allverts$uvert]
+  outlist$tXv <- allverts[, c("triangle_", "vertex_")]
+  outlist$v <- dplyr::distinct_(allverts,  "vertex_", .keep_all = TRUE)[, c("x_", "y_", "vertex_")]
+  ## finally add longitude and latitude
+  outlist$meta <- tibble::tibble(proj = pr4, x = "x_", y = "y_", ctime = format(Sys.time(), tz = "UTC"))
+  class(outlist) <- "trimesh"
+  outlist
+}
+
+
+ranglPoly <- function(x, max_area = NULL, ...) {
+  pr4 <- proj4string(x)
+  x0 <- x
+  ## kludge for non DataFrames
+  if (! "data" %in% slotNames(x)) {
+    dummy <- data.frame(row_number = seq_along(x))
+    x <- sp::SpatialPolygonsDataFrame(x, dummy, match.ID = FALSE)
+  }
+  tabs <- spbabel::map_table(x)
+  
+  outlist <- tri_mesh_map_table1(tabs, max_area = max_area)
+  
+    ## renormalize the vertices
   allverts <- dplyr::inner_join(outlist$tXv, outlist$v, "vertex_")
   allverts$uvert <- as.integer(factor(paste(allverts$x_, allverts$y_, sep = "_")))
   allverts$vertex_ <- spbabel:::id_n(length(unique(allverts$uvert)))[allverts$uvert]

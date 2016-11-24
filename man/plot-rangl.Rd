@@ -5,14 +5,17 @@
 \alias{plot-rangl}
 \alias{plot.linemesh}
 \alias{plot.pointmesh}
+\alias{plot.quad_mesh}
 \alias{plot.trimesh}
-\title{plot the triangles in the tables}
+\title{Plot objects in OpenGL}
 \usage{
 \method{plot}{trimesh}(x, ...)
 
 \method{plot}{linemesh}(x, ...)
 
 \method{plot}{pointmesh}(x, ...)
+
+\method{plot}{quad_mesh}(x, ...)
 }
 \arguments{
 \item{x}{object from \code{\link{rangl}}}
@@ -23,12 +26,14 @@
 the rgl mesh3d object, invisibly
 }
 \description{
-plot
+Plot using the \code{\link[rgl]{rgl-package}}.
 }
-\examples{
-example(rangl)
-if(exists("b")) { 
- plot(b)
- }
+\details{
+The data structures from \code{\link{rangl}} are converted to their analogous forms
+used by the \code{\link[rgl]{rgl}} package and plotted. These plot methods return
+the rgl form invisibly.
+}
+\seealso{
+\code{\link{rangl.RasterLayer}}
 }
 

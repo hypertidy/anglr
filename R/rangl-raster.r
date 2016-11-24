@@ -1,11 +1,10 @@
 #' Raster rangl
 #' 
-#' Colours not supported, this just gives the virids palette sequentially. 
-#' @param x \code{\link[raster]{raster}}
+#' Colours not supported, this just gives the viridis palette sequentially. 
 #' @param z \code{\link[raster]{raster}}, by default \code{x} is used
 #' @param na.rm remove missing values
-#' @param ... unused
 #' @return quad_mesh
+#' @name rangl
 #' @export
 #' @importFrom raster projection values xmin xmax ymin ymax
 #' @examples
