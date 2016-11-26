@@ -79,19 +79,6 @@ rangl.SpatialLines <- function(x, ...) {
   allverts$uvert <- as.integer(factor(paste(allverts$x_, allverts$y_, sep = "_")))
   allverts$vertex_ <- spbabel:::id_n(length(unique(allverts$uvert)))[allverts$uvert]
   outlist$lXv <- allverts[, c("segment_", "vertex_")]
-  
-  ## normalize segments
-  ## this arrange was borkifying
-  a <- outlist$lXv #%>% dplyr::arrange(segment_, vertex_)
-  lista <- split(a, a$segment_)
-  f <- factor(unlist(lapply(lista, function(x) paste(x$vertex_, collapse = "_"))))
-  outlist$lXv <- a %>% inner_join(tibble(segment_ = names(lista), usegment = as.integer(f))) %>% mutate(segment_ = segment_[usegment]) %>% 
-    dplyr::select(segment_, vertex_) %>% distinct()
-  outlist$l <- outlist$l %>% inner_join(tibble(segment_ = names(lista), usegment = as.integer(f))) %>% 
-    mutate(segment_ = segment_[usegment]) %>% 
-    dplyr::select(segment_, object_)
-  
-  
   outlist$v <- dplyr::distinct_(allverts, "x_", "y_", "vertex_")
   ## finally add longitude and latitude
   outlist$meta <- tibble::tibble(proj = pr4, x = "x_", y = "y_", ctime = format(Sys.time(), tz = "UTC"))
@@ -99,6 +86,53 @@ rangl.SpatialLines <- function(x, ...) {
   outlist
 }
 
-
-
-
+# rangl.SpatialLines <- function(x, ...) {
+#   pr4 <- proj4string(x)
+#   if (! "data" %in% slotNames(x)) {
+#     dummy <- data.frame(row_number = seq_along(x))
+#     x <- sp::SpatialLinesDataFrame(x, dummy, match.ID = FALSE)
+#   }
+#   tabs <- spbabel::map_table(x)
+#   ll <- vector("list", nrow(tabs$o))
+#   for (i_obj in seq(nrow(tabs$o))) {
+#     tabs_i <- tabs; tabs_i$o <- tabs_i$o[i_obj, ]
+#     tabs_i <- semi_cascade(tabs_i)
+#     tt_i <- line_mesh_map_table1(tabs_i)
+#     ll[[i_obj]] <- tt_i
+#   }
+#   
+#   outlist <- vector("list", length(ll[[1]]))
+#   nms <- names(ll[[1]])
+#   names(outlist) <- nms
+#   for (i in seq_along(outlist)) {
+#     outlist[[i]] <- dplyr::bind_rows(lapply(ll, "[[", nms[i]))
+#   }
+#   
+#   ## renormalize the vertices
+#   allverts <- dplyr::inner_join(outlist$lXv, outlist$v, "vertex_")
+#   allverts$uvert <- as.integer(factor(paste(allverts$x_, allverts$y_, sep = "_")))
+#   allverts$vertex_ <- spbabel:::id_n(length(unique(allverts$uvert)))[allverts$uvert]
+#   outlist$lXv <- allverts[, c("segment_", "vertex_")]
+#   
+#   ## normalize segments
+#   ## this arrange was borkifying
+#   a <- outlist$lXv #%>% dplyr::arrange(segment_, vertex_)
+#   lista <- split(a, a$segment_)
+#   f <- factor(unlist(lapply(lista, function(x) paste(x$vertex_, collapse = "_"))))
+#   outlist$lXv <- a %>% inner_join(tibble(segment_ = names(lista), usegment = as.integer(f))) %>% mutate(segment_ = segment_[usegment]) %>% 
+#     dplyr::select(segment_, vertex_) %>% distinct()
+#   outlist$l <- outlist$l %>% inner_join(tibble(segment_ = names(lista), usegment = as.integer(f))) %>% 
+#     mutate(segment_ = segment_[usegment]) %>% 
+#     dplyr::select(segment_, object_)
+#   
+#   
+#   outlist$v <- dplyr::distinct_(allverts, "x_", "y_", "vertex_")
+#   ## finally add longitude and latitude
+#   outlist$meta <- tibble::tibble(proj = pr4, x = "x_", y = "y_", ctime = format(Sys.time(), tz = "UTC"))
+#   class(outlist) <- "linemesh"
+#   outlist
+# }
+# 
+# 
+# 
+# 

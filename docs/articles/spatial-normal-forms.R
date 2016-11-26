@@ -81,14 +81,14 @@ par(mar = rep(0, 4))
 plot(lsegment$v$x_, lsegment$v$y_, asp = 1, pch = ".", axes = FALSE)
 lsegment$o$color <- viridis::viridis(nrow(lsegment$o))
 #segs <- lsegment$l %>% inner_join(lsegment$o %>% select(object_, color)) %>% inner_join(lsegment$lXv) %>% select(color, vertex_, segment_) %>% inner_join(lsegment$v)
-segs <- lsegment$lXv %>% inner_join(lsegment$l) %>% inner_join(lsegment$o %>% select(object_, color)) %>% select(color, vertex_, segment_) %>% inner_join(lsegment$v)
-ix <- seq(1, nrow(segs)-1, by  = 2); ix <- head(ix, 170); segments(segs$x_[ix], segs$y_[ix], segs$x_[ix + 1], segs$y_[ix+1], col = segs$color[ix], lwd = 4)
+segs <- lsegment$lXv %>% inner_join(lsegment$l) %>% inner_join(lsegment$o %>% dplyr::select(object_, color)) %>% dplyr::select(color, vertex_, segment_) %>% inner_join(lsegment$v)
+ix <- seq(1, nrow(segs)-1, by  = 2);  segments(segs$x_[ix], segs$y_[ix], segs$x_[ix + 1], segs$y_[ix+1], col = segs$color[ix], lwd = 4)
 
 ## ------------------------------------------------------------------------
 prim2D <- rangl::rangl(pnganz)
 plot(pnganz, border = "black", col = "transparent", lwd = 4)
 for (i in seq(nrow(prim2D$t))) {
-  tri <- prim2D$t[i, ] %>% inner_join(prim2D$tXv, "triangle_") %>% inner_join(prim2D$v, "vertex_") %>% select(x_, y_)
+  tri <- prim2D$t[i, ] %>% inner_join(prim2D$tXv, "triangle_") %>% inner_join(prim2D$v, "vertex_") %>% dplyr::select(x_, y_)
   polygon(tri$x_, tri$y_, border = (prim2D$t[i, ] %>% inner_join(prim2D$o, "object_"))$color[1])
 }
 
@@ -105,12 +105,15 @@ rglwidget(elementId="png_anz_globe")
 ## ------------------------------------------------------------------------
 prim2D$v
 rangl::globe(prim2D)$v
+subid <- currentSubscene3d()
+rglwidget(elementId="prim2D")
 
 ## ------------------------------------------------------------------------
 rangl::globe(prim2D)$meta[, c("proj", "ctime")]
 
-## ------------------------------------------------------------------------
 
+## ------------------------------------------------------------------------
+## TBD
 
 ## ------------------------------------------------------------------------
 p1 <- cbind(x = c(0, 0, 0.75, 1,   0.5, 0.8, 0.69, 0), 
