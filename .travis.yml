@@ -6,7 +6,9 @@ cache: packages
 
 apt_packages:
  - libproj-dev
-
+ - libgdal-dev
+ - libgeos++-dev
+ 
 before_install:
   - "export RGL_USE_NULL=TRUE"
   - echo "options(repos = c(CRAN='http://cran.rstudio.com'))" > ~/.Rprofile
