@@ -51,6 +51,12 @@ Colours not supported, this just gives the viridis palette sequentially.
 \details{
 #' Methods exist for SpatialPolygons, SpatialLines, rgl mesh3d(triangle) ...
 }
+\section{Warning}{
+
+rangl only checks for presence of triangle centres within
+known holes, so this doesn't pick up examples of overlapping areas e.g. 
+https://github.com/r-gris/rangl/issues/39
+}
 \examples{
 ## -----------------------------------------------
 ## POLYGONS
