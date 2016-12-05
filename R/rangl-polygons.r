@@ -27,6 +27,10 @@ tri_mesh_map_table1 <- function(tabs, max_area = NULL) {
   ## build the triangulation, with input max_area (defaults to NULL)
   tr <- RTriangle::triangulate(ps, a = max_area)
   
+  ## NOTE: the following only checks for presence of triangle centres within
+  ## known holes, so this doesn't pick up examples of overlapping areas e.g. 
+  ## https://github.com/r-gris/rangl/issues/39
+  
   ## process the holes if present
   if (any(!tabs$b$island_)) {
     ## filter out all the hole geometry and build an sp polygon object with it
@@ -61,6 +65,10 @@ tri_mesh_map_table1 <- function(tabs, max_area = NULL) {
 
 #' @rdname rangl
 #' @export
+#' @section Warning:
+#' rangl only checks for presence of triangle centres within
+#' known holes, so this doesn't pick up examples of overlapping areas e.g. 
+#' https://github.com/r-gris/rangl/issues/39
 #' @importFrom sp geometry  over SpatialPoints proj4string CRS SpatialPolygonsDataFrame
 #' @importFrom dplyr inner_join
 #' @importFrom RTriangle pslg triangulate
