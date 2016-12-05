@@ -9,7 +9,8 @@ apt_packages:
 
 before_install:
   - "export RGL_USE_NULL=TRUE"
-
+  - echo "options(repos = c(CRAN='http://cran.rstudio.com'))" > ~/.Rprofile
+  
 after_success:
   - Rscript -e 'covr::codecov()'
 
