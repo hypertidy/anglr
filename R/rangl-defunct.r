@@ -5,7 +5,7 @@
 #' @param ... ignored
 #' @export
 tri_mesh <- function(x, ...) {
-  .Defunct("rangl", package= "rangl", old = "tri_mesh")
+  .Defunct("rangl", package= "rangl")
 }
 
 #' @rdname rangl-defunct

@@ -10,33 +10,27 @@ output: github_document
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>")
+  comment = "#>",
+  fig.path = "readme-figure/README-"
+)
+rgl::par3d(windowRect = c(100, 100, 512 + 100, 512 +100))
 ```
 
 ## Tabular storage for spatial data 
 
 The 'rangl' package illustrates some generalizations of GIS-y tasks in R with "tables". 
 
-The basic idea is to create "toplogical" objects from a variety of sources including: 
+The basic idea is to create "toplogical" objects from a variety of sources: 
 
-* vector Spatial data, from `sp` and family
-* raster grid data
-* general 3D objects (including `rgl`)
-* `trip objects` (animal tracking data) and other related "trajectory" data
-* model structures for spatially explicit ecosystem models
+* SpatialPolygons, SpatialLines, SpatialMultipoints
+* rgl 3D objects
+* trip objects (animal tracking data)
 * --others to come-- see https://github.com/mdsumner/spbabel
 
 
-The topology comes from two related aspects. The first is decomposing what are usually *paths of coordinates* defining lines or polygons into the more general topological primitives. The second is a de-duplication of shared vertices into a single **vertex pool** that is referenced by primitives. This is not what is always meant when people say "topology" in a GIS context, but the topic is too complex and fragmented to summarize in brief here. 
+Multiple multi-part objects are decomposed to a set of related, linked tables. Object identity is maintained with attribute metadata and this is carried through to colour and other aesthetics in 3D plots.  
 
-Multiple multi-part objects are decomposed to a set of related, linked tables. Object identity is maintained with attribute metadata and this is carried through to colour and other aesthetics in plots. The nice thing is that the structures used for general visualization correspond to handy structures for a lot of modelling and analyses. It also happens that the easiest way to prove that it works is to plot it, so it's a good place to start, "eye-candy" snubs aside. 
-
-
-Plot methods take those tables and generate the "indexed array" structures needed for 'rgl'. The tables use globally unique IDs to ensure that we can subset and recombine data sets arbitrarily without constantly updating structural indexes. The tables can also be back-ended by whatever database engine is appropriate, so we can leverage that power as we like without having to push through shoe-horn ourselves through someone's definition of how spatial data is supposed to be stored.  Analytical methods can either use the graphics structure index model or the relational table model. In this way we get the best of both worlds of "GIS" and "3D models". 
-
-## Why?
-
-There is plenty of evidence around for the need for this kind of approach to data structures, we can see it in PostGIS Topology when simple features is not enough, in geometry generators for QGIS, in coordinate space munching by ggplot2, and in the wonderful discussions of topology and projections by Mike Bostock. This project certainly doesn't solve or unify all aspects, but it has a utility for a wide variety of concerns and I hope this helps spur discussion about the future of spatial data handling generally. 
+Plot methods take those tables and generate the "indexed array" structures needed for 'rgl'. In this way we get the best of both worlds of "GIS" and "3D models". 
 
 ## Ongoing design
 
@@ -52,6 +46,7 @@ Triangulation is with `RTriangle` package using "constrained mostly-Delaunay Tri
 
 This package is in active development and will see a number of breaking changes before release. 
 
+
 Also required are packages 'rgl' and 'RTriangle', so first make sure you can install and use these. 
 
 ```{r,eval=FALSE}
@@ -60,15 +55,13 @@ install.packages("RTriangle")
 
 ```
 
-In examples below I use 'graticule', 'trip', and 'rbgm', but these aren't strictly required by the package, only for some examples. 
+In examples below I use 'graticule' as well, so you might as well install that too. 
 
 ```{r,eval=FALSE}
 install.packages("graticule")
-install.packages("trip")
-install.packages("rbgm")
 ```
 
-If you are feeling adventurous, 'rangl' can be installed from Github. 
+If you are still feeling adventurous, 'rangl' can be installed from Github. This will also ensure that the latest version of 'spbabel' is installed, until I get around to updating that on CRAN. 
 
 ```{r,eval=FALSE}
 devtools::install_github("r-gris/rangl")
@@ -84,13 +77,9 @@ https://github.com/r-gris/rangl/issues
 
 ## Examples
 
-See the [package vignettes](https://r-gris.github.io/rangl/articles/index.html). 
+See the vignettes: https://r-gris.github.io/rangl/articles/index.html
 
-## Open topics
 
-* single-points are a bit funny, it's wasteful to copy the branches model - needs thought
-* multi-points are also a bit funny, but this will form the basis of input tracking data for some applications
-* UUIDs- unique IDs are not done very well, they are maybe ... 1) not unique enough, 2) over-used for vertices/branches, 3) unnecessary for general storage, maybe we should always flip back to structural *after* merge/transmission operations. 
 
 Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
 

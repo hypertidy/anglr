@@ -1,4 +1,6 @@
-# rangl 0.4.0
+# rangl 0.4.5
+
+* release codename Just Work in Master, Dude
 
 * old functions made defunct
 

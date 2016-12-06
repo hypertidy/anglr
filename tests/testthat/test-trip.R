@@ -4,8 +4,8 @@ context("trip")
 ## TODO: Add more tests
 
 library(trip)
-example(trip)
-
+#example(trip)
+data("walrus818")
 test_that("trip works", {
-  expect_that(rangl(tr), is_a("linemesh"))
+  expect_that(rangl(walrus818), is_a("linemesh"))
 })
