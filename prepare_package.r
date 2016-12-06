@@ -18,7 +18,7 @@ rmarkdown::render("README.Rmd", "all")
 # move the newly created appveyor.yml to the root directory and modify it
 
 # Check spelling mistakes
-devtools::spell_check()
+#devtools::spell_check()
 
 pkgdown::build_site()
 

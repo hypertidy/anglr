@@ -18,7 +18,6 @@ rangl.SpatialMultiPoints <- function(x, ...) {
 #' @rdname rangl
 #' @export
 rangl.SpatialPoints <- function(x, ...) {
-  stop("you don't really need this function, just use `as.data.frame(x)`")
    pr4 <- proj4string(x)
    if (! "data" %in% slotNames(x)) {
      dummy <- data.frame(row_number = seq_along(x))
