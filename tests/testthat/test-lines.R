@@ -9,6 +9,8 @@ spl <- as(sph, "SpatialLinesDataFrame")
 
 test_that("lines works", {
   expect_that(rangl(spl), is_a("linemesh"))
-  expect_that(rangl(geometry(spl)), is_a("linemesh"))
+  expect_that(rangl(sp::geometry(spl)), is_a("linemesh"))
   
 })
+
+

@@ -74,31 +74,3 @@ mpts <- as(as(wrld_simpl, "SpatialLinesDataFrame"), "SpatialMultiPointsDataFrame
 plot(rangl(mpts))
 rgl::view3d(theta = 25, phi = 3)
 
-## ---- webgl=TRUE---------------------------------------------------------
-library(trip)
-library(rangl)
-data(walrus818)
-
-library(graticule)
-prj <-"+proj=laea +lon_0=0 +lat_0=90 +ellps=WGS84"
-gr <- graticule(lats = seq(40, 85, by = 5), ylim = c(35, 89.5), proj = prj)
-library(maptools)
-data(wrld_simpl)
-
-w <- spTransform(subset(wrld_simpl, coordinates(wrld_simpl)[,2] > -70),  prj)
-library(graticule)
-walrus <- spTransform(walrus818, prj)
-
-gr$color_ <- "black"
-rgl::par3d(windowRect = c(100, 100, 912 + 100, 912 +100))
-plot(rangl(gr))
-w$color_ <- sample(viridis::inferno(nrow(w)))
-plot(rangl(w), specular = "black")
-plot(rangl(walrus))
-um <- structure(c(0.934230506420135, 0.343760699033737, 0.0950899347662926, 
-                  0, -0.302941381931305, 0.905495941638947, -0.297159105539322, 
-                  0, -0.188255190849304, 0.24880850315094, 0.950081348419189, 0, 
-                  0, 0, 0, 1), .Dim = c(4L, 4L))
-par3d(userMatrix = um)
-
-
