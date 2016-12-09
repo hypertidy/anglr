@@ -1,4 +1,5 @@
 #' @importFrom sf st_crs
+#' @export
 rangl.sf <- function (x, max_area = NULL, ...) 
 {
   pr4 <- sf::st_crs(x)$proj4string
