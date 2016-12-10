@@ -81,7 +81,7 @@
       <h1>Spatial data and topology</h1>
                         <h4 class="author">Michael Sumner</h4>
             
-            <h4 class="date">2016-11-26</h4>
+            <h4 class="date">2016-12-10</h4>
           </div>
 
     
@@ -164,60 +164,60 @@ p &lt;-<span class="st"> </span><span class="kw">readOGR</span>(<span class="kw"
 <p>The objects.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ptabs$o</code></pre></div>
 <pre><code>## # A tibble: 4 × 3
-##               name     color    object_
-## *           &lt;fctr&gt;     &lt;chr&gt;      &lt;chr&gt;
-## 1        Australia #440154FF b4SWHqe1Rl
-## 2        Indonesia #31688EFF E1Q8xoaUoS
-## 3      New Zealand #35B779FF DhNjRO8BWE
-## 4 Papua New Guinea #FDE725FF 0pp1FFarhm</code></pre>
+##               name     color object_
+## *           &lt;fctr&gt;     &lt;chr&gt;   &lt;chr&gt;
+## 1        Australia #440154FF   polT1
+## 2        Indonesia #31688EFF   yYR0o
+## 3      New Zealand #35B779FF   n3Yjh
+## 4 Papua New Guinea #FDE725FF   TW6DP</code></pre>
 <p>The branches record which object they belong to.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ptabs$b</code></pre></div>
 <pre><code>## # A tibble: 21 × 3
-##       object_    branch_ island_
-##         &lt;chr&gt;      &lt;chr&gt;   &lt;lgl&gt;
-## 1  b4SWHqe1Rl 5hve0rggNr    TRUE
-## 2  b4SWHqe1Rl dbJtMrjfk6    TRUE
-## 3  E1Q8xoaUoS ZFJRwjLNlD    TRUE
-## 4  E1Q8xoaUoS 5LbZqm4lbw    TRUE
-## 5  E1Q8xoaUoS NlaDNsYgZV    TRUE
-## 6  E1Q8xoaUoS e3M0E1sMLq    TRUE
-## 7  E1Q8xoaUoS A7yQUC182p    TRUE
-## 8  E1Q8xoaUoS krsWFkrY0y    TRUE
-## 9  E1Q8xoaUoS lyFa0urnpW    TRUE
-## 10 E1Q8xoaUoS 2mbBhACCpc    TRUE
+##    object_ branch_ island_
+##      &lt;chr&gt;   &lt;chr&gt;   &lt;lgl&gt;
+## 1    polT1   iX4Qd    TRUE
+## 2    polT1   W0SVS    TRUE
+## 3    yYR0o   cLzYl    TRUE
+## 4    yYR0o   2BFlX    TRUE
+## 5    yYR0o   HnoQ0    TRUE
+## 6    yYR0o   t5wDk    TRUE
+## 7    yYR0o   U0VyO    TRUE
+## 8    yYR0o   pTeEY    TRUE
+## 9    yYR0o   mlfjY    TRUE
+## 10   yYR0o   8YMrn    TRUE
 ## # ... with 11 more rows</code></pre>
 <p>The branches-link-vertex table records the relationship between vertices and branches (by default the de-duplication is done in X-Y but it could be done in other geometric spaces, e.g. in 1D time or 3D X-Y-Z or X-Y-Time).</p>
 <p>This is the <em>instances of vertices</em> as opposed to the unique paired values of coordinates themselves.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ptabs$bXv</code></pre></div>
 <pre><code>## # A tibble: 638 × 3
-##       branch_ order_    vertex_
-##         &lt;chr&gt;  &lt;int&gt;      &lt;chr&gt;
-## 1  5hve0rggNr      1 51aAaAgPLX
-## 2  5hve0rggNr      2 E76mN52GvR
-## 3  5hve0rggNr      3 gKev3yzAp8
-## 4  5hve0rggNr      4 jPZjgHZLfB
-## 5  5hve0rggNr      5 yN9R45XmmA
-## 6  5hve0rggNr      6 HpRc6cZMX0
-## 7  5hve0rggNr      7 fcyRyESYT8
-## 8  5hve0rggNr      8 NGVUuIqtpP
-## 9  5hve0rggNr      9 rZCmpnF1RO
-## 10 5hve0rggNr     10 8YKhPBs75N
+##    branch_ order_ vertex_
+##      &lt;chr&gt;  &lt;int&gt;   &lt;chr&gt;
+## 1    iX4Qd      1   AS35D
+## 2    iX4Qd      2   3GqLR
+## 3    iX4Qd      3   IHKjU
+## 4    iX4Qd      4   9ki7N
+## 5    iX4Qd      5   Q4Xc6
+## 6    iX4Qd      6   6Sbyk
+## 7    iX4Qd      7   BqbFb
+## 8    iX4Qd      8   Z395Q
+## 9    iX4Qd      9   8jhWH
+## 10   iX4Qd     10   zabpm
 ## # ... with 628 more rows</code></pre>
 <p>And finally the vertices. In this example there are fewer unique x-y vertex than there are <strong>instance of the vertices</strong>, not a one-to-one match. This discrepancy obviously increases greatly for layers with shared boundaries, though in this example it is mostly due to the final closing coordinate on each polygon path - it’s a repeated instance, but not a repeated vertex <em>value</em>. There is at least one shared edge in this layer, clearly the one between Indonesia and Papua New Guinea.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ptabs$v</code></pre></div>
 <pre><code>## # A tibble: 614 × 3
-##          x_        y_    vertex_
-##       &lt;dbl&gt;     &lt;dbl&gt;      &lt;chr&gt;
-## 1  145.3980 -40.79255 51aAaAgPLX
-## 2  146.3641 -41.13770 E76mN52GvR
-## 3  146.9086 -41.00055 gKev3yzAp8
-## 4  147.6893 -40.80826 jPZjgHZLfB
-## 5  148.2891 -40.87544 yN9R45XmmA
-## 6  148.3599 -42.06245 HpRc6cZMX0
-## 7  148.0173 -42.40702 fcyRyESYT8
-## 8  147.9141 -43.21152 NGVUuIqtpP
-## 9  147.5646 -42.93769 rZCmpnF1RO
-## 10 146.8703 -43.63460 8YKhPBs75N
+##          x_        y_ vertex_
+##       &lt;dbl&gt;     &lt;dbl&gt;   &lt;chr&gt;
+## 1  145.3980 -40.79255   AS35D
+## 2  146.3641 -41.13770   3GqLR
+## 3  146.9086 -41.00055   IHKjU
+## 4  147.6893 -40.80826   9ki7N
+## 5  148.2891 -40.87544   Q4Xc6
+## 6  148.3599 -42.06245   6Sbyk
+## 7  148.0173 -42.40702   BqbFb
+## 8  147.9141 -43.21152   Z395Q
+## 9  147.5646 -42.93769   8jhWH
+## 10 146.8703 -43.63460   zabpm
 ## # ... with 604 more rows</code></pre>
 <div id="polygons-are-just-lines" class="section level2">
 <h2>Polygons are just lines</h2>
@@ -236,122 +236,122 @@ for (i in <span class="kw">seq_along</span>(ltabs)) {
 <pre><code>## ------------------------------
 ## $o
 ## # A tibble: 4 × 3
-##               name     color    object_
-## *           &lt;fctr&gt;     &lt;chr&gt;      &lt;chr&gt;
-## 1        Australia #440154FF 2ep6vHz8vo
-## 2        Indonesia #31688EFF KVAN6Bbxx9
-## 3      New Zealand #35B779FF BLX129fXAl
-## 4 Papua New Guinea #FDE725FF 3jfxEZFpv4
+##               name     color object_
+## *           &lt;fctr&gt;     &lt;chr&gt;   &lt;chr&gt;
+## 1        Australia #440154FF   gPeyl
+## 2        Indonesia #31688EFF   oGbuj
+## 3      New Zealand #35B779FF   p2SYj
+## 4 Papua New Guinea #FDE725FF   t3y28
 ## 
 ## $o
 ## # A tibble: 4 × 3
-##               name     color    object_
-## *           &lt;fctr&gt;     &lt;chr&gt;      &lt;chr&gt;
-## 1        Australia #440154FF b4SWHqe1Rl
-## 2        Indonesia #31688EFF E1Q8xoaUoS
-## 3      New Zealand #35B779FF DhNjRO8BWE
-## 4 Papua New Guinea #FDE725FF 0pp1FFarhm
+##               name     color object_
+## *           &lt;fctr&gt;     &lt;chr&gt;   &lt;chr&gt;
+## 1        Australia #440154FF   polT1
+## 2        Indonesia #31688EFF   yYR0o
+## 3      New Zealand #35B779FF   n3Yjh
+## 4 Papua New Guinea #FDE725FF   TW6DP
 ## 
 ## 
 ## ------------------------------
 ## $b
 ## # A tibble: 21 × 2
-##       object_    branch_
-##         &lt;chr&gt;      &lt;chr&gt;
-## 1  2ep6vHz8vo xwGFzKIcDN
-## 2  2ep6vHz8vo PqmxQYlQ4m
-## 3  KVAN6Bbxx9 0W6soLkmmv
-## 4  KVAN6Bbxx9 9pv4zOYUk2
-## 5  KVAN6Bbxx9 kAoI7YAGUJ
-## 6  KVAN6Bbxx9 Fi0ivwPQur
-## 7  KVAN6Bbxx9 bBUTRUocq9
-## 8  KVAN6Bbxx9 7bjqQHoOWY
-## 9  KVAN6Bbxx9 TzME98HhBd
-## 10 KVAN6Bbxx9 hDAMc4H0vp
+##    object_ branch_
+##      &lt;chr&gt;   &lt;chr&gt;
+## 1    gPeyl   jbmsr
+## 2    gPeyl   ucUMB
+## 3    oGbuj   tGxfI
+## 4    oGbuj   pGVLD
+## 5    oGbuj   jWRDt
+## 6    oGbuj   A5aSe
+## 7    oGbuj   fpl8l
+## 8    oGbuj   dUfoU
+## 9    oGbuj   jgqzQ
+## 10   oGbuj   VLAOD
 ## # ... with 11 more rows
 ## 
 ## $b
 ## # A tibble: 21 × 3
-##       object_    branch_ island_
-##         &lt;chr&gt;      &lt;chr&gt;   &lt;lgl&gt;
-## 1  b4SWHqe1Rl 5hve0rggNr    TRUE
-## 2  b4SWHqe1Rl dbJtMrjfk6    TRUE
-## 3  E1Q8xoaUoS ZFJRwjLNlD    TRUE
-## 4  E1Q8xoaUoS 5LbZqm4lbw    TRUE
-## 5  E1Q8xoaUoS NlaDNsYgZV    TRUE
-## 6  E1Q8xoaUoS e3M0E1sMLq    TRUE
-## 7  E1Q8xoaUoS A7yQUC182p    TRUE
-## 8  E1Q8xoaUoS krsWFkrY0y    TRUE
-## 9  E1Q8xoaUoS lyFa0urnpW    TRUE
-## 10 E1Q8xoaUoS 2mbBhACCpc    TRUE
+##    object_ branch_ island_
+##      &lt;chr&gt;   &lt;chr&gt;   &lt;lgl&gt;
+## 1    polT1   iX4Qd    TRUE
+## 2    polT1   W0SVS    TRUE
+## 3    yYR0o   cLzYl    TRUE
+## 4    yYR0o   2BFlX    TRUE
+## 5    yYR0o   HnoQ0    TRUE
+## 6    yYR0o   t5wDk    TRUE
+## 7    yYR0o   U0VyO    TRUE
+## 8    yYR0o   pTeEY    TRUE
+## 9    yYR0o   mlfjY    TRUE
+## 10   yYR0o   8YMrn    TRUE
 ## # ... with 11 more rows
 ## 
 ## 
 ## ------------------------------
 ## $bXv
 ## # A tibble: 638 × 3
-##       branch_ order_    vertex_
-##         &lt;chr&gt;  &lt;int&gt;      &lt;chr&gt;
-## 1  xwGFzKIcDN      1 zRZPWEaKHt
-## 2  xwGFzKIcDN      2 TOIJc3QYCw
-## 3  xwGFzKIcDN      3 GAOHxmcnf8
-## 4  xwGFzKIcDN      4 LfVuLySAYl
-## 5  xwGFzKIcDN      5 jmehg9aVez
-## 6  xwGFzKIcDN      6 RPc0bOKIbw
-## 7  xwGFzKIcDN      7 t69nak8yJu
-## 8  xwGFzKIcDN      8 3mYELNROWD
-## 9  xwGFzKIcDN      9 wWHvcZugsL
-## 10 xwGFzKIcDN     10 4KkDD0vD6l
+##    branch_ order_ vertex_
+##      &lt;chr&gt;  &lt;int&gt;   &lt;chr&gt;
+## 1    jbmsr      1   lWJNB
+## 2    jbmsr      2   ARX1U
+## 3    jbmsr      3   BZZho
+## 4    jbmsr      4   ivRdi
+## 5    jbmsr      5   4V0jN
+## 6    jbmsr      6   pkEEY
+## 7    jbmsr      7   kd5H9
+## 8    jbmsr      8   itY7j
+## 9    jbmsr      9   co4uX
+## 10   jbmsr     10   swH6U
 ## # ... with 628 more rows
 ## 
 ## $bXv
 ## # A tibble: 638 × 3
-##       branch_ order_    vertex_
-##         &lt;chr&gt;  &lt;int&gt;      &lt;chr&gt;
-## 1  5hve0rggNr      1 51aAaAgPLX
-## 2  5hve0rggNr      2 E76mN52GvR
-## 3  5hve0rggNr      3 gKev3yzAp8
-## 4  5hve0rggNr      4 jPZjgHZLfB
-## 5  5hve0rggNr      5 yN9R45XmmA
-## 6  5hve0rggNr      6 HpRc6cZMX0
-## 7  5hve0rggNr      7 fcyRyESYT8
-## 8  5hve0rggNr      8 NGVUuIqtpP
-## 9  5hve0rggNr      9 rZCmpnF1RO
-## 10 5hve0rggNr     10 8YKhPBs75N
+##    branch_ order_ vertex_
+##      &lt;chr&gt;  &lt;int&gt;   &lt;chr&gt;
+## 1    iX4Qd      1   AS35D
+## 2    iX4Qd      2   3GqLR
+## 3    iX4Qd      3   IHKjU
+## 4    iX4Qd      4   9ki7N
+## 5    iX4Qd      5   Q4Xc6
+## 6    iX4Qd      6   6Sbyk
+## 7    iX4Qd      7   BqbFb
+## 8    iX4Qd      8   Z395Q
+## 9    iX4Qd      9   8jhWH
+## 10   iX4Qd     10   zabpm
 ## # ... with 628 more rows
 ## 
 ## 
 ## ------------------------------
 ## $v
 ## # A tibble: 614 × 3
-##          x_        y_    vertex_
-##       &lt;dbl&gt;     &lt;dbl&gt;      &lt;chr&gt;
-## 1  145.3980 -40.79255 zRZPWEaKHt
-## 2  146.3641 -41.13770 TOIJc3QYCw
-## 3  146.9086 -41.00055 GAOHxmcnf8
-## 4  147.6893 -40.80826 LfVuLySAYl
-## 5  148.2891 -40.87544 jmehg9aVez
-## 6  148.3599 -42.06245 RPc0bOKIbw
-## 7  148.0173 -42.40702 t69nak8yJu
-## 8  147.9141 -43.21152 3mYELNROWD
-## 9  147.5646 -42.93769 wWHvcZugsL
-## 10 146.8703 -43.63460 4KkDD0vD6l
+##          x_        y_ vertex_
+##       &lt;dbl&gt;     &lt;dbl&gt;   &lt;chr&gt;
+## 1  145.3980 -40.79255   lWJNB
+## 2  146.3641 -41.13770   ARX1U
+## 3  146.9086 -41.00055   BZZho
+## 4  147.6893 -40.80826   ivRdi
+## 5  148.2891 -40.87544   4V0jN
+## 6  148.3599 -42.06245   pkEEY
+## 7  148.0173 -42.40702   kd5H9
+## 8  147.9141 -43.21152   itY7j
+## 9  147.5646 -42.93769   co4uX
+## 10 146.8703 -43.63460   swH6U
 ## # ... with 604 more rows
 ## 
 ## $v
 ## # A tibble: 614 × 3
-##          x_        y_    vertex_
-##       &lt;dbl&gt;     &lt;dbl&gt;      &lt;chr&gt;
-## 1  145.3980 -40.79255 51aAaAgPLX
-## 2  146.3641 -41.13770 E76mN52GvR
-## 3  146.9086 -41.00055 gKev3yzAp8
-## 4  147.6893 -40.80826 jPZjgHZLfB
-## 5  148.2891 -40.87544 yN9R45XmmA
-## 6  148.3599 -42.06245 HpRc6cZMX0
-## 7  148.0173 -42.40702 fcyRyESYT8
-## 8  147.9141 -43.21152 NGVUuIqtpP
-## 9  147.5646 -42.93769 rZCmpnF1RO
-## 10 146.8703 -43.63460 8YKhPBs75N
+##          x_        y_ vertex_
+##       &lt;dbl&gt;     &lt;dbl&gt;   &lt;chr&gt;
+## 1  145.3980 -40.79255   AS35D
+## 2  146.3641 -41.13770   3GqLR
+## 3  146.9086 -41.00055   IHKjU
+## 4  147.6893 -40.80826   9ki7N
+## 5  148.2891 -40.87544   Q4Xc6
+## 6  148.3599 -42.06245   6Sbyk
+## 7  148.0173 -42.40702   BqbFb
+## 8  147.9141 -43.21152   Z395Q
+## 9  147.5646 -42.93769   8jhWH
+## 10 146.8703 -43.63460   zabpm
 ## # ... with 604 more rows</code></pre>
 </div>
 <div id="what-makes-polygons-different-to-lines" class="section level2">
@@ -402,48 +402,48 @@ for (i in <span class="kw">seq</span>(<span class="kw">nrow</span>(prim2D$t))) {
 <pre><code>## Joining, by = &quot;triangle_&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">subid &lt;-<span class="st"> </span><span class="kw">currentSubscene3d</span>()
 <span class="kw">rglwidget</span>(<span class="dt">elementId=</span><span class="st">&quot;pnganz&quot;</span>)</code></pre></div>
-<p>preservea6f7f4bf4b81fbda</p>
+<p>preserve2190f217ee9d4449</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(rangl::<span class="kw">globe</span>(prim2D), <span class="dt">specular =</span> <span class="st">&quot;black&quot;</span>)</code></pre></div>
 <pre><code>## Joining, by = &quot;object_&quot;
 ## Joining, by = &quot;triangle_&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">subid &lt;-<span class="st"> </span><span class="kw">currentSubscene3d</span>()
 <span class="kw">rglwidget</span>(<span class="dt">elementId=</span><span class="st">&quot;png_anz_globe&quot;</span>)</code></pre></div>
-<p>preserve0f844e5f9dd139a6</p>
+<p>preserve7eed0d8516191306</p>
 <p>Why do this? It’s not just to plot a globe, but to see why it’s helpful to see what the function <code>globe()</code> does.</p>
 <p>Run the layer through <code>globe()</code> and print out the vertices table.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prim2D$v</code></pre></div>
 <pre><code>## # A tibble: 614 × 3
-##          x_        y_    vertex_
-##       &lt;dbl&gt;     &lt;dbl&gt;      &lt;chr&gt;
-## 1  114.6165 -28.51640 vqMOqUK3bE
-## 2  114.6420 -28.81023 fAvJwz55Ml
-## 3  115.0400 -29.46110 aoUoQDYybT
-## 4  114.2329 -26.29845 7ataOXEWp3
-## 5  113.7784 -26.54903 xGntvbT2KQ
-## 6  114.0489 -27.33477 il4dU1zlD1
-## 7  114.1736 -28.11808 mKPsjJO1Nf
-## 8  113.4775 -26.54313 ztk03iPR1k
-## 9  115.0268 -34.19652 TyEykZeTp9
-## 10 115.5451 -33.48726 QPHZCcpIuL
+##          x_        y_ vertex_
+##       &lt;dbl&gt;     &lt;dbl&gt;   &lt;chr&gt;
+## 1  114.6165 -28.51640   6Ou57
+## 2  114.6420 -28.81023   AvJ44
+## 3  115.0400 -29.46110   rRVBH
+## 4  114.2329 -26.29845   jtf5G
+## 5  113.7784 -26.54903   J0XLT
+## 6  114.0489 -27.33477   lob7X
+## 7  114.1736 -28.11808   6HmlW
+## 8  113.4775 -26.54313   Gbu6u
+## 9  115.0268 -34.19652   X3HXB
+## 10 115.5451 -33.48726   7hmA3
 ## # ... with 604 more rows</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rangl::<span class="kw">globe</span>(prim2D)$v</code></pre></div>
 <pre><code>## # A tibble: 614 × 4
-##          x_      y_    vertex_       z_
-##       &lt;dbl&gt;   &lt;dbl&gt;      &lt;chr&gt;    &lt;dbl&gt;
-## 1  -2336231 5098892 vqMOqUK3bE -3026914
-## 2  -2331985 5083655 fAvJwz55Ml -3055489
-## 3  -2352381 5035508 aoUoQDYybT -3118501
-## 4  -2348469 5217578 7ataOXEWp3 -2808743
-## 5  -2302026 5224737 xGntvbT2KQ -2833605
-## 6  -2310595 5177787 il4dU1zlD1 -2911217
-## 7  -2305320 5135903 mKPsjJO1Nf -2988053
-## 8  -2274676 5237020 ztk03iPR1k -2833021
-## 9  -2234102 4785201 TyEykZeTp9 -3564497
-## 10 -2296191 4804324 QPHZCcpIuL -3499156
+##          x_      y_ vertex_       z_
+##       &lt;dbl&gt;   &lt;dbl&gt;   &lt;chr&gt;    &lt;dbl&gt;
+## 1  -2336231 5098892   6Ou57 -3026914
+## 2  -2331985 5083655   AvJ44 -3055489
+## 3  -2352381 5035508   rRVBH -3118501
+## 4  -2348469 5217578   jtf5G -2808743
+## 5  -2302026 5224737   J0XLT -2833605
+## 6  -2310595 5177787   lob7X -2911217
+## 7  -2305320 5135903   6HmlW -2988053
+## 8  -2274676 5237020   Gbu6u -2833021
+## 9  -2234102 4785201   X3HXB -3564497
+## 10 -2296191 4804324   7hmA3 -3499156
 ## # ... with 604 more rows</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">subid &lt;-<span class="st"> </span><span class="kw">currentSubscene3d</span>()
 <span class="kw">rglwidget</span>(<span class="dt">elementId=</span><span class="st">&quot;prim2D&quot;</span>)</code></pre></div>
-<p>preservef937a16d88541b19</p>
+<p>preserve079c36cba85c3236</p>
 <p>The only thing that happened was that the input <code>x_</code> and <code>y_</code> were converted to geocentric “x, y, z” coordinates. Under the hood this is done by driving the transformation with PROJ.4 (via the R package <code>proj4</code>). The PROJ.4 family in use is “geocent”, i.e. here the <code>meta</code> table simply records the history of transformations.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rangl::<span class="kw">globe</span>(prim2D)$meta[, <span class="kw">c</span>(<span class="st">&quot;proj&quot;</span>, <span class="st">&quot;ctime&quot;</span>)]</code></pre></div>
 <pre><code>## # A tibble: 2 × 2
@@ -542,7 +542,7 @@ nodes &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(mp$v %&gt;
 <p>What is arc-node? The nodes in the graph are the vertices that are shared by any two arcs. The arcs are the <em>paths</em> that trace a line between nodes. This means that not all coordinates are nodes, and even that not all <em>parts</em> have any node/s at all. We can produce this by traversal of all edges to determine the arcs that join nodes and anything left is just a standalone arc. This is brute-force remove duplicate edges (ignore direction), join on start vertex, end vertex, count the number of edges involved and any with 3 edges is a <strong>Node</strong>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## what are the nodes?
 x1 &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="kw">system.file</span>(<span class="st">&quot;shape/nc.shp&quot;</span>, <span class="dt">package=</span><span class="st">&quot;sf&quot;</span>), <span class="st">&quot;nc&quot;</span>, <span class="dt">crs =</span> <span class="dv">4267</span>)</code></pre></div>
-<pre><code>## Reading layer `nc&#39; from data source `E:\inst\R\R\library\sf\shape\nc.shp&#39; using driver `ESRI Shapefile&#39;
+<pre><code>## Reading layer `nc&#39; from data source `C:\Users\mdsumner\Documents\R\win-library\3.3\sf\shape\nc.shp&#39; using driver `ESRI Shapefile&#39;
 ## converted into: MULTIPOLYGON
 ## Simple feature collection with 100 features and 14 fields
 ## geometry type:  MULTIPOLYGON
