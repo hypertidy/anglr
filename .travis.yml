@@ -5,6 +5,7 @@ sudo: required
 cache: packages
 
 apt_packages:
+ - libhdf5-dev
  - libhdf5-serial-dev
  - libproj-dev
  - libgdal-dev
