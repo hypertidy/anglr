@@ -1,4 +1,5 @@
 #' @importFrom sf st_crs
+#' @export
 rangl.sf <- function (x, max_area = NULL, ...) 
 {
   pr4 <- sf::st_crs(x)$proj4string
@@ -8,8 +9,8 @@ rangl.sf <- function (x, max_area = NULL, ...)
   for (i_obj in seq(nrow(tabs$o))) {
     tabs_i <- tabs
     tabs_i$o <- tabs_i$o[i_obj, ]
-    tabs_i <- semi_cascade(tabs_i)
-    tt_i <- tri_mesh_map_table1(tabs_i, max_area = max_area)
+    tabs_i <- rangl:::semi_cascade(tabs_i)
+    tt_i <- rangl:::tri_mesh_map_table1(tabs_i, max_area = max_area)
     ll[[i_obj]] <- tt_i
   }
   outlist <- vector("list", length(ll[[1]]))
