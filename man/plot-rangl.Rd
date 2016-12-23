@@ -9,13 +9,13 @@
 \alias{plot.trimesh}
 \title{Plot objects in OpenGL}
 \usage{
-\method{plot}{trimesh}(x, ...)
+plot.trimesh(x, ...)
 
-\method{plot}{linemesh}(x, ...)
+plot.linemesh(x, ...)
 
-\method{plot}{pointmesh}(x, ...)
+plot.pointmesh(x, ...)
 
-\method{plot}{quad_mesh}(x, ...)
+plot.quad_mesh(x, ...)
 }
 \arguments{
 \item{x}{object from \code{\link{rangl}}}

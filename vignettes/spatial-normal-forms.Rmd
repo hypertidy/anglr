@@ -126,10 +126,11 @@ ltabs <- spbabel::map_table(as(pnganz, "SpatialLinesDataFrame"))
 
 for (i in seq_along(ltabs)) {
   writeLines("------------------------------")
-  print(ltabs[i])
+#  print(ltabs[i])
   print(ptabs[i])
-  writeLines("")
-  
+ writeLines("")
+#  str(ltabs[[i]])
+#  str(ptabs[[i]])
 }
 ```
 
