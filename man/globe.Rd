@@ -30,4 +30,3 @@ if (interactive()) {
  plot(g, lwd = 3)
  }
 }
-

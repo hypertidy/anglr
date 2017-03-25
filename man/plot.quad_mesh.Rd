@@ -21,4 +21,3 @@ Title
 example(rangl.RasterLayer)
 plot(w)
 }
-
