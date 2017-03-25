@@ -27,3 +27,15 @@
 #' }
 #'
 NULL
+
+
+rangl.map_table <- function(x, ...) {
+  
+}
+
+plot.map_table <- function(x, ...) {
+  x <- x$o %>% inner_join(x$b) %>% inner_join(x$bXv) %>% inner_join(x$v)
+  ggplot2::ggplot(x) + 
+    aes(x = x_, y = y_, group = branch_, fill = object_) + 
+    ggpolypath::geom_polypath() + guides(colour = FALSE)
+}
