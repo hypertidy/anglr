@@ -1,16 +1,19 @@
-#' @importFrom sf st_crs
+#' @importFrom spbabel map_table
 #' @export
 rangl.sf <- function (x, max_area = NULL, ...) 
 {
   pr4 <- sf::st_crs(x)$proj4string
   
   tabs <- spbabel::map_table(x)
-  ll <- vector("list", nrow(tabs$o))
-  for (i_obj in seq(nrow(tabs$o))) {
+ # tabs <- sc::PRIMITIVE(x)
+  return(tabs)
+  ll <- vector("list", nrow(tabs$object))
+  for (i_obj in seq(nrow(tabs$object))) {
     tabs_i <- tabs
-    tabs_i$o <- tabs_i$o[i_obj, ]
-    tabs_i <- rangl:::semi_cascade(tabs_i)
-    tt_i <- rangl:::tri_mesh_map_table1(tabs_i, max_area = max_area)
+    tabs_i$object <- tabs_i$object[i_obj, ]
+    
+    tabs_i <- semi_cascade(tabs_i, tables = attr(tabs_i, "join_ramp"))
+    tt_i <- tri_mesh_map_table1(tabs_i, max_area = max_area)
     ll[[i_obj]] <- tt_i
   }
   outlist <- vector("list", length(ll[[1]]))
