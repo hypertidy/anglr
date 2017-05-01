@@ -1,7 +1,7 @@
 Package: rangl
 Type: Package
 Title: Tidy Flexible Spatial
-Version: 0.4.5
+Version: 0.4.5.9001
 Authors@R: person("Michael D.","Sumner", role = c("aut", "cre"), email =
     "mdsumner@gmail.com")
 Description: Tabular storage for topological data structures based on primitives.
