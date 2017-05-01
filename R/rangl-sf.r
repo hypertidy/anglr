@@ -5,14 +5,14 @@ rangl.sf <- function (x, max_area = NULL, ...)
   pr4 <- sf::st_crs(x)$proj4string
   
   tabs <- spbabel::map_table(x)
- # tabs <- sc::PRIMITIVE(x)
-  return(tabs)
-  ll <- vector("list", nrow(tabs$object))
-  for (i_obj in seq(nrow(tabs$object))) {
+  #tabs <- sc::PRIMITIVE(x)
+ #names(tabs) <- c("object", "path", "path_link_segment", "vertex")
+  ll <- vector("list", nrow(tabs$o))
+  for (i_obj in seq(nrow(tabs$o))) {
     tabs_i <- tabs
-    tabs_i$object <- tabs_i$object[i_obj, ]
+    tabs_i$o <- tabs_i$o[i_obj, ]
     
-    tabs_i <- semi_cascade(tabs_i, tables = attr(tabs_i, "join_ramp"))
+    tabs_i <- semi_cascade(tabs_i, tables = c("o", "b", "bXv", "v"))
     tt_i <- tri_mesh_map_table1(tabs_i, max_area = max_area)
     ll[[i_obj]] <- tt_i
   }
