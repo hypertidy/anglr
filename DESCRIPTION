@@ -25,6 +25,7 @@ Suggests:
     graticule,
     maptools,
     purrr,
+    rgdal,
     rworldmap,
     rworldxtra,
     testthat, 
