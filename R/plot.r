@@ -40,7 +40,7 @@ plot.trimesh <- function(x,  ...) {
   invisible(tt)
 }
 
-#' @rdname plot-rangl
+#' @name plot-rangl
 #' @export
 plot.linemesh <- function(x,  ...) {
   if (!"color_" %in% names(x$o)) {
@@ -69,7 +69,7 @@ plot.linemesh <- function(x,  ...) {
   invisible(list(v = vb, it = itex))
 }
 
-#' @rdname plot-rangl
+#' @name plot-rangl
 #' @export
 plot.pointmesh <- function(x,  ...) {
   if (!"color_" %in% names(x$o)) {
@@ -99,8 +99,7 @@ plot.pointmesh <- function(x,  ...) {
   invisible(list(v = vb, material = list(col = pindex$color_)))
 }
 
-
-#' @rdname plot-rangl
+#' @name plot-rangl
 #' @export
 #' @seealso \code{\link{rangl.RasterLayer}}
 plot.quad_mesh <- function(x, ...) {
