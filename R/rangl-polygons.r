@@ -7,7 +7,7 @@ path2seg <- function(x) {
 
 ## this could replace tri_mesh_map_table1
 ## by input of a simpler object, not so many tables
-tri_mesh_PRIMITIVE <- function(x, max_area = NULL)
+#tri_mesh_PRIMITIVE <- function(x, max_area = NULL) {}
 
 
 ## this internal function does the decomposition to primitives of a 
