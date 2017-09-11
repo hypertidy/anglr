@@ -37,15 +37,15 @@ line_mesh_map_table1 <- function(tabs) {
   tabs$v$countingIndex <- seq(nrow(tabs$v))
   nonuq <- dplyr::inner_join(tabs$bXv, tabs$v, "vertex_")
   
-  ps <- RTriangle::pslg(P = as.matrix(tabs$v[, c("x_", "y_")]),
+  pl <- list(P = as.matrix(tabs$v[, c("x_", "y_")]),
                         S = do.call(rbind, lapply(split(nonuq, nonuq$branch_),
                                                   function(x) path2seg(x$countingIndex))))
   
-  tabs$v <- tibble::tibble(x_ = ps$P[,1], y_ = ps$P[,2], vertex_ = spbabel:::id_n(nrow(ps$P)))
+  tabs$v <- tibble::tibble(x_ = pl$P[,1], y_ = pl$P[,2], vertex_ = spbabel:::id_n(nrow(pl$P)))
   tabs$b <- tabs$bXv <- NULL
-  tabs$l <- tibble::tibble(segment_ = spbabel:::id_n(nrow(ps$S)), object_ = tabs$o$object_[1])
+  tabs$l <- tibble::tibble(segment_ = spbabel:::id_n(nrow(pl$S)), object_ = tabs$o$object_[1])
   tabs$lXv <- tibble::tibble(segment_ = rep(tabs$l$segment_, each = 2), 
-                             vertex_ = tabs$v$vertex_[as.vector(t(ps$S))])
+                             vertex_ = tabs$v$vertex_[as.vector(t(pl$S))])
   
   tabs
 }
@@ -63,9 +63,6 @@ rangl.SpatialLines <- function(x, ...) {
     tabs_i <- tabs; tabs_i$o <- tabs_i$o[i_obj, ]
     tabs_i <- semi_cascade(tabs_i)
     tt_i <- line_mesh_map_table1(tabs_i)
-    # plot.trimesh(tt_i)
-    # scan("", 1L)
-    # rgl::rgl.clear()
     ll[[i_obj]] <- tt_i
   }
   
@@ -83,7 +80,7 @@ rangl.SpatialLines <- function(x, ...) {
   outlist$lXv <- allverts[, c("segment_", "vertex_")]
   outlist$v <- dplyr::distinct_(allverts, "x_", "y_", "vertex_")
   ## finally add longitude and latitude
-  outlist$meta <- tibble::tibble(proj = pr4, x = "x_", y = "y_")
+  outlist$meta <- tibble::tibble(proj = pr4, x = "x_", y = "y_", ctime = format(Sys.time(), tz = "UTC"))
   class(outlist) <- "linemesh"
   outlist
 }

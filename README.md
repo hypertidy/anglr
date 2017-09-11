@@ -23,7 +23,14 @@ Ongoing design
 
 The core work for translating "Spatial" classes is done by the unspecialized 'spbabel::map\_table' function.
 
-This is likely to be replaced by a 'primitives()' function that takes any lines or polygons data and returns just the linked edges. \#\# Installation
+This is likely to be replaced by a 'primitives()' function that takes any lines or polygons data and returns just the linked edges. Crucially, polygons and lines are described by the same 1D primitives, and this is easy to do. Harder is to generate 2D primitives and for that we rely on [Jonathan Richard Shewchuk's Triangle](https://www.cs.cmu.edu/~quake/triangle.html).
+
+Triangulation is with `RTriangle` package using "constrained mostly-Delaunay Triangulation" from the Triangle library, but could alternatively use `rgl` with its ear clipping algorithm.
+
+(With RTriangle we can set a max area for the triangles, so it can wrap around curves like globes and hills.)
+
+Installation
+------------
 
 This package is in active development and will see a number of breaking changes before release.
 
@@ -109,7 +116,7 @@ rgl.snapshot("readme-figure/README-sids-globe.png"); rgl.clear()
 Holes are trivially supported.
 ------------------------------
 
-It's trivial to have "holes", because there are no "holes" because we have a true surface, composed of 2D primitives (triangles).
+It's trivial to have "holes", because there are no holes, because we have a true surface, composed of 2D primitives (triangles).
 
 ``` r
 library(spbabel)
@@ -175,6 +182,8 @@ rgl::rgl.snapshot("readme-figure/README-Platonic.png"); rgl.clear()
 
 ![Platonic](readme-figure/README-Platonic.png?raw=true "Platonic")
 
+To complete the support for these rgl objects we need quads, and to allows a mix of quads and triangles in one data set (that's what `extrude3d` uses).
+
 Points
 ------
 
@@ -196,13 +205,63 @@ rgl::view3d(theta = 25, phi = 3)
 Trips
 -----
 
-Trust me.
+The soon to be released update to trip includes a 'walrus818' data set courtesy of Anthony Fischbach. Zoom around and see if you can find them.
 
 ``` r
 library(trip)
-example(trip)
-plot(tr)
+library(rangl)
+data(walrus818)
+
+library(graticule)
+prj <-"+proj=laea +lon_0=0 +lat_0=90 +ellps=WGS84"
+gr <- graticule(lats = seq(40, 85, by = 5), ylim = c(35, 89.5), proj = prj)
+library(maptools)
+data(wrld_simpl)
+
+w <- spTransform(subset(wrld_simpl, coordinates(wrld_simpl)[,2] > -70),  prj)
+library(graticule)
+walrus <- spTransform(walrus818, prj)
+
+gr$color_ <- "black"
+rgl.close()
+rgl::par3d(windowRect = c(100, 100, 912 + 100, 912 +100))
+plot(rangl(gr))
+#> Joining, by = "object_"
+#> Joining, by = "segment_"
+w$color_ <- sample(viridis::inferno(nrow(w)))
+plot(rangl(w), specular = "black")
+#> Joining, by = "object_"
+#> Joining, by = "triangle_"
+plot(rangl(walrus))
+#> Joining, by = "object_"
+#> Joining, by = "segment_"
+um <- structure(c(0.934230506420135, 0.343760699033737, 0.0950899347662926, 
+0, -0.302941381931305, 0.905495941638947, -0.297159105539322, 
+0, -0.188255190849304, 0.24880850315094, 0.950081348419189, 0, 
+0, 0, 0, 1), .Dim = c(4L, 4L))
+par3d(userMatrix = um)
+rgl::rgl.snapshot("readme-figure/README-walrus.png"); rgl.clear()
 ```
+
+![Walrus](readme-figure/README-walrus.png?raw=true "Walrus")
+
+Rasters
+-------
+
+Single layer rasters are supported.
+
+``` r
+wrld <- rasterize(wrld_simpl, raster())
+plot(rangl(wrld/10))
+rgl::rgl.snapshot("readme-figure/README-raster.png"); rgl.clear()
+
+plot(globe(rangl(wrld*100000)), specular = "black")
+rgl::rgl.snapshot("readme-figure/README-rasterglobe.png"); rgl.clear()
+```
+
+![Raster](readme-figure/README-raster.png?raw=true "Raster")
+
+![RasterGlobe](readme-figure/README-rasterglobe.png?raw=true "RasterGlobe")
 
 Open topics
 -----------

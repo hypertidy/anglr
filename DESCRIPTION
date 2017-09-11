@@ -1,7 +1,7 @@
 Package: rangl
 Type: Package
 Title: Tidy Flexible Spatial
-Version: 0.3.0
+Version: 0.3.0.9001
 Authors@R: person("Michael D.","Sumner", role = c("aut", "cre"), email =
     "mdsumner@gmail.com")
 Description: Create tidy tables for topological, triangulated, and other spatial data structures.
@@ -10,6 +10,7 @@ Imports:
     dplyr,
     methods,
     proj4,
+    raster,
     rgl,
     RTriangle,
     sp,
@@ -26,4 +27,4 @@ SystemRequirements: PROJ.4
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 5.0.1
-Remotes: mdsumner/spbabel
+Remotes: mdsumner/spbabel, mdsumner/trip
