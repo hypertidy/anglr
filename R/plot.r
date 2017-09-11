@@ -1,18 +1,15 @@
-
-#' plot the triangles in the tables
+#' Plot objects in OpenGL
+#' 
+#' Plot using the \code{\link[rgl]{rgl-package}}. 
 #'
-#' plot
-#'
+#' The data structures from \code{\link{rangl}} are converted to their analogous forms
+#' used by the \code{\link[rgl]{rgl}} package and plotted. These plot methods return
+#' the rgl form invisibly. 
 #' @param x object from \code{\link{rangl}}
 #' @param ... args for underlying plotting
 #' @return the rgl mesh3d object, invisibly
 #' @export
 #' @importFrom rgl shade3d
-#' @examples
-#' example(rangl)
-#' if(exists("b")) { 
-#'  plot(b)
-#'  }
 #' @name plot-rangl
 #' @aliases plot
 plot.trimesh <- function(x,  ...) {
@@ -43,7 +40,7 @@ plot.trimesh <- function(x,  ...) {
   invisible(tt)
 }
 
-#' @rdname plot-rangl
+#' @name plot-rangl
 #' @export
 plot.linemesh <- function(x,  ...) {
   if (!"color_" %in% names(x$o)) {
@@ -72,7 +69,7 @@ plot.linemesh <- function(x,  ...) {
   invisible(list(v = vb, it = itex))
 }
 
-#' @rdname plot-rangl
+#' @name plot-rangl
 #' @export
 plot.pointmesh <- function(x,  ...) {
   if (!"color_" %in% names(x$o)) {
@@ -100,4 +97,15 @@ plot.pointmesh <- function(x,  ...) {
   
   
   invisible(list(v = vb, material = list(col = pindex$color_)))
+}
+
+#' @name plot-rangl
+#' @export
+#' @seealso \code{\link{rangl.RasterLayer}}
+plot.quad_mesh <- function(x, ...) {
+  ## etc blah
+  ob <- mkq_3d()
+  ob$vb <- t(cbind(as.matrix(x$v[, c("x_", "y_", "z_")]), 1))
+  ob$ib <- matrix(x$qXv$vertex_, nrow = 4)
+  invisible(rgl::shade3d(ob, col = trimesh_cols(nrow(x$qd))[ob$ib], ...))
 }

@@ -1,0 +1,103 @@
+---
+title: "Structures for hierarchical data in R"
+author: "Michael Sumner"
+date: "14 December 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Hierarchical data is generally hard to deal with since the layout doesn't often match the way tools must then work with the data. Physical structures are used to match the logical structure in data sets, and this is not necessarily an efficient or flexible way to deal with the data itself. 
+
+** Example of extracting stuff from  a nested list**
+
+```{r}
+library(repurrrsive)
+got_chars
+```
+
+## Tables
+
+The tidy framework in R generally dictates that the long form of tabular storage is the best way to work with statistical models and graphics. 
+
+The tools for converting from untidy nested structures, to long-form tables is well established, but the capacity to deal with 
+multiple related tables is more difficult. 
+
+What does nesting represent? Nesting in a tree-like structure represents data as nodes in a graph, with the parent-node and child-nodes as a straightforward encoding of relations. 
+
+**Tree example of a nested list**
+
+```{r}
+```
+
+These relations can be encoded in "normal-form", where the proper entities in the data structure are stored each 
+in a table, and the tree is not stored explicitly but as 1-many and many-1 links in relations. 
+
+** Table example of a nested list **
+
+```{r}
+
+```
+
+When the nodes in the graph are themselves *tidy*, it's very easy to convert from the nested recursive structure to a set of tables. 
+
+** Bag of relations **
+
+A list of tables doesn't seem especially helpful, and it's not  - at the user-level - but for a developer it's a very straightforward data structure to work with. 
+
+## Tools to build a map of nested structure
+
+## Applying the map to extract tidy tables 
+
+## Collapsing to entity tables
+
+
+```{r}
+library(repurrrsive)
+
+library(purrr)
+library(tibble)
+library(dplyr)
+library(tidyr)
+map_df(wesanderson, function(x) tibble(color = x), .id = "palette")
+
+map(got_chars[[1]], length)
+
+
+library(sf)
+nc <- st_read(system.file("shape/nc.shp", package="sf"))
+#map(st_geometry(nc), length)
+
+nc %>% select(CNTY_ID, AREA, geometry) %>% mutate(len = at_depth(geometry, 1, length)) %>% filter(len > 1)
+
+shp <- as(nc, "Spatial")
+library(spbabel)
+library(sp)
+map_table(nc)
+
+## break down nc and rebuild as tibble
+tnc <- nc %>% select(-geometry) %>% as_tibble()
+tnc$geometry <- st_geometry(nc)
+#st_as_sf(tnc) %>% by_row(map_table)
+map_table.tbl_df <- function(x, ...) {
+  map_table(st_as_sf(x))
+}
+
+x <- st_as_sf(tnc) %>% by_row(map_table) %>% select(.out)
+x$.out[[1]]
+```
+
+
+## Examples with spatial data
+
+** Normal form for simple features **
+
+** Primitives form (topology) **
+
+** Recording aesthetics as variables with primitives **
+
+** Recording variables generally on entities **
+
+** Primitives from ggvis ** 
