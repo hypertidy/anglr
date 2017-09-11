@@ -12,5 +12,5 @@ tri_mesh <- function(x, ...) {
 #' @name rangl-defunct
 #' @export
 mesh <- function(x, ...) {
-  .Deprecated("rangl", package= "rangl", old = "mesh")
+  .Defunct("rangl", package= "rangl", old = "mesh")
 }

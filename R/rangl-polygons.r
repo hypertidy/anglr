@@ -36,7 +36,7 @@ tri_mesh_map_table1 <- function(tabs, max_area = NULL) {
   ## https://github.com/r-gris/rangl/issues/39
   
   ## process the holes if present
-  if (any(!tabs$b$island_)) {
+  if ("island_" %in% names(tabs$b) && any(!tabs$b$island_)) {
     ## filter out all the hole geometry and build an sp polygon object with it
     ## this 
     ##   filters all the branches that are holes
@@ -44,7 +44,8 @@ tri_mesh_map_table1 <- function(tabs, max_area = NULL) {
     ##   joins on the vertex values
     ##   recomposes a SpatialPolygonsDataFrame using the spbabel::sp convention
     holes <- spbabel::sp(dplyr::inner_join(dplyr::inner_join(dplyr::filter_(tabs$b, quote(!island_)), tabs$bXv, "branch_"), 
-                                           tabs$v, "vertex_"))
+                                           tabs$v, "vertex_") %>% dplyr::mutate(order_ = row_number()))
+    stopifnot(inherits(holes, "SpatialPolygons"))
     ## centroid of every triangle
     centroids <- matrix(unlist(lapply(split(tr$P[t(tr$T), ], rep(seq(nrow(tr$T)), each = 3)), .colMeans, 3, 2)), 
                         ncol = 2, byrow = TRUE)
