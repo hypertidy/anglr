@@ -8,22 +8,20 @@
 \alias{plot.linemesh}
 \alias{plot-rangl}
 \alias{plot.pointmesh}
-\alias{plot-rangl}
-\alias{plot.quad_mesh}
 \title{Plot objects in OpenGL}
 \usage{
-\method{plot}{trimesh}(x, ...)
+\method{plot}{trimesh}(x, ..., add = FALSE)
 
-\method{plot}{linemesh}(x, ...)
+\method{plot}{linemesh}(x, ..., add = FALSE)
 
 \method{plot}{pointmesh}(x, ...)
-
-\method{plot}{quad_mesh}(x, ...)
 }
 \arguments{
 \item{x}{object from \code{\link{rangl}}}
 
 \item{...}{args for underlying plotting}
+
+\item{add}{add to existing plot if exists}
 }
 \value{
 the rgl mesh3d object, invisibly
@@ -35,7 +33,4 @@ Plot using the \code{\link[rgl]{rgl-package}}.
 The data structures from \code{\link{rangl}} are converted to their analogous forms
 used by the \code{\link[rgl]{rgl}} package and plotted. These plot methods return
 the rgl form invisibly.
-}
-\seealso{
-\code{\link{rangl.RasterLayer}}
 }

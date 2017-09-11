@@ -45,8 +45,11 @@ tri_mesh_map_table1 <- function(tabs, max_area = NULL) {
     ##   joins on the vertex instance index
     ##   joins on the vertex values
     ##   recomposes a SpatialPolygonsDataFrame using the spbabel::sp convention
-    holes <- spbabel::sp(dplyr::inner_join(dplyr::inner_join(dplyr::filter_(tabs$b, quote(!island_)), tabs$bXv, "branch_"), 
-                                           tabs$v, "vertex_") %>% dplyr::mutate(order_ = dplyr::row_number()))
+    holes <- dplyr::inner_join(dplyr::inner_join(dplyr::filter_(tabs$b, quote(!island_)), tabs$bXv, "branch_"), 
+                                           tabs$v, "vertex_")
+    holes[["order_"]] <- seq_len(nrow(holes))
+    holes <- spbabel::sp(holes)
+    
     stopifnot(inherits(holes, "SpatialPolygons"))
     ## centroid of every triangle
     centroids <- matrix(unlist(lapply(split(tr$P[t(tr$T), ], rep(seq(nrow(tr$T)), each = 3)), .colMeans, 3, 2)), 
