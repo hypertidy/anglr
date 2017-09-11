@@ -4,8 +4,11 @@
 \alias{plot-rangl}
 \alias{plot.trimesh}
 \alias{plot}
+\alias{plot-rangl}
 \alias{plot.linemesh}
+\alias{plot-rangl}
 \alias{plot.pointmesh}
+\alias{plot-rangl}
 \alias{plot.quad_mesh}
 \title{Plot objects in OpenGL}
 \usage{

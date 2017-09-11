@@ -1,19 +1,40 @@
-#' @importFrom spbabel map_table
+#' @importFrom rlang .data
+silicate_to_gris_names <- function(x) {
+  names(x) <- c("o", "b", "v", "bXv")
+  x[["o"]] <- dplyr::rename(x[["o"]], object_  = .data$object)
+  x[["b"]] <- dplyr::rename(x[["b"]], object_ = .data$object, branch_ = .data$path)
+  
+  thetype <- x[["b"]]$type[1]
+  
+  ## good grief, split order is a nightmare
+  if (thetype == "MULTIPOLYGON") x[["b"]][["island_"]] <- unlist(lapply(split(x[["b"]], x[["b"]][["object_"]]), function(xa) !duplicated(xa[["subobject"]]))[unique(x[["b"]][["object_"]])])
+  if (thetype == "POLYGON") x[["b"]][["island_"]] <- !duplicated(x[["b"]][["object_"]])
+  x[["bXv"]] <- dplyr::rename(x[["bXv"]], branch_ = .data$path)
+  
+  x
+}
+
+#' @importFrom silicate PATH
 #' @export
 rangl.sf <- function (x, max_area = NULL, ...) 
 {
   pr4 <- attr(x[[attr(x, "sf_column")]], "crs")[["proj4string"]]
   #tabs <- spbabel::map_table(x)
   tabs <- silicate::PATH(x)
-  names(tabs) <- c("o", "b", "v", "bXv")
-  tabs[["o"]] <- dplyr::rename(tabs[["o"]], object_  = object)
-  tabs[["b"]] <- dplyr::rename(tabs[["b"]], object_ = object, branch_ = path)
-  #tabs[["b"]] <- dplyr::mutate(tabs[["b"]], island_ = subobject < 2)
-  ## good grief, split order is a nightmare
-  if (tabs[["b"]]$type[1] == "MULTIPOLYGON") tabs[["b"]][["island_"]] <- unlist(lapply(split(tabs[["b"]], tabs[["b"]][["object_"]]), function(xa) !duplicated(xa[["subobject"]]))[unique(tabs[["b"]][["object_"]])])
-  if (tabs[["b"]]$type[1] == "POLYGON") tabs[["b"]][["island_"]] <- !duplicated(tabs[["b"]][["object_"]])
-  tabs[["bXv"]] <- dplyr::rename(tabs[["bXv"]], branch_ = path)
-  rangl_polys(tabs)
+  tabs <- silicate_to_gris_names(tabs)
+  thetype <- tabs[["b"]]$type[1]
+  if (grepl("POLYGON", thetype)) {
+   return(rangl_polys(tabs))
+  }
+  if (grepl("LINE", thetype)) {
+    return(rangl_lines(tabs))
+  }
+ # tabs <- spbabel::map_table(x)
+  ## otherwise M/POINT
+  tabs$meta <- tibble::tibble(proj = pr4, x = "x_", y = "y_", ctime = format(Sys.time(), tz = "UTC"))
+  
+  class(tabs) <- "pointmesh"
+  tabs
 
 }
 
@@ -28,7 +49,10 @@ rangl.SpatialLines <- function(x, ...) {
     x <- sp::SpatialLinesDataFrame(x, dummy, match.ID = FALSE)
   }
   tabs <- spbabel::map_table(x)
-  rangl_lines(tabs)
+  out <- rangl_lines(tabs)
+  out$meta <- tibble::tibble(proj = pr4, x = "x_", y = "y_", 
+                                 ctime = format(Sys.time(), tz = "UTC"))
+  out
 }
 
 
@@ -54,6 +78,9 @@ rangl.SpatialPolygons <- function(x, max_area = NULL, ...) {
     x <- sp::SpatialPolygonsDataFrame(x, dummy, match.ID = FALSE)
   }
   tabs <- spbabel::map_table(x)
-  rangl_polys(tabs, max_area = max_area, ...)
+  out <- rangl_polys(tabs, max_area = max_area, ...)
+  out$meta <- tibble::tibble(proj = pr4, x = "x_", y = "y_", 
+                             ctime = format(Sys.time(), tz = "UTC"))
+  out
 }
 

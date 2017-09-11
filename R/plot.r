@@ -98,14 +98,3 @@ plot.pointmesh <- function(x,  ...) {
   
   invisible(list(v = vb, material = list(col = pindex$color_)))
 }
-
-#' @name plot-rangl
-#' @export
-#' @seealso \code{\link{rangl.RasterLayer}}
-plot.quad_mesh <- function(x, ...) {
-  ## etc blah
-  ob <- mkq_3d()
-  ob$vb <- t(cbind(as.matrix(x$v[, c("x_", "y_", "z_")]), 1))
-  ob$ib <- matrix(x$qXv$vertex_, nrow = 4)
-  invisible(rgl::shade3d(ob, col = trimesh_cols(nrow(x$qd))[ob$ib], ...))
-}

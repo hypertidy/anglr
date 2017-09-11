@@ -158,25 +158,25 @@ p &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentat
 <pre><code>## # A tibble: 4 x 3
 ##               name     color    object_
 ## *           &lt;fctr&gt;     &lt;chr&gt;      &lt;chr&gt;
-## 1        Australia #440154FF KvEmKzox1A
-## 2        Indonesia #31688EFF 7PCVdIAAXW
-## 3      New Zealand #35B779FF 4HOkUGSyvi
-## 4 Papua New Guinea #FDE725FF 8hOYvOCLf5</code></pre>
+## 1        Australia #440154FF ilVnmqCbbH
+## 2        Indonesia #31688EFF t47yzdE784
+## 3      New Zealand #35B779FF 7pFZe2znZh
+## 4 Papua New Guinea #FDE725FF CSxAPEYLNQ</code></pre>
 <p>The branches record which object they belong to.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ptabs<span class="op">$</span>b</code></pre></div>
 <pre><code>## # A tibble: 21 x 3
 ##       object_    branch_ island_
 ##         &lt;chr&gt;      &lt;chr&gt;   &lt;lgl&gt;
-##  1 KvEmKzox1A MIxXsSbGV3    TRUE
-##  2 KvEmKzox1A qpKBYodAGT    TRUE
-##  3 7PCVdIAAXW e1TCj0Br2v    TRUE
-##  4 7PCVdIAAXW F5MJcuULVQ    TRUE
-##  5 7PCVdIAAXW sxStn4POGv    TRUE
-##  6 7PCVdIAAXW 5Eiakyu9tp    TRUE
-##  7 7PCVdIAAXW PnIP7bB2HM    TRUE
-##  8 7PCVdIAAXW j2ai8LH3uW    TRUE
-##  9 7PCVdIAAXW oFdvvUylNS    TRUE
-## 10 7PCVdIAAXW D1RfDjTifE    TRUE
+##  1 ilVnmqCbbH MRdiSEtOBJ    TRUE
+##  2 ilVnmqCbbH v64zPxJodf    TRUE
+##  3 t47yzdE784 901DrwvOfm    TRUE
+##  4 t47yzdE784 bOkvCn1Be9    TRUE
+##  5 t47yzdE784 3huo59ri0e    TRUE
+##  6 t47yzdE784 0Q5V7zVZFZ    TRUE
+##  7 t47yzdE784 N6yev7yvC3    TRUE
+##  8 t47yzdE784 y89dESVcBR    TRUE
+##  9 t47yzdE784 okx9yVE9yZ    TRUE
+## 10 t47yzdE784 rehoUtEtGG    TRUE
 ## # ... with 11 more rows</code></pre>
 <p>The branches-link-vertex table records the relationship between vertices and branches (by default the de-duplication is done in X-Y but it could be done in other geometric spaces, e.g. in 1D time or 3D X-Y-Z or X-Y-Time).</p>
 <p>This is the <em>instances of vertices</em> as opposed to the unique paired values of coordinates themselves.</p>
@@ -184,32 +184,32 @@ p &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentat
 <pre><code>## # A tibble: 638 x 3
 ##       branch_ order_    vertex_
 ##         &lt;chr&gt;  &lt;int&gt;      &lt;chr&gt;
-##  1 MIxXsSbGV3      1 FgaZXgycV5
-##  2 MIxXsSbGV3      2 dAERPpzeKd
-##  3 MIxXsSbGV3      3 3F2v2xG4AH
-##  4 MIxXsSbGV3      4 YF8lp2myiT
-##  5 MIxXsSbGV3      5 3WBwgsn4Fa
-##  6 MIxXsSbGV3      6 adk2CNvwTQ
-##  7 MIxXsSbGV3      7 S0iwI9CM61
-##  8 MIxXsSbGV3      8 LHLMUJkMIx
-##  9 MIxXsSbGV3      9 DyA2PktVXv
-## 10 MIxXsSbGV3     10 0HvWkduai8
+##  1 MRdiSEtOBJ      1 jVBSelrBao
+##  2 MRdiSEtOBJ      2 2vuILYW5Iz
+##  3 MRdiSEtOBJ      3 nCBJNdUV2I
+##  4 MRdiSEtOBJ      4 Kzco2xpDaR
+##  5 MRdiSEtOBJ      5 91gqFJTpaz
+##  6 MRdiSEtOBJ      6 KKo2gVz2tw
+##  7 MRdiSEtOBJ      7 YC5kxaLn27
+##  8 MRdiSEtOBJ      8 MbgoLABFwI
+##  9 MRdiSEtOBJ      9 G06xH1AABL
+## 10 MRdiSEtOBJ     10 nFEN3vFw4k
 ## # ... with 628 more rows</code></pre>
 <p>And finally the vertices. In this example there are fewer unique x-y vertex than there are <strong>instance of the vertices</strong>, not a one-to-one match. This discrepancy obviously increases greatly for layers with shared boundaries, though in this example it is mostly due to the final closing coordinate on each polygon path - it’s a repeated instance, but not a repeated vertex <em>value</em>. There is at least one shared edge in this layer, clearly the one between Indonesia and Papua New Guinea.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ptabs<span class="op">$</span>v</code></pre></div>
 <pre><code>## # A tibble: 614 x 3
 ##          x_        y_    vertex_
 ##       &lt;dbl&gt;     &lt;dbl&gt;      &lt;chr&gt;
-##  1 145.3980 -40.79255 FgaZXgycV5
-##  2 146.3641 -41.13770 dAERPpzeKd
-##  3 146.9086 -41.00055 3F2v2xG4AH
-##  4 147.6893 -40.80826 YF8lp2myiT
-##  5 148.2891 -40.87544 3WBwgsn4Fa
-##  6 148.3599 -42.06245 adk2CNvwTQ
-##  7 148.0173 -42.40702 S0iwI9CM61
-##  8 147.9141 -43.21152 LHLMUJkMIx
-##  9 147.5646 -42.93769 DyA2PktVXv
-## 10 146.8703 -43.63460 0HvWkduai8
+##  1 145.3980 -40.79255 jVBSelrBao
+##  2 146.3641 -41.13770 2vuILYW5Iz
+##  3 146.9086 -41.00055 nCBJNdUV2I
+##  4 147.6893 -40.80826 Kzco2xpDaR
+##  5 148.2891 -40.87544 91gqFJTpaz
+##  6 148.3599 -42.06245 KKo2gVz2tw
+##  7 148.0173 -42.40702 YC5kxaLn27
+##  8 147.9141 -43.21152 MbgoLABFwI
+##  9 147.5646 -42.93769 G06xH1AABL
+## 10 146.8703 -43.63460 nFEN3vFw4k
 ## # ... with 604 more rows</code></pre>
 <div id="polygons-are-just-lines" class="section level2">
 <h2 class="hasAnchor">
@@ -232,10 +232,10 @@ p &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentat
 ## # A tibble: 4 x 3
 ##               name     color    object_
 ## *           &lt;fctr&gt;     &lt;chr&gt;      &lt;chr&gt;
-## 1        Australia #440154FF KvEmKzox1A
-## 2        Indonesia #31688EFF 7PCVdIAAXW
-## 3      New Zealand #35B779FF 4HOkUGSyvi
-## 4 Papua New Guinea #FDE725FF 8hOYvOCLf5
+## 1        Australia #440154FF ilVnmqCbbH
+## 2        Indonesia #31688EFF t47yzdE784
+## 3      New Zealand #35B779FF 7pFZe2znZh
+## 4 Papua New Guinea #FDE725FF CSxAPEYLNQ
 ## 
 ## 
 ## ------------------------------
@@ -243,16 +243,16 @@ p &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentat
 ## # A tibble: 21 x 3
 ##       object_    branch_ island_
 ##         &lt;chr&gt;      &lt;chr&gt;   &lt;lgl&gt;
-##  1 KvEmKzox1A MIxXsSbGV3    TRUE
-##  2 KvEmKzox1A qpKBYodAGT    TRUE
-##  3 7PCVdIAAXW e1TCj0Br2v    TRUE
-##  4 7PCVdIAAXW F5MJcuULVQ    TRUE
-##  5 7PCVdIAAXW sxStn4POGv    TRUE
-##  6 7PCVdIAAXW 5Eiakyu9tp    TRUE
-##  7 7PCVdIAAXW PnIP7bB2HM    TRUE
-##  8 7PCVdIAAXW j2ai8LH3uW    TRUE
-##  9 7PCVdIAAXW oFdvvUylNS    TRUE
-## 10 7PCVdIAAXW D1RfDjTifE    TRUE
+##  1 ilVnmqCbbH MRdiSEtOBJ    TRUE
+##  2 ilVnmqCbbH v64zPxJodf    TRUE
+##  3 t47yzdE784 901DrwvOfm    TRUE
+##  4 t47yzdE784 bOkvCn1Be9    TRUE
+##  5 t47yzdE784 3huo59ri0e    TRUE
+##  6 t47yzdE784 0Q5V7zVZFZ    TRUE
+##  7 t47yzdE784 N6yev7yvC3    TRUE
+##  8 t47yzdE784 y89dESVcBR    TRUE
+##  9 t47yzdE784 okx9yVE9yZ    TRUE
+## 10 t47yzdE784 rehoUtEtGG    TRUE
 ## # ... with 11 more rows
 ## 
 ## 
@@ -261,16 +261,16 @@ p &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentat
 ## # A tibble: 638 x 3
 ##       branch_ order_    vertex_
 ##         &lt;chr&gt;  &lt;int&gt;      &lt;chr&gt;
-##  1 MIxXsSbGV3      1 FgaZXgycV5
-##  2 MIxXsSbGV3      2 dAERPpzeKd
-##  3 MIxXsSbGV3      3 3F2v2xG4AH
-##  4 MIxXsSbGV3      4 YF8lp2myiT
-##  5 MIxXsSbGV3      5 3WBwgsn4Fa
-##  6 MIxXsSbGV3      6 adk2CNvwTQ
-##  7 MIxXsSbGV3      7 S0iwI9CM61
-##  8 MIxXsSbGV3      8 LHLMUJkMIx
-##  9 MIxXsSbGV3      9 DyA2PktVXv
-## 10 MIxXsSbGV3     10 0HvWkduai8
+##  1 MRdiSEtOBJ      1 jVBSelrBao
+##  2 MRdiSEtOBJ      2 2vuILYW5Iz
+##  3 MRdiSEtOBJ      3 nCBJNdUV2I
+##  4 MRdiSEtOBJ      4 Kzco2xpDaR
+##  5 MRdiSEtOBJ      5 91gqFJTpaz
+##  6 MRdiSEtOBJ      6 KKo2gVz2tw
+##  7 MRdiSEtOBJ      7 YC5kxaLn27
+##  8 MRdiSEtOBJ      8 MbgoLABFwI
+##  9 MRdiSEtOBJ      9 G06xH1AABL
+## 10 MRdiSEtOBJ     10 nFEN3vFw4k
 ## # ... with 628 more rows
 ## 
 ## 
@@ -279,16 +279,16 @@ p &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentat
 ## # A tibble: 614 x 3
 ##          x_        y_    vertex_
 ##       &lt;dbl&gt;     &lt;dbl&gt;      &lt;chr&gt;
-##  1 145.3980 -40.79255 FgaZXgycV5
-##  2 146.3641 -41.13770 dAERPpzeKd
-##  3 146.9086 -41.00055 3F2v2xG4AH
-##  4 147.6893 -40.80826 YF8lp2myiT
-##  5 148.2891 -40.87544 3WBwgsn4Fa
-##  6 148.3599 -42.06245 adk2CNvwTQ
-##  7 148.0173 -42.40702 S0iwI9CM61
-##  8 147.9141 -43.21152 LHLMUJkMIx
-##  9 147.5646 -42.93769 DyA2PktVXv
-## 10 146.8703 -43.63460 0HvWkduai8
+##  1 145.3980 -40.79255 jVBSelrBao
+##  2 146.3641 -41.13770 2vuILYW5Iz
+##  3 146.9086 -41.00055 nCBJNdUV2I
+##  4 147.6893 -40.80826 Kzco2xpDaR
+##  5 148.2891 -40.87544 91gqFJTpaz
+##  6 148.3599 -42.06245 KKo2gVz2tw
+##  7 148.0173 -42.40702 YC5kxaLn27
+##  8 147.9141 -43.21152 MbgoLABFwI
+##  9 147.5646 -42.93769 G06xH1AABL
+## 10 146.8703 -43.63460 nFEN3vFw4k
 ## # ... with 604 more rows</code></pre>
 </div>
 <div id="what-makes-polygons-different-to-lines" class="section level2">
@@ -357,31 +357,31 @@ segs &lt;-<span class="st"> </span>lsegment<span class="op">$</span>lXv <span cl
 <pre><code>## # A tibble: 614 x 3
 ##          x_        y_    vertex_
 ##       &lt;dbl&gt;     &lt;dbl&gt;      &lt;chr&gt;
-##  1 114.6165 -28.51640 snAVoeH9nY
-##  2 114.6420 -28.81023 WebbOGsHhK
-##  3 115.0400 -29.46110 lUF49zorp0
-##  4 114.2329 -26.29845 4fK5RLYtGb
-##  5 113.7784 -26.54903 cbDHoCdn2i
-##  6 114.0489 -27.33477 nFCtqd1oGa
-##  7 114.1736 -28.11808 f8rCKENwxQ
-##  8 113.4775 -26.54313 84CVzpffSz
-##  9 115.0268 -34.19652 gHGQQgPq9p
-## 10 115.5451 -33.48726 5dCf3He1p3
+##  1 114.6165 -28.51640 MXxxXr7JiZ
+##  2 114.6420 -28.81023 cdixHYSZjF
+##  3 115.0400 -29.46110 ZuHhg3z90O
+##  4 114.2329 -26.29845 fBw4t9uOHh
+##  5 113.7784 -26.54903 6jfQk18Rtm
+##  6 114.0489 -27.33477 ncqs1eNlEG
+##  7 114.1736 -28.11808 MHjUMziko3
+##  8 113.4775 -26.54313 l9M5XQLD3M
+##  9 115.0268 -34.19652 rCnFiATcRx
+## 10 115.5451 -33.48726 LbykL1pNdI
 ## # ... with 604 more rows</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rangl<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/rangl/topics/globe">globe</a></span>(prim2D)<span class="op">$</span>v</code></pre></div>
 <pre><code>## # A tibble: 614 x 4
 ##          x_      y_    vertex_       z_
 ##       &lt;dbl&gt;   &lt;dbl&gt;      &lt;chr&gt;    &lt;dbl&gt;
-##  1 -2336231 5098892 snAVoeH9nY -3026914
-##  2 -2331985 5083655 WebbOGsHhK -3055489
-##  3 -2352381 5035508 lUF49zorp0 -3118501
-##  4 -2348469 5217578 4fK5RLYtGb -2808743
-##  5 -2302026 5224737 cbDHoCdn2i -2833605
-##  6 -2310595 5177787 nFCtqd1oGa -2911217
-##  7 -2305320 5135903 f8rCKENwxQ -2988053
-##  8 -2274676 5237020 84CVzpffSz -2833021
-##  9 -2234102 4785201 gHGQQgPq9p -3564497
-## 10 -2296191 4804324 5dCf3He1p3 -3499156
+##  1 -2336231 5098892 MXxxXr7JiZ -3026914
+##  2 -2331985 5083655 cdixHYSZjF -3055489
+##  3 -2352381 5035508 ZuHhg3z90O -3118501
+##  4 -2348469 5217578 fBw4t9uOHh -2808743
+##  5 -2302026 5224737 6jfQk18Rtm -2833605
+##  6 -2310595 5177787 ncqs1eNlEG -2911217
+##  7 -2305320 5135903 MHjUMziko3 -2988053
+##  8 -2274676 5237020 l9M5XQLD3M -2833021
+##  9 -2234102 4785201 rCnFiATcRx -3564497
+## 10 -2296191 4804324 LbykL1pNdI -3499156
 ## # ... with 604 more rows</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#subid &lt;- currentSubscene3d()</span>
 <span class="co">#rglwidget(elementId="prim2D")</span></code></pre></div>
@@ -396,203 +396,6 @@ segs &lt;-<span class="st"> </span>lsegment<span class="op">$</span>lXv <span cl
 <p>We can otherwise do anything we like with the vertices, including reprojecting them and copying on other attributes.</p>
 <p>As an example, copy on the Etopo5 elevations, first with the default triangulation, and then with a denser version.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## <span class="al">TBD</span></code></pre></div>
-<p>Now for some examples to give an overview of diferent tools in R.</p>
-</div>
-<div id="base-graphics" class="section level2">
-<h2 class="hasAnchor">
-<a href="#base-graphics" class="anchor"></a>Base graphics</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p1 &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="fl">0.75</span>, <span class="dv">1</span>,   <span class="fl">0.5</span>, <span class="fl">0.8</span>, <span class="fl">0.69</span>, <span class="dv">0</span>), 
-           <span class="dt">y =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>,    <span class="fl">0.8</span>, <span class="fl">0.7</span>, <span class="fl">0.6</span>, <span class="dv">0</span>,    <span class="dv">0</span>))
-p2 &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.2</span>), 
-            <span class="dt">y =</span> <span class="kw">c</span>(<span class="fl">0.2</span>, <span class="fl">0.4</span>, <span class="fl">0.6</span>, <span class="fl">0.4</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>))
-p4 &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="fl">0.69</span>, <span class="fl">0.8</span>, <span class="fl">1.1</span>, <span class="fl">1.23</span>, <span class="fl">0.69</span>), 
-            <span class="dt">y =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.6</span>, <span class="fl">0.63</span>, <span class="fl">0.3</span>, <span class="dv">0</span>))
-pp &lt;-<span class="st"> </span><span class="kw">rbind</span>(p1, <span class="ot">NA</span>,  p2[<span class="kw">nrow</span>(p2)<span class="op">:</span><span class="dv">1</span>, ])
-<span class="kw"><a href="../reference/plot-rangl.html">plot</a></span>(<span class="kw">rbind</span>(pp, p4), <span class="dt">cex =</span> <span class="fl">1.3</span>, <span class="dt">main =</span> <span class="st">"two polygons, shared edge"</span>)
-<span class="kw">polypath</span>(pp, <span class="dt">col =</span> <span class="st">"grey"</span>)
-<span class="kw">polypath</span>(p4, <span class="dt">col =</span> <span class="st">"firebrick"</span>)</code></pre></div>
-<p><img src="spatial-normal-forms_files/figure-html/unnamed-chunk-20-1.png" width="672"></p>
-</div>
-<div id="simple-features-for-r" class="section level2">
-<h2 class="hasAnchor">
-<a href="#simple-features-for-r" class="anchor"></a>Simple features for R</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#devtools::install_github("edzer/sfr")</span>
-<span class="kw">library</span>(sf)</code></pre></div>
-<pre><code>## Linking to GEOS 3.5.1, GDAL 2.2.1, proj.4 4.9.3</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tibble)
-x &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/st_as_sf">st_as_sf</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/tibble/topics/tibble">tibble</a></span>(<span class="dt">a =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dt">geom =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/sfc">st_sfc</a></span>(<span class="kw">list</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/st">st_multipolygon</a></span>(<span class="kw">list</span>(<span class="kw">list</span>(p1, p2[<span class="kw">rev</span>(<span class="kw">seq</span>(<span class="kw">nrow</span>(p2))), ]))),  
-                                                 <span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/st">st_multipolygon</a></span>(<span class="kw">list</span>(<span class="kw">list</span>(p4)))))))
-<span class="kw"><a href="../reference/plot-rangl.html">plot</a></span>(x, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">"grey"</span>, <span class="st">"firebrick"</span>))</code></pre></div>
-<p><img src="spatial-normal-forms_files/figure-html/unnamed-chunk-21-1.png" width="672"></p>
-</div>
-<div id="spatial-legacy-sp-package" class="section level2">
-<h2 class="hasAnchor">
-<a href="#spatial-legacy-sp-package" class="anchor"></a>Spatial (legacy sp package)</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sp)
-spgdf &lt;-<span class="st"> </span><span class="kw">as</span>(x, <span class="st">"Spatial"</span>)
-<span class="kw"><a href="../reference/plot-rangl.html">plot</a></span>(spgdf, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">"grey"</span>, <span class="st">"firebrick"</span>))</code></pre></div>
-<p><img src="spatial-normal-forms_files/figure-html/unnamed-chunk-22-1.png" width="672"></p>
-</div>
-<div id="grammar-of-graphics" class="section level2">
-<h2 class="hasAnchor">
-<a href="#grammar-of-graphics" class="anchor"></a>Grammar of graphics</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## fortify model
-<span class="kw">library</span>(dplyr)
-meta &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/reexports.html">as_tibble</a></span>(x <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>geom) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">object_ =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/ranking.html">row_number</a></span>()))
-map &lt;-<span class="st"> </span>spbabel<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/spbabel/topics/sptable">sptable</a></span>(spgdf)
-<span class="kw">library</span>(ggplot2)
-ggcols &lt;-<span class="st"> </span>ggplot2<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual">scale_fill_manual</a></span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">"1"</span> =<span class="st"> "grey"</span>, <span class="st">"2"</span>  =<span class="st"> "firebrick"</span>)) 
-<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(map <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">rn =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/ranking.html">row_number</a></span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(meta)) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> x_, <span class="dt">y =</span> y_, <span class="dt">group =</span> branch_, <span class="dt">fill =</span> <span class="kw">factor</span>(object_)) <span class="op">+</span>
-<span class="st">  </span>ggcols <span class="op">+</span><span class="st"> </span>ggpolypath<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggpolypath/topics/geom_polypath">geom_polypath</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_path</a></span>()</code></pre></div>
-<pre><code>## Joining, by = "object_"</code></pre>
-<p><img src="spatial-normal-forms_files/figure-html/unnamed-chunk-23-1.png" width="672"></p>
-</div>
-<div id="map-table" class="section level2">
-<h2 class="hasAnchor">
-<a href="#map-table" class="anchor"></a>Map table</h2>
-<p>This is a four-table decomposition of Spatial objects, a normalization of the fortify model.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(spbabel)
-mp &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/spbabel/topics/map_table">map_table</a></span>(spgdf)
-ggcols &lt;-<span class="st"> </span>ggplot2<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual">scale_fill_manual</a></span>(<span class="dt">values =</span> <span class="kw">setNames</span>(<span class="kw">c</span>(<span class="st">"grey"</span>, <span class="st">"firebrick"</span>), mp<span class="op">$</span>o<span class="op">$</span>object_))
-gg &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(mp<span class="op">$</span>o <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(mp<span class="op">$</span>b) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(mp<span class="op">$</span>bXv) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(mp<span class="op">$</span>v))</code></pre></div>
-<pre><code>## Joining, by = "object_"</code></pre>
-<pre><code>## Joining, by = "branch_"</code></pre>
-<pre><code>## Joining, by = "vertex_"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gg <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> x_, <span class="dt">y =</span> y_, <span class="dt">group =</span> branch_, <span class="dt">fill =</span> object_) <span class="op">+</span><span class="st"> </span>ggcols <span class="op">+</span><span class="st"> </span>ggpolypath<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggpolypath/topics/geom_polypath">geom_polypath</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_path</a></span>(<span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="spatial-normal-forms_files/figure-html/unnamed-chunk-24-1.png" width="672"></p>
-</div>
-<div id="planar-straight-line-graph" class="section level2">
-<h2 class="hasAnchor">
-<a href="#planar-straight-line-graph" class="anchor"></a>Planar straight line graph</h2>
-<p>Here we identify all <strong>edges</strong>, i.e. line segments between a pair of coordinates, regardless of direction.</p>
-<p>Note in the second plot we identify “nodes”, and that there are two segments that overlap between the neighbouring polygons. In Arc speak this is just one arc, but in simple features it is just a segment on one polygon path, and another segment on the other polygon path, without any explicit record or knowledge of that relationship.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p2seg &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw"><a href="http://dplyr.tidyverse.org/reference/reexports.html">as_tibble</a></span>(rangl<span class="op">:::</span><span class="kw">path2seg</span>(x<span class="op">$</span>vertex_))
-BxE &lt;-<span class="st"> </span>mp<span class="op">$</span>bXv <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">split</span>(.<span class="op">$</span>branch_) <span class="op">%&gt;%</span><span class="st"> </span>purrr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map">map</a></span>(p2seg) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span>(<span class="dt">.id =</span> <span class="st">"branch_"</span>) 
-<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(BxE <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(mp<span class="op">$</span>v <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">rename</a></span>(<span class="dt">x =</span> x_, <span class="dt">y =</span> y_), <span class="kw">c</span>(<span class="st">"V1"</span> =<span class="st"> "vertex_"</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">                            </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(mp<span class="op">$</span>v, <span class="kw">c</span>(<span class="st">"V2"</span> =<span class="st"> "vertex_"</span>))) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_segment">geom_segment</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y, <span class="dt">xend =</span> x_, <span class="dt">yend =</span> y_, <span class="dt">colour =</span> V1)) <span class="co">#+ guides(colour = FALSE)</span></code></pre></div>
-<p><img src="spatial-normal-forms_files/figure-html/unnamed-chunk-25-1.png" width="672"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">uE &lt;-<span class="st"> </span>mp<span class="op">$</span>bXv <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">split</span>(.<span class="op">$</span>branch_) <span class="op">%&gt;%</span><span class="st"> </span>purrr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map">map</a></span>(p2seg) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span>(<span class="dt">.id =</span> <span class="st">"branch_"</span>)<span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">edge_ =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/ranking.html">row_number</a></span>()) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">   </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">uu =</span> <span class="kw">paste</span>(<span class="kw">pmin</span>(V1, V2), <span class="kw">pmax</span>(V1, V2), <span class="dt">sep =</span> <span class="st">"_"</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span>(uu, <span class="dt">.keep_all =</span> <span class="ot">TRUE</span>)
-nodes &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span>(mp<span class="op">$</span>v <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(vertex_) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(uE, <span class="kw">c</span>(<span class="st">"vertex_"</span> =<span class="st"> "V1"</span>)), 
-          mp<span class="op">$</span>v <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(vertex_) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(uE, <span class="kw">c</span>(<span class="st">"vertex_"</span> =<span class="st"> "V2"</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span>(edge_, vertex_) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(vertex_) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">nb =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/n.html">n</a></span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span>() <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(nb <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span>(vertex_) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(mp<span class="op">$</span>v)</code></pre></div>
-<pre><code>## Joining, by = "vertex_"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot-rangl.html">plot</a></span>(spgdf)
-<span class="kw">points</span>(nodes<span class="op">$</span>x_, nodes<span class="op">$</span>y_, <span class="dt">cex =</span> <span class="fl">0.9</span>)</code></pre></div>
-<p><img src="spatial-normal-forms_files/figure-html/unnamed-chunk-25-2.png" width="672"></p>
-</div>
-<div id="arc-node" class="section level2">
-<h2 class="hasAnchor">
-<a href="#arc-node" class="anchor"></a>Arc-node</h2>
-<p>What is arc-node? The nodes in the graph are the vertices that are shared by any two arcs. The arcs are the <em>paths</em> that trace a line between nodes. This means that not all coordinates are nodes, and even that not all <em>parts</em> have any node/s at all. We can produce this by traversal of all edges to determine the arcs that join nodes and anything left is just a standalone arc. This is brute-force remove duplicate edges (ignore direction), join on start vertex, end vertex, count the number of edges involved and any with 3 edges is a <strong>Node</strong>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## what are the nodes?
-x1 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/st_read">st_read</a></span>(<span class="kw">system.file</span>(<span class="st">"shape/nc.shp"</span>, <span class="dt">package=</span><span class="st">"sf"</span>), <span class="st">"nc"</span>, <span class="dt">crs =</span> <span class="dv">4267</span>)</code></pre></div>
-<pre><code>## Reading layer `nc' from data source `/usr/local/lib/R/site-library/sf/shape/nc.shp' using driver `ESRI Shapefile'
-## Simple feature collection with 100 features and 14 fields
-## geometry type:  MULTIPOLYGON
-## dimension:      XY
-## bbox:           xmin: -84.32385 ymin: 33.88199 xmax: -75.45698 ymax: 36.58965
-## epsg (SRID):    4267
-## proj4string:    +proj=longlat +datum=NAD27 +no_defs</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mp &lt;-<span class="st"> </span>spbabel<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/spbabel/topics/map_table">map_table</a></span>(x1)
-uE &lt;-<span class="st"> </span>mp<span class="op">$</span>bXv <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">split</span>(.<span class="op">$</span>branch_) <span class="op">%&gt;%</span><span class="st"> </span>purrr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map">map</a></span>(p2seg) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span>(<span class="dt">.id =</span> <span class="st">"branch_"</span>)<span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">edge_ =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/ranking.html">row_number</a></span>()) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">   </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">uu =</span> <span class="kw">paste</span>(<span class="kw">pmin</span>(V1, V2), <span class="kw">pmax</span>(V1, V2), <span class="dt">sep =</span> <span class="st">"_"</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span>(uu, <span class="dt">.keep_all =</span> <span class="ot">TRUE</span>)
-nodes &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span>(mp<span class="op">$</span>v <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(vertex_) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(uE, <span class="kw">c</span>(<span class="st">"vertex_"</span> =<span class="st"> "V1"</span>)), 
-          mp<span class="op">$</span>v <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(vertex_) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(uE, <span class="kw">c</span>(<span class="st">"vertex_"</span> =<span class="st"> "V2"</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span>(edge_, vertex_) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(vertex_) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">nb =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/n.html">n</a></span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span>() <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(nb <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span>(vertex_) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(mp<span class="op">$</span>v)</code></pre></div>
-<pre><code>## Joining, by = "vertex_"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot-rangl.html">plot</a></span>(x1)</code></pre></div>
-<pre><code>## Warning: plotting the first 10 out of 14 attributes; use max.plot = 14 to
-## plot all</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">points</span>(nodes<span class="op">$</span>x_, nodes<span class="op">$</span>y_, <span class="dt">cex =</span> <span class="fl">0.9</span>)</code></pre></div>
-<p><img src="spatial-normal-forms_files/figure-html/unnamed-chunk-26-1.png" width="672"></p>
-<p>Arc-node topology was used by the Arc Info software prior to the invention of the shapefile and ArcView . . .</p>
-<p>TopoJSON uses this model, or at least something very similar to it: <a href="https://github.com/topojson/topojson/wiki" class="uri">https://github.com/topojson/topojson/wiki</a></p>
-</div>
-<div id="simplicial-complex" class="section level2">
-<h2 class="hasAnchor">
-<a href="#simplicial-complex" class="anchor"></a>Simplicial complex</h2>
-<p>The simplicial complex is more abstract than arc-node topology, but also much more general. Arcs can only be joined to bound regions in the plane, but the simplicial complex is composed of <strong>primitives</strong> for any topology. Coordinates are 0-D primitives, line segments are 1-D primitives, and triangles are 2-primitives. We are free to store any chosen geometry on the coordinates of primitives, so they can describe overlapping surfaces in 3D space, or connected paths through 4D space. There’s a natual extension up in dimension to volumes as well, where 3-D primitives (tetrahedron) compose 3D-space filling shapes, and so on.</p>
-<p>In short, arc-node is one of several <em>2D-only</em> optimizations for spatial data that do no apply to higher dimensional topologies and/or higher dimensional geometry. The simplicial complex is a finite-element model that is general enough for any spatial or other hierarchically organized multi-dimensional data.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sc &lt;-<span class="st"> </span>rangl<span class="op">::</span><span class="kw">rangl</span>(spgdf)
-
-<span class="kw"><a href="../reference/plot-rangl.html">plot</a></span>(sc)</code></pre></div>
-<pre><code>## Joining, by = "object_"</code></pre>
-<pre><code>## Joining, by = "triangle_"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot-rangl.html">plot</a></span>(x)
-l1 &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(sc<span class="op">$</span>o[<span class="dv">1</span>, ], sc<span class="op">$</span>t) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">split</span>(.<span class="op">$</span>triangle_) <span class="op">%&gt;%</span><span class="st"> </span>purrr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map">map</a></span>(<span class="cf">function</span>(x) <span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(x, sc<span class="op">$</span>tXv) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(sc<span class="op">$</span>v)) </code></pre></div>
-<pre><code>## Joining, by = "object_"
-## Joining, by = "triangle_"</code></pre>
-<pre><code>## Joining, by = "vertex_"</code></pre>
-<pre><code>## Joining, by = "triangle_"</code></pre>
-<pre><code>## Joining, by = "vertex_"</code></pre>
-<pre><code>## Joining, by = "triangle_"</code></pre>
-<pre><code>## Joining, by = "vertex_"</code></pre>
-<pre><code>## Joining, by = "triangle_"</code></pre>
-<pre><code>## Joining, by = "vertex_"</code></pre>
-<pre><code>## Joining, by = "triangle_"</code></pre>
-<pre><code>## Joining, by = "vertex_"</code></pre>
-<pre><code>## Joining, by = "triangle_"</code></pre>
-<pre><code>## Joining, by = "vertex_"</code></pre>
-<pre><code>## Joining, by = "triangle_"</code></pre>
-<pre><code>## Joining, by = "vertex_"</code></pre>
-<pre><code>## Joining, by = "triangle_"</code></pre>
-<pre><code>## Joining, by = "vertex_"</code></pre>
-<pre><code>## Joining, by = "triangle_"</code></pre>
-<pre><code>## Joining, by = "vertex_"</code></pre>
-<pre><code>## Joining, by = "triangle_"</code></pre>
-<pre><code>## Joining, by = "vertex_"</code></pre>
-<pre><code>## Joining, by = "triangle_"</code></pre>
-<pre><code>## Joining, by = "vertex_"</code></pre>
-<pre><code>## Joining, by = "triangle_"</code></pre>
-<pre><code>## Joining, by = "vertex_"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">j &lt;-<span class="st"> </span><span class="kw">lapply</span>(l1, <span class="cf">function</span>(x) <span class="kw">polygon</span>(<span class="kw">cbind</span>(x<span class="op">$</span>x_, x<span class="op">$</span>y_), <span class="dt">col =</span> <span class="st">"grey"</span>))
-l2 &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(sc<span class="op">$</span>o[<span class="dv">2</span>, ], sc<span class="op">$</span>t) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">split</span>(.<span class="op">$</span>triangle_) <span class="op">%&gt;%</span><span class="st"> </span>purrr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map">map</a></span>(<span class="cf">function</span>(x) <span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(x, sc<span class="op">$</span>tXv) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(sc<span class="op">$</span>v)) </code></pre></div>
-<pre><code>## Joining, by = "object_"</code></pre>
-<pre><code>## Joining, by = "triangle_"</code></pre>
-<pre><code>## Joining, by = "vertex_"</code></pre>
-<pre><code>## Joining, by = "triangle_"</code></pre>
-<pre><code>## Joining, by = "vertex_"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">j &lt;-<span class="st"> </span><span class="kw">lapply</span>(l2, <span class="cf">function</span>(x) <span class="kw">polygon</span>(<span class="kw">cbind</span>(x<span class="op">$</span>x_, x<span class="op">$</span>y_), <span class="dt">col =</span> <span class="st">"firebrick"</span>))</code></pre></div>
-<p><img src="spatial-normal-forms_files/figure-html/unnamed-chunk-27-1.png" width="672"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## this is slow but does show that we have a full and constrained triangulation
- <span class="kw">set.seed</span>(<span class="dv">75</span>)
-sc &lt;-<span class="st"> </span>rangl<span class="op">::</span><span class="kw">rangl</span>(<span class="kw">as</span>(x1[<span class="dv">24</span><span class="op">:</span><span class="dv">30</span>, ], <span class="st">"Spatial"</span>))
-<span class="kw"><a href="../reference/plot-rangl.html">plot</a></span>(x1[<span class="dv">24</span><span class="op">:</span><span class="dv">30</span>, ], <span class="dt">border =</span> <span class="st">"black"</span>, <span class="dt">lwd =</span> <span class="dv">4</span>)</code></pre></div>
-<pre><code>## Warning: plotting the first 9 out of 14 attributes; use max.plot = 14 to
-## plot all</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq</span>(<span class="kw">nrow</span>(x1))) {
-  l1 &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(sc<span class="op">$</span>o[i, ], sc<span class="op">$</span>t, <span class="st">"object_"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">split</span>(.<span class="op">$</span>triangle_) <span class="op">%&gt;%</span><span class="st"> </span>purrr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map">map</a></span>(<span class="cf">function</span>(x) <span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(x, sc<span class="op">$</span>tXv, <span class="st">"triangle_"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(sc<span class="op">$</span>v, <span class="st">"vertex_"</span>)) 
- 
-  j &lt;-<span class="st"> </span><span class="kw">lapply</span>(l1, <span class="cf">function</span>(x) <span class="kw">polygon</span>(<span class="kw">cbind</span>(x<span class="op">$</span>x_, x<span class="op">$</span>y_), <span class="dt">border =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/sample.html">sample</a></span>(<span class="kw">c</span>(<span class="st">"grey"</span>, <span class="st">"firebrick"</span>, viridis<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/viridis/topics/reexports">viridis</a></span>(<span class="dv">5</span>)), <span class="dv">1</span>)))
-}</code></pre></div>
-<p><img src="spatial-normal-forms_files/figure-html/unnamed-chunk-27-2.png" width="672"></p>
-</div>
-<div id="affine-georeferenced-rasters" class="section level2">
-<h2 class="hasAnchor">
-<a href="#affine-georeferenced-rasters" class="anchor"></a>Affine-georeferenced rasters</h2>
-<p>These are very well supported by the raster package. Generally, affine refers to a linear transformation (which preserves points, straight lines and planes)[<a href="https://en.wikipedia.org/wiki/Affine_transformation" class="uri">https://en.wikipedia.org/wiki/Affine_transformation</a>]. In geo-spatial, the affine transform is the 6 numbers that define the offset (absolute position of one corner), the scale (pixel height and width), and skew (dual component scale). Usually skew (or “rotation”) is not used, though it is supported by GDAL, QGIS, <code>rasterImage</code> and <code>raster</code> (to some degree).</p>
-<p>In <code>raster</code> the affine transform is the <code>extent()</code> which has a straightforward relation to the shift and scale values of the transform, with skew set to 0 for both X and Y.</p>
-</div>
-<div id="rectilinear-rasters" class="section level2">
-<h2 class="hasAnchor">
-<a href="#rectilinear-rasters" class="anchor"></a>Rectilinear rasters</h2>
-<p>Not supported by <code>raster</code> or <code>rasterImage</code>, supported by <code>image</code>. This is when the positions of each pixel are non-linear, and independent in X and Y.</p>
-</div>
-<div id="curvilinear-rasters" class="section level2">
-<h2 class="hasAnchor">
-<a href="#curvilinear-rasters" class="anchor"></a>Curvilinear rasters</h2>
-<p>These are not generally supported, though you can find them in NetCDF and HDF files. This is where you need an explicit coordinate for every pixel, so <em>topologicall</em> there is a raster in the sense that it’s a full grid of X<em>Y or X</em>Y*Z (or more) cells with an index relation.</p>
-</div>
-<div id="discrete-versus-continuous-rasters" class="section level2">
-<h2 class="hasAnchor">
-<a href="#discrete-versus-continuous-rasters" class="anchor"></a>Discrete versus continuous rasters</h2>
-<p>The distinction is supported by <code>image</code> but this is not generally covered in R, though it appears in topics of the exact details of extract for polygons on rasters. R’s base and grid graphics don’t have any support for textures, though rgl does.</p>
 </div>
 </div>
 </div>
@@ -609,18 +412,6 @@ sc &lt;-<span class="st"> </span>rangl<span class="op">::</span><span class="kw"
       <li><a href="#what-makes-polygons-different-to-lines">What makes polygons different to lines?</a></li>
       <li><a href="#polygons-are-not-composed-of-primitives">Polygons are not composed of primitives</a></li>
       <li><a href="#constrained-polygon-triangulation-starts-with-line-primitives">Constrained polygon triangulation starts with line primitives</a></li>
-      <li><a href="#base-graphics">Base graphics</a></li>
-      <li><a href="#simple-features-for-r">Simple features for R</a></li>
-      <li><a href="#spatial-legacy-sp-package">Spatial (legacy sp package)</a></li>
-      <li><a href="#grammar-of-graphics">Grammar of graphics</a></li>
-      <li><a href="#map-table">Map table</a></li>
-      <li><a href="#planar-straight-line-graph">Planar straight line graph</a></li>
-      <li><a href="#arc-node">Arc-node</a></li>
-      <li><a href="#simplicial-complex">Simplicial complex</a></li>
-      <li><a href="#affine-georeferenced-rasters">Affine-georeferenced rasters</a></li>
-      <li><a href="#rectilinear-rasters">Rectilinear rasters</a></li>
-      <li><a href="#curvilinear-rasters">Curvilinear rasters</a></li>
-      <li><a href="#discrete-versus-continuous-rasters">Discrete versus continuous rasters</a></li>
       </ul>
 </li>
       </ul>

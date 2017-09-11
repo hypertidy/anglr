@@ -103,23 +103,23 @@
 
     <pre class="usage"><span class='fu'>rangl</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
-<span class='co'># S3 method for SpatialLines</span>
-<span class='fu'>rangl</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
 <span class='co'># S3 method for SpatialMultiPoints</span>
 <span class='fu'>rangl</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for SpatialPoints</span>
 <span class='fu'>rangl</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
-<span class='co'># S3 method for SpatialPolygons</span>
-<span class='fu'>rangl</span>(<span class='no'>x</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
-
 <span class='co'># S3 method for RasterLayer</span>
 <span class='fu'>rangl</span>(<span class='no'>x</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>x</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for trip</span>
 <span class='fu'>rangl</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for SpatialLines</span>
+<span class='fu'>rangl</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for SpatialPolygons</span>
+<span class='fu'>rangl</span>(<span class='no'>x</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for mesh3d</span>
 <span class='fu'>rangl</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -136,16 +136,16 @@
       <td><p>arguments passed to methods</p></td>
     </tr>
     <tr>
-      <th>max_area</th>
-      <td><p>maximum area in coordinate system of x, passed to <code><a href='http://www.rdocumentation.org/packages/RTriangle/topics/triangulate'>triangulate</a></code> 'a' argument</p></td>
-    </tr>
-    <tr>
       <th>z</th>
       <td><p><code><a href='http://www.rdocumentation.org/packages/raster/topics/raster'>raster</a></code>, by default <code>x</code> is used</p></td>
     </tr>
     <tr>
       <th>na.rm</th>
       <td><p>remove missing values</p></td>
+    </tr>
+    <tr>
+      <th>max_area</th>
+      <td><p>maximum area in coordinate system of x, passed to <code><a href='http://www.rdocumentation.org/packages/RTriangle/topics/triangulate'>triangulate</a></code> 'a' argument</p></td>
     </tr>
     </table>
     
@@ -171,8 +171,7 @@ https://github.com/r-gris/rangl/issues/39</p>
 <span class='co'>## POLYGONS</span>
 <span class='fu'>library</span>(<span class='no'>maptools</span>)
 <span class='fu'>data</span>(<span class='no'>wrld_simpl</span>)
-<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'>rangl</span>(<span class='no'>wrld_simpl</span>)
-<span class='fu'><a href='plot-rangl.html'>plot</a></span>(<span class='no'>b</span>)</div><div class='output co'>#&gt; <span class='message'>Joining, by = "object_"</span></div><div class='output co'>#&gt; <span class='message'>Joining, by = "triangle_"</span></div><div class='input'><span class='co'>#if (require(rworldxtra)) {</span>
+<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'>rangl</span>(<span class='no'>wrld_simpl</span>)</div><div class='output co'>#&gt; <span class='error'>Error in mutate_impl(.data, dots): Evaluation error: argument "x" is missing, with no default.</span></div><div class='input'><span class='fu'><a href='plot-rangl.html'>plot</a></span>(<span class='no'>b</span>)</div><div class='output co'>#&gt; <span class='message'>Joining, by = "object_"</span></div><div class='output co'>#&gt; <span class='message'>Joining, by = "triangle_"</span></div><div class='input'><span class='co'>#if (require(rworldxtra)) {</span>
 
 <span class='co'>#data(countriesHigh)</span>
 <span class='co'>#sv &lt;- c("New Zealand", "Antarctica", "Papua New Guinea",</span>
@@ -1736,10 +1735,8 @@ https://github.com/r-gris/rangl/issues/39</p>
 #&gt; [1] "mesh3d"  "shape3d"</div><div class='input'>
 <span class='co'>## -----------------------------------------------</span>
 <span class='co'>## RGL TRIANGLES</span>
-<span class='fu'>library</span>(<span class='no'>rgl</span>)</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘rgl’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:rangl’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    triangulate</span></div><div class='input'>
+<span class='fu'>library</span>(<span class='no'>rgl</span>)
+
 <span class='no'>dod</span> <span class='kw'>&lt;-</span> <span class='fu'>rangl</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/rgl/topics/mesh3d'>dodecahedron3d</a></span>(<span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"cyan"</span>))
 <span class='no'>octo</span> <span class='kw'>&lt;-</span> <span class='fu'>rangl</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/rgl/topics/matrices'>translate3d</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/rgl/topics/mesh3d'>octahedron3d</a></span>(<span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"blue"</span>), <span class='fl'>6</span>, <span class='fl'>0</span>, <span class='fl'>0</span>))
 <span class='fu'><a href='plot-rangl.html'>plot</a></span>(<span class='no'>dod</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/reexports'>viridis</a></span>(<span class='fl'>5</span>)[<span class='fl'>1</span>], <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)</div><div class='output co'>#&gt; <span class='message'>Joining, by = "object_"</span></div><div class='output co'>#&gt; <span class='message'>Joining, by = "triangle_"</span></div><div class='input'><span class='fu'><a href='plot-rangl.html'>plot</a></span>(<span class='no'>octo</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/reexports'>viridis</a></span>(<span class='fl'>5</span>)[<span class='fl'>5</span>], <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)</div><div class='output co'>#&gt; <span class='message'>Joining, by = "object_"</span></div><div class='output co'>#&gt; <span class='message'>Joining, by = "triangle_"</span></div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/rgl/topics/bg'>bg3d</a></span>(<span class='st'>"grey"</span>)</div></pre>
