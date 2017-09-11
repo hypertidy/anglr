@@ -37,5 +37,8 @@ globe.default <- function(x, gproj = "+proj=geocent +ellps=WGS84", ...) {
   x$v$x_ <- xyz[,1]
   x$v$y_ <- xyz[,2]
   x$v$z_ <- xyz[,3]
+  x$meta <- rbind(x$meta[1, ], x$meta)
+  x$meta$proj[1] <- gproj
+  x$meta$ctime[1] <- format(Sys.time(), tz = "UTC")
   x
 }
