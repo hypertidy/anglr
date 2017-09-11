@@ -4,20 +4,11 @@ path2seg <- function(x) {
   head(suppressWarnings(matrix(x, nrow = length(x) + 1, ncol = 2, byrow = FALSE)), -2L)
 }
 
-#' Deprecated from rangl
-#' @rdname rangl-deprecated
-#' @param x nothing
-#' @param ... ignored
-#' @export
-tri_mesh <- function(x, ...) {
-  .Deprecated("mesh", package= "rangl", old = "tri_mesh")
-}
 
-#' @rdname rangl-deprecated
-#' @export
-mesh <- function(x, ...) {
-  .Deprecated("rangl", package= "rangl", old = "mesh")
-}
+## this could replace tri_mesh_map_table1
+## by input of a simpler object, not so many tables
+#tri_mesh_PRIMITIVE <- function(x, max_area = NULL) {}
+
 
 ## this internal function does the decomposition to primitives of a 
 ##  single Spatial object, i.e. a "multipolygon"
@@ -39,6 +30,10 @@ tri_mesh_map_table1 <- function(tabs, max_area = NULL) {
   
   ## build the triangulation, with input max_area (defaults to NULL)
   tr <- RTriangle::triangulate(ps, a = max_area)
+  
+  ## NOTE: the following only checks for presence of triangle centres within
+  ## known holes, so this doesn't pick up examples of overlapping areas e.g. 
+  ## https://github.com/r-gris/rangl/issues/39
   
   ## process the holes if present
   if (any(!tabs$b$island_)) {
@@ -74,6 +69,10 @@ tri_mesh_map_table1 <- function(tabs, max_area = NULL) {
 
 #' @rdname rangl
 #' @export
+#' @section Warning:
+#' rangl only checks for presence of triangle centres within
+#' known holes, so this doesn't pick up examples of overlapping areas e.g. 
+#' https://github.com/r-gris/rangl/issues/39
 #' @importFrom sp geometry  over SpatialPoints proj4string CRS SpatialPolygonsDataFrame
 #' @importFrom dplyr inner_join
 #' @importFrom RTriangle pslg triangulate
@@ -109,6 +108,31 @@ rangl.SpatialPolygons <- function(x, max_area = NULL, ...) {
   }
   
   ## renormalize the vertices
+  allverts <- dplyr::inner_join(outlist$tXv, outlist$v, "vertex_")
+  allverts$uvert <- as.integer(factor(paste(allverts$x_, allverts$y_, sep = "_")))
+  allverts$vertex_ <- spbabel:::id_n(length(unique(allverts$uvert)))[allverts$uvert]
+  outlist$tXv <- allverts[, c("triangle_", "vertex_")]
+  outlist$v <- dplyr::distinct_(allverts,  "vertex_", .keep_all = TRUE)[, c("x_", "y_", "vertex_")]
+  ## finally add longitude and latitude
+  outlist$meta <- tibble::tibble(proj = pr4, x = "x_", y = "y_", ctime = format(Sys.time(), tz = "UTC"))
+  class(outlist) <- "trimesh"
+  outlist
+}
+
+
+ranglPoly <- function(x, max_area = NULL, ...) {
+  pr4 <- proj4string(x)
+  x0 <- x
+  ## kludge for non DataFrames
+  if (! "data" %in% slotNames(x)) {
+    dummy <- data.frame(row_number = seq_along(x))
+    x <- sp::SpatialPolygonsDataFrame(x, dummy, match.ID = FALSE)
+  }
+  tabs <- spbabel::map_table(x)
+  
+  outlist <- tri_mesh_map_table1(tabs, max_area = max_area)
+  
+    ## renormalize the vertices
   allverts <- dplyr::inner_join(outlist$tXv, outlist$v, "vertex_")
   allverts$uvert <- as.integer(factor(paste(allverts$x_, allverts$y_, sep = "_")))
   allverts$vertex_ <- spbabel:::id_n(length(unique(allverts$uvert)))[allverts$uvert]

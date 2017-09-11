@@ -1,11 +1,10 @@
 #' Raster rangl
 #' 
-#' Colours not supported, this just gives the virids palette sequentially. 
-#' @param x \code{\link[raster]{raster}}
+#' Colours not supported, this just gives the viridis palette sequentially. 
 #' @param z \code{\link[raster]{raster}}, by default \code{x} is used
 #' @param na.rm remove missing values
-#' @param ... unused
 #' @return quad_mesh
+#' @name rangl
 #' @export
 #' @importFrom raster projection values xmin xmax ymin ymax
 #' @examples
@@ -51,7 +50,10 @@ plot.quad_mesh <- function(x, ...) {
   ob <- mkq_3d()
   ob$vb <- t(cbind(as.matrix(x$v[, c("x_", "y_", "z_")]), 1))
   ob$ib <- matrix(x$qXv$vertex_, nrow = 4)
-  invisible(rgl::shade3d(ob, col = trimesh_cols(nrow(x$qd))[ob$ib], ...))
+  ob$material$col <- trimesh_cols(nrow(x$qd))[ob$ib]
+  #rgl::shade3d(ob, col = trimesh_cols(nrow(x$qd))[ob$ib], ...)
+  rgl::shade3d(ob, ...)
+  ob
 }
 
 mkq_3d <- function() {
