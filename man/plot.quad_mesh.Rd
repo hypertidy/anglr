@@ -4,12 +4,14 @@
 \alias{plot.quad_mesh}
 \title{Title}
 \usage{
-\method{plot}{quad_mesh}(x, ...)
+\method{plot}{quad_mesh}(x, ..., add = FALSE)
 }
 \arguments{
 \item{x}{quad_mesh}
 
 \item{...}{args passed to rgl plot}
+
+\item{add}{reset plot?}
 }
 \value{
 qmesh

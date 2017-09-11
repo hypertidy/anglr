@@ -51,6 +51,7 @@ library(raster)
 library(rangl)
 cmesh <- rangl(wrld_simpl)
 plot(cmesh)
+rglwidget()
 ```
 
 

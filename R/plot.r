@@ -7,12 +7,13 @@
 #' the rgl form invisibly. 
 #' @param x object from \code{\link{rangl}}
 #' @param ... args for underlying plotting
+#' @param add add to existing plot if exists
 #' @return the rgl mesh3d object, invisibly
 #' @export
 #' @importFrom rgl shade3d
 #' @name plot-rangl
 #' @aliases plot
-plot.trimesh <- function(x,  ...) {
+plot.trimesh <- function(x,  ..., add = FALSE) {
   if (!"color_" %in% names(x$o)) {
     x$o$color_ <- trimesh_cols(nrow(x$o))
   }
@@ -34,15 +35,16 @@ plot.trimesh <- function(x,  ...) {
   
   vindex <- dplyr::inner_join(x$tXv, vv, "vertex_")
   tt$it <- t(matrix(vindex$row_n, ncol = 3, byrow = TRUE))
+  if (!add & length(rgl::rgl.dev.list()) < 1L) rgl::rgl.clear()
   rgl::shade3d(tt, col = pindex$color_, ...)
   
-  
-  invisible(tt)
+out <-   if ( rgl::rgl.useNULL()) rgl::rglwidget() else invisible(tt)
+out
 }
 
 #' @name plot-rangl
 #' @export
-plot.linemesh <- function(x,  ...) {
+plot.linemesh <- function(x,  ..., add = FALSE) {
   if (!"color_" %in% names(x$o)) {
     x$o$color_ <- trimesh_cols(nrow(x$o))
   }
@@ -63,10 +65,13 @@ plot.linemesh <- function(x,  ...) {
   
   vindex <- dplyr::inner_join(x$lXv, vv, "vertex_")
   itex <- t(matrix(vindex$row_n, ncol = 2, byrow = TRUE))
+  if (!add & length(rgl::rgl.dev.list()) < 1L) rgl::rgl.clear()
+  
   rgl::segments3d(t(vb)[itex,], col = pindex$color_, ...)
   
-  
-  invisible(list(v = vb, it = itex))
+  out <-   if ( rgl::rgl.useNULL()) rgl::rglwidget() else   invisible(list(v = vb, it = itex))
+
+  out
 }
 
 #' @name plot-rangl
@@ -93,8 +98,9 @@ plot.pointmesh <- function(x,  ...) {
   
   # vindex <- dplyr::inner_join(x$bXv, vv, "vertex_")
   #itex <- t(matrix(vindex$row_n, ncol = 2, byrow = TRUE))
+  if (!add & length(rgl::rgl.dev.list()) < 1L) rgl::rgl.clear()
+  
   rgl::rgl.points(t(vb), col = pindex$color_, ...)
   
-  
-  invisible(list(v = vb, material = list(col = pindex$color_)))
+  out <-   if ( rgl::rgl.useNULL()) rgl::rglwidget() else invisible(list(v = vb, material = list(col = pindex$color_)))
 }

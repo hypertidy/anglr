@@ -3,6 +3,7 @@
 #' Colours not supported, this just gives the viridis palette sequentially. 
 #' @param z \code{\link[raster]{raster}}, by default \code{x} is used
 #' @param na.rm remove missing values
+#' @param ... ignored
 #' @return quad_mesh
 #' @name rangl
 #' @export
@@ -38,22 +39,25 @@ rangl.RasterLayer <-  function(x, z = x, na.rm = FALSE, ...) {
 #'
 #' @param x quad_mesh
 #' @param ... args passed to rgl plot
-#'
+#' @param add reset plot?
 #' @return qmesh
 #' @export
 #'
 #' @examples
 #' example(rangl.RasterLayer)
 #' plot(w)
-plot.quad_mesh <- function(x, ...) {
+plot.quad_mesh <- function(x, ..., add = FALSE) {
   ## etc blah
   ob <- mkq_3d()
   ob$vb <- t(cbind(as.matrix(x$v[, c("x_", "y_", "z_")]), 1))
   ob$ib <- matrix(x$qXv$vertex_, nrow = 4)
   ob$material$col <- trimesh_cols(nrow(x$qd))[ob$ib]
   #rgl::shade3d(ob, col = trimesh_cols(nrow(x$qd))[ob$ib], ...)
+  if (!add & length(rgl::rgl.dev.list()) < 1L) rgl::rgl.clear()
+  
   rgl::shade3d(ob, ...)
-  ob
+  out <-   if ( rgl::rgl.useNULL()) rgl::rglwidget() else   invisible(ob)
+  out  
 }
 
 mkq_3d <- function() {
