@@ -29,3 +29,10 @@
 NULL
 
 
+#' sf data frame zoo. 
+#' 
+#' Each kind of geometry in an sf data frame, in a list. 
+#' @name sf_data_zoo
+#' @docType data 
+NULL
+

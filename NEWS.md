@@ -1,3 +1,7 @@
+# rangl dev
+
+* now faster by relying on silicate for `sf`
+
 # rangl 0.4.5
 
 * release codename Just Work in Master, Dude
