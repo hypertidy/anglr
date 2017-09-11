@@ -14,7 +14,8 @@ r_packages:
  - rgdal
  - maptools
  - trip
-
+ - rgeos
+ 
 # We use clang, --without-libtool and --with-debug for faster build
 compiler:
   - clang
