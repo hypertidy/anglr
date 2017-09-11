@@ -22,3 +22,4 @@ test_that("plot works", {
   expect_that(plot(rangl(spp)), is_a("list"))
   expect_that(plot(spz), is_a("list"))
 })
+

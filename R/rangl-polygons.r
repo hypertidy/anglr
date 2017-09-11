@@ -14,6 +14,8 @@ path2seg <- function(x) {
 ##  single Spatial object, i.e. a "multipolygon"
 ## we need to do it one object at a time otherwise keeping track
 ## of the input versus add vertices is harder (but maybe possible later)
+#' @importFrom dplyr row_number inner_join
+#' @importFrom RTriangle pslg triangulate
 tri_mesh_map_table1 <- function(tabs, max_area = NULL) {
   ## the row index of the vertices
   ## we need this in the triangulation
@@ -44,7 +46,7 @@ tri_mesh_map_table1 <- function(tabs, max_area = NULL) {
     ##   joins on the vertex values
     ##   recomposes a SpatialPolygonsDataFrame using the spbabel::sp convention
     holes <- spbabel::sp(dplyr::inner_join(dplyr::inner_join(dplyr::filter_(tabs$b, quote(!island_)), tabs$bXv, "branch_"), 
-                                           tabs$v, "vertex_") %>% dplyr::mutate(order_ = row_number()))
+                                           tabs$v, "vertex_") %>% dplyr::mutate(order_ = dplyr::row_number()))
     stopifnot(inherits(holes, "SpatialPolygons"))
     ## centroid of every triangle
     centroids <- matrix(unlist(lapply(split(tr$P[t(tr$T), ], rep(seq(nrow(tr$T)), each = 3)), .colMeans, 3, 2)), 
@@ -92,9 +94,7 @@ rangl_polys <-  function(tabs, max_area = NULL, ...){
   outlist$tXv <- allverts[, c("triangle_", "vertex_")]
   outlist$v <- dplyr::distinct_(allverts, "vertex_", .keep_all = TRUE)[, 
                                                                        c("x_", "y_", "vertex_")]
-  outlist$meta <- tibble::tibble(proj = pr4, x = "x_", y = "y_", 
-                                 ctime = format(Sys.time(), tz = "UTC"))
-  class(outlist) <- "trimesh"
+ class(outlist) <- "trimesh"
   outlist
   
 }
