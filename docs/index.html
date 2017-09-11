@@ -29,10 +29,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="reference/index.html">Reference</a>
+  <a href="/index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="articles/index.html">Articles</a>
+  <a href="reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="articles/rangl-examples.html">Examples with rangl</a>
+    </li>
+    <li>
+      <a href="articles/spatial-normal-forms.html">Spatial data and topology</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="news/index.html">News</a>
@@ -56,6 +74,8 @@
 <div class="contents">
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+<pre><code>## Warning in rgl.init(initValue, onlyNULL): RGL: unable to open X11 display</code></pre>
+<pre><code>## Warning: 'rgl_init' failed, running with rgl.useNULL = TRUE</code></pre>
 <div id="tabular-storage-for-spatial-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#tabular-storage-for-spatial-data" class="anchor"></a>Tabular storage for spatial data</h2>
@@ -89,7 +109,7 @@
 <p>In examples below I use ‘graticule’ as well, so you might as well install that too.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"graticule"</span>)</code></pre></div>
 <p>If you are still feeling adventurous, ‘rangl’ can be installed from Github. This will also ensure that the latest version of ‘spbabel’ is installed, until I get around to updating that on CRAN.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">"r-gris/rangl"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"r-gris/rangl"</span>)</code></pre></div>
 </div>
 <div id="get-involved" class="section level2">
 <h2 class="hasAnchor">
@@ -107,7 +127,8 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>License</h2>
+    <h2 class="hasAnchor">
+<a href="#sidebar" class="anchor"></a>License</h2>
 <p><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></p>
 <h2>Developers</h2>
 <ul class="list-unstyled">

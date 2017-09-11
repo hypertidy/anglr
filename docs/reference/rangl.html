@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generate primitive-based spatial structures � rangl • rangl</title>
+<title>Generate primitive-based spatial structures — rangl • rangl</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/rangl-examples.html">Examples with rangl</a>
+    </li>
+    <li>
+      <a href="../articles/spatial-normal-forms.html">Spatial data and topology</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">News</a>
@@ -168,7 +187,7 @@ https://github.com/r-gris/rangl/issues/39</p>
 <span class='co'>#plot(l1)</span>
 <span class='co'>#plot(globe(l1))</span>
 <span class='fu'>library</span>(<span class='no'>raster</span>)
-<span class='no'>w</span> <span class='kw'>&lt;-</span> <span class='fu'>raster</span>(<span class='no'>volcano</span>)
+<span class='no'>w</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/raster/topics/raster'>raster</a></span>(<span class='no'>volcano</span>)
 <span class='fu'><a href='plot-rangl.html'>plot</a></span>(<span class='fu'>rangl</span>(<span class='no'>w</span>/<span class='fl'>300</span>))</div><div class='output co'>#&gt; $vb
 #&gt;         [,1]       [,2]       [,3]       [,4]       [,5]       [,6]       [,7]
 #&gt;         [,8]      [,9]     [,10]     [,11]     [,12]     [,13]     [,14]
@@ -1717,11 +1736,13 @@ https://github.com/r-gris/rangl/issues/39</p>
 #&gt; [1] "mesh3d"  "shape3d"</div><div class='input'>
 <span class='co'>## -----------------------------------------------</span>
 <span class='co'>## RGL TRIANGLES</span>
-<span class='fu'>library</span>(<span class='no'>rgl</span>)
-
-<span class='no'>dod</span> <span class='kw'>&lt;-</span> <span class='fu'>rangl</span>(<span class='fu'>dodecahedron3d</span>(<span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"cyan"</span>))
-<span class='no'>octo</span> <span class='kw'>&lt;-</span> <span class='fu'>rangl</span>(<span class='fu'>translate3d</span>(<span class='fu'>octahedron3d</span>(<span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"blue"</span>), <span class='fl'>6</span>, <span class='fl'>0</span>, <span class='fl'>0</span>))
-<span class='fu'><a href='plot-rangl.html'>plot</a></span>(<span class='no'>dod</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>viridis</span><span class='kw'>::</span><span class='fu'>viridis</span>(<span class='fl'>5</span>)[<span class='fl'>1</span>], <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)</div><div class='output co'>#&gt; <span class='message'>Joining, by = "object_"</span></div><div class='output co'>#&gt; <span class='message'>Joining, by = "triangle_"</span></div><div class='input'><span class='fu'><a href='plot-rangl.html'>plot</a></span>(<span class='no'>octo</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>viridis</span><span class='kw'>::</span><span class='fu'>viridis</span>(<span class='fl'>5</span>)[<span class='fl'>5</span>], <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)</div><div class='output co'>#&gt; <span class='message'>Joining, by = "object_"</span></div><div class='output co'>#&gt; <span class='message'>Joining, by = "triangle_"</span></div><div class='input'><span class='fu'>bg3d</span>(<span class='st'>"grey"</span>)</div></pre>
+<span class='fu'>library</span>(<span class='no'>rgl</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘rgl’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:rangl’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    triangulate</span></div><div class='input'>
+<span class='no'>dod</span> <span class='kw'>&lt;-</span> <span class='fu'>rangl</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/rgl/topics/mesh3d'>dodecahedron3d</a></span>(<span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"cyan"</span>))
+<span class='no'>octo</span> <span class='kw'>&lt;-</span> <span class='fu'>rangl</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/rgl/topics/matrices'>translate3d</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/rgl/topics/mesh3d'>octahedron3d</a></span>(<span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"blue"</span>), <span class='fl'>6</span>, <span class='fl'>0</span>, <span class='fl'>0</span>))
+<span class='fu'><a href='plot-rangl.html'>plot</a></span>(<span class='no'>dod</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/reexports'>viridis</a></span>(<span class='fl'>5</span>)[<span class='fl'>1</span>], <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)</div><div class='output co'>#&gt; <span class='message'>Joining, by = "object_"</span></div><div class='output co'>#&gt; <span class='message'>Joining, by = "triangle_"</span></div><div class='input'><span class='fu'><a href='plot-rangl.html'>plot</a></span>(<span class='no'>octo</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/reexports'>viridis</a></span>(<span class='fl'>5</span>)[<span class='fl'>5</span>], <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)</div><div class='output co'>#&gt; <span class='message'>Joining, by = "object_"</span></div><div class='output co'>#&gt; <span class='message'>Joining, by = "triangle_"</span></div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/rgl/topics/bg'>bg3d</a></span>(<span class='st'>"grey"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
