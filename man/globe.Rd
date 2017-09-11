@@ -26,6 +26,7 @@ Convert map coordinates to Geocentric (XYZ) coordinates.
 library(maptools)
 data(wrld_simpl)
 g <- globe(rangl(as(wrld_simpl, "SpatialLinesDataFrame")))
-plot(g, lwd = 3)
+if (interactive()) {
+ plot(g, lwd = 3)
+ }
 }
-
