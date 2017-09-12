@@ -76,24 +76,25 @@ rangl_lines <- function(tabs, ...) {
   }
   
   ## renormalize the vertices
-  allverts <- dplyr::inner_join(outlist$lXv, outlist$v, "vertex_")
+ # allverts <- dplyr::inner_join(outlist$lXv, outlist$v, "vertex_")
   #browser()
-  allverts$uvert <- as.integer(factor(paste(allverts$x_, allverts$y_, sep = "_")))
-  allverts$vertex_ <- spbabel:::id_n(length(unique(allverts$uvert)))[allverts$uvert]
-  outlist$lXv <- allverts[, c("segment_", "vertex_")]
-  
-  qs <- rlang::quos(...)
-  if (length(qs) < 1L) {
-    geometry_dimension_label <- rev(class(x[[attr(x, "sf_column")]][[1]]))[3L]
-    qs <- rlang::syms(switch(geometry_dimension_label, 
-                             XY = c("x_", "y_", "vertex_"), 
-                             XYZ = c("x_", "y_", "z_", "vertex_"), 
-                             XYM = c("x_", "y_", "m_", "vertex_"), 
-                             XYZM = c("x_", "y_", "z_", "m_", "vertex_"))    )
-  }
-  print(names(allverts))
-  print(qs)
-  outlist$v <- dplyr::distinct(allverts, !!!qs)
+#  allverts$uvert <- as.integer(factor(paste(allverts$x_, allverts$y_, sep = "_")))
+#  allverts$vertex_ <- spbabel:::id_n(length(unique(allverts$uvert)))[allverts$uvert]
+#  outlist$lXv <- allverts[, c("segment_", "vertex_")]
+#  outlist$v <- dplyr::distinct(allverts, uvert, .keep_all = TRUE)
+#  allverts$uvert <- NULL
+ # outlist$v <- allverts 
+  # qs <- rlang::quos(...)
+  # if (length(qs) < 1L) {
+  #   geometry_dimension_label <- rev(class(x[[attr(x, "sf_column")]][[1]]))[3L]
+  #   qs <- rlang::syms(switch(geometry_dimension_label, 
+  #                            XY = c("x_", "y_", "vertex_"), 
+  #                            XYZ = c("x_", "y_", "z_", "vertex_"), 
+  #                            XYM = c("x_", "y_", "m_", "vertex_"), 
+  #                            XYZM = c("x_", "y_", "z_", "m_", "vertex_"))    )
+  # }
+  # print(names(allverts))
+  # print(qs)
   ## finally add longitude and latitude
   #outlist$meta <- tibble::tibble(proj = pr4, x = "x_", y = "y_", ctime = format(Sys.time(), tz = "UTC"))
   class(outlist) <- "linemesh"
