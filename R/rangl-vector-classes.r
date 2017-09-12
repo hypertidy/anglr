@@ -22,7 +22,10 @@ rangl.sf <- function (x,  ..., max_area = NULL)
   pr4 <- attr(x[[attr(x, "sf_column")]], "crs")[["proj4string"]]
   #tabs <- spbabel::map_table(x)
   tabs <- silicate::PATH(x)
+  
   tabs <- silicate_to_gris_names(tabs)
+  tabs$meta <- tibble::tibble(proj = pr4, ctime = format(Sys.time(), tz = "UTC"))
+  
   thetype <- tabs[["b"]]$type[1]
   if (grepl("POLYGON", thetype)) {
    return(rangl_polys(tabs, ...))
@@ -32,13 +35,23 @@ rangl.sf <- function (x,  ..., max_area = NULL)
   }
  # tabs <- spbabel::map_table(x)
   ## otherwise M/POINT
-  tabs$meta <- tibble::tibble(proj = pr4, x = "x_", y = "y_", ctime = format(Sys.time(), tz = "UTC"))
   
-  class(tabs) <- "pointmesh"
   tabs
 
 }
-
+#' @export
+rangl.PATH <- function(x, ...) {
+  tabs <- silicate_to_gris_names(x)
+  thetype <- tabs[["b"]]$type[1]
+  if (grepl("POLYGON", thetype)) {
+    return(rangl_polys(tabs, ...))
+  }
+  if (grepl("LINE", thetype)) {
+    return(rangl_lines(tabs))
+  }
+  ## could be NULL
+  stop("woah, no type in this PATH - todo")
+}
 
 #' @rdname rangl
 #' @importFrom dplyr %>%  arrange distinct mutate
@@ -51,7 +64,7 @@ rangl.SpatialLines <- function(x, ...) {
   }
   tabs <- spbabel::map_table(x)
   out <- rangl_lines(tabs)
-  out$meta <- tibble::tibble(proj = pr4, x = "x_", y = "y_", 
+  out$meta <- tibble::tibble(proj = pr4,
                                  ctime = format(Sys.time(), tz = "UTC"))
   out
 }
@@ -80,7 +93,7 @@ rangl.SpatialPolygons <- function(x, max_area = NULL, ...) {
   }
   tabs <- spbabel::map_table(x)
   out <- rangl_polys(tabs, max_area = max_area, ...)
-  out$meta <- tibble::tibble(proj = pr4, x = "x_", y = "y_", 
+  out$meta <- tibble::tibble(proj = pr4,
                              ctime = format(Sys.time(), tz = "UTC"))
   out
 }
