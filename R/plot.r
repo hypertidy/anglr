@@ -38,8 +38,9 @@ plot.trimesh <- function(x,  ..., add = FALSE) {
   if (!add & length(rgl::rgl.dev.list()) < 1L) rgl::rgl.clear()
   rgl::shade3d(tt, col = pindex$color_, ...)
   
-out <-   if ( rgl::rgl.useNULL()) rgl::rglwidget() else invisible(tt)
-out
+  if ( rgl::rgl.useNULL()) rgl::rglwidget()  
+  invisible(tt)
+
 }
 
 #' @name plot-rangl
@@ -69,14 +70,15 @@ plot.linemesh <- function(x,  ..., add = FALSE) {
   
   rgl::segments3d(t(vb)[itex,], col = pindex$color_, ...)
   
-  out <-   if ( rgl::rgl.useNULL()) rgl::rglwidget() else   invisible(list(v = vb, it = itex))
+  if ( rgl::rgl.useNULL()) rgl::rglwidget() 
+  
+  invisible(list(v = vb, it = itex))
 
-  out
 }
 
 #' @name plot-rangl
 #' @export
-plot.pointmesh <- function(x,  ...) {
+plot.pointmesh <- function(x,  ..., add = FALSE) {
   if (!"color_" %in% names(x$o)) {
     x$o$color_ <- viridis::viridis(nrow(x$o))
   }
@@ -102,5 +104,6 @@ plot.pointmesh <- function(x,  ...) {
   
   rgl::rgl.points(t(vb), col = pindex$color_, ...)
   
-  out <-   if ( rgl::rgl.useNULL()) rgl::rglwidget() else invisible(list(v = vb, material = list(col = pindex$color_)))
+  if ( rgl::rgl.useNULL()) rgl::rglwidget()
+  invisible(list(v = vb, material = list(col = pindex$color_)))
 }

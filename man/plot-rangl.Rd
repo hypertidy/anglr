@@ -14,7 +14,7 @@
 
 \method{plot}{linemesh}(x, ..., add = FALSE)
 
-\method{plot}{pointmesh}(x, ...)
+\method{plot}{pointmesh}(x, ..., add = FALSE)
 }
 \arguments{
 \item{x}{object from \code{\link{rangl}}}
