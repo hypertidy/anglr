@@ -16,15 +16,16 @@ silicate_to_gris_names <- function(x) {
 
 #' @importFrom silicate PATH
 #' @export
-rangl.sf <- function (x, max_area = NULL, ...) 
+rangl.sf <- function (x,  ..., max_area = NULL) 
 {
+
   pr4 <- attr(x[[attr(x, "sf_column")]], "crs")[["proj4string"]]
   #tabs <- spbabel::map_table(x)
   tabs <- silicate::PATH(x)
   tabs <- silicate_to_gris_names(tabs)
   thetype <- tabs[["b"]]$type[1]
   if (grepl("POLYGON", thetype)) {
-   return(rangl_polys(tabs))
+   return(rangl_polys(tabs, ...))
   }
   if (grepl("LINE", thetype)) {
     return(rangl_lines(tabs))
