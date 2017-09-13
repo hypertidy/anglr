@@ -1,4 +1,4 @@
 library(testthat)
-library(rangl)
+library(anglr)
 
-test_check("rangl")
+test_check("anglr")

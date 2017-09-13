@@ -1,19 +1,19 @@
-#' Raster rangl
+#' Raster anglr
 #' 
 #' Colours not supported, this just gives the viridis palette sequentially. 
 #' @param z \code{\link[raster]{raster}}, by default \code{x} is used
 #' @param na.rm remove missing values
 #' @param ... ignored
 #' @return quad_mesh
-#' @name rangl
+#' @name anglr
 #' @export
 #' @importFrom raster projection values xmin xmax ymin ymax
 #' @examples
 #' library(raster)
 #' w <- raster(volcano)
-#' plot(rangl(w/300))
+#' plot(anglr(w/300))
 #' 
-rangl.RasterLayer <-  function(x, z = x, na.rm = FALSE, ...) {
+anglr.RasterLayer <-  function(x, z = x, na.rm = FALSE, ...) {
   x <- x[[1]]  ## just the oneth raster for now
   pr4 <- projection(x)
   exy <- edges0(x)
@@ -44,7 +44,7 @@ rangl.RasterLayer <-  function(x, z = x, na.rm = FALSE, ...) {
 #' @export
 #'
 #' @examples
-#' example(rangl.RasterLayer)
+#' example(anglr.RasterLayer)
 #' plot(w)
 plot.quad_mesh <- function(x, ..., add = FALSE) {
   ## etc blah

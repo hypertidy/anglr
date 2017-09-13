@@ -1,7 +1,7 @@
 
-#' @rdname rangl
+#' @rdname anglr
 #' @export
-rangl.SpatialMultiPoints <- function(x, ...) {
+anglr.SpatialMultiPoints <- function(x, ...) {
   pr4 <- proj4string(x)
   if (! "data" %in% slotNames(x)) {
     dummy <- data.frame(row_number = seq_along(x))
@@ -15,9 +15,9 @@ rangl.SpatialMultiPoints <- function(x, ...) {
 }
 
 
-#' @rdname rangl
+#' @rdname anglr
 #' @export
-rangl.SpatialPoints <- function(x, ...) {
+anglr.SpatialPoints <- function(x, ...) {
    pr4 <- proj4string(x)
    if (! "data" %in% slotNames(x)) {
      dummy <- data.frame(row_number = seq_along(x))

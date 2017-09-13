@@ -45,7 +45,7 @@ Read in a polygon vector layer in traditional GIS form, and plot it.
 #data(countriesLow)
 #p <- countriesLow
 library(rgdal)
-p <- readOGR(system.file("extdata", "small_world.gpkg", package = "rangl"), "ne_110m_admin_0_countries")
+p <- readOGR(system.file("extdata", "small_world.gpkg", package = "anglr"), "ne_110m_admin_0_countries")
 plot(p, col = viridis::viridis(nrow(p)))
 ```
 
@@ -141,18 +141,18 @@ The coordinate-path structures used above for polygons and lines are very explic
 
 The next step in topological relationships is to represent each *segment* of a line rather than the entire path. To do this we need a table of segments, and a link table to store the identity of the two vertices used by those segments. 
 
-This has been implemented in the package `rangl`. 
+This has been implemented in the package `anglr`. 
 
 ```{r}
-lsegment <- rangl::rangl(as(pnganz, "SpatialLinesDataFrame"))
+lsegment <- anglr::anglr(as(pnganz, "SpatialLinesDataFrame"))
 as.data.frame(lapply(lsegment, nrow))
 ```
 
 
 ```{r,eval=FALSE,include=FALSE}
 library(geosphere)
-library(rangl)
-x <- globe(rangl(SpatialMultiPoints(list(randomCoordinates(5e4)), 
+library(anglr)
+x <- globe(anglr(SpatialMultiPoints(list(randomCoordinates(5e4)), 
                    proj4string = CRS("+proj=longlat +ellps=WGS84 +no_defs"))), 
            "+proj=geocent +a=1")
 
@@ -195,7 +195,7 @@ This is not lovely code, though it is straight forward and systematic. Treated a
 Treat the polygon as segments build a triangulation, a surface of 2D triangle primitives. 
 
 ```{r}
-prim2D <- rangl::rangl(pnganz)
+prim2D <- anglr::anglr(pnganz)
 plot(pnganz, border = "black", col = "transparent", lwd = 4)
 for (i in seq(nrow(prim2D$t))) {
   tri <- prim2D$t[i, ] %>% inner_join(prim2D$tXv, "triangle_") %>% inner_join(prim2D$v, "vertex_") %>% dplyr::select(x_, y_)
@@ -204,7 +204,7 @@ for (i in seq(nrow(prim2D$t))) {
 
 ```
 
-The plot loop above is very inefficient, but it's purely to illustrate that we have the shapes in the right form. This is used in rangl to plot the shapes in 3D, either in native planar form or as a surface of a globe. 
+The plot loop above is very inefficient, but it's purely to illustrate that we have the shapes in the right form. This is used in anglr to plot the shapes in 3D, either in native planar form or as a surface of a globe. 
 
 ```{r}
 library(rgl)
@@ -214,7 +214,7 @@ rglwidget(elementId="pnganz")
 ```
 
 ```{r}
-plot(rangl::globe(prim2D), specular = "black")
+plot(anglr::globe(prim2D), specular = "black")
 subid <- currentSubscene3d()
 rglwidget(elementId="png_anz_globe")
 ```
@@ -225,7 +225,7 @@ Run the layer through `globe()` and print out the vertices table.
 
 ```{r}
 prim2D$v
-rangl::globe(prim2D)$v
+anglr::globe(prim2D)$v
 #subid <- currentSubscene3d()
 #rglwidget(elementId="prim2D")
 ```
@@ -233,7 +233,7 @@ rangl::globe(prim2D)$v
 The only thing that happened was that the input `x_` and `y_` were converted to geocentric "x, y, z" coordinates. Under the hood this is done by driving the transformation with PROJ.4 (via the R package `proj4`). The PROJ.4 family in use is  "geocent", i.e. here the `meta` table simply records the history of transformations. 
 
 ```{r}
-rangl::globe(prim2D)$meta[, c("proj", "ctime")]
+anglr::globe(prim2D)$meta[, c("proj", "ctime")]
 
 ```
 
