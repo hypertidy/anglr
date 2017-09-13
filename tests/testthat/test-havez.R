@@ -2,7 +2,7 @@ context("Icanhavez")
 
 
 library(spbabel)
-hol <- rangl(sp(holey))
+hol <- anglr(sp(holey))
 hol$v$z_ <- rnorm(nrow(hol$v))
 hol$meta$proj[1] <- "+proj=laea +a=80"
 

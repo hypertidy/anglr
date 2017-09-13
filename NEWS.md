@@ -1,4 +1,6 @@
-# rangl dev
+# anglr dev
+
+* rename package (from rangl)
 
 * now faster by relying on silicate for `sf`
 

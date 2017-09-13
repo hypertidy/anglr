@@ -3,7 +3,7 @@ output: github_document
 ---
 
 
-[![Travis-CI Build Status](https://travis-ci.org/hypertidy/rangl.svg?branch=master)](https://travis-ci.org/hypertidy/rangl) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/hypertidy/rangl?branch=master&svg=true)](https://ci.appveyor.com/project/hypertidy/rangl) [![Coverage Status](https://img.shields.io/codecov/c/github/hypertidy/rangl/master.svg)](https://codecov.io/github/hypertidy/rangl?branch=master)
+[![Travis-CI Build Status](https://travis-ci.org/hypertidy/anglr.svg?branch=master)](https://travis-ci.org/hypertidy/anglr) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/hypertidy/anglr?branch=master&svg=true)](https://ci.appveyor.com/project/hypertidy/anglr) [![Coverage Status](https://img.shields.io/codecov/c/github/hypertidy/anglr/master.svg)](https://codecov.io/github/hypertidy/anglr?branch=master)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -18,7 +18,7 @@ rgl::par3d(windowRect = c(100, 100, 512 + 100, 512 +100))
 
 ## Tabular storage for spatial data 
 
-The 'rangl' package illustrates some generalizations of GIS-y tasks in R with "tables". 
+The 'anglr' package illustrates some generalizations of GIS-y tasks in R with "tables". 
 
 The basic idea is to create "toplogical" objects from a variety of sources: 
 
@@ -61,23 +61,23 @@ In examples below I use 'graticule' as well, so you might as well install that t
 install.packages("graticule")
 ```
 
-If you are still feeling adventurous, 'rangl' can be installed from Github. This will also ensure that the latest version of 'spbabel' is installed, until I get around to updating that on CRAN. 
+If you are still feeling adventurous, 'anglr' can be installed from Github. This will also ensure that the latest version of 'spbabel' is installed, until I get around to updating that on CRAN. 
 
 ```{r,eval=FALSE}
-devtools::install_github("hypertidy/rangl")
+devtools::install_github("hypertidy/anglr")
 ```
 
 ## Get involved!
 
 Let me know if you have problems, or are interested in this work. See the issues tab to make suggestions or report bugs. 
 
-https://github.com/hypertidy/rangl/issues
+https://github.com/hypertidy/anglr/issues
 
 
 
 ## Examples
 
-See the vignettes: https://hypertidy.github.io/rangl/articles/index.html
+See the vignettes: https://hypertidy.github.io/anglr/articles/index.html
 
 
 

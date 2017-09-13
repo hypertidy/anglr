@@ -2,17 +2,17 @@
 #' Convert map coordinates to Geocentric (XYZ) coordinates. 
 #'
 #' 
-#' @param x list of tibbles, in \code{\link{rangl}} form
+#' @param x list of tibbles, in \code{\link{anglr}} form
 #' @param gproj Geocentric PROJ.4 string, defaults to WGS84
 #' @param ... arguments to methods (none used)
 #'
-#' @return rangl object with vertices table modified
+#' @return anglr object with vertices table modified
 #' @export
 #'
 #' @examples
 #' library(maptools)
 #' data(wrld_simpl)
-#' g <- globe(rangl(as(wrld_simpl, "SpatialLinesDataFrame")))
+#' g <- globe(anglr(as(wrld_simpl, "SpatialLinesDataFrame")))
 #' if (interactive()) {
 #'  plot(g, lwd = 3)
 #'  }
