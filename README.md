@@ -1,5 +1,5 @@
 
-[![Travis-CI Build Status](https://travis-ci.org/hypertidy/anglr.svg?branch=master)](https://travis-ci.org/hypertidy/anglr) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/hypertidy/anglr?branch=master&svg=true)](https://ci.appveyor.com/project/hypertidy/anglr) [![Coverage Status](https://img.shields.io/codecov/c/github/hypertidy/anglr/master.svg)](https://codecov.io/github/hypertidy/anglr?branch=master)
+[![Travis-CI Build Status](https://travis-ci.org/hypertidy/anglr.svg?branch=master)](https://travis-ci.org/hypertidy/anglr) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/hypertidy/anglr?branch=master&svg=true)](https://ci.appveyor.com/project/hypertidy/anglr) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/anglr)](https://cran.r-project.org/package=anglr) [![Coverage Status](https://img.shields.io/codecov/c/github/hypertidy/anglr/master.svg)](https://codecov.io/github/hypertidy/anglr?branch=master)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 Topological forms for plotting spatial data
