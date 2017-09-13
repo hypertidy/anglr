@@ -70,13 +70,26 @@ Plot methods take those tables and generate the "indexed array" structures neede
 Ongoing design
 --------------
 
-The core work for translating "Spatial" classes is done by the unspecialized 'spbabel::map\_table' function.
+The core work for translating spatial classes is done by the unspecialized 'silicate::PATH' function and its underlying decomposition generics.
 
-This is likely to be replaced by a 'primitives()' function that takes any lines or polygons data and returns just the linked edges. Crucially, polygons and lines are described by the same 1D primitives, and this is easy to do. Harder is to generate 2D primitives and for that we rely on [Jonathan Richard Shewchuk's Triangle](https://www.cs.cmu.edu/~quake/triangle.html).
+`anglr` then decomposes further, from path-types to primitive-types - where "primitive" means topological primitives, vertices, line segments (edges), triangles. Crucially, polygons and lines are described by the same 1D primitives, and this is easy to do. Harder is to generate 2D primitives and for that we rely on [Jonathan Richard Shewchuk's Triangle](https://www.cs.cmu.edu/~quake/triangle.html).
 
-Triangulation is with `RTriangle` package using "constrained mostly-Delaunay Triangulation" from the Triangle library, but could alternatively use `rgl` with its ear clipping algorithm.
+Triangulation is with `RTriangle` package using "constrained mostly-Delaunay Triangulation" from the Triangle library, but could alternatively use `rgl` with its ear clipping algorithm, and related work is in the `laridae` project to bring CGAL facilities to R.
 
-(With RTriangle we can set a max area for the triangles, so it can wrap around curves like globes and hills.)
+With RTriangle we can set a max area for the triangles, so it can wrap around curves like globes and hills, and this can only be done by the addition of Steiner points. All of this takes us very far from the path-based types generally used by GIS-alikes.
+
+Grids
+-----
+
+Raster gridded data are decomposed to "quad" forms, essentially a 2D primitive with four corners rather than 3. This works well in rgl but is slow in the browser for some reason, but we can always break quads down to triangles if needed.
+
+Texture mapping is possible with rgl, but it needs a local coordinate system mapped to the index space of a PNG image. It's easy enough but requires a bit of awkward preparation, not yet simplified. Some different approaches:
+
+<https://rpubs.com/cyclemumner/frink-polyogn>
+
+Deprecated use of rangl here, but shows the general texture coordinate approach required:
+
+<https://gist.github.com/mdsumner/dc80283de50bb23ff7681b14768b9367>
 
 Installation
 ------------
