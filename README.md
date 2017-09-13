@@ -1,22 +1,21 @@
 
-[![Travis-CI Build Status](https://travis-ci.org/hypertidy/rangl.svg?branch=master)](https://travis-ci.org/hypertidy/rangl) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/hypertidy/rangl?branch=master&svg=true)](https://ci.appveyor.com/project/hypertidy/rangl) [![Coverage Status](https://img.shields.io/codecov/c/github/hypertidy/rangl/master.svg)](https://codecov.io/github/hypertidy/rangl?branch=master)
+[![Travis-CI Build Status](https://travis-ci.org/hypertidy/anglr.svg?branch=master)](https://travis-ci.org/hypertidy/anglr) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/hypertidy/anglr?branch=master&svg=true)](https://ci.appveyor.com/project/hypertidy/anglr) [![Coverage Status](https://img.shields.io/codecov/c/github/hypertidy/anglr/master.svg)](https://codecov.io/github/hypertidy/anglr?branch=master)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-    ## Warning in rgl.init(initValue, onlyNULL): RGL: unable to open X11 display
+Topological forms for plotting spatial data
+-------------------------------------------
 
-    ## Warning: 'rgl_init' failed, running with rgl.useNULL = TRUE
+The 'anglr' package illustrates some generalizations of GIS-y tasks in R with a database-y approach.
 
-Tabular storage for spatial data
---------------------------------
+The basic idea is to create toplogical objects from a variety of sources:
 
-The 'rangl' package illustrates some generalizations of GIS-y tasks in R with "tables".
-
-The basic idea is to create "toplogical" objects from a variety of sources:
-
--   SpatialPolygons, SpatialLines, SpatialMultipoints
+-   simple features
+-   Spatial features
 -   rgl 3D objects
--   trip objects (animal tracking data)
--   --others to come-- see <https://github.com/mdsumner/spbabel>
+-   trip objects (and general animal tracking data types)
+-   regular raster grids
+-   igraph
+-   Lidar
 
 Multiple multi-part objects are decomposed to a set of related, linked tables. Object identity is maintained with attribute metadata and this is carried through to colour and other aesthetics in 3D plots.
 
@@ -36,25 +35,12 @@ Triangulation is with `RTriangle` package using "constrained mostly-Delaunay Tri
 Installation
 ------------
 
-This package is in active development and will see a number of breaking changes before release.
-
 Also required are packages 'rgl' and 'RTriangle', so first make sure you can install and use these.
 
 ``` r
 install.packages("rgl")
 install.packages("RTriangle")
-```
-
-In examples below I use 'graticule' as well, so you might as well install that too.
-
-``` r
-install.packages("graticule")
-```
-
-If you are still feeling adventurous, 'rangl' can be installed from Github. This will also ensure that the latest version of 'spbabel' is installed, until I get around to updating that on CRAN.
-
-``` r
-devtools::install_github("hypertidy/rangl")
+devtools::install_github("hypertidy/anglr")
 ```
 
 Get involved!
@@ -62,11 +48,11 @@ Get involved!
 
 Let me know if you have problems, or are interested in this work. See the issues tab to make suggestions or report bugs.
 
-<https://github.com/hypertidy/rangl/issues>
+<https://github.com/hypertidy/anglr/issues>
 
 Examples
 --------
 
-See the vignettes: <https://hypertidy.github.io/rangl/articles/index.html>
+See the vignettes: <https://hypertidy.github.io/anglr/articles/index.html>
 
 Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
