@@ -13,7 +13,7 @@
 #' ## POLYGONS
 #' library(maptools)
 #' data(wrld_simpl)
-#' b <- rangl(wrld_simpl)
+#' b <- anglr(wrld_simpl)
 #' plot(b)
 #' #if (require(rworldxtra)) {
 #'
@@ -21,22 +21,22 @@
 #' #sv <- c("New Zealand", "Antarctica", "Papua New Guinea",
 #' #  "Indonesia", "Malaysia", "Fiji", "Australia")
 #' #a <- subset(countriesHigh, SOVEREIGNT %in% sv)
-#' #b7 <- rangl(a, max_area = 0.5)
+#' #b7 <- anglr(a, max_area = 0.5)
 #' #plot(globe(b7))
 #' #}
 #' ## -----------------------------------------------
 #' ## LINES
-#' #l1 <- rangl(as(a, "SpatialLinesDataFrame") )
+#' #l1 <- anglr(as(a, "SpatialLinesDataFrame") )
 #' #plot(l1)
 #' #plot(globe(l1))
 #' 
 #' #data("flight_tracks", package = "silicate")
-#' #r <- rangl(flight_tracks)
+#' #r <- anglr(flight_tracks)
 #' #plot(r)
 #' #rgl::aspect3d(1, 1, 0.001)
 #' #rgl::rglwidget()
-rangl <- function(x, ...) {
-  UseMethod("rangl")
+anglr <- function(x, ...) {
+  UseMethod("anglr")
 }
 
 line_mesh_map_table1 <- function(tabs) {
@@ -60,7 +60,7 @@ line_mesh_map_table1 <- function(tabs) {
   tabs
 }
 
-rangl_lines <- function(tabs, ...) {
+anglr_lines <- function(tabs, ...) {
   ll <- vector("list", nrow(tabs$o))
   for (i_obj in seq(nrow(tabs$o))) {
     tabs_i <- tabs; tabs_i$o <- tabs_i$o[i_obj, ]

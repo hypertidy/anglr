@@ -1,6 +1,6 @@
-#' @name rangl
+#' @name anglr
 #' @export
-rangl.trip <- 
+anglr.trip <- 
   function(x, ...) {
     ## this is just a copy of the lines version for now
     ## next step is to put all the attributes on the v table

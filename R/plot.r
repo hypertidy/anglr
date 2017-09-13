@@ -2,16 +2,16 @@
 #' 
 #' Plot using the \code{\link[rgl]{rgl-package}}. 
 #'
-#' The data structures from \code{\link{rangl}} are converted to their analogous forms
+#' The data structures from \code{\link{anglr}} are converted to their analogous forms
 #' used by the \code{\link[rgl]{rgl}} package and plotted. These plot methods return
 #' the rgl form invisibly. 
-#' @param x object from \code{\link{rangl}}
+#' @param x object from \code{\link{anglr}}
 #' @param ... args for underlying plotting
 #' @param add add to existing plot if exists
 #' @return the rgl mesh3d object, invisibly
 #' @export
 #' @importFrom rgl shade3d
-#' @name plot-rangl
+#' @name plot-anglr
 #' @aliases plot
 plot.trimesh <- function(x,  ..., add = FALSE) {
   if (!"color_" %in% names(x$o)) {
@@ -43,7 +43,7 @@ plot.trimesh <- function(x,  ..., add = FALSE) {
 
 }
 
-#' @name plot-rangl
+#' @name plot-anglr
 #' @export
 plot.linemesh <- function(x,  ..., add = FALSE) {
   if (!"color_" %in% names(x$o)) {
@@ -76,7 +76,7 @@ plot.linemesh <- function(x,  ..., add = FALSE) {
 
 }
 
-#' @name plot-rangl
+#' @name plot-anglr
 #' @export
 plot.pointmesh <- function(x,  ..., add = FALSE) {
   if (!"color_" %in% names(x$o)) {

@@ -16,7 +16,7 @@ silicate_to_gris_names <- function(x) {
 
 #' @importFrom silicate PATH
 #' @export
-rangl.sf <- function (x,  ..., max_area = NULL) 
+anglr.sf <- function (x,  ..., max_area = NULL) 
 {
 
   pr4 <- attr(x[[attr(x, "sf_column")]], "crs")[["proj4string"]]
@@ -28,10 +28,10 @@ rangl.sf <- function (x,  ..., max_area = NULL)
   
   thetype <- tabs[["b"]]$type[1]
   if (grepl("POLYGON", thetype)) {
-   return(rangl_polys(tabs, ...))
+   return(anglr_polys(tabs, ...))
   }
   if (grepl("LINE", thetype)) {
-    return(rangl_lines(tabs))
+    return(anglr_lines(tabs))
   }
  # tabs <- spbabel::map_table(x)
   ## otherwise M/POINT
@@ -40,30 +40,30 @@ rangl.sf <- function (x,  ..., max_area = NULL)
 
 }
 #' @export
-rangl.PATH <- function(x, ...) {
+anglr.PATH <- function(x, ...) {
   tabs <- silicate_to_gris_names(x)
   thetype <- tabs[["b"]]$type[1]
   if (grepl("POLYGON", thetype)) {
-    return(rangl_polys(tabs, ...))
+    return(anglr_polys(tabs, ...))
   }
   if (grepl("LINE", thetype)) {
-    return(rangl_lines(tabs))
+    return(anglr_lines(tabs))
   }
   ## could be NULL
   stop("woah, no type in this PATH - todo")
 }
 
-#' @rdname rangl
+#' @rdname anglr
 #' @importFrom dplyr %>%  arrange distinct mutate
 #' @export
-rangl.SpatialLines <- function(x, ...) {
+anglr.SpatialLines <- function(x, ...) {
   pr4 <- proj4string(x)
   if (! "data" %in% slotNames(x)) {
     dummy <- data.frame(row_number = seq_along(x))
     x <- sp::SpatialLinesDataFrame(x, dummy, match.ID = FALSE)
   }
   tabs <- spbabel::map_table(x)
-  out <- rangl_lines(tabs)
+  out <- anglr_lines(tabs)
   out$meta <- tibble::tibble(proj = pr4,
                                  ctime = format(Sys.time(), tz = "UTC"))
   out
@@ -71,19 +71,19 @@ rangl.SpatialLines <- function(x, ...) {
 
 
 
-#' @rdname rangl
+#' @rdname anglr
 #' @export
 #' @section Warning:
-#' rangl only checks for presence of triangle centres within
+#' anglr only checks for presence of triangle centres within
 #' known holes, so this doesn't pick up examples of overlapping areas e.g. 
-#' https://github.com/r-gris/rangl/issues/39
+#' https://github.com/hypertidy/anglr/issues/39
 #' @importFrom sp geometry  over SpatialPoints proj4string CRS SpatialPolygonsDataFrame
 #' @importFrom dplyr inner_join
 #' @importFrom RTriangle pslg triangulate
 #' @importFrom spbabel map_table
 #' @importFrom tibble tibble
 #' @importFrom methods slotNames
-rangl.SpatialPolygons <- function(x, max_area = NULL, ...) {
+anglr.SpatialPolygons <- function(x, max_area = NULL, ...) {
   pr4 <- proj4string(x)
   x0 <- x
   ## kludge for non DataFrames
@@ -92,7 +92,7 @@ rangl.SpatialPolygons <- function(x, max_area = NULL, ...) {
     x <- sp::SpatialPolygonsDataFrame(x, dummy, match.ID = FALSE)
   }
   tabs <- spbabel::map_table(x)
-  out <- rangl_polys(tabs, max_area = max_area, ...)
+  out <- anglr_polys(tabs, max_area = max_area, ...)
   out$meta <- tibble::tibble(proj = pr4,
                              ctime = format(Sys.time(), tz = "UTC"))
   out

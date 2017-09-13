@@ -1,6 +1,6 @@
 #' Tidy tables for topological spatial data structures.
 #'
-#' The 'rangl' package helps transcend the following general limitations:  
+#' The 'anglr' package helps transcend the following general limitations:  
 #' \itemize{
 #'  \item coordinates beyond X and Y, or longitude and latitude
 #'  \item storing attributes on vertices, primitives, branches (parts), or objects
@@ -11,11 +11,11 @@
 #'  \item TBD n-dimensional rasters with curvilinear coordinates, and the discrete-continuous distinction 
 #' }
 #'
-#' @name rangl-package
+#' @name anglr-package
 #' @docType package
 #' @section I. Creation:
 #' \tabular{ll}{
-#'  \code{\link{rangl}} \tab create a rangl table set from various input types  \cr
+#'  \code{\link{anglr}} \tab create a anglr table set from various input types  \cr
 #'  }
 #'
 #' @section II. Plotting:

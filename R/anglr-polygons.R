@@ -35,7 +35,7 @@ tri_mesh_map_table1 <- function(tabs, max_area = NULL) {
   
   ## NOTE: the following only checks for presence of triangle centres within
   ## known holes, so this doesn't pick up examples of overlapping areas e.g. 
-  ## https://github.com/r-gris/rangl/issues/39
+  ## https://github.com/hypertidy/anglr/issues/39
   
   ## process the holes if present
   if ("island_" %in% names(tabs$b) && any(!tabs$b$island_)) {
@@ -74,7 +74,7 @@ tri_mesh_map_table1 <- function(tabs, max_area = NULL) {
 }
 
 
-rangl_polys <-  function(tabs, max_area = NULL, ...){
+anglr_polys <-  function(tabs, max_area = NULL, ...){
   ll <- vector("list", nrow(tabs$o))
   for (i_obj in seq(nrow(tabs[["o"]]))) {
     tabs_i <- tabs

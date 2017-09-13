@@ -1,5 +1,5 @@
 ---
-title: "Examples with rangl"
+title: "Examples with anglr"
 author: "Michael D. Sumner"
 date: "`r Sys.Date()`"
 output:
@@ -7,7 +7,7 @@ output:
     fig_width: 7
     fig_height: 7
 vignette: >
-  %\VignetteIndexEntry{Examples with rangl}
+  %\VignetteIndexEntry{Examples with anglr}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -30,7 +30,7 @@ library(maptools)
 
 # Introduction
 
-The 'rangl' package illustrates some generalizations of GIS-y and topology tasks in R with "tables". See the [package project](https://github.com/r-gris/rangl/blob/master/README.md) for more information. 
+The 'anglr' package illustrates some generalizations of GIS-y and topology tasks in R with "tables". See the [package project](https://github.com/r-gris/anglr/blob/master/README.md) for more information. 
 
 
 Get some maps and plot in 3D - in plane view, or globe view. 
@@ -48,8 +48,8 @@ data(wrld_simpl)
 library(raster)
 
 ## convert to triangles and plot 
-library(rangl)
-cmesh <- rangl(wrld_simpl)
+library(anglr)
+cmesh <- anglr(wrld_simpl)
 plot(cmesh)
 rglwidget()
 ```
@@ -66,9 +66,9 @@ gl <- graticule::graticule(seq(xmin(ex), xmax(ex), length = 15),
 
 
 ## convert to triangles, but wrap onto globe then plot
-smesh <- rangl(sids)
+smesh <- anglr(sids)
 plot(globe(smesh))
-mgl <- rangl(gl)
+mgl <- anglr(gl)
 mgl$o$color_ <- "black"
 plot(globe(mgl), lwd = 2)
 ```
@@ -86,7 +86,7 @@ data(holey)
 ## SpatialPolygonsDataFrame
 sph <- sp(holey)
 
-glh <- rangl(sph)
+glh <- anglr(sph)
 plot(glh)
 ```
 
@@ -98,7 +98,7 @@ plot(glh)
 
 ```{r, webgl=TRUE}
 linehouse <- as(sph, "SpatialLinesDataFrame")
-plot(rangl(linehouse))
+plot(anglr(linehouse))
 ```
 
 
@@ -107,7 +107,7 @@ plot(rangl(linehouse))
 ## Globe lines
 
 ```{r, webgl=TRUE}
-lmesh <- rangl(as(wrld_simpl, "SpatialLinesDataFrame"))
+lmesh <- anglr(as(wrld_simpl, "SpatialLinesDataFrame"))
 plot(globe(lmesh))
 ```
 
@@ -122,8 +122,8 @@ Rgl mesh3d objects that use "triangle" primitives are supported.
 ```{r,webgl=TRUE}
 library(rgl)
 
-dod <- rangl(dodecahedron3d(col = "cyan"))
-octo <- rangl(translate3d(octahedron3d(col = "blue"), 6, 0, 0))
+dod <- anglr(dodecahedron3d(col = "cyan"))
+octo <- anglr(translate3d(octahedron3d(col = "blue"), 6, 0, 0))
 plot(dod, col = viridis::viridis(5)[1], alpha = 0.3)
 plot(octo, col = viridis::viridis(5)[5], alpha = 0.3)
 bg3d("grey")
@@ -141,11 +141,11 @@ And points work!  (Don't laugh).
 
 
 ```{r, webgl=TRUE}
-library(rangl)
+library(anglr)
 library(maptools)
 data(wrld_simpl)
 mpts <- as(as(wrld_simpl, "SpatialLinesDataFrame"), "SpatialMultiPointsDataFrame")
-plot(rangl(mpts))
+plot(anglr(mpts))
 rgl::view3d(theta = 25, phi = 3)
 ```
 
@@ -156,7 +156,7 @@ The trip package includes  a 'walrus818' data set courtesy of Anthony Fischbach.
 
 ```{r, webgl=TRUE}
 library(trip)
-library(rangl)
+library(anglr)
 data(walrus818)
 
 library(graticule)
@@ -171,10 +171,10 @@ walrus <- spTransform(walrus818, prj)
 
 gr$color_ <- "black"
 rgl::par3d(windowRect = c(100, 100, 912 + 100, 912 +100))
-plot(rangl(gr))
+plot(anglr(gr))
 w$color_ <- sample(viridis::inferno(nrow(w)))
-plot(rangl(w), specular = "black")
-plot(rangl(walrus))
+plot(anglr(w), specular = "black")
+plot(anglr(walrus))
 um <- structure(c(0.934230506420135, 0.343760699033737, 0.0950899347662926, 
                   0, -0.302941381931305, 0.905495941638947, -0.297159105539322, 
                   0, -0.188255190849304, 0.24880850315094, 0.950081348419189, 0, 
