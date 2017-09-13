@@ -7,7 +7,7 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -16,16 +16,20 @@ knitr::opts_chunk$set(
 rgl::par3d(windowRect = c(100, 100, 512 + 100, 512 +100))
 ```
 
-## Tabular storage for spatial data 
+## Topological forms for plotting spatial data
 
-The 'anglr' package illustrates some generalizations of GIS-y tasks in R with "tables". 
+The 'anglr' package illustrates some generalizations of GIS-y tasks in R with a database-y approach. 
 
-The basic idea is to create "toplogical" objects from a variety of sources: 
+The basic idea is to create toplogical objects from a variety of sources: 
 
-* SpatialPolygons, SpatialLines, SpatialMultipoints
+* simple features
+* Spatial features
 * rgl 3D objects
-* trip objects (animal tracking data)
-* --others to come-- see https://github.com/mdsumner/spbabel
+* trip objects (and general animal tracking data types)
+* regular raster grids
+* igraph
+* Lidar
+
 
 
 Multiple multi-part objects are decomposed to a set of related, linked tables. Object identity is maintained with attribute metadata and this is carried through to colour and other aesthetics in 3D plots.  
@@ -44,26 +48,12 @@ Triangulation is with `RTriangle` package using "constrained mostly-Delaunay Tri
 
 ## Installation
 
-This package is in active development and will see a number of breaking changes before release. 
-
 
 Also required are packages 'rgl' and 'RTriangle', so first make sure you can install and use these. 
 
 ```{r,eval=FALSE}
 install.packages("rgl")
 install.packages("RTriangle")
-
-```
-
-In examples below I use 'graticule' as well, so you might as well install that too. 
-
-```{r,eval=FALSE}
-install.packages("graticule")
-```
-
-If you are still feeling adventurous, 'anglr' can be installed from Github. This will also ensure that the latest version of 'spbabel' is installed, until I get around to updating that on CRAN. 
-
-```{r,eval=FALSE}
 devtools::install_github("hypertidy/anglr")
 ```
 

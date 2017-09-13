@@ -28,7 +28,7 @@ anglr.sf <- function (x,  ..., max_area = NULL)
   
   thetype <- tabs[["b"]]$type[1]
   if (grepl("POLYGON", thetype)) {
-   return(anglr_polys(tabs, ...))
+   return(anglr_polys(tabs, ..., max_area = max_area))
   }
   if (grepl("LINE", thetype)) {
     return(anglr_lines(tabs))
