@@ -1,3 +1,31 @@
+
+#' Title
+#'
+#' @param x quad_mesh
+#' @param ... args passed to rgl plot
+#' @param add reset plot?
+#' @return qmesh
+#' @export
+#'
+#' @examples
+#' example(anglr.RasterLayer)
+#' plot(w)
+plot.quad_mesh <- function(x, ..., add = FALSE) {
+  ## etc blah
+  ob <- mkq_3d()
+  ob$vb <- t(cbind(as.matrix(x$v[, c("x_", "y_", "z_")]), 1))
+  ob$ib <- matrix(x$qXv$vertex_, nrow = 4)
+  ob$material$col <- trimesh_cols(nrow(x$qd))[ob$ib]
+  #rgl::shade3d(ob, col = trimesh_cols(nrow(x$qd))[ob$ib], ...)
+  if (!add & length(rgl::rgl.dev.list()) < 1L) rgl::rgl.clear()
+  
+  rgl::shade3d(ob, ...)
+  if ( rgl::rgl.useNULL()) rgl::rglwidget()  
+  
+  invisible(ob)
+}
+
+
 #' Plot objects in OpenGL
 #' 
 #' Plot using the \code{\link[rgl]{rgl-package}}. 

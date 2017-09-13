@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>sf data frame zoo. — sf_data_zoo • anglr</title>
+<title>Tidy tables for topological spatial data structures. — anglr-package • anglr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -96,20 +96,57 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>sf data frame zoo.</h1>
+    <h1>Tidy tables for topological spatial data structures.</h1>
     </div>
 
     
-    <p>Each kind of geometry in an sf data frame, in a list.</p>
+    <p>The 'anglr' package helps transcend the following general limitations:</p><ul>
+<li><p>coordinates beyond X and Y, or longitude and latitude</p></li>
+<li><p>storing attributes on vertices, primitives, branches (parts), or objects</p></li>
+<li><p>topology and geometry are properly separated</p></li>
+<li><p>spatial data can be properly represented as a graph of spatial primitives</p></li>
+<li><p>polygons as true surfaces, not just glorified lines with a path-filling rule</p></li>
+<li><p>TBD higher dimensional primitives are possible</p></li>
+<li><p>TBD n-dimensional rasters with curvilinear coordinates, and the discrete-continuous distinction</p></li>
+</ul>
     
 
         
+    <h2 class="hasAnchor" id="i-creation"><a class="anchor" href="#i-creation"></a>I. Creation</h2>
+
+    
+    <table><tr><td>
+ <code>anglr</code> </td>
+<td> create a anglr table set from various input types  </td>
+</tr></table>
+    
+    <h2 class="hasAnchor" id="ii-plotting"><a class="anchor" href="#ii-plotting"></a>II. Plotting</h2>
+
+    
+    <table><tr><td>
+ <code><a href='globe.html'>globe</a></code> </td>
+<td> convert X,Y planar or angular to 3D on the surface of a globe, based on the data in longitude-latitude form </td>
+</tr><tr><td>
+ <code><a href='plot-anglr.html'>plot.trimesh</a></code> </td>
+<td> plot 2D topology in 3D geometry space </td>
+</tr><tr><td>
+ <code><a href='plot-anglr.html'>plot.linemesh</a></code> </td>
+<td> plot 1D topology in 3D geometry space </td>
+</tr><tr><td>
+ <code><a href='plot-anglr.html'>plot.pointmesh</a></code> </td>
+<td> plot 0D topology in 3D geometry space </td>
+</tr></table>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-                </ul>
+      
+      <li><a href="#i-creation">I. Creation</a></li>
+
+      <li><a href="#ii-plotting">II. Plotting</a></li>
+          </ul>
 
   </div>
 </div>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>sf data frame zoo. — sf_data_zoo • anglr</title>
+<title>Plot objects in OpenGL — plot-anglr • anglr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -96,20 +96,60 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>sf data frame zoo.</h1>
+    <h1>Plot objects in OpenGL</h1>
     </div>
 
     
-    <p>Each kind of geometry in an sf data frame, in a list.</p>
+    <p>Plot using the <code><a href='http://www.rdocumentation.org/packages/rgl/topics/rgl-package'>rgl-package</a></code>.</p>
     
 
-        
+    <pre class="usage"><span class='co'># S3 method for trimesh</span>
+<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='co'># S3 method for linemesh</span>
+<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='co'># S3 method for pointmesh</span>
+<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>object from <code>anglr</code></p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>args for underlying plotting</p></td>
+    </tr>
+    <tr>
+      <th>add</th>
+      <td><p>add to existing plot if exists</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>the rgl mesh3d object, invisibly</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The data structures from <code>anglr</code> are converted to their analogous forms
+used by the <code><a href='http://www.rdocumentation.org/packages/rgl/topics/rgl-package'>rgl</a></code> package and plotted. These plot methods return
+the rgl form invisibly.</p>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-                </ul>
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
+          </ul>
 
   </div>
 </div>
