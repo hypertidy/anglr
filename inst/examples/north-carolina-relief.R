@@ -9,13 +9,14 @@ library(anglr) ## devtools::install_github("hypertidy/anglr")
 
 ## objects
 ## a relief map, triangles grouped by polygon with interpolated raster elevation 
-p <- anglr(nc, max_area = 0.008) ## make small triangles (0.2 sq lon-lat degree)
-g <- anglr(graticule::graticule(-85:-74, 32:37))
-p$v$z_ <- extract(r, cbind(p$v$x_, p$v$y_), method = "bilinear")
+p_mesh <- anglr(nc, max_area = 0.008) ## make small triangles ( sq lon-lat degree)
+#g <- anglr(graticule::graticule(-85:-74, 32:37))
+p_mesh$v$z_ <- extract(r, cbind(p_mesh$v$x_, p_mesh$v$y_), method = "bilinear")
 
 ## plot the scene
 library(rgl)
-rgl.clear(); 
-plot(p); plot(g, color = "white"); 
-bg3d("black"); material3d(specular = "black"); 
+rgl.clear() 
+plot(pmesh) 
+#plot(g, color = "white") 
+bg3d("black"); material3d(specular = "black")
 rglwidget(width =  900, height = 450)
