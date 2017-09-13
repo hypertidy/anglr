@@ -30,6 +30,50 @@ The basic idea is to create toplogical objects from a variety of sources:
 * igraph
 * Lidar
 
+# Usage
+
+The general approach is to `anglr` your model and then plot it. 
+
+```{r usage, eval=FALSE}
+
+library(anglr)
+
+#model <- sf::st_read("some/shapefile.shp")
+#model <- raster::raster("some/gridraster.tif")
+
+mesh <- anglr(model)
+plot(mesh)
+```
+This is too simplistic for general use but these meshes can be used to merge disparate data into a single form, or used to convert standard spatial objects to `rgl` ready forms. 
+
+An example of merging vector and raster can be seen with this. 
+
+```{r merge, eval=FALSE}
+f <- system.file("extdata/gebco1.tif", package = "anglr")
+## ad hoc scaling as x,y and  z are different units
+r <- raster::raster(f)/1000
+
+library(sf)
+nc <- read_sf(system.file("shape/nc.shp", package="sf"))
+library(raster)
+library(anglr) ## devtools::install_github("hypertidy/anglr")
+
+## objects
+## a relief map, triangles grouped by polygon with interpolated raster elevation 
+p_mesh <- anglr(nc, max_area = 0.008) ## make small triangles ( sq lon-lat degree)
+#g <- anglr(graticule::graticule(-85:-74, 32:37))
+p_mesh$v$z_ <- extract(r, cbind(p_mesh$v$x_, p_mesh$v$y_), method = "bilinear")
+
+## plot the scene
+library(rgl)
+
+rgl.clear()  ## rerun the cycle from clear to widget in browser contexts 
+plot(pmesh) 
+#plot(g, color = "white") 
+bg3d("black"); material3d(specular = "black")
+rglwidget(width =  900, height = 450)  ## not needed if you have a local device
+
+```
 
 
 Multiple multi-part objects are decomposed to a set of related, linked tables. Object identity is maintained with attribute metadata and this is carried through to colour and other aesthetics in 3D plots.  
