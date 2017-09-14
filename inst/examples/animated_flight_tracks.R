@@ -1,20 +1,16 @@
-#' @name plot-anglr
-#' @export
-play_xyzm <- function(x,  ..., add = FALSE) {
-  library(anglr)
-  library(rgl)
-  library(dplyr)
-  data("flight_tracks", package = "silicate")
-  ## convert to topological graph
-  aa <- anglr(flight_tracks)
-  
-  ## group by M
-  aa$v <- aa$v %>% mutate(g = dplyr::ntile(m_, 50)) %>% group_by(g)
-  for (gi in unique(aa$v$g)) {
-     plot(anglr:::semi_cascade(aa, g == 1,  tables = c("v", "lXv", "l", "o")))
-    if (gi == 1) aspect3d(1, 1, 0.001)
-    rglwidget()
-    Sys.sleep(0.5)
-  }
-  
+#devtools::install_github("hypertidy/anglr")
+library(anglr)
+library(rgl)
+library(dplyr)
+data("flight_tracks", package = "silicate")
+## convert to topological graph
+aa <- anglr(flight_tracks)
+rgl.points(aa$v[, c("x_", "y_", "z_")], size = 0)
+aspect3d(1, 1, 0.05)
+## group by M
+aa$v <- aa$v %>% mutate(g = cut(m_, 1500, labels = FALSE)) %>% group_by(g)
+for (gi in sort(unique(aa$v$g))) {
+  try(plot(anglr:::semi_cascade(aa, g == gi,  tables = c("v", "lXv", "l", "o"))))
+
+  #Sys.sleep(0.5)
 }
