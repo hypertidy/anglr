@@ -3,7 +3,6 @@
 #' Colours not supported, this just gives the viridis palette sequentially. 
 #' @param z \code{\link[raster]{raster}}, by default \code{x} is used
 #' @param na.rm remove missing values
-#' @param ... ignored
 #' @return quad_mesh
 #' @name anglr
 #' @export

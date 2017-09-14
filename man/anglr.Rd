@@ -40,8 +40,6 @@ anglr(x, ...)
 \item{na.rm}{remove missing values}
 
 \item{max_area}{maximum area in coordinate system of x, passed to \code{\link[RTriangle]{triangulate}} 'a' argument}
-
-\item{...}{ignored}
 }
 \value{
 a list of tibble data frames, using the gris-map_table model
