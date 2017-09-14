@@ -206,7 +206,7 @@ plot(pnganz, border = "black", col = "transparent", lwd = 4)
 prim2D$o$color <- viridis::viridis(nrow(prim2D$o))
 
 library(purrr)
-
+library(tidyr)
 tri <-
   prim2D$t %>%
   inner_join(prim2D$tXv) %>%
