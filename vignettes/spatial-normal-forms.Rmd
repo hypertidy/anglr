@@ -273,7 +273,7 @@ library(anglr)
 ## a relief map, triangles grouped by polygon with interpolated raster elevation 
 p <- anglr(nc, max_area = 0.008) ## make small triangles (0.2 sq lon-lat degree)
 g <- anglr(graticule::graticule(-85:-74, 32:37))
-p$v$z_ <- extract(r, cbind(p$v$x_, p$v$y_), method = "bilinear")
+p$v$z_ <- raster::extract(r, cbind(p$v$x_, p$v$y_), method = "bilinear")
 
 ## plot the scene
 library(rgl)
@@ -288,7 +288,7 @@ What if we didn't set the `max_area` and only got the triangulation needed to st
 ```{r no-steiner, webgl=TRUE}
 p <- anglr(nc, max_area = 0.008) ## make small triangles (0.2 sq lon-lat degree)
 g <- anglr(graticule::graticule(-85:-74, 32:37))
-p$v$z_ <- extract(r, cbind(p$v$x_, p$v$y_), method = "bilinear")
+p$v$z_ <- raster::extract(r, cbind(p$v$x_, p$v$y_), method = "bilinear")
 
 ## plot the scene
 library(rgl)
