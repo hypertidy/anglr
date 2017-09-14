@@ -225,7 +225,7 @@ walk(tri$triangle, ~polygon(x = .$x_,
   
 ```
 
-The plot loop above is very inefficient, but it's purely to illustrate that we have the shapes in the right form. This is used in anglr to plot the shapes in 3D, either in native planar form or as a surface of a globe. 
+The plot walk above may be inefficient, but it's purely to illustrate that we have the shapes in the right form. This is used in anglr to plot the shapes in 3D, either in native planar form or as a surface of a globe. 
 
 ```{r}
 library(rgl)
