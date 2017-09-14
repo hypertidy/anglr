@@ -14,3 +14,17 @@ for (gi in sort(unique(aa$v$g))) {
 
   #Sys.sleep(0.5)
 }
+
+
+inner_cascade <- function(x) {
+  tabnames <- silicate:::join_ramp(x)
+  tab <- x[[tabnames[1]]]
+  for (ni in tabnames[-1L]) tab <- dplyr::inner_join(tab, x[[ni]])
+  tab
+}
+
+v <- inner_join(flight_tracks$path_link_vertex, flight_tracks$vertex)
+library(ggplot2)
+ggplot(v %>% group_by(path) %>% mutate(m_ = row_number()) %>% ungroup(), aes(m_, z_, group = path)) + 
+  geom_path() + 
+  xlim(c(0, 300))

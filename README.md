@@ -102,6 +102,36 @@ install.packages("RTriangle")
 devtools::install_github("hypertidy/anglr")
 ```
 
+### Ubuntu/Debian
+
+On Linux you will need at least the following installed by an administrator, here tested on Ubuntu Xenial 16.04 (note the apt/sources.list is specific to version).
+
+``` bash
+## key for apt-get update, see http://cran.r-project.org/bin/linux/ubuntu/README
+echo 'deb https://cloud.r-project.org/bin/linux/ubuntu xenial/' >> /etc/apt/sources.list
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
+
+## up to date GDAL and PROJ.4 and GEOS
+## https://launchpad.net/~ubuntugis/+archive/ubuntu/ubuntugis-unstable
+add-apt-repository ppa:ubuntugis/ubuntugis-unstable --yes
+
+apt update 
+apt upgrade --assume-yes
+
+## Install 3rd parties
+apt install libproj-dev libgdal-dev libgeos-dev  libssl-dev libgl1-mesa-dev libglu1-mesa-dev libudunits2-dev
+## install R, if you need to
+## apt install r-base r-base-dev 
+```
+
+Then in R
+
+``` r
+install.packages("devtools")
+install.packages(c("dplyr", "proj4", "raster",  "rgl", "rlang", "RTriangle", "spbabel", "tibble", "viridis"))
+devtools::install_github("hypertidy/anglr")
+```
+
 Get involved!
 -------------
 
