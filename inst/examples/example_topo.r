@@ -9,7 +9,7 @@
  b <- tri_mesh(a, max_area = 0.01)
  
 
- b$v$z_ <- extract(top, b$v[, c("x_", "y_")], method = "bilinear") 
+ b$v$z_ <- raster::extract(top, b$v[, c("x_", "y_")], method = "bilinear") 
  
  b$v$z_0 <- b$v$z_
  b$v$z_ <- b$v$z_0 * 5000
