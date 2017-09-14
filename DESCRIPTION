@@ -34,6 +34,7 @@ Suggests:
     rworldmap,
     rworldxtra,
     testthat, 
+    tidyr,
     trip,
     knitr,
     rmarkdown
