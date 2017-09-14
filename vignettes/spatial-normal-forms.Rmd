@@ -53,8 +53,10 @@ This object `p` presents a "data frame" (i.e. a table) front-end that we can que
 
 ```{r}
 library(spbabel)
-(pnganz <- subset(p, name %in% c("Australia", "Indonesia", "New Zealand", "Papua New Guinea")))
-pnganz$color <- viridis::viridis(nrow(pnganz))
+pnganz <- subset(p, name %in% c("Australia", "Indonesia", "New Zealand", "Papua 
+New Guinea"))
+pnganz
+
 plot(pnganz, col = viridis::viridis(nrow(pnganz)))
 ```
 
@@ -69,7 +71,7 @@ NOTE: the `Spatial` classes here are **pre-simple features**, so they are more a
 
 These hierarchical structures can be serialized and stored in different ways, typically they are stored as binary geoms and stored directly in a table. 
 
-An interesting aspect here is that these structures don't describe the topology of the objects in any special way, these are just *paths* of coordinates, and when they are plotted or used in analysis there's a rule about how space is enclosed by a closed path. If we treat them as lines, the only difference is to not treat them as enclosed paths.  Literally the only difference in the structure of this object from the polygons version is the name of the class, and the behaviour that methods invoked for this object will provide. 
+An interesting aspect here is that these structures don't describe the topology of the objects in any special way, these are just *paths* of coordinates, and when they are plotted or used in analysis there's a rule about how space is enclosed by a closed path. If we treat them as lines (as `SpatialLinesDataFrame`), the only difference is to not treat them as enclosed paths.  Literally the only difference in the structure of this object from the polygons version is the name of the class, and the behaviour that methods invoked for this object will provide. 
 
 ```{r}
 plot(as(pnganz, "SpatialLinesDataFrame"))
@@ -127,11 +129,8 @@ ltabs <- spbabel::map_table(as(pnganz, "SpatialLinesDataFrame"))
 
 for (i in seq_along(ltabs)) {
   writeLines("------------------------------")
-#  print(ltabs[i])
   print(ptabs[i])
  writeLines("")
-#  str(ltabs[[i]])
-#  str(ptabs[[i]])
 }
 ```
 
@@ -182,10 +181,20 @@ Not surprisingly, our connected line doesn't make much sense, but worse our atte
 ```{r}
 par(mar = rep(0, 4))
 plot(lsegment$v$x_, lsegment$v$y_, asp = 1, pch = ".", axes = FALSE)
+
 lsegment$o$color <- viridis::viridis(nrow(lsegment$o))
-#segs <- lsegment$l %>% inner_join(lsegment$o %>% select(object_, color)) %>% inner_join(lsegment$lXv) %>% select(color, vertex_, segment_) %>% inner_join(lsegment$v)
-segs <- lsegment$lXv %>% inner_join(lsegment$l) %>% inner_join(lsegment$o %>% dplyr::select(object_, color)) %>% dplyr::select(color, vertex_, segment_) %>% inner_join(lsegment$v)
-ix <- seq(1, nrow(segs)-1, by  = 2);  segments(segs$x_[ix], segs$y_[ix], segs$x_[ix + 1], segs$y_[ix+1], col = segs$color[ix], lwd = 4)
+
+segs <- 
+    lsegment$lXv %>%
+    inner_join(lsegment$l) %>% 
+    inner_join(lsegment$o) %>% 
+    inner_join(lsegment$v) %>%
+    dplyr::select(color, vertex_, segment_, x_, y_) %>%
+    group_by(segment_) %>%
+    mutate(x__ = lead(x_), y__ = lead(y_)) %>%
+    filter(row_number() == 1)
+    
+segments(segs$x_, segs$y_, segs$x__, segs$y__, col = segs$color, lwd = 4)
 ```
 
 This is not lovely code, though it is straight forward and systematic. Treated as segments we automatically get the right "topology" of our lines, we joined the object attribute down to the actual pairs of coordinates and plotted all the segments individually. We managed to keep our object-part-coordinate hierarchy, though we've chosen primitives belonging to objects rather than branches as the model. This is also convenient for the next step because line segments are what we need for generating primitives to represent the polygons as surfaces. 
@@ -197,11 +206,11 @@ Treat the polygon as segments build a triangulation, a surface of 2D triangle pr
 ```{r}
 prim2D <- anglr::anglr(pnganz)
 plot(pnganz, border = "black", col = "transparent", lwd = 4)
+
 for (i in seq(nrow(prim2D$t))) {
   tri <- prim2D$t[i, ] %>% inner_join(prim2D$tXv, "triangle_") %>% inner_join(prim2D$v, "vertex_") %>% dplyr::select(x_, y_)
   polygon(tri$x_, tri$y_, border = (prim2D$t[i, ] %>% inner_join(prim2D$o, "object_"))$color[1])
 }
-
 ```
 
 The plot loop above is very inefficient, but it's purely to illustrate that we have the shapes in the right form. This is used in anglr to plot the shapes in 3D, either in native planar form or as a surface of a globe. 
