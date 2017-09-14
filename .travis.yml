@@ -13,6 +13,7 @@ before_install:
 r_packages:
  - rgdal
  - maptools
+ - sf
  - trip
  - rgeos
  
