@@ -206,14 +206,26 @@ Treat the polygon as segments build a triangulation, a surface of 2D triangle pr
 ```{r}
 prim2D <- anglr::anglr(pnganz)
 plot(pnganz, border = "black", col = "transparent", lwd = 4)
+prim2D$o$color <- viridis::viridis(nrow(prim2D$o))
 
-for (i in seq(nrow(prim2D$t))) {
-  tri <- prim2D$t[i, ] %>% inner_join(prim2D$tXv, "triangle_") %>% inner_join(prim2D$v, "vertex_") %>% dplyr::select(x_, y_)
-  polygon(tri$x_, tri$y_, border = (prim2D$t[i, ] %>% inner_join(prim2D$o, "object_"))$color[1])
-}
+library(purrr)
+
+tri <-
+  prim2D$t %>%
+  inner_join(prim2D$tXv) %>%
+  inner_join(prim2D$v) %>%
+  inner_join(prim2D$o) %>%
+  select(-object_, -name, -vertex_) %>%
+  nest(x_, y_, color,.key = "triangle")
+  
+walk(tri$triangle, ~polygon(x = .$x_, 
+                            y = .$y_,
+                            border = .$color)
+                    )
+  
 ```
 
-The plot loop above is very inefficient, but it's purely to illustrate that we have the shapes in the right form. This is used in anglr to plot the shapes in 3D, either in native planar form or as a surface of a globe. 
+The plot walk above may be inefficient, but it's purely to illustrate that we have the shapes in the right form. This is used in anglr to plot the shapes in 3D, either in native planar form or as a surface of a globe. 
 
 ```{r}
 library(rgl)
