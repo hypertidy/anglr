@@ -2,8 +2,8 @@ Package: anglr
 Type: Package
 Title: Elevating Spatial
 Version: 0.4.5.9002
-Authors@R: person("Michael D.","Sumner", role = c("aut", "cre"), email =
-    "mdsumner@gmail.com")
+Authors@R: c(person("Michael D.","Sumner", role = c("aut", "cre"), email ="mdsumner@gmail.com"), 
+             person("Miles", "McBain", role = c("ctb")))
 Description: Tidy topological approaches to spatial data to enable easy general conversions
  particularly for plotting using Open Graphics Library. 
 License: GPL-3
