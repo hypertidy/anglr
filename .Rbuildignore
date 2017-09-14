@@ -12,3 +12,4 @@
 ^prepare_package.r$
 ^data-raw$
 ^D:\GIT\rangl\docs$
+^inst/examples/rsconnect*
