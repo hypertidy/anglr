@@ -21,6 +21,7 @@ library(dplyr)
 ```
 
 
+**Terminology note**: an early version of this document used the term *branch* to refer to what is now called a **path**, where a path is a linked sequence of coordinates. Technically a *path* can be composed of a single vertex, which is partly why a different term was used originally. There are some abbreviations "b" and "bXv" below that still refer to this old usage, they stand for "path" and "paths-link-vertex" respectively. 
 
 # Spatial normal forms
 
@@ -30,11 +31,11 @@ When we talk about vector data in geo-spatial, we have at least three levels of 
 
 * objects (or features) - these are the things we primarily interact with and store data against
 * coordinates - these are the specific vertices, the dimensionless points that place our data in a geometry
-* branches - these are the parts that different objects are made of, they describe the way the coordinates are linked together, the topology
+* paths - these are the parts that different objects are made of, they describe the way the coordinates are linked together in sequence
 
-GIS tools typically only provides direct access to the objects, though the relations between branches and coordinates can sometimes be seen. 
+GIS tools typically only provides direct access to the objects, though the relations between paths and coordinates can sometimes be seen. 
 
-We generally cannot store information against the branches or the coordinates, beyond what they inherently are defined by. For coordinates this is the X and Y values, and/or the longitude and latitudes, but simple features does provide the ability to store a "third" coordinate "Z" and or a measure coordinate "M".  M is typically used for "linear referencing", and not a more general multidimensional geometry (like time). 
+We generally cannot store information against the paths or the coordinates, beyond what they inherently are defined by. For coordinates this is the X and Y values, and/or the longitude and latitudes, but simple features does provide the ability to store a "third" coordinate "Z" and or a measure coordinate "M".  M is typically used for "linear referencing", and not a more general multidimensional geometry (like time). 
 
 I'll use the countries example from a GeoPackage file provided here. I use R because I can tell the complete story with it, in a concrete and reproducible way. 
 
@@ -60,12 +61,8 @@ pnganz
 plot(pnganz, col = viridis::viridis(nrow(pnganz)))
 ```
 
-Looking at the object's underlying geometric structure shows nested lists of matrixes of x,y coordinates. There is one matrix per branch,  analogous to the way that feature parts are nested in standard Geom binary forms like WKB. Each component branch stores extra information about whether it is a hole, the ring direction, a coordinate for label plotting and so on. We otherwise cannot store any more information on the component parts though. 
+Looking at the object's underlying geometric structure shows nested lists of matrixes of x,y coordinates. There is one matrix per branch,  analogous to the way that feature parts are nested in standard Geom binary forms like WKB. Each component path stores extra information about whether it is a hole, the ring direction, a coordinate for label plotting and so on. We otherwise cannot store any more information on the component parts though. 
 
-
-```{r]))
-
-```
 
 NOTE: the `Spatial` classes here are **pre-simple features**, so they are more analogous to the structures in a shapefile in that a polygon hole's "island parent"" may be ambiguous, but this is not so important to this story. R now has simple features in the `sfr` project here, which adds Z, M and the possibility of some of the exotic types as well. https://github.com/edzer/sfr
 
@@ -80,7 +77,7 @@ plot(as(pnganz, "SpatialLinesDataFrame"), col = viridis::viridis(nrow(pnganz), a
 str(as(geometry(pnganz[1,]), "SpatialLines"))
 ```
 
-If we convert these data to "normal form", we actually need at least three tables, one each for the objects, the branches, and the coordinates (vertices). The `map_table` function in the `spbabel` package creates these but also adds another link table between branches and vertices to enable de-duplication of shared vertices. The de-duplication is required for triangulating the polygons, and other topological operations. 
+If we convert these data to "normal form", we actually need at least three tables, one each for the objects, the paths, and the coordinates (vertices). The `map_table` function in the `spbabel` package creates these but also adds another link table between paths and vertices to enable de-duplication of shared vertices. The de-duplication is required for triangulating the polygons, and other topological operations. 
 
 ```{r}
 ptabs <- spbabel::map_table(pnganz)
@@ -96,13 +93,13 @@ The objects.
 ptabs$o
 ```
 
-The branches record which object they belong to. 
+The paths record which object they belong to. 
 
 ```{r}
 ptabs$b
 ```
 
-The branches-link-vertex table records the relationship between vertices and branches (by default the de-duplication is done in X-Y but it could be done in other geometric spaces, e.g. in 1D time or 3D X-Y-Z or X-Y-Time). 
+The paths-link-vertex table records the relationship between vertices and paths (by default the de-duplication is done in X-Y but it could be done in other geometric spaces, e.g. in 1D time or 3D X-Y-Z or X-Y-Time). 
 
 This is the *instances of vertices* as opposed to the unique paired values of coordinates themselves. 
 
@@ -120,9 +117,9 @@ ptabs$v
 
 From this form we can see clearly that polygons and lines in GIS are really the same thing, we have *paths of coordinates* and then rules about how they are used. 
 
-If we compare each entity table side by side it's clear the only difference is whether a branch is badged as an island vs. a hole. 
+If we compare each entity table side by side it's clear the only difference is whether a path is badged as an island vs. a hole. 
 
-For points we don't need the branches or the order data, though for multipoints we do need branch. 
+For points we don't need the paths or the order data, though for multipoints we do need branch. 
 
 ```{r}
 ltabs <- spbabel::map_table(as(pnganz, "SpatialLinesDataFrame"))
@@ -136,7 +133,7 @@ for (i in seq_along(ltabs)) {
 
 ## What makes polygons different to lines? 
 
-The coordinate-path structures used above for polygons and lines are very explicit, and in traditional form cannot be used in a more abstract way. By collecting the attributes of the entities in use into their own tables we start to build this abstraction. The paths are represented as a sequence of identifiers, rather than the actual coordinate values themselves. Why do this?  We can abstract the choice of what do with those coordinate away from their storage. We also get a limited form of topology, in that a change made to one vertex coordinate attribute is reflected in all of the branches that use that vertex, analogous the Shared Edit mode in Manifold 8.0. 
+The coordinate-path structures used above for polygons and lines are very explicit, and in traditional form cannot be used in a more abstract way. By collecting the attributes of the entities in use into their own tables we start to build this abstraction. The paths are represented as a sequence of identifiers, rather than the actual coordinate values themselves. Why do this?  We can abstract the choice of what do with those coordinate away from their storage. We also get a limited form of topology, in that a change made to one vertex coordinate attribute is reflected in all of the paths that use that vertex, analogous the Shared Edit mode in Manifold 8.0. 
 
 The next step in topological relationships is to represent each *segment* of a line rather than the entire path. To do this we need a table of segments, and a link table to store the identity of the two vertices used by those segments. 
 
@@ -197,7 +194,7 @@ segs <-
 segments(segs$x_, segs$y_, segs$x__, segs$y__, col = segs$color, lwd = 4)
 ```
 
-This is not lovely code, though it is straight forward and systematic. Treated as segments we automatically get the right "topology" of our lines, we joined the object attribute down to the actual pairs of coordinates and plotted all the segments individually. We managed to keep our object-part-coordinate hierarchy, though we've chosen primitives belonging to objects rather than branches as the model. This is also convenient for the next step because line segments are what we need for generating primitives to represent the polygons as surfaces. 
+This is not lovely code, though it is straight forward and systematic. Treated as segments we automatically get the right "topology" of our lines, we joined the object attribute down to the actual pairs of coordinates and plotted all the segments individually. We managed to keep our object-part-coordinate hierarchy, though we've chosen primitives belonging to objects rather than paths as the model. This is also convenient for the next step because line segments are what we need for generating primitives to represent the polygons as surfaces. 
 
 ## Constrained polygon triangulation starts with line primitives
 
@@ -206,7 +203,7 @@ Treat the polygon as segments build a triangulation, a surface of 2D triangle pr
 ```{r}
 prim2D <- anglr::anglr(pnganz)
 plot(pnganz, border = "black", col = "transparent", lwd = 4)
-
+prim2D$o$color <- viridis::viridis(nrow(pnganz))
 for (i in seq(nrow(prim2D$t))) {
   tri <- prim2D$t[i, ] %>% inner_join(prim2D$tXv, "triangle_") %>% inner_join(prim2D$v, "vertex_") %>% dplyr::select(x_, y_)
   polygon(tri$x_, tri$y_, border = (prim2D$t[i, ] %>% inner_join(prim2D$o, "object_"))$color[1])
@@ -215,17 +212,17 @@ for (i in seq(nrow(prim2D$t))) {
 
 The plot loop above is very inefficient, but it's purely to illustrate that we have the shapes in the right form. This is used in anglr to plot the shapes in 3D, either in native planar form or as a surface of a globe. 
 
-```{r}
+```{r prim2D, webgl=TRUE}
 library(rgl)
+rgl.clear()
 plot(prim2D, specular = "black")
-subid <- currentSubscene3d()
-rglwidget(elementId="pnganz")
+rglwidget()
 ```
 
-```{r}
+```{r globe-prim2D, webgl=TRUE}
+rgl.clear()
 plot(anglr::globe(prim2D), specular = "black")
-subid <- currentSubscene3d()
-rglwidget(elementId="png_anz_globe")
+rglwidget()
 ```
 
 Why do this? It's not just to plot a globe, but to see why it's helpful to see what the function `globe()` does. 
@@ -235,8 +232,7 @@ Run the layer through `globe()` and print out the vertices table.
 ```{r}
 prim2D$v
 anglr::globe(prim2D)$v
-#subid <- currentSubscene3d()
-#rglwidget(elementId="prim2D")
+
 ```
 
 The only thing that happened was that the input `x_` and `y_` were converted to geocentric "x, y, z" coordinates. Under the hood this is done by driving the transformation with PROJ.4 (via the R package `proj4`). The PROJ.4 family in use is  "geocent", i.e. here the `meta` table simply records the history of transformations. 
@@ -248,10 +244,44 @@ anglr::globe(prim2D)$meta[, c("proj", "ctime")]
 
 We can otherwise do anything we like with the vertices, including reprojecting them and copying on other attributes. 
 
-As an example, copy on the Etopo5 elevations, first with the default triangulation, and then with a denser version. 
+A relief map of North Carolina counties. 
 
-```{r}
-## TBD
+
+```{r polygon-terrain, webgl=TRUE}
+f <- system.file("extdata/gebco1.tif", package = "anglr")
+## ad hoc scaling as x,y and  z are different units
+r <- raster::raster(f)/1000
+
+library(sf)
+nc <- read_sf(system.file("shape/nc.shp", package="sf"))
+library(raster)
+library(anglr)
+## objects
+## a relief map, triangles grouped by polygon with interpolated raster elevation 
+p <- anglr(nc, max_area = 0.008) ## make small triangles (0.2 sq lon-lat degree)
+g <- anglr(graticule::graticule(-85:-74, 32:37))
+p$v$z_ <- extract(r, cbind(p$v$x_, p$v$y_), method = "bilinear")
+
+## plot the scene
+library(rgl)
+rgl.clear(); 
+plot(p); plot(g, color = "white"); 
+bg3d("black"); material3d(specular = "black")
+rglwidget()
 ```
 
+What if we didn't set the `max_area` and only got the triangulation needed to stay within the polygons?
+
+```{r no-steiner, webgl=TRUE}
+p <- anglr(nc, max_area = 0.008) ## make small triangles (0.2 sq lon-lat degree)
+g <- anglr(graticule::graticule(-85:-74, 32:37))
+p$v$z_ <- extract(r, cbind(p$v$x_, p$v$y_), method = "bilinear")
+
+## plot the scene
+library(rgl)
+rgl.clear(); 
+plot(p); plot(g, color = "white"); 
+bg3d("black"); material3d(specular = "black")
+rglwidget()
+```
 

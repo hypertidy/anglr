@@ -48,9 +48,6 @@
       <a href="../articles/rangl-examples.html">Examples with anglr</a>
     </li>
     <li>
-      <a href="../articles/rgl-guide.html">Vignette Title</a>
-    </li>
-    <li>
       <a href="../articles/spatial-normal-forms.html">Spatial data and topology</a>
     </li>
   </ul>
@@ -75,12 +72,13 @@
       <h1>Spatial data and topology</h1>
                         <h4 class="author">Michael Sumner</h4>
             
-            <h4 class="date">2017-09-13</h4>
+            <h4 class="date">2017-09-15</h4>
           </div>
 
     
     
 <div class="contents">
+<p><strong>Terminology note</strong>: an early version of this document used the term <em>branch</em> to refer to what is now called a <strong>path</strong>, where a path is a linked sequence of coordinates. Technically a <em>path</em> can be composed of a single vertex, which is partly why a different term was used originally. There are some abbreviations “b” and “bXv” below that still refer to this old usage, they stand for “path” and “paths-link-vertex” respectively.</p>
 <div id="spatial-normal-forms" class="section level1">
 <h1 class="hasAnchor">
 <a href="#spatial-normal-forms" class="anchor"></a>Spatial normal forms</h1>
@@ -89,10 +87,10 @@
 <ul>
 <li>objects (or features) - these are the things we primarily interact with and store data against</li>
 <li>coordinates - these are the specific vertices, the dimensionless points that place our data in a geometry</li>
-<li>branches - these are the parts that different objects are made of, they describe the way the coordinates are linked together, the topology</li>
+<li>paths - these are the parts that different objects are made of, they describe the way the coordinates are linked together in sequence</li>
 </ul>
-<p>GIS tools typically only provides direct access to the objects, though the relations between branches and coordinates can sometimes be seen.</p>
-<p>We generally cannot store information against the branches or the coordinates, beyond what they inherently are defined by. For coordinates this is the X and Y values, and/or the longitude and latitudes, but simple features does provide the ability to store a “third” coordinate “Z” and or a measure coordinate “M”. M is typically used for “linear referencing”, and not a more general multidimensional geometry (like time).</p>
+<p>GIS tools typically only provides direct access to the objects, though the relations between paths and coordinates can sometimes be seen.</p>
+<p>We generally cannot store information against the paths or the coordinates, beyond what they inherently are defined by. For coordinates this is the X and Y values, and/or the longitude and latitudes, but simple features does provide the ability to store a “third” coordinate “Z” and or a measure coordinate “M”. M is typically used for “linear referencing”, and not a more general multidimensional geometry (like time).</p>
 <p>I’ll use the countries example from a GeoPackage file provided here. I use R because I can tell the complete story with it, in a concrete and reproducible way.</p>
 <p>Read in a polygon vector layer in traditional GIS form, and plot it.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#library(rworldmap)</span>
@@ -108,27 +106,26 @@ p &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentat
 <p><img src="spatial-normal-forms_files/figure-html/unnamed-chunk-1-1.png" width="672"></p>
 <p>This object <code>p</code> presents a “data frame” (i.e. a table) front-end that we can query and use at the objects level, much like in some GIS software we can easily select a single object or row in a table.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(spbabel)
-(pnganz &lt;-<span class="st"> </span><span class="kw">subset</span>(p, name <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">"Australia"</span>, <span class="st">"Indonesia"</span>, <span class="st">"New Zealand"</span>, <span class="st">"Papua New Guinea"</span>)))</code></pre></div>
+pnganz &lt;-<span class="st"> </span><span class="kw">subset</span>(p, name <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">"Australia"</span>, <span class="st">"Indonesia"</span>, <span class="st">"New Zealand"</span>, <span class="st">"Papua </span>
+<span class="st">New Guinea"</span>))
+pnganz</code></pre></div>
 <pre><code>## class       : SpatialPolygonsDataFrame 
-## features    : 4 
+## features    : 3 
 ## extent      : 95.29303, 178.5171, -46.64124, 5.479821  (xmin, xmax, ymin, ymax)
 ## coord. ref. : +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 
 ## variables   : 1
-## # A tibble: 4 x 1
-##               name
-## *           &lt;fctr&gt;
-## 1        Australia
-## 2        Indonesia
-## 3      New Zealand
-## 4 Papua New Guinea</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pnganz<span class="op">$</span>color &lt;-<span class="st"> </span>viridis<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/viridis/topics/reexports">viridis</a></span>(<span class="kw">nrow</span>(pnganz))
-<span class="kw"><a href="../reference/plot-anglr.html">plot</a></span>(pnganz, <span class="dt">col =</span> viridis<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/viridis/topics/reexports">viridis</a></span>(<span class="kw">nrow</span>(pnganz)))</code></pre></div>
+## # A tibble: 3 x 1
+##          name
+## *      &lt;fctr&gt;
+## 1   Australia
+## 2   Indonesia
+## 3 New Zealand</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot-anglr.html">plot</a></span>(pnganz, <span class="dt">col =</span> viridis<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/viridis/topics/reexports">viridis</a></span>(<span class="kw">nrow</span>(pnganz)))</code></pre></div>
 <p><img src="spatial-normal-forms_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
-<p>Looking at the object’s underlying geometric structure shows nested lists of matrixes of x,y coordinates. There is one matrix per branch, analogous to the way that feature parts are nested in standard Geom binary forms like WKB. Each component branch stores extra information about whether it is a hole, the ring direction, a coordinate for label plotting and so on. We otherwise cannot store any more information on the component parts though.</p>
-<pre class="{r]))"><code></code></pre>
+<p>Looking at the object’s underlying geometric structure shows nested lists of matrixes of x,y coordinates. There is one matrix per branch, analogous to the way that feature parts are nested in standard Geom binary forms like WKB. Each component path stores extra information about whether it is a hole, the ring direction, a coordinate for label plotting and so on. We otherwise cannot store any more information on the component parts though.</p>
 <p>NOTE: the <code>Spatial</code> classes here are <strong>pre-simple features</strong>, so they are more analogous to the structures in a shapefile in that a polygon hole’s “island parent”" may be ambiguous, but this is not so important to this story. R now has simple features in the <code>sfr</code> project here, which adds Z, M and the possibility of some of the exotic types as well. <a href="https://github.com/edzer/sfr" class="uri">https://github.com/edzer/sfr</a></p>
 <p>These hierarchical structures can be serialized and stored in different ways, typically they are stored as binary geoms and stored directly in a table.</p>
-<p>An interesting aspect here is that these structures don’t describe the topology of the objects in any special way, these are just <em>paths</em> of coordinates, and when they are plotted or used in analysis there’s a rule about how space is enclosed by a closed path. If we treat them as lines, the only difference is to not treat them as enclosed paths. Literally the only difference in the structure of this object from the polygons version is the name of the class, and the behaviour that methods invoked for this object will provide.</p>
+<p>An interesting aspect here is that these structures don’t describe the topology of the objects in any special way, these are just <em>paths</em> of coordinates, and when they are plotted or used in analysis there’s a rule about how space is enclosed by a closed path. If we treat them as lines (as <code>SpatialLinesDataFrame</code>), the only difference is to not treat them as enclosed paths. Literally the only difference in the structure of this object from the polygons version is the name of the class, and the behaviour that methods invoked for this object will provide.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot-anglr.html">plot</a></span>(<span class="kw">as</span>(pnganz, <span class="st">"SpatialLinesDataFrame"</span>))
 <span class="kw"><a href="../reference/plot-anglr.html">plot</a></span>(<span class="kw">as</span>(pnganz, <span class="st">"SpatialLinesDataFrame"</span>), <span class="dt">col =</span> viridis<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/viridis/topics/reexports">viridis</a></span>(<span class="kw">nrow</span>(pnganz), <span class="dt">alpha =</span> <span class="fl">0.7</span>), <span class="dt">lwd =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>), <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p><img src="spatial-normal-forms_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
@@ -148,164 +145,169 @@ p &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentat
 ##   .. .. ..$ : chr [1:2] "min" "max"
 ##   ..@ proj4string:Formal class 'CRS' [package "sp"] with 1 slot
 ##   .. .. ..@ projargs: chr "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"</code></pre>
-<p>If we convert these data to “normal form”, we actually need at least three tables, one each for the objects, the branches, and the coordinates (vertices). The <code>map_table</code> function in the <code>spbabel</code> package creates these but also adds another link table between branches and vertices to enable de-duplication of shared vertices. The de-duplication is required for triangulating the polygons, and other topological operations.</p>
+<p>If we convert these data to “normal form”, we actually need at least three tables, one each for the objects, the paths, and the coordinates (vertices). The <code>map_table</code> function in the <code>spbabel</code> package creates these but also adds another link table between paths and vertices to enable de-duplication of shared vertices. The de-duplication is required for triangulating the polygons, and other topological operations.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ptabs &lt;-<span class="st"> </span>spbabel<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/spbabel/topics/map_table">map_table</a></span>(pnganz)
 <span class="kw">print</span>(<span class="kw">names</span>(ptabs))</code></pre></div>
 <pre><code>## [1] "o"   "b"   "bXv" "v"</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">sapply</span>(ptabs, nrow))</code></pre></div>
 <pre><code>##   o   b bXv   v 
-##   4  21 638 614</code></pre>
+##   3  17 557 540</code></pre>
 <p>Now it’s a bit clearer how the underlying entities are put together. Each table here has a unique relational id, this allows us to subset and recombine these tables without having to convert indexes each time.</p>
 <p>The objects.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ptabs<span class="op">$</span>o</code></pre></div>
-<pre><code>## # A tibble: 4 x 3
-##               name     color    object_
-## *           &lt;fctr&gt;     &lt;chr&gt;      &lt;chr&gt;
-## 1        Australia #440154FF CU92FoIIVe
-## 2        Indonesia #31688EFF iU8tl8bf93
-## 3      New Zealand #35B779FF i0lRAzDfj5
-## 4 Papua New Guinea #FDE725FF 01QCdfesoB</code></pre>
-<p>The branches record which object they belong to.</p>
+<pre><code>## # A tibble: 3 x 2
+##          name    object_
+## *      &lt;fctr&gt;      &lt;chr&gt;
+## 1   Australia SSYvhjZ0QR
+## 2   Indonesia 8fEjCrtv17
+## 3 New Zealand GWtMTloaXe</code></pre>
+<p>The paths record which object they belong to.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ptabs<span class="op">$</span>b</code></pre></div>
-<pre><code>## # A tibble: 21 x 3
+<pre><code>## # A tibble: 17 x 3
 ##       object_    branch_ island_
 ##         &lt;chr&gt;      &lt;chr&gt;   &lt;lgl&gt;
-##  1 CU92FoIIVe luW7xnb9SL    TRUE
-##  2 CU92FoIIVe VB4bkQg1oJ    TRUE
-##  3 iU8tl8bf93 L82ZXCW3Hg    TRUE
-##  4 iU8tl8bf93 Wyykld0Uha    TRUE
-##  5 iU8tl8bf93 sRKBBCBF6h    TRUE
-##  6 iU8tl8bf93 G9cQaZwu02    TRUE
-##  7 iU8tl8bf93 uhcJYb27J0    TRUE
-##  8 iU8tl8bf93 rxRd3a56DI    TRUE
-##  9 iU8tl8bf93 hZ4lXxuQfp    TRUE
-## 10 iU8tl8bf93 XqaY4Tv8gS    TRUE
-## # ... with 11 more rows</code></pre>
-<p>The branches-link-vertex table records the relationship between vertices and branches (by default the de-duplication is done in X-Y but it could be done in other geometric spaces, e.g. in 1D time or 3D X-Y-Z or X-Y-Time).</p>
+##  1 SSYvhjZ0QR 2WbNGT8zmt    TRUE
+##  2 SSYvhjZ0QR ZKarQGhIaJ    TRUE
+##  3 8fEjCrtv17 ghnxjHhZ4f    TRUE
+##  4 8fEjCrtv17 yKsqonTDfz    TRUE
+##  5 8fEjCrtv17 dJqFmFGNTv    TRUE
+##  6 8fEjCrtv17 HJZUoVL2rW    TRUE
+##  7 8fEjCrtv17 BJfQylicYg    TRUE
+##  8 8fEjCrtv17 pfB4VLRknN    TRUE
+##  9 8fEjCrtv17 KZckauu1eE    TRUE
+## 10 8fEjCrtv17 sb8OgvDv7D    TRUE
+## 11 8fEjCrtv17 iuRPwPeeFl    TRUE
+## 12 8fEjCrtv17 ARovn6ExOT    TRUE
+## 13 8fEjCrtv17 dtkaX8WLQG    TRUE
+## 14 8fEjCrtv17 xbx213p1Uv    TRUE
+## 15 8fEjCrtv17 UyyQljRnaP    TRUE
+## 16 GWtMTloaXe PP2UjJgd2R    TRUE
+## 17 GWtMTloaXe 8lX5A1cihG    TRUE</code></pre>
+<p>The paths-link-vertex table records the relationship between vertices and paths (by default the de-duplication is done in X-Y but it could be done in other geometric spaces, e.g. in 1D time or 3D X-Y-Z or X-Y-Time).</p>
 <p>This is the <em>instances of vertices</em> as opposed to the unique paired values of coordinates themselves.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ptabs<span class="op">$</span>bXv</code></pre></div>
-<pre><code>## # A tibble: 638 x 3
+<pre><code>## # A tibble: 557 x 3
 ##       branch_ order_    vertex_
 ##         &lt;chr&gt;  &lt;int&gt;      &lt;chr&gt;
-##  1 luW7xnb9SL      1 QqLpqwKW9H
-##  2 luW7xnb9SL      2 100n7GrKl0
-##  3 luW7xnb9SL      3 hhybIJEzIY
-##  4 luW7xnb9SL      4 6ijyhxtKZi
-##  5 luW7xnb9SL      5 FtvtWBlEAH
-##  6 luW7xnb9SL      6 RnzNuzcovi
-##  7 luW7xnb9SL      7 nV4hqvBjw2
-##  8 luW7xnb9SL      8 GoPa1bdLBo
-##  9 luW7xnb9SL      9 lXhZhorjsn
-## 10 luW7xnb9SL     10 SO7y5ifMDu
-## # ... with 628 more rows</code></pre>
+##  1 2WbNGT8zmt      1 BAzmAh01Xh
+##  2 2WbNGT8zmt      2 6sPPbe3RXd
+##  3 2WbNGT8zmt      3 gTyaisYeEM
+##  4 2WbNGT8zmt      4 RdDII19Na8
+##  5 2WbNGT8zmt      5 dMlamuVBLS
+##  6 2WbNGT8zmt      6 DuZrn293Rm
+##  7 2WbNGT8zmt      7 unI0YdQ4hW
+##  8 2WbNGT8zmt      8 MOEklVJnnW
+##  9 2WbNGT8zmt      9 EgnAY2CaJf
+## 10 2WbNGT8zmt     10 wcDdKvdcfC
+## # ... with 547 more rows</code></pre>
 <p>And finally the vertices. In this example there are fewer unique x-y vertex than there are <strong>instance of the vertices</strong>, not a one-to-one match. This discrepancy obviously increases greatly for layers with shared boundaries, though in this example it is mostly due to the final closing coordinate on each polygon path - it’s a repeated instance, but not a repeated vertex <em>value</em>. There is at least one shared edge in this layer, clearly the one between Indonesia and Papua New Guinea.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ptabs<span class="op">$</span>v</code></pre></div>
-<pre><code>## # A tibble: 614 x 3
+<pre><code>## # A tibble: 540 x 3
 ##          x_        y_    vertex_
 ##       &lt;dbl&gt;     &lt;dbl&gt;      &lt;chr&gt;
-##  1 145.3980 -40.79255 QqLpqwKW9H
-##  2 146.3641 -41.13770 100n7GrKl0
-##  3 146.9086 -41.00055 hhybIJEzIY
-##  4 147.6893 -40.80826 6ijyhxtKZi
-##  5 148.2891 -40.87544 FtvtWBlEAH
-##  6 148.3599 -42.06245 RnzNuzcovi
-##  7 148.0173 -42.40702 nV4hqvBjw2
-##  8 147.9141 -43.21152 GoPa1bdLBo
-##  9 147.5646 -42.93769 lXhZhorjsn
-## 10 146.8703 -43.63460 SO7y5ifMDu
-## # ... with 604 more rows</code></pre>
+##  1 145.3980 -40.79255 BAzmAh01Xh
+##  2 146.3641 -41.13770 6sPPbe3RXd
+##  3 146.9086 -41.00055 gTyaisYeEM
+##  4 147.6893 -40.80826 RdDII19Na8
+##  5 148.2891 -40.87544 dMlamuVBLS
+##  6 148.3599 -42.06245 DuZrn293Rm
+##  7 148.0173 -42.40702 unI0YdQ4hW
+##  8 147.9141 -43.21152 MOEklVJnnW
+##  9 147.5646 -42.93769 EgnAY2CaJf
+## 10 146.8703 -43.63460 wcDdKvdcfC
+## # ... with 530 more rows</code></pre>
 <div id="polygons-are-just-lines" class="section level2">
 <h2 class="hasAnchor">
 <a href="#polygons-are-just-lines" class="anchor"></a>Polygons are just lines</h2>
 <p>From this form we can see clearly that polygons and lines in GIS are really the same thing, we have <em>paths of coordinates</em> and then rules about how they are used.</p>
-<p>If we compare each entity table side by side it’s clear the only difference is whether a branch is badged as an island vs. a hole.</p>
-<p>For points we don’t need the branches or the order data, though for multipoints we do need branch.</p>
+<p>If we compare each entity table side by side it’s clear the only difference is whether a path is badged as an island vs. a hole.</p>
+<p>For points we don’t need the paths or the order data, though for multipoints we do need branch.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ltabs &lt;-<span class="st"> </span>spbabel<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/spbabel/topics/map_table">map_table</a></span>(<span class="kw">as</span>(pnganz, <span class="st">"SpatialLinesDataFrame"</span>))
 
 <span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq_along</span>(ltabs)) {
   <span class="kw">writeLines</span>(<span class="st">"------------------------------"</span>)
-<span class="co">#  print(ltabs[i])</span>
   <span class="kw">print</span>(ptabs[i])
  <span class="kw">writeLines</span>(<span class="st">""</span>)
-<span class="co">#  str(ltabs[[i]])</span>
-<span class="co">#  str(ptabs[[i]])</span>
 }</code></pre></div>
 <pre><code>## ------------------------------
 ## $o
-## # A tibble: 4 x 3
-##               name     color    object_
-## *           &lt;fctr&gt;     &lt;chr&gt;      &lt;chr&gt;
-## 1        Australia #440154FF CU92FoIIVe
-## 2        Indonesia #31688EFF iU8tl8bf93
-## 3      New Zealand #35B779FF i0lRAzDfj5
-## 4 Papua New Guinea #FDE725FF 01QCdfesoB
+## # A tibble: 3 x 2
+##          name    object_
+## *      &lt;fctr&gt;      &lt;chr&gt;
+## 1   Australia SSYvhjZ0QR
+## 2   Indonesia 8fEjCrtv17
+## 3 New Zealand GWtMTloaXe
 ## 
 ## 
 ## ------------------------------
 ## $b
-## # A tibble: 21 x 3
+## # A tibble: 17 x 3
 ##       object_    branch_ island_
 ##         &lt;chr&gt;      &lt;chr&gt;   &lt;lgl&gt;
-##  1 CU92FoIIVe luW7xnb9SL    TRUE
-##  2 CU92FoIIVe VB4bkQg1oJ    TRUE
-##  3 iU8tl8bf93 L82ZXCW3Hg    TRUE
-##  4 iU8tl8bf93 Wyykld0Uha    TRUE
-##  5 iU8tl8bf93 sRKBBCBF6h    TRUE
-##  6 iU8tl8bf93 G9cQaZwu02    TRUE
-##  7 iU8tl8bf93 uhcJYb27J0    TRUE
-##  8 iU8tl8bf93 rxRd3a56DI    TRUE
-##  9 iU8tl8bf93 hZ4lXxuQfp    TRUE
-## 10 iU8tl8bf93 XqaY4Tv8gS    TRUE
-## # ... with 11 more rows
+##  1 SSYvhjZ0QR 2WbNGT8zmt    TRUE
+##  2 SSYvhjZ0QR ZKarQGhIaJ    TRUE
+##  3 8fEjCrtv17 ghnxjHhZ4f    TRUE
+##  4 8fEjCrtv17 yKsqonTDfz    TRUE
+##  5 8fEjCrtv17 dJqFmFGNTv    TRUE
+##  6 8fEjCrtv17 HJZUoVL2rW    TRUE
+##  7 8fEjCrtv17 BJfQylicYg    TRUE
+##  8 8fEjCrtv17 pfB4VLRknN    TRUE
+##  9 8fEjCrtv17 KZckauu1eE    TRUE
+## 10 8fEjCrtv17 sb8OgvDv7D    TRUE
+## 11 8fEjCrtv17 iuRPwPeeFl    TRUE
+## 12 8fEjCrtv17 ARovn6ExOT    TRUE
+## 13 8fEjCrtv17 dtkaX8WLQG    TRUE
+## 14 8fEjCrtv17 xbx213p1Uv    TRUE
+## 15 8fEjCrtv17 UyyQljRnaP    TRUE
+## 16 GWtMTloaXe PP2UjJgd2R    TRUE
+## 17 GWtMTloaXe 8lX5A1cihG    TRUE
 ## 
 ## 
 ## ------------------------------
 ## $bXv
-## # A tibble: 638 x 3
+## # A tibble: 557 x 3
 ##       branch_ order_    vertex_
 ##         &lt;chr&gt;  &lt;int&gt;      &lt;chr&gt;
-##  1 luW7xnb9SL      1 QqLpqwKW9H
-##  2 luW7xnb9SL      2 100n7GrKl0
-##  3 luW7xnb9SL      3 hhybIJEzIY
-##  4 luW7xnb9SL      4 6ijyhxtKZi
-##  5 luW7xnb9SL      5 FtvtWBlEAH
-##  6 luW7xnb9SL      6 RnzNuzcovi
-##  7 luW7xnb9SL      7 nV4hqvBjw2
-##  8 luW7xnb9SL      8 GoPa1bdLBo
-##  9 luW7xnb9SL      9 lXhZhorjsn
-## 10 luW7xnb9SL     10 SO7y5ifMDu
-## # ... with 628 more rows
+##  1 2WbNGT8zmt      1 BAzmAh01Xh
+##  2 2WbNGT8zmt      2 6sPPbe3RXd
+##  3 2WbNGT8zmt      3 gTyaisYeEM
+##  4 2WbNGT8zmt      4 RdDII19Na8
+##  5 2WbNGT8zmt      5 dMlamuVBLS
+##  6 2WbNGT8zmt      6 DuZrn293Rm
+##  7 2WbNGT8zmt      7 unI0YdQ4hW
+##  8 2WbNGT8zmt      8 MOEklVJnnW
+##  9 2WbNGT8zmt      9 EgnAY2CaJf
+## 10 2WbNGT8zmt     10 wcDdKvdcfC
+## # ... with 547 more rows
 ## 
 ## 
 ## ------------------------------
 ## $v
-## # A tibble: 614 x 3
+## # A tibble: 540 x 3
 ##          x_        y_    vertex_
 ##       &lt;dbl&gt;     &lt;dbl&gt;      &lt;chr&gt;
-##  1 145.3980 -40.79255 QqLpqwKW9H
-##  2 146.3641 -41.13770 100n7GrKl0
-##  3 146.9086 -41.00055 hhybIJEzIY
-##  4 147.6893 -40.80826 6ijyhxtKZi
-##  5 148.2891 -40.87544 FtvtWBlEAH
-##  6 148.3599 -42.06245 RnzNuzcovi
-##  7 148.0173 -42.40702 nV4hqvBjw2
-##  8 147.9141 -43.21152 GoPa1bdLBo
-##  9 147.5646 -42.93769 lXhZhorjsn
-## 10 146.8703 -43.63460 SO7y5ifMDu
-## # ... with 604 more rows</code></pre>
+##  1 145.3980 -40.79255 BAzmAh01Xh
+##  2 146.3641 -41.13770 6sPPbe3RXd
+##  3 146.9086 -41.00055 gTyaisYeEM
+##  4 147.6893 -40.80826 RdDII19Na8
+##  5 148.2891 -40.87544 dMlamuVBLS
+##  6 148.3599 -42.06245 DuZrn293Rm
+##  7 148.0173 -42.40702 unI0YdQ4hW
+##  8 147.9141 -43.21152 MOEklVJnnW
+##  9 147.5646 -42.93769 EgnAY2CaJf
+## 10 146.8703 -43.63460 wcDdKvdcfC
+## # ... with 530 more rows</code></pre>
 </div>
 <div id="what-makes-polygons-different-to-lines" class="section level2">
 <h2 class="hasAnchor">
 <a href="#what-makes-polygons-different-to-lines" class="anchor"></a>What makes polygons different to lines?</h2>
-<p>The coordinate-path structures used above for polygons and lines are very explicit, and in traditional form cannot be used in a more abstract way. By collecting the attributes of the entities in use into their own tables we start to build this abstraction. The paths are represented as a sequence of identifiers, rather than the actual coordinate values themselves. Why do this? We can abstract the choice of what do with those coordinate away from their storage. We also get a limited form of topology, in that a change made to one vertex coordinate attribute is reflected in all of the branches that use that vertex, analogous the Shared Edit mode in Manifold 8.0.</p>
+<p>The coordinate-path structures used above for polygons and lines are very explicit, and in traditional form cannot be used in a more abstract way. By collecting the attributes of the entities in use into their own tables we start to build this abstraction. The paths are represented as a sequence of identifiers, rather than the actual coordinate values themselves. Why do this? We can abstract the choice of what do with those coordinate away from their storage. We also get a limited form of topology, in that a change made to one vertex coordinate attribute is reflected in all of the paths that use that vertex, analogous the Shared Edit mode in Manifold 8.0.</p>
 <p>The next step in topological relationships is to represent each <em>segment</em> of a line rather than the entire path. To do this we need a table of segments, and a link table to store the identity of the two vertices used by those segments.</p>
 <p>This has been implemented in the package <code>anglr</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lsegment &lt;-<span class="st"> </span>anglr<span class="op">::</span><span class="kw">anglr</span>(<span class="kw">as</span>(pnganz, <span class="st">"SpatialLinesDataFrame"</span>))</code></pre></div>
-<pre><code>## Warning in rgl.init(initValue, onlyNULL): RGL: unable to open X11 display</code></pre>
-<pre><code>## Warning: 'rgl_init' failed, running with rgl.useNULL = TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.data.frame</span>(<span class="kw">lapply</span>(lsegment, nrow))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lsegment &lt;-<span class="st"> </span>anglr<span class="op">::</span><span class="kw">anglr</span>(<span class="kw">as</span>(pnganz, <span class="st">"SpatialLinesDataFrame"</span>))
+<span class="kw">as.data.frame</span>(<span class="kw">lapply</span>(lsegment, nrow))</code></pre></div>
 <pre><code>##   o   v   l  lXv meta
-## 1 4 617 617 1234    1</code></pre>
+## 1 3 540 540 1080    1</code></pre>
 <p>This is no different for polygons when we store them as polygon paths, so then why is the segment/edge model useful? It provides a table to store metrics such as the length of the segment, its duration in time, and other information. The segment/edge model is also a required precursor for building a triangulated mesh. This brings us to an important stage of the story.</p>
 </div>
 <div id="polygons-are-not-composed-of-primitives" class="section level2">
@@ -319,15 +321,24 @@ p &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentat
 <p>Not surprisingly, our connected line doesn’t make much sense, but worse our attempts at applying multiple colours was completely unsuccessful. Segments to the rescue.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">4</span>))
 <span class="kw"><a href="../reference/plot-anglr.html">plot</a></span>(lsegment<span class="op">$</span>v<span class="op">$</span>x_, lsegment<span class="op">$</span>v<span class="op">$</span>y_, <span class="dt">asp =</span> <span class="dv">1</span>, <span class="dt">pch =</span> <span class="st">"."</span>, <span class="dt">axes =</span> <span class="ot">FALSE</span>)
+
 lsegment<span class="op">$</span>o<span class="op">$</span>color &lt;-<span class="st"> </span>viridis<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/viridis/topics/reexports">viridis</a></span>(<span class="kw">nrow</span>(lsegment<span class="op">$</span>o))
-<span class="co">#segs &lt;- lsegment$l %&gt;% inner_join(lsegment$o %&gt;% select(object_, color)) %&gt;% inner_join(lsegment$lXv) %&gt;% select(color, vertex_, segment_) %&gt;% inner_join(lsegment$v)</span>
-segs &lt;-<span class="st"> </span>lsegment<span class="op">$</span>lXv <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">inner_join</span>(lsegment<span class="op">$</span>l) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">inner_join</span>(lsegment<span class="op">$</span>o <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(object_, color)) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(color, vertex_, segment_) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">inner_join</span>(lsegment<span class="op">$</span>v)</code></pre></div>
+
+segs &lt;-<span class="st"> </span>
+<span class="st">    </span>lsegment<span class="op">$</span>lXv <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">inner_join</span>(lsegment<span class="op">$</span>l) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">inner_join</span>(lsegment<span class="op">$</span>o) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">inner_join</span>(lsegment<span class="op">$</span>v) <span class="op">%&gt;%</span>
+<span class="st">    </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(color, vertex_, segment_, x_, y_) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">group_by</span>(segment_) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">x__ =</span> <span class="kw">lead</span>(x_), <span class="dt">y__ =</span> <span class="kw">lead</span>(y_)) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">filter</span>(<span class="kw">row_number</span>() <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</code></pre></div>
 <pre><code>## Joining, by = "segment_"</code></pre>
 <pre><code>## Joining, by = "object_"</code></pre>
 <pre><code>## Joining, by = "vertex_"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ix &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="kw">nrow</span>(segs)<span class="op">-</span><span class="dv">1</span>, <span class="dt">by  =</span> <span class="dv">2</span>);  <span class="kw">segments</span>(segs<span class="op">$</span>x_[ix], segs<span class="op">$</span>y_[ix], segs<span class="op">$</span>x_[ix <span class="op">+</span><span class="st"> </span><span class="dv">1</span>], segs<span class="op">$</span>y_[ix<span class="op">+</span><span class="dv">1</span>], <span class="dt">col =</span> segs<span class="op">$</span>color[ix], <span class="dt">lwd =</span> <span class="dv">4</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">segments</span>(segs<span class="op">$</span>x_, segs<span class="op">$</span>y_, segs<span class="op">$</span>x__, segs<span class="op">$</span>y__, <span class="dt">col =</span> segs<span class="op">$</span>color, <span class="dt">lwd =</span> <span class="dv">4</span>)</code></pre></div>
 <p><img src="spatial-normal-forms_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
-<p>This is not lovely code, though it is straight forward and systematic. Treated as segments we automatically get the right “topology” of our lines, we joined the object attribute down to the actual pairs of coordinates and plotted all the segments individually. We managed to keep our object-part-coordinate hierarchy, though we’ve chosen primitives belonging to objects rather than branches as the model. This is also convenient for the next step because line segments are what we need for generating primitives to represent the polygons as surfaces.</p>
+<p>This is not lovely code, though it is straight forward and systematic. Treated as segments we automatically get the right “topology” of our lines, we joined the object attribute down to the actual pairs of coordinates and plotted all the segments individually. We managed to keep our object-part-coordinate hierarchy, though we’ve chosen primitives belonging to objects rather than paths as the model. This is also convenient for the next step because line segments are what we need for generating primitives to represent the polygons as surfaces.</p>
 </div>
 <div id="constrained-polygon-triangulation-starts-with-line-primitives" class="section level2">
 <h2 class="hasAnchor">
@@ -335,6 +346,7 @@ segs &lt;-<span class="st"> </span>lsegment<span class="op">$</span>lXv <span cl
 <p>Treat the polygon as segments build a triangulation, a surface of 2D triangle primitives.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prim2D &lt;-<span class="st"> </span>anglr<span class="op">::</span><span class="kw">anglr</span>(pnganz)
 <span class="kw"><a href="../reference/plot-anglr.html">plot</a></span>(pnganz, <span class="dt">border =</span> <span class="st">"black"</span>, <span class="dt">col =</span> <span class="st">"transparent"</span>, <span class="dt">lwd =</span> <span class="dv">4</span>)
+prim2D<span class="op">$</span>o<span class="op">$</span>color &lt;-<span class="st"> </span>viridis<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/viridis/topics/reexports">viridis</a></span>(<span class="kw">nrow</span>(pnganz))
 <span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq</span>(<span class="kw">nrow</span>(prim2D<span class="op">$</span>t))) {
   tri &lt;-<span class="st"> </span>prim2D<span class="op">$</span>t[i, ] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">inner_join</span>(prim2D<span class="op">$</span>tXv, <span class="st">"triangle_"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">inner_join</span>(prim2D<span class="op">$</span>v, <span class="st">"vertex_"</span>) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(x_, y_)
   <span class="kw">polygon</span>(tri<span class="op">$</span>x_, tri<span class="op">$</span>y_, <span class="dt">border =</span> (prim2D<span class="op">$</span>t[i, ] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">inner_join</span>(prim2D<span class="op">$</span>o, <span class="st">"object_"</span>))<span class="op">$</span>color[<span class="dv">1</span>])
@@ -342,52 +354,50 @@ segs &lt;-<span class="st"> </span>lsegment<span class="op">$</span>lXv <span cl
 <p><img src="spatial-normal-forms_files/figure-html/unnamed-chunk-14-1.png" width="672"></p>
 <p>The plot loop above is very inefficient, but it’s purely to illustrate that we have the shapes in the right form. This is used in anglr to plot the shapes in 3D, either in native planar form or as a surface of a globe.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rgl)
+<span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/scene">rgl.clear</a></span>()
 <span class="kw"><a href="../reference/plot-anglr.html">plot</a></span>(prim2D, <span class="dt">specular =</span> <span class="st">"black"</span>)</code></pre></div>
 <pre><code>## Joining, by = "object_"</code></pre>
 <pre><code>## Joining, by = "triangle_"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">subid &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/subscene3d">currentSubscene3d</a></span>()
-<span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/rglwidget">rglwidget</a></span>(<span class="dt">elementId=</span><span class="st">"pnganz"</span>)</code></pre></div>
-<div id="pnganz" style="width:672px;height:480px;" class="rglWebGL html-widget"></div>
-<script type="application/json" data-for="pnganz">{"x":{"material":{"color":["#FFFFFF","#FF0000"],"alpha":1,"lit":true,"ambient":"#000000","specular":"#FFFFFF","emission":"#000000","shininess":50,"smooth":true,"front":"filled","back":"filled","size":3,"lwd":1,"fog":true,"point_antialias":false,"line_antialias":false,"texture":null,"textype":"rgb","texmipmap":false,"texminfilter":"linear","texmagfilter":"linear","texenvmap":false,"depth_mask":true,"depth_test":"less","isTransparent":false},"rootSubscene":1,"objects":{"6":{"id":6,"reuse":"rgl63190"},"5":{"id":5,"reuse":"rgl63190"},"4":{"id":4,"reuse":"rgl63190"},"1":{"id":1,"type":"subscene","par3d":{"antialias":1,"FOV":90,"ignoreExtent":false,"listeners":1,"mouseMode":{"left":"polar","right":"fov","middle":"zoom","wheel":"pull"},"observer":[0,0,69.4364776611328],"modelMatrix":[[1,0,0,-136.905059814453],[0,0.965925812721252,-0.258819043636322,19.8794364929199],[0,0.258819043636322,0.965925812721252,-64.1098022460938],[0,0,0,1]],"projMatrix":[[1,0,0,0],[0,1,0,0],[0,0,-1.41421365737915,-49.099006652832],[0,0,-1,0]],"skipRedraw":false,"userMatrix":[[1,0,0,0],[0,0.965925812721252,-0.258819043636322,0],[0,0.258819043636322,0.965925812721252,0],[0,0,0,1]],"scale":[1,1,1],"viewport":{"x":0,"y":0,"width":1,"height":1},"zoom":1,"bbox":[95.2930297851562,178.51708984375,-46.6412353515625,5.479820728302,0,0],"windowRect":[0,0,256,256],"family":"sans","font":1,"cex":1,"useFreeType":false,"fontname":"NULL","maxClipPlanes":2147483647,"glVersion":"NaN"},"embeddings":{"viewport":"replace","projection":"replace","model":"replace"},"objects":[4,6,5],"subscenes":[],"flags":1027}},"width":672,"height":480,"sphereVerts":{"reuse":"rgl63190"},"webGLoptions":{"preserveDrawingBuffer":true}},"evals":[],"jsHooks":[]}</script><div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot-anglr.html">plot</a></span>(anglr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/anglr/topics/globe">globe</a></span>(prim2D), <span class="dt">specular =</span> <span class="st">"black"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/rglwidget">rglwidget</a></span>()</code></pre></div>
+<div id="rgl42778" style="width:672px;height:480px;" class="rglWebGL html-widget"></div>
+<script type="application/json" data-for="rgl42778">{"x":{"material":{"color":["#FFFFFF","#FF0000"],"alpha":1,"lit":true,"ambient":"#000000","specular":"#FFFFFF","emission":"#000000","shininess":50,"smooth":true,"front":"filled","back":"filled","size":3,"lwd":1,"fog":true,"point_antialias":false,"line_antialias":false,"texture":null,"textype":"rgb","texmipmap":false,"texminfilter":"linear","texmagfilter":"linear","texenvmap":false,"depth_mask":true,"depth_test":"less","isTransparent":false},"rootSubscene":1,"objects":{"6":{"id":6,"reuse":"rgl21603"},"5":{"id":5,"reuse":"rgl21603"},"4":{"id":4,"reuse":"rgl21603"},"1":{"id":1,"type":"subscene","par3d":{"antialias":1,"FOV":90,"ignoreExtent":false,"listeners":1,"mouseMode":{"left":"polar","right":"fov","middle":"zoom","wheel":"pull"},"observer":[0,0,69.4364776611328],"modelMatrix":[[1,0,0,-136.905059814453],[0,0.965925812721252,-0.258819043636322,19.8794364929199],[0,0.258819043636322,0.965925812721252,-64.1098022460938],[0,0,0,1]],"projMatrix":[[1,0,0,0],[0,1,0,0],[0,0,-1.41421365737915,-49.099006652832],[0,0,-1,0]],"skipRedraw":false,"userMatrix":[[1,0,0,0],[0,0.965925812721252,-0.258819043636322,0],[0,0.258819043636322,0.965925812721252,0],[0,0,0,1]],"scale":[1,1,1],"viewport":{"x":0,"y":0,"width":1,"height":1},"zoom":1,"bbox":[95.2930297851562,178.51708984375,-46.6412353515625,5.479820728302,0,0],"windowRect":[0,0,256,256],"family":"sans","font":1,"cex":1,"useFreeType":false,"fontname":"NULL","maxClipPlanes":2147483647,"glVersion":"NaN"},"embeddings":{"viewport":"replace","projection":"replace","model":"replace"},"objects":[4,6,5],"subscenes":[],"flags":1027}},"width":672,"height":480,"sphereVerts":{"reuse":"rgl21603"},"webGLoptions":{"preserveDrawingBuffer":true}},"evals":[],"jsHooks":[]}</script><div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/scene">rgl.clear</a></span>()
+<span class="kw"><a href="../reference/plot-anglr.html">plot</a></span>(anglr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/anglr/topics/globe">globe</a></span>(prim2D), <span class="dt">specular =</span> <span class="st">"black"</span>)</code></pre></div>
 <pre><code>## Joining, by = "object_"</code></pre>
 <pre><code>## Joining, by = "triangle_"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">subid &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/subscene3d">currentSubscene3d</a></span>()
-<span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/rglwidget">rglwidget</a></span>(<span class="dt">elementId=</span><span class="st">"png_anz_globe"</span>)</code></pre></div>
-<div id="png_anz_globe" style="width:672px;height:480px;" class="rglWebGL html-widget"></div>
-<script type="application/json" data-for="png_anz_globe">{"x":{"material":{"color":["#FFFFFF","#FF0000"],"alpha":1,"lit":true,"ambient":"#000000","specular":"#FFFFFF","emission":"#000000","shininess":50,"smooth":true,"front":"filled","back":"filled","size":3,"lwd":1,"fog":true,"point_antialias":false,"line_antialias":false,"texture":null,"textype":"rgb","texmipmap":false,"texminfilter":"linear","texmagfilter":"linear","texenvmap":false,"depth_mask":true,"depth_test":"less","isTransparent":false},"rootSubscene":1,"objects":{"6":{"id":6,"reuse":"rgl63190"},"7":{"id":7,"reuse":"rgl84247"},"5":{"id":5,"reuse":"rgl63190"},"4":{"id":4,"reuse":"rgl63190"},"1":{"id":1,"type":"subscene","par3d":{"antialias":1,"FOV":90,"ignoreExtent":false,"listeners":1,"mouseMode":{"left":"polar","right":"fov","middle":"zoom","wheel":"pull"},"observer":[0,0,7098996],"modelMatrix":[[1,0,0,2894885.75],[0,0.965925812721252,-0.258819043636322,-3574210.5],[0,0.258819043636322,0.965925812721252,-5981258],[0,0,0,1]],"projMatrix":[[1,0,0,0],[0,1,0,0],[0,0,-1.41421365737915,-5019749],[0,0,-1,0]],"skipRedraw":false,"userMatrix":[[1,0,0,0],[0,0.965925812721252,-0.258819043636322,0],[0,0.258819043636322,0.965925812721252,0],[0,0,0,1]],"scale":[1,1,1],"viewport":{"x":0,"y":0,"width":1,"height":1},"zoom":1,"bbox":[-5789950,178.51708984375,-46.6412353515625,6326307,-4614473.5,605022.375],"windowRect":[0,0,256,256],"family":"sans","font":1,"cex":1,"useFreeType":false,"fontname":"NULL","maxClipPlanes":2147483647,"glVersion":"NaN"},"embeddings":{"viewport":"replace","projection":"replace","model":"replace"},"objects":[4,6,7,5],"subscenes":[],"flags":1027}},"width":672,"height":480,"sphereVerts":{"reuse":"rgl63190"},"webGLoptions":{"preserveDrawingBuffer":true}},"evals":[],"jsHooks":[]}</script><p>Why do this? It’s not just to plot a globe, but to see why it’s helpful to see what the function <code><a href="../reference/globe.html">globe()</a></code> does.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/rglwidget">rglwidget</a></span>()</code></pre></div>
+<div id="rgl52936" style="width:672px;height:480px;" class="rglWebGL html-widget"></div>
+<script type="application/json" data-for="rgl52936">{"x":{"material":{"color":["#FFFFFF","#FF0000"],"alpha":1,"lit":true,"ambient":"#000000","specular":"#FFFFFF","emission":"#000000","shininess":50,"smooth":true,"front":"filled","back":"filled","size":3,"lwd":1,"fog":true,"point_antialias":false,"line_antialias":false,"texture":null,"textype":"rgb","texmipmap":false,"texminfilter":"linear","texmagfilter":"linear","texenvmap":false,"depth_mask":true,"depth_test":"less","isTransparent":false},"rootSubscene":1,"objects":{"7":{"id":7,"reuse":"rgl33365"},"5":{"id":5,"reuse":"rgl21603"},"4":{"id":4,"reuse":"rgl21603"},"1":{"id":1,"type":"subscene","par3d":{"antialias":1,"FOV":90,"ignoreExtent":false,"listeners":1,"mouseMode":{"left":"polar","right":"fov","middle":"zoom","wheel":"pull"},"observer":[0,0,6601511],"modelMatrix":[[1,0,0,2905841.25],[0,0.965925812721252,-0.258819043636322,-3637389.5],[0,0.258819043636322,0.965925812721252,-5500702],[0,0,0,1]],"projMatrix":[[1,0,0,0],[0,1,0,0],[0,0,-1.41421365737915,-4667974],[0,0,-1,0]],"skipRedraw":false,"userMatrix":[[1,0,0,0],[0,0.965925812721252,-0.258819043636322,0],[0,0.258819043636322,0.965925812721252,0],[0,0,0,1]],"scale":[1,1,1],"viewport":{"x":0,"y":0,"width":1,"height":1},"zoom":1,"bbox":[-5225974.5,-585708.1875,130769.6484375,6326307,-4614473.5,605022.375],"windowRect":[0,0,256,256],"family":"sans","font":1,"cex":1,"useFreeType":false,"fontname":"NULL","maxClipPlanes":2147483647,"glVersion":"NaN"},"embeddings":{"viewport":"replace","projection":"replace","model":"replace"},"objects":[4,7,5],"subscenes":[],"flags":1027}},"width":672,"height":480,"sphereVerts":{"reuse":"rgl21603"},"webGLoptions":{"preserveDrawingBuffer":true}},"evals":[],"jsHooks":[]}</script><p>Why do this? It’s not just to plot a globe, but to see why it’s helpful to see what the function <code><a href="../reference/globe.html">globe()</a></code> does.</p>
 <p>Run the layer through <code><a href="../reference/globe.html">globe()</a></code> and print out the vertices table.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prim2D<span class="op">$</span>v</code></pre></div>
-<pre><code>## # A tibble: 614 x 3
+<pre><code>## # A tibble: 540 x 3
 ##          x_        y_    vertex_
 ##       &lt;dbl&gt;     &lt;dbl&gt;      &lt;chr&gt;
-##  1 114.6165 -28.51640 YK4JKhzK8H
-##  2 114.6420 -28.81023 9ykDihwoOJ
-##  3 115.0400 -29.46110 zMM3d5lPQH
-##  4 114.2329 -26.29845 HtDtmVBT4n
-##  5 113.7784 -26.54903 QFfdiGdy6v
-##  6 114.0489 -27.33477 v8VinH4DCE
-##  7 114.1736 -28.11808 V1fm56kLiG
-##  8 113.4775 -26.54313 YjF7ry9beh
-##  9 115.0268 -34.19652 opq2S4KAZn
-## 10 115.5451 -33.48726 RuVSF0LMck
-## # ... with 604 more rows</code></pre>
+##  1 114.6165 -28.51640 6hycrMdY6A
+##  2 114.6420 -28.81023 ez9fuga3WQ
+##  3 115.0400 -29.46110 UXSAjCI17k
+##  4 114.2329 -26.29845 eIgBkBTj0o
+##  5 113.7784 -26.54903 I3Ov0xc8Hd
+##  6 114.0489 -27.33477 gcBvKRn2uM
+##  7 114.1736 -28.11808 16ejmOlJDI
+##  8 113.4775 -26.54313 VCFGLeY1MU
+##  9 115.0268 -34.19652 YUwVf6S42l
+## 10 115.5451 -33.48726 yZIKS9d7KH
+## # ... with 530 more rows</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">anglr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/anglr/topics/globe">globe</a></span>(prim2D)<span class="op">$</span>v</code></pre></div>
-<pre><code>## # A tibble: 614 x 4
+<pre><code>## # A tibble: 540 x 4
 ##          x_      y_    vertex_       z_
 ##       &lt;dbl&gt;   &lt;dbl&gt;      &lt;chr&gt;    &lt;dbl&gt;
-##  1 -2336231 5098892 YK4JKhzK8H -3026914
-##  2 -2331985 5083655 9ykDihwoOJ -3055489
-##  3 -2352381 5035508 zMM3d5lPQH -3118501
-##  4 -2348469 5217578 HtDtmVBT4n -2808743
-##  5 -2302026 5224737 QFfdiGdy6v -2833605
-##  6 -2310595 5177787 v8VinH4DCE -2911217
-##  7 -2305320 5135903 V1fm56kLiG -2988053
-##  8 -2274676 5237020 YjF7ry9beh -2833021
-##  9 -2234102 4785201 opq2S4KAZn -3564497
-## 10 -2296191 4804324 RuVSF0LMck -3499156
-## # ... with 604 more rows</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#subid &lt;- currentSubscene3d()</span>
-<span class="co">#rglwidget(elementId="prim2D")</span></code></pre></div>
+##  1 -2336231 5098892 6hycrMdY6A -3026914
+##  2 -2331985 5083655 ez9fuga3WQ -3055489
+##  3 -2352381 5035508 UXSAjCI17k -3118501
+##  4 -2348469 5217578 eIgBkBTj0o -2808743
+##  5 -2302026 5224737 I3Ov0xc8Hd -2833605
+##  6 -2310595 5177787 gcBvKRn2uM -2911217
+##  7 -2305320 5135903 16ejmOlJDI -2988053
+##  8 -2274676 5237020 VCFGLeY1MU -2833021
+##  9 -2234102 4785201 YUwVf6S42l -3564497
+## 10 -2296191 4804324 yZIKS9d7KH -3499156
+## # ... with 530 more rows</code></pre>
 <p>The only thing that happened was that the input <code>x_</code> and <code>y_</code> were converted to geocentric “x, y, z” coordinates. Under the hood this is done by driving the transformation with PROJ.4 (via the R package <code>proj4</code>). The PROJ.4 family in use is “geocent”, i.e. here the <code>meta</code> table simply records the history of transformations.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">anglr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/anglr/topics/globe">globe</a></span>(prim2D)<span class="op">$</span>meta[, <span class="kw">c</span>(<span class="st">"proj"</span>, <span class="st">"ctime"</span>)]</code></pre></div>
 <pre><code>## # A tibble: 2 x 2
@@ -397,8 +407,55 @@ segs &lt;-<span class="st"> </span>lsegment<span class="op">$</span>lXv <span cl
 ## 2 +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0
 ## # ... with 1 more variables: ctime &lt;chr&gt;</code></pre>
 <p>We can otherwise do anything we like with the vertices, including reprojecting them and copying on other attributes.</p>
-<p>As an example, copy on the Etopo5 elevations, first with the default triangulation, and then with a denser version.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## <span class="al">TBD</span></code></pre></div>
+<p>A relief map of North Carolina counties.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata/gebco1.tif"</span>, <span class="dt">package =</span> <span class="st">"anglr"</span>)
+## ad hoc scaling as x,y and  z are different units
+r &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/raster">raster</a></span>(f)<span class="op">/</span><span class="dv">1000</span>
+
+<span class="kw">library</span>(sf)</code></pre></div>
+<pre><code>## Linking to GEOS 3.5.1, GDAL 2.2.1, proj.4 4.9.3</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nc &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/st_read">read_sf</a></span>(<span class="kw">system.file</span>(<span class="st">"shape/nc.shp"</span>, <span class="dt">package=</span><span class="st">"sf"</span>))
+<span class="kw">library</span>(raster)</code></pre></div>
+<pre><code>## 
+## Attaching package: 'raster'</code></pre>
+<pre><code>## The following object is masked from 'package:dplyr':
+## 
+##     select</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(anglr)
+## objects
+## a relief map, triangles grouped by polygon with interpolated raster elevation 
+p &lt;-<span class="st"> </span><span class="kw">anglr</span>(nc, <span class="dt">max_area =</span> <span class="fl">0.008</span>) ## make small triangles (0.2 sq lon-lat degree)
+g &lt;-<span class="st"> </span><span class="kw">anglr</span>(graticule<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/graticule/topics/graticule">graticule</a></span>(<span class="op">-</span><span class="dv">85</span><span class="op">:-</span><span class="dv">74</span>, <span class="dv">32</span><span class="op">:</span><span class="dv">37</span>))
+p<span class="op">$</span>v<span class="op">$</span>z_ &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/extract">extract</a></span>(r, <span class="kw">cbind</span>(p<span class="op">$</span>v<span class="op">$</span>x_, p<span class="op">$</span>v<span class="op">$</span>y_), <span class="dt">method =</span> <span class="st">"bilinear"</span>)
+
+## plot the scene
+<span class="kw">library</span>(rgl)
+<span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/scene">rgl.clear</a></span>(); 
+<span class="kw"><a href="../reference/plot-anglr.html">plot</a></span>(p); <span class="kw"><a href="../reference/plot-anglr.html">plot</a></span>(g, <span class="dt">color =</span> <span class="st">"white"</span>); </code></pre></div>
+<pre><code>## Joining, by = "object_"</code></pre>
+<pre><code>## Joining, by = "triangle_"</code></pre>
+<pre><code>## Joining, by = "object_"</code></pre>
+<pre><code>## Joining, by = "segment_"</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/bg">bg3d</a></span>(<span class="st">"black"</span>); <span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/material">material3d</a></span>(<span class="dt">specular =</span> <span class="st">"black"</span>)
+<span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/rglwidget">rglwidget</a></span>()</code></pre></div>
+<div id="rgl83666" style="width:672px;height:480px;" class="rglWebGL html-widget"></div>
+<script type="application/json" data-for="rgl83666">{"x":{"material":{"color":["#FFFFFF","#FF0000"],"alpha":1,"lit":true,"ambient":"#000000","specular":"#000000","emission":"#000000","shininess":50,"smooth":true,"front":"filled","back":"filled","size":3,"lwd":1,"fog":true,"point_antialias":false,"line_antialias":false,"texture":null,"textype":"rgb","texmipmap":false,"texminfilter":"linear","texmagfilter":"linear","texenvmap":false,"depth_mask":true,"depth_test":"less","isTransparent":false},"rootSubscene":1,"objects":{"8":{"id":8,"reuse":"rgl57463"},"9":{"id":9,"reuse":"rgl76539"},"5":{"id":5,"reuse":"rgl21603"},"4":{"id":4,"reuse":"rgl21603"},"10":{"id":10,"type":"background","material":{"lit":false,"specular":"#FFFFFF","back":"lines"},"colors":[[0,0,0,1]],"centers":[[0,0,0]],"sphere":false,"fogtype":"none","flags":0},"1":{"id":1,"type":"subscene","par3d":{"antialias":1,"FOV":90,"ignoreExtent":false,"listeners":1,"mouseMode":{"left":"polar","right":"fov","middle":"zoom","wheel":"pull"},"observer":[0,0,8.57768440246582],"modelMatrix":[[1,0,0,79.5],[0,0.965925812721252,-0.258819043636322,-33.211483001709],[0,0.258819043636322,0.965925812721252,-17.9285049438477],[0,0,0,1]],"projMatrix":[[1,0,0,0],[0,1,0,0],[0,0,-1.41421377658844,-6.06534004211426],[0,0,-1,0]],"skipRedraw":false,"userMatrix":[[1,0,0,0],[0,0.965925812721252,-0.258819043636322,0],[0,0.258819043636322,0.965925812721252,0],[0,0,0,1]],"scale":[1,1,1],"viewport":{"x":0,"y":0,"width":1,"height":1},"zoom":1,"bbox":[-85,-74,32,37,-0.100530900061131,0.973398506641388],"windowRect":[0,0,256,256],"family":"sans","font":1,"cex":1,"useFreeType":false,"fontname":"NULL","maxClipPlanes":2147483647,"glVersion":"NaN"},"embeddings":{"viewport":"replace","projection":"replace","model":"replace"},"objects":[10,8,9,5],"subscenes":[],"flags":1155}},"width":672,"height":480,"sphereVerts":{"reuse":"rgl21603"},"webGLoptions":{"preserveDrawingBuffer":true}},"evals":[],"jsHooks":[]}</script><p>What if we didn’t set the <code>max_area</code> and only got the triangulation needed to stay within the polygons?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="kw">anglr</span>(nc, <span class="dt">max_area =</span> <span class="fl">0.008</span>) ## make small triangles (0.2 sq lon-lat degree)
+g &lt;-<span class="st"> </span><span class="kw">anglr</span>(graticule<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/graticule/topics/graticule">graticule</a></span>(<span class="op">-</span><span class="dv">85</span><span class="op">:-</span><span class="dv">74</span>, <span class="dv">32</span><span class="op">:</span><span class="dv">37</span>))
+p<span class="op">$</span>v<span class="op">$</span>z_ &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/extract">extract</a></span>(r, <span class="kw">cbind</span>(p<span class="op">$</span>v<span class="op">$</span>x_, p<span class="op">$</span>v<span class="op">$</span>y_), <span class="dt">method =</span> <span class="st">"bilinear"</span>)
+
+## plot the scene
+<span class="kw">library</span>(rgl)
+<span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/scene">rgl.clear</a></span>(); 
+<span class="kw"><a href="../reference/plot-anglr.html">plot</a></span>(p); <span class="kw"><a href="../reference/plot-anglr.html">plot</a></span>(g, <span class="dt">color =</span> <span class="st">"white"</span>); </code></pre></div>
+<pre><code>## Joining, by = "object_"</code></pre>
+<pre><code>## Joining, by = "triangle_"</code></pre>
+<pre><code>## Joining, by = "object_"</code></pre>
+<pre><code>## Joining, by = "segment_"</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/bg">bg3d</a></span>(<span class="st">"black"</span>); <span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/material">material3d</a></span>(<span class="dt">specular =</span> <span class="st">"black"</span>)
+<span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/rglwidget">rglwidget</a></span>()</code></pre></div>
+<div id="rgl70137" style="width:672px;height:480px;" class="rglWebGL html-widget"></div>
+<script type="application/json" data-for="rgl70137">{"x":{"material":{"color":["#FFFFFF","#FF0000"],"alpha":1,"lit":true,"ambient":"#000000","specular":"#000000","emission":"#000000","shininess":50,"smooth":true,"front":"filled","back":"filled","size":3,"lwd":1,"fog":true,"point_antialias":false,"line_antialias":false,"texture":null,"textype":"rgb","texmipmap":false,"texminfilter":"linear","texmagfilter":"linear","texenvmap":false,"depth_mask":true,"depth_test":"less","isTransparent":false},"rootSubscene":1,"objects":{"11":{"id":11,"reuse":"rgl511"},"12":{"id":12,"reuse":"rgl11197"},"5":{"id":5,"reuse":"rgl21603"},"4":{"id":4,"reuse":"rgl21603"},"10":{"id":10,"reuse":"rgl83666"},"13":{"id":13,"type":"background","material":{"lit":false,"back":"lines"},"colors":[[0,0,0,1]],"centers":[[0,0,0]],"sphere":false,"fogtype":"none","flags":0},"1":{"id":1,"type":"subscene","par3d":{"antialias":1,"FOV":90,"ignoreExtent":false,"listeners":1,"mouseMode":{"left":"polar","right":"fov","middle":"zoom","wheel":"pull"},"observer":[0,0,8.57768440246582],"modelMatrix":[[1,0,0,79.5],[0,0.965925812721252,-0.258819043636322,-33.211483001709],[0,0.258819043636322,0.965925812721252,-17.9285049438477],[0,0,0,1]],"projMatrix":[[1,0,0,0],[0,1,0,0],[0,0,-1.41421377658844,-6.06534004211426],[0,0,-1,0]],"skipRedraw":false,"userMatrix":[[1,0,0,0],[0,0.965925812721252,-0.258819043636322,0],[0,0.258819043636322,0.965925812721252,0],[0,0,0,1]],"scale":[1,1,1],"viewport":{"x":0,"y":0,"width":1,"height":1},"zoom":1,"bbox":[-85,-74,32,37,-0.100530900061131,0.973398506641388],"windowRect":[0,0,256,256],"family":"sans","font":1,"cex":1,"useFreeType":false,"fontname":"NULL","maxClipPlanes":2147483647,"glVersion":"NaN"},"embeddings":{"viewport":"replace","projection":"replace","model":"replace"},"objects":[13,11,12,5],"subscenes":[],"flags":1155}},"width":672,"height":480,"sphereVerts":{"reuse":"rgl21603"},"webGLoptions":{"preserveDrawingBuffer":true}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>

@@ -48,9 +48,6 @@
       <a href="articles/rangl-examples.html">Examples with anglr</a>
     </li>
     <li>
-      <a href="articles/rgl-guide.html">Vignette Title</a>
-    </li>
-    <li>
       <a href="articles/spatial-normal-forms.html">Spatial data and topology</a>
     </li>
   </ul>
@@ -91,16 +88,62 @@
 <li>igraph</li>
 <li>Lidar</li>
 </ul>
+</div>
+<div id="usage" class="section level1">
+<div class="page-header"><h1 class="hasAnchor">
+<a href="#usage" class="anchor"></a>Usage</h1></div>
+<p>The general approach is to <code>anglr</code> your model and then plot it.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+<span class="kw">library</span>(anglr)
+
+<span class="co">#model &lt;- sf::st_read("some/shapefile.shp")</span>
+<span class="co">#model &lt;- raster::raster("some/gridraster.tif")</span>
+
+mesh &lt;-<span class="st"> </span><span class="kw">anglr</span>(model)
+<span class="kw"><a href="reference/plot-anglr.html">plot</a></span>(mesh)</code></pre></div>
+<p>This is too simplistic for general use but these meshes can be used to merge disparate data into a single form, or used to convert standard spatial objects to <code>rgl</code> ready forms.</p>
+<p>An example of merging vector and raster can be seen with this.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata/gebco1.tif"</span>, <span class="dt">package =</span> <span class="st">"anglr"</span>)
+## ad hoc scaling as x,y and  z are different units
+r &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/raster">raster</a></span>(f)<span class="op">/</span><span class="dv">1000</span>
+
+<span class="kw">library</span>(sf)
+nc &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/st_read">read_sf</a></span>(<span class="kw">system.file</span>(<span class="st">"shape/nc.shp"</span>, <span class="dt">package=</span><span class="st">"sf"</span>))
+<span class="kw">library</span>(raster)
+<span class="kw">library</span>(anglr) ## devtools::install_github("hypertidy/anglr")
+
+## objects
+## a relief map, triangles grouped by polygon with interpolated raster elevation 
+p_mesh &lt;-<span class="st"> </span><span class="kw">anglr</span>(nc, <span class="dt">max_area =</span> <span class="fl">0.008</span>) ## make small triangles ( sq lon-lat degree)
+<span class="co">#g &lt;- anglr(graticule::graticule(-85:-74, 32:37))</span>
+p_mesh<span class="op">$</span>v<span class="op">$</span>z_ &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/extract">extract</a></span>(r, <span class="kw">cbind</span>(p_mesh<span class="op">$</span>v<span class="op">$</span>x_, p_mesh<span class="op">$</span>v<span class="op">$</span>y_), <span class="dt">method =</span> <span class="st">"bilinear"</span>)
+
+## plot the scene
+<span class="kw">library</span>(rgl)
+
+<span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/scene">rgl.clear</a></span>()  ## rerun the cycle from clear to widget in browser contexts 
+<span class="kw"><a href="reference/plot-anglr.html">plot</a></span>(pmesh) 
+<span class="co">#plot(g, color = "white") </span>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/bg">bg3d</a></span>(<span class="st">"black"</span>); <span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/material">material3d</a></span>(<span class="dt">specular =</span> <span class="st">"black"</span>)
+<span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/rglwidget">rglwidget</a></span>(<span class="dt">width =</span>  <span class="dv">900</span>, <span class="dt">height =</span> <span class="dv">450</span>)  ## not needed if you have a local device</code></pre></div>
 <p>Multiple multi-part objects are decomposed to a set of related, linked tables. Object identity is maintained with attribute metadata and this is carried through to colour and other aesthetics in 3D plots.</p>
 <p>Plot methods take those tables and generate the “indexed array” structures needed for ‘rgl’. In this way we get the best of both worlds of “GIS” and “3D models”.</p>
-</div>
 <div id="ongoing-design" class="section level2">
 <h2 class="hasAnchor">
 <a href="#ongoing-design" class="anchor"></a>Ongoing design</h2>
-<p>The core work for translating “Spatial” classes is done by the unspecialized ‘spbabel::map_table’ function.</p>
-<p>This is likely to be replaced by a ‘primitives()’ function that takes any lines or polygons data and returns just the linked edges. Crucially, polygons and lines are described by the same 1D primitives, and this is easy to do. Harder is to generate 2D primitives and for that we rely on <a href="https://www.cs.cmu.edu/~quake/triangle.html">Jonathan Richard Shewchuk’s Triangle</a>.</p>
-<p>Triangulation is with <code>RTriangle</code> package using “constrained mostly-Delaunay Triangulation” from the Triangle library, but could alternatively use <code>rgl</code> with its ear clipping algorithm.</p>
-<p>(With RTriangle we can set a max area for the triangles, so it can wrap around curves like globes and hills.)</p>
+<p>The core work for translating spatial classes is done by the unspecialized ‘silicate::PATH’ function and its underlying decomposition generics.</p>
+<p><code>anglr</code> then decomposes further, from path-types to primitive-types - where “primitive” means topological primitives, vertices, line segments (edges), triangles. Crucially, polygons and lines are described by the same 1D primitives, and this is easy to do. Harder is to generate 2D primitives and for that we rely on <a href="https://www.cs.cmu.edu/~quake/triangle.html">Jonathan Richard Shewchuk’s Triangle</a>.</p>
+<p>Triangulation is with <code>RTriangle</code> package using “constrained mostly-Delaunay Triangulation” from the Triangle library, but could alternatively use <code>rgl</code> with its ear clipping algorithm, and related work is in the <code>laridae</code> project to bring CGAL facilities to R.</p>
+<p>With RTriangle we can set a max area for the triangles, so it can wrap around curves like globes and hills, and this can only be done by the addition of Steiner points. All of this takes us very far from the path-based types generally used by GIS-alikes.</p>
+</div>
+<div id="grids" class="section level2">
+<h2 class="hasAnchor">
+<a href="#grids" class="anchor"></a>Grids</h2>
+<p>Raster gridded data are decomposed to “quad” forms, essentially a 2D primitive with four corners rather than 3. This works well in rgl but is slow in the browser for some reason, but we can always break quads down to triangles if needed.</p>
+<p>Texture mapping is possible with rgl, but it needs a local coordinate system mapped to the index space of a PNG image. It’s easy enough but requires a bit of awkward preparation, not yet simplified. Some different approaches:</p>
+<p><a href="https://rpubs.com/cyclemumner/frink-polyogn" class="uri">https://rpubs.com/cyclemumner/frink-polyogn</a></p>
+<p>Deprecated use of rangl here, but shows the general texture coordinate approach required:</p>
+<p><a href="https://gist.github.com/mdsumner/dc80283de50bb23ff7681b14768b9367" class="uri">https://gist.github.com/mdsumner/dc80283de50bb23ff7681b14768b9367</a></p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -109,6 +152,30 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"rgl"</span>)
 <span class="kw">install.packages</span>(<span class="st">"RTriangle"</span>)
 devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"hypertidy/anglr"</span>)</code></pre></div>
+<div id="ubuntudebian" class="section level3">
+<h3 class="hasAnchor">
+<a href="#ubuntudebian" class="anchor"></a>Ubuntu/Debian</h3>
+<p>On Linux you will need at least the following installed by an administrator, here tested on Ubuntu Xenial 16.04 (note the apt/sources.list is specific to version).</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">## key for apt-get update, see http://cran.r-project.org/bin/linux/ubuntu/README</span>
+<span class="bu">echo</span> <span class="st">'deb https://cloud.r-project.org/bin/linux/ubuntu xenial/'</span> <span class="op">&gt;&gt;</span> /etc/apt/sources.list
+<span class="ex">apt-key</span> adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
+
+<span class="co">## up to date GDAL and PROJ.4 and GEOS</span>
+<span class="co">## https://launchpad.net/~ubuntugis/+archive/ubuntu/ubuntugis-unstable</span>
+<span class="ex">add-apt-repository</span> ppa:ubuntugis/ubuntugis-unstable --yes
+
+<span class="ex">apt</span> update 
+<span class="ex">apt</span> upgrade --assume-yes
+
+<span class="co">## Install 3rd parties</span>
+<span class="ex">apt</span> install libproj-dev libgdal-dev libgeos-dev  libssl-dev libgl1-mesa-dev libglu1-mesa-dev libudunits2-dev
+<span class="co">## install R, if you need to</span>
+<span class="co">## apt install r-base r-base-dev </span></code></pre></div>
+<p>Then in R</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
+<span class="kw">install.packages</span>(<span class="kw">c</span>(<span class="st">"dplyr"</span>, <span class="st">"proj4"</span>, <span class="st">"raster"</span>,  <span class="st">"rgl"</span>, <span class="st">"rlang"</span>, <span class="st">"RTriangle"</span>, <span class="st">"spbabel"</span>, <span class="st">"tibble"</span>, <span class="st">"viridis"</span>))
+devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"hypertidy/anglr"</span>)</code></pre></div>
+</div>
 </div>
 <div id="get-involved" class="section level2">
 <h2 class="hasAnchor">
@@ -123,6 +190,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <p>Please note that this project is released with a <a href="CONDUCT.md">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</p>
 </div>
 </div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -132,11 +200,13 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <h2>Developers</h2>
 <ul class="list-unstyled">
 <li>Michael D. Sumner <br><small class="roles"> Author, maintainer </small> </li>
+<li><a href="authors.html">All authors...</a></li>
 </ul>
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://travis-ci.org/hypertidy/anglr"><img src="https://travis-ci.org/hypertidy/anglr.svg?branch=master" alt="Travis-CI Build Status"></a></li>
 <li><a href="https://ci.appveyor.com/project/hypertidy/anglr"><img src="https://ci.appveyor.com/api/projects/status/github/hypertidy/anglr?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
+<li><a href="https://cran.r-project.org/package=anglr"><img src="http://www.r-pkg.org/badges/version/anglr" alt="CRAN_Status_Badge"></a></li>
 <li><a href="https://codecov.io/github/hypertidy/anglr?branch=master"><img src="https://img.shields.io/codecov/c/github/hypertidy/anglr/master.svg" alt="Coverage Status"></a></li>
 </ul>
 </div>
