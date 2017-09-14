@@ -12,6 +12,7 @@ play_xyzm <- function(x,  ..., add = FALSE) {
   aa$v <- aa$v %>% mutate(g = dplyr::ntile(m_, 50)) %>% group_by(g)
   for (gi in unique(aa$v$g)) {
      plot(anglr:::semi_cascade(aa, g == 1,  tables = c("v", "lXv", "l", "o")))
+    if (gi == 1) aspect3d(1, 1, 0.001)
     rglwidget()
     Sys.sleep(0.5)
   }
