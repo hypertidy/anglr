@@ -1,5 +1,7 @@
 # anglr dev
 
+* new `add_normals` argument for plotting triangulations
+
 * rename package (from rangl)
 
 * now faster by relying on silicate for `sf`

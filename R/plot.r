@@ -33,15 +33,18 @@ plot.quad_mesh <- function(x, ..., add = FALSE) {
 #' The data structures from \code{\link{anglr}} are converted to their analogous forms
 #' used by the \code{\link[rgl]{rgl}} package and plotted. These plot methods return
 #' the rgl form invisibly. 
+#'
 #' @param x object from \code{\link{anglr}}
 #' @param ... args for underlying plotting
+#' @param add_normals if TRUE use `rgl::addNormals` to smooth the model before plotting
 #' @param add add to existing plot if exists
+#'
 #' @return the rgl mesh3d object, invisibly
 #' @export
 #' @importFrom rgl shade3d
 #' @name plot-anglr
 #' @aliases plot
-plot.trimesh <- function(x,  ..., add = FALSE) {
+plot.trimesh <- function(x,  ..., add = FALSE, add_normals = FALSE) {
   if (!"color_" %in% names(x$o)) {
     x$o$color_ <- trimesh_cols(nrow(x$o))
   }
@@ -64,6 +67,7 @@ plot.trimesh <- function(x,  ..., add = FALSE) {
   vindex <- dplyr::inner_join(x$tXv, vv, "vertex_")
   tt$it <- t(matrix(vindex$row_n, ncol = 3, byrow = TRUE))
   if (!add & length(rgl::rgl.dev.list()) < 1L) rgl::rgl.clear()
+  if (add_normals) tt <- rgl::addNormals(tt)
   rgl::shade3d(tt, col = pindex$color_, ...)
   
   if ( rgl::rgl.useNULL()) rgl::rglwidget()  
