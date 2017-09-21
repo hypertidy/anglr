@@ -10,7 +10,7 @@
 \alias{plot.pointmesh}
 \title{Plot objects in OpenGL}
 \usage{
-\method{plot}{trimesh}(x, ..., add = FALSE)
+\method{plot}{trimesh}(x, ..., add = FALSE, add_normals = FALSE)
 
 \method{plot}{linemesh}(x, ..., add = FALSE)
 
@@ -22,6 +22,8 @@
 \item{...}{args for underlying plotting}
 
 \item{add}{add to existing plot if exists}
+
+\item{add_normals}{if TRUE use `rgl::addNormals` to smooth the model before plotting}
 }
 \value{
 the rgl mesh3d object, invisibly

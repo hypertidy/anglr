@@ -20,7 +20,7 @@ plot.quad_mesh <- function(x, ..., add = FALSE) {
   if (!add & length(rgl::rgl.dev.list()) < 1L) rgl::rgl.clear()
   
   rgl::shade3d(ob, ...)
-  if ( rgl::rgl.useNULL()) rgl::rglwidget()  
+  #if ( rgl::rgl.useNULL()) force(rgl::rglwidget()  )
   
   invisible(ob)
 }
