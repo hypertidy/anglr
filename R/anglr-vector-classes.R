@@ -64,6 +64,8 @@ anglr.SpatialLines <- function(x, ...) {
   }
   tabs <- spbabel::map_table(x)
   out <- anglr_lines(tabs)
+  #tabs <- silicate::PATH(x)
+  #tabs <- silicate_to_gris_names(tabs)
   out$meta <- tibble::tibble(proj = pr4,
                                  ctime = format(Sys.time(), tz = "UTC"))
   out
