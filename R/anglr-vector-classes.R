@@ -1,15 +1,15 @@
 #' @importFrom rlang .data
 silicate_to_gris_names <- function(x) {
   names(x) <- c("o", "b", "v", "bXv")
-  x[["o"]] <- dplyr::rename(x[["o"]], object_  = .data$object)
-  x[["b"]] <- dplyr::rename(x[["b"]], object_ = .data$object, branch_ = .data$path)
+  #x[["o"]] <- dplyr::rename(x[["o"]], object_  = .data$object)
+  x[["b"]] <- dplyr::rename(x[["b"]], branch_ = .data$path_)
   
   thetype <- x[["b"]]$type[1]
   
   ## good grief, split order is a nightmare
   if (thetype == "MULTIPOLYGON") x[["b"]][["island_"]] <- unlist(lapply(split(x[["b"]], x[["b"]][["object_"]]), function(xa) !duplicated(xa[["subobject"]]))[unique(x[["b"]][["object_"]])])
   if (thetype == "POLYGON") x[["b"]][["island_"]] <- !duplicated(x[["b"]][["object_"]])
-  x[["bXv"]] <- dplyr::rename(x[["bXv"]], branch_ = .data$path)
+  x[["bXv"]] <- dplyr::rename(x[["bXv"]], branch_ = .data$path_)
   
   x
 }
