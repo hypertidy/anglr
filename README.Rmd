@@ -70,7 +70,7 @@ p_mesh$v$z_ <- raster::extract(r, cbind(p_mesh$v$x_, p_mesh$v$y_), method = "bil
 library(rgl)
 
 rgl.clear()  ## rerun the cycle from clear to widget in browser contexts 
-plot(pmesh) 
+plot(p_mesh) 
 #plot(g, color = "white") 
 bg3d("black"); material3d(specular = "black")
 rglwidget(width =  900, height = 450)  ## not needed if you have a local device
