@@ -26,47 +26,56 @@ anglr.sf <- function (x, z = NULL, ..., type = NULL, max_area = NULL)
   thetype <- tabs[["b"]]$type[1]
   if (!is.null(type)) thetype <- type
   if (grepl("POLYGON", thetype)) {
- out <- anglr_polys(tabs, ..., max_area = max_area)
-  if (!is.null(z)) {
-    tmp <- out$tXv %>% 
-      dplyr::inner_join(out$t, "triangle_") %>% 
-      dplyr::inner_join(out$o %>% dplyr::select(object_, z), "object_") %>% 
-      dplyr::select(vertex_,  z)
-    out$v <- dplyr::inner_join(tmp, out$v, "vertex_") %>% 
-      dplyr::select(vertex_, x_, y_, z)
-    names(out$v)[names(out$v) == z] <- "z_"
-    
-    ## we now need to make new vertex_ ids based on uniqueness in x, y, z
-    out$tXv$gp  <- out$v$gp <- dplyr::group_indices(out$v, x_, y_, z_)
-    
-    out$v <- dplyr::distinct(out$v, x_, y_, z_, gp)
-    out$v$vertex_ <- silicate::sc_uid(nrow(out$v))
-    out$tXv$vertex_ <- out$v$vertex_[match(out$tXv$gp, out$v$gp)]
-    out$tXv$gp <- out$v$gp <- NULL
-  }
-       return(out)
-}
-  if (grepl("LINE", thetype)) {
-    out <- anglr_lines(tabs)
+    out <- anglr_polys(tabs, ..., max_area = max_area)
+    if (inherits(z, "BasicRaster")) {
+      ee <- raster::extract(z, as.matrix(out$v[, c("x_", "y_")]), method = "bilinear")
+      if (all(is.na(ee))) warning("all raster values NA, mixed projections not supported yet")
+      out$v$z_ <- ee
+      
+      z <- NULL
+    }
     if (!is.null(z)) {
       
-      ## this is totally broken now
-      tmp <- out$lXv %>%  dplyr::distinct(segment_) %>% 
-        dplyr::inner_join(out$l, "segment_") %>% 
+      v <- out$tXv %>% dplyr::inner_join(out$t) %>% 
         dplyr::inner_join(out$o %>% dplyr::select(object_, z), "object_") %>% 
-        dplyr::select(segment_, z) %>% dplyr::distinct()
+        dplyr::inner_join(out$v) %>% 
+        dplyr::select(x_, y_, z, vertex_, triangle_)
+      names(v)[names(v) == z] <- "z_"
+      names(v)[names(v) == "vertex_"] <- "old"
+    
+      gp <- dplyr::group_indices(v,  x_, y_, z_)
+      v$vertex_ <- silicate::sc_uid(length(unique(gp)))[gp]
+      tXv <- v %>% dplyr::select(vertex_, triangle_)
+      out$tXv <- tXv
+      v$old <- NULL
+      out$v <- dplyr::distinct(v, x_, y_, z_, vertex_)
+    }
+    return(out)
+  }
+  if (grepl("LINE", thetype)) {
+    out <- anglr_lines(tabs)
+    if (inherits(z, "BasicRaster")) {
+      ee <- raster::extract(z, as.matrix(out$v[, c("x_", "y_")]), method = "bilinear")
+      if (all(is.na(ee))) warning("all raster values NA, mixed projections not supported yet")
+      out$v$z_ <- ee
       
-
-      out$v <- dplyr::inner_join(tmp, out$v,  "vertex_") %>% 
-        dplyr::select(vertex_, x_, y_, z)
-      names(out$v)[names(out$v) == z] <- "z_"
+      z <- NULL
+    }
+    if (!is.null(z)) {
       
-      out$lXv$gp  <- out$v$gp <- dplyr::group_indices(out$v, x_, y_, z_)
+      v <- out$lXv %>% dplyr::inner_join(out$l) %>% 
+        dplyr::inner_join(out$o %>% dplyr::select(object_, z), "object_") %>% 
+        dplyr::inner_join(out$v %>% dplyr::select(vertex_, x_, y_)) %>% 
+        dplyr::select(x_, y_, z, vertex_, segment_)
+      names(v)[names(v) == z] <- "z_"
+      names(v)[names(v) == "vertex_"] <- "old"
       
-      out$v <- dplyr::distinct(out$v, x_, y_, z_, gp)
-      out$v$vertex_ <- silicate::sc_uid(nrow(out$v))
-      out$lXv$vertex_ <- out$v$vertex_[match(out$lXv$gp, out$v$gp)]
-      out$lXv$gp <- out$v$gp <- NULL
+      gp <- dplyr::group_indices(v,  x_, y_, z_)
+      v$vertex_ <- silicate::sc_uid(length(unique(gp)))[gp]
+      lXv <- v %>% dplyr::select(vertex_, segment_)
+      out$lXv <- lXv
+      v$old <- NULL
+      out$v <- dplyr::distinct(v, x_, y_, z_, vertex_)
     }
     return(out)
   }
@@ -103,7 +112,7 @@ anglr.SpatialLines <- function (x, z = NULL, ..., type = NULL, max_area = NULL) 
   #tabs <- silicate::PATH(x)
   #tabs <- silicate_to_gris_names(tabs)
   out$meta <- tibble::tibble(proj = pr4,
-                                 ctime = format(Sys.time(), tz = "UTC"))
+                             ctime = format(Sys.time(), tz = "UTC"))
   out
 }
 

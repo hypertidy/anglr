@@ -1,5 +1,8 @@
 # anglr dev
 
+* new "z = " support in `anglr` for a feature name (to copy as a constant) or a raster object (to extract values onto vertices), 
+  for now the raster must be in the same coordinate system as the input object
+
 * new `add_normals` argument for plotting triangulations
 
 * rename package (from rangl)

@@ -40,6 +40,19 @@
 #' #plot(r)
 #' #rgl::aspect3d(1, 1, 0.001)
 #' #rgl::rglwidget()
+#' 
+#' ## copy feature attributes onto vertices
+#' #library(sf)
+#' #example(st_read)
+#' #library(rgl)
+#' #rgl.clear(); plot(anglr(st_cast(nc, "MULTILINESTRING"), z = "BIR74"));
+#' 
+#' #x <- nc
+#' ## copy raster attributes onto vertices (must be same projection for now)
+#' #topo <- raster(system.file("extdata", "gebco1.tif", package = "ang
+#' #rgl.clear(); plot(anglr(x, z = topo/10));
+#' #data("wrld_simpl", package= "maptools")
+#' # rgl.clear(); plot(globe(anglr(st_as_sf(wrld_simpl[c(9, 160), ]), z = topo*1e4, max_area = .1)));
 anglr <- function(x, ...) {
   UseMethod("anglr")
 }
