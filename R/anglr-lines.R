@@ -35,7 +35,7 @@
 #' #plot(r)
 #' #rgl::aspect3d(1, 1, 0.001)
 #' #rgl::rglwidget()
-anglr <- function(x, ...) {
+anglr <- function(x, z = NULL, ...) {
   UseMethod("anglr")
 }
 
