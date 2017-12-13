@@ -53,6 +53,10 @@
 #' #rgl.clear(); plot(anglr(x, z = topo/10));
 #' #data("wrld_simpl", package= "maptools")
 #' # rgl.clear(); plot(globe(anglr(st_as_sf(wrld_simpl[c(9, 160), ]), z = topo*1e4, max_area = .1)));
+#' 
+#' ## we can nominate the output type so we aren't bound to what's come in
+#' #rgl.clear(); plot(anglr(st_cast(x, "MULTILINESTRING"), z = topo/1000, type = "POLYGON"));
+#' #rgl.clear(); plot(anglr(x, z = topo/1000, type = "LINE"));
 anglr <- function(x, ...) {
   UseMethod("anglr")
 }
