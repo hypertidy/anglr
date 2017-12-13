@@ -23,7 +23,7 @@ silicate_to_gris_names <- function(x) {
 
 #' @importFrom silicate PATH
 #' @export
-anglr.sf <- function (x,  ..., max_area = NULL) 
+anglr.sf <- function (x,  z = NULL, ..., max_area = NULL) 
 {
 
   pr4 <- attr(x[[attr(x, "sf_column")]], "crs")[["proj4string"]]
@@ -38,7 +38,19 @@ anglr.sf <- function (x,  ..., max_area = NULL)
    return(anglr_polys(tabs, ..., max_area = max_area))
   }
   if (grepl("LINE", thetype)) {
-    return(anglr_lines(tabs))
+    out <- anglr_lines(tabs)
+    if (!is.null(z)) {
+      tmp <- out$lXv %>%  dplyr::distinct(segment_, vertex_) %>% 
+        dplyr::inner_join(out$l, "segment_") %>% 
+        dplyr::inner_join(out$o %>% dplyr::select(object_, z), "object_") %>% 
+        dplyr::select(vertex_, z)
+      
+
+      out$v <- inner_join(out$v, tmp %>% dplyr::distinct(vertex_, .keep_all = TRUE), "vertex_") %>% 
+        dplyr::select(segment_, vertex_, x_, y_, z)
+      names(out$v)[names(out$v) == z] <- "z_"
+    }
+    return(out)
   }
  # tabs <- spbabel::map_table(x)
   ## otherwise M/POINT

@@ -12,7 +12,8 @@
 #' w <- raster(volcano)
 #' plot(anglr(w/300))
 #' 
-anglr.RasterLayer <-  function(x, z = x, na.rm = FALSE, ...) {
+anglr.RasterLayer <-  function(x, z = NULL, na.rm = FALSE, ...) {
+  if (is.null(z)) z <- x
   x <- x[[1]]  ## just the oneth raster for now
   pr4 <- projection(x)
   exy <- edges0(x)
