@@ -1,8 +1,3 @@
-#' @importFrom utils head
-path2seg <- function(x) {
-  ## this is a trick of array logic to generate paired indexes from a sequence
-  head(suppressWarnings(matrix(x, nrow = length(x) + 1, ncol = 2, byrow = FALSE)), -2L)
-}
 
 
 ## this could replace tri_mesh_map_table1
@@ -103,13 +98,3 @@ anglr_polys <-  function(tabs, max_area = NULL, ...){
 }
 
 
-th3d <- function() {
-  structure(list(vb = NULL, it = NULL, primitivetype = "triangle",
-                 material = list(), normals = NULL, texcoords = NULL), .Names = c("vb",
-                                                                                  "it", "primitivetype", "material", "normals", "texcoords"), class = c("mesh3d",
-                                                                                                                                                        "shape3d"))
-}
-
-trimesh_cols <- function(n) {
-  viridis::viridis(n)
-}
