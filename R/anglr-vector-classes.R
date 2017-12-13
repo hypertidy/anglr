@@ -35,20 +35,47 @@ anglr.sf <- function (x,  z = NULL, ..., max_area = NULL)
   
   thetype <- tabs[["b"]]$type[1]
   if (grepl("POLYGON", thetype)) {
-   return(anglr_polys(tabs, ..., max_area = max_area))
+  out <- anglr_polys(tabs, ..., max_area = max_area)
+  if (!is.null(z)) {
+    tmp <- out$tXv %>% 
+      dplyr::inner_join(out$t, "triangle_") %>% 
+      dplyr::inner_join(out$o %>% dplyr::select(object_, z), "object_") %>% 
+      dplyr::select(vertex_,  z)
+    out$v <- dplyr::inner_join(tmp, out$v, "vertex_") %>% 
+      dplyr::select(vertex_, x_, y_, z)
+    names(out$v)[names(out$v) == z] <- "z_"
+    
+    ## we now need to make new vertex_ ids based on uniqueness in x, y, z
+    out$tXv$gp  <- out$v$gp <- dplyr::group_indices(out$v, x_, y_, z_)
+    
+    out$v <- dplyr::distinct(out$v, x_, y_, z_, gp)
+    out$v$vertex_ <- silicate::sc_uid(nrow(out$v))
+    out$tXv$vertex_ <- out$v$vertex_[match(out$tXv$gp, out$v$gp)]
+    out$tXv$gp <- out$v$gp <- NULL
+  }
+       return(out)
   }
   if (grepl("LINE", thetype)) {
     out <- anglr_lines(tabs)
     if (!is.null(z)) {
-      tmp <- out$lXv %>%  dplyr::distinct(segment_, vertex_) %>% 
+      
+      ## this is totally broken now
+      tmp <- out$lXv %>%  dplyr::distinct(segment_) %>% 
         dplyr::inner_join(out$l, "segment_") %>% 
         dplyr::inner_join(out$o %>% dplyr::select(object_, z), "object_") %>% 
-        dplyr::select(vertex_, z)
+        dplyr::select(segment_, z) %>% dplyr::distinct()
       
 
-      out$v <- inner_join(out$v, tmp %>% dplyr::distinct(vertex_, .keep_all = TRUE), "vertex_") %>% 
-        dplyr::select(segment_, vertex_, x_, y_, z)
+      out$v <- dplyr::inner_join(tmp, out$v,  "vertex_") %>% 
+        dplyr::select(vertex_, x_, y_, z)
       names(out$v)[names(out$v) == z] <- "z_"
+      
+      out$lXv$gp  <- out$v$gp <- dplyr::group_indices(out$v, x_, y_, z_)
+      
+      out$v <- dplyr::distinct(out$v, x_, y_, z_, gp)
+      out$v$vertex_ <- silicate::sc_uid(nrow(out$v))
+      out$lXv$vertex_ <- out$v$vertex_[match(out$lXv$gp, out$v$gp)]
+      out$lXv$gp <- out$v$gp <- NULL
     }
     return(out)
   }

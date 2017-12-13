@@ -2,8 +2,9 @@
 #'
 #' Create primitive-based "mesh" structures from various inputs.
 #'
-#' #' Methods exist for SpatialPolygons, SpatialLines, rgl mesh3d(triangle) ...
+#' #' Methods exist for sp, sf, raster, rgl and silicate objects
 #' @param x input data
+#' @param z (optional) name of a feature attribute to copy down to the vertices, only works for sf and raster currently
 #' @param ... arguments passed to methods
 #' @param max_area maximum area in coordinate system of x, passed to \code{\link[RTriangle]{triangulate}} 'a' argument
 #' @return a list of tibble data frames, using the gris-map_table model
