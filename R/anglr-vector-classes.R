@@ -39,7 +39,7 @@ anglr.sf <- function (x, z = NULL, ..., type = NULL, max_area = NULL) {
     if (!is.null(z)) {
       
       v <- out$tXv %>% dplyr::inner_join(out$t) %>% 
-        dplyr::inner_join(out$o %>% dplyr::select(.data$object_, .data$z), "object_") %>% 
+        dplyr::inner_join(out$o %>% dplyr::select(.data$object_, z), "object_") %>% 
         dplyr::inner_join(out$v) %>% 
         dplyr::select(.data$x_, .data$y_, z, .data$vertex_, .data$triangle_)
       names(v)[names(v) == z] <- "z_"
