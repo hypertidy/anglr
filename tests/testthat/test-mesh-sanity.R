@@ -2,7 +2,8 @@ context("mesh-sanity")
 
 library(raster)
 library(sf)
-
+library(silicate)
+library(dplyr)
 v <- raster(diag(3))
 p <- st_as_sf(rasterToPolygons(v, dissolve = TRUE))
 tp <- st_cast(sfdct::ct_triangulate(p), warn = FALSE)
