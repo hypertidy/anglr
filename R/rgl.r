@@ -13,7 +13,7 @@
 #' plot(dod, col = viridis::viridis(5)[1], alpha = 0.3)
 #' plot(octo, col = viridis::viridis(5)[5], alpha = 0.3)
 #' bg3d("grey")
-anglr.mesh3d <- function(x, ...) {
+anglr.mesh3d <- function (x, z = NULL, ..., type = NULL, max_area = NULL) {
   stopifnot(x$primitivetype == "triangle")
   if ("ib" %in% names(x)) {
     warning("object has quad primitives as well as triangles,\n only the triangles will be carried through")

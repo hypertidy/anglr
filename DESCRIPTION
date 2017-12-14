@@ -1,11 +1,10 @@
 Package: anglr
 Type: Package
-Title: Elevating Spatial
+Title: Elevating Spatial Data With Topology
 Version: 0.4.5.9002
 Authors@R: c(person("Michael D.","Sumner", role = c("aut", "cre"), email ="mdsumner@gmail.com"), 
              person("Miles", "McBain", role = c("ctb")))
-Description: Tidy topological approaches to spatial data to enable easy general conversions
- particularly for plotting using Open Graphics Library. 
+Description: Tidy topological approaches to spatial data to enable plotting using Open Graphics Library. 
 License: GPL-3
 Depends: R (>= 3.3.2)
 Imports:
@@ -33,6 +32,7 @@ Suggests:
     rgeos,
     rworldmap,
     rworldxtra,
+    sf,
     testthat, 
     tidyr,
     trip,

@@ -23,28 +23,3 @@ semi_cascade <- function(x, ..., tables = c("o", "b", "bXv", "v")) {
   }
   x
 }
-
-# semi_cascade2 <- function(x, ..., tables = c("o", "b", "bXv", "v")) {
-#   #qs <- rlang::quos(...)
-#   first <- dplyr::filter(x[[tables[1]]], g == 1)
-#   x[[tables[1]]] <- last <- first 
-#   tables <- tables[-1]
-#   for (itab in tables) {
-#     print(names(last))
-#     print(itab)
-#     print(names(x[[itab]]))
-#     last <- semi_join_be_quiet_if_there_is_only_1(x[[itab]], last)
-#     x[[itab]] <- last
-#   }
-#   x
-# }
-
-# inner_cascade <- function(x, ..., tables = c("o", "b", "bXv", "v")) {
-#   first <- dplyr::filter(x[[tables[1]]], ...)
-#   #x[[1]] <- last <- first 
-#   tables <- tables[-1]
-#   for (itab in tables) {
-#     first <-  dplyr::inner_join(x[[itab]], first)
-#   }
-#   first
-# }

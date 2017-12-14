@@ -14,13 +14,16 @@
 \alias{anglr.mesh3d}
 \title{Raster anglr}
 \usage{
-\method{anglr}{SpatialMultiPoints}(x, ...)
+\method{anglr}{SpatialMultiPoints}(x, z = NULL, ..., type = NULL,
+  max_area = NULL)
 
-\method{anglr}{SpatialPoints}(x, ...)
+\method{anglr}{SpatialPoints}(x, z = NULL, ..., type = NULL,
+  max_area = NULL)
 
-\method{anglr}{RasterLayer}(x, z = NULL, na.rm = FALSE, ...)
+\method{anglr}{RasterLayer}(x, z = NULL, ..., type = NULL,
+  max_area = NULL)
 
-\method{anglr}{trip}(x, ...)
+\method{anglr}{trip}(x, z = NULL, ..., type = NULL, max_area = NULL)
 
 \method{anglr}{SpatialLines}(x, z = NULL, ..., type = NULL,
   max_area = NULL)
@@ -30,18 +33,18 @@
 
 anglr(x, ...)
 
-\method{anglr}{mesh3d}(x, ...)
+\method{anglr}{mesh3d}(x, z = NULL, ..., type = NULL, max_area = NULL)
 }
 \arguments{
 \item{x}{input data}
 
-\item{...}{arguments passed to methods}
-
 \item{z}{\code{\link[raster]{raster}}, by default \code{x} is used}
 
-\item{na.rm}{remove missing values}
+\item{...}{arguments passed to methods}
 
 \item{max_area}{maximum area in coordinate system of x, passed to \code{\link[RTriangle]{triangulate}} 'a' argument}
+
+\item{na.rm}{remove missing values}
 }
 \value{
 quad_mesh

@@ -23,8 +23,6 @@ line_mesh_map_table1 <- function(tabs) {
 }
 
 anglr_lines <- function(tabs, ...) {
-  ll <- vector("list", nrow(tabs$o))
-
   outlist <- line_mesh_map_table1(tabs) 
   ## renormalize the vertices
   allverts <- dplyr::inner_join(outlist$lXv, outlist$v, "vertex_")
@@ -32,7 +30,7 @@ anglr_lines <- function(tabs, ...) {
   allverts$uvert <- as.integer(factor(paste(allverts$x_, allverts$y_, sep = "_")))
   allverts$vertex_ <- spbabel:::id_n(length(unique(allverts$uvert)))[allverts$uvert]
   outlist$lXv <- allverts[, c("segment_", "vertex_")]
-  outlist$v <- dplyr::distinct(allverts, uvert, .keep_all = TRUE)
+  outlist$v <- dplyr::distinct(allverts, .data$uvert, .keep_all = TRUE)
   class(outlist) <- "linemesh"
   outlist
 }

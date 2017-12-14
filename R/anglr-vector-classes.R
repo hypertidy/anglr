@@ -15,11 +15,13 @@ get_proj.sf <- function(x, ...) {
 get_proj.sfc <- function(x, ...) {
   attr(x, "crs")[["proj4string"]]
 }
+get_proj.PATH <- function(x, ...) {
+  NA_character_  ## silicate needs to record this
+}
 #' @importFrom silicate PATH
 #' @export
 
-anglr.sf <- function (x, z = NULL, ..., type = NULL, max_area = NULL) 
-{
+anglr.sf <- function (x, z = NULL, ..., type = NULL, max_area = NULL) {
   pr4 <- get_proj(x)
   tabs <- silicate_to_gris_names(silicate::PATH(x))
   tabs$meta <- tibble::tibble(proj = pr4, ctime = format(Sys.time(), tz = "UTC"))
@@ -37,18 +39,18 @@ anglr.sf <- function (x, z = NULL, ..., type = NULL, max_area = NULL)
     if (!is.null(z)) {
       
       v <- out$tXv %>% dplyr::inner_join(out$t) %>% 
-        dplyr::inner_join(out$o %>% dplyr::select(object_, z), "object_") %>% 
+        dplyr::inner_join(out$o %>% dplyr::select(.data$object_, .data$z), "object_") %>% 
         dplyr::inner_join(out$v) %>% 
-        dplyr::select(x_, y_, z, vertex_, triangle_)
+        dplyr::select(.data$x_, .data$y_, z, .data$vertex_, .data$triangle_)
       names(v)[names(v) == z] <- "z_"
       names(v)[names(v) == "vertex_"] <- "old"
     
-      gp <- dplyr::group_indices(v,  x_, y_, z_)
+      gp <- dplyr::group_indices(v,  .data$x_, .data$y_, .data$z_)
       v$vertex_ <- silicate::sc_uid(length(unique(gp)))[gp]
-      tXv <- v %>% dplyr::select(vertex_, triangle_)
+      tXv <- v %>% dplyr::select(.data$vertex_, .data$triangle_)
       out$tXv <- tXv
       v$old <- NULL
-      out$v <- dplyr::distinct(v, x_, y_, z_, vertex_)
+      out$v <- dplyr::distinct(v, .data$x_, .data$y_, .data$z_, .data$vertex_)
     }
     return(out)
   }
@@ -64,9 +66,9 @@ anglr.sf <- function (x, z = NULL, ..., type = NULL, max_area = NULL)
     if (!is.null(z)) {
       
       v <- out$lXv %>% dplyr::inner_join(out$l) %>% 
-        dplyr::inner_join(out$o %>% dplyr::select(object_, z), "object_") %>% 
-        dplyr::inner_join(out$v %>% dplyr::select(vertex_, x_, y_)) %>% 
-        dplyr::select(x_, y_, z, vertex_, segment_)
+        dplyr::inner_join(out$o %>% dplyr::select(.data$object_, z), "object_") %>% 
+        dplyr::inner_join(out$v %>% dplyr::select(.data$vertex_, .data$x_, .data$y_)) %>% 
+        dplyr::select(.data$x_, .data$y_, z, .data$vertex_, .data$segment_)
       names(v)[names(v) == z] <- "z_"
       names(v)[names(v) == "vertex_"] <- "old"
       
@@ -85,6 +87,7 @@ anglr.sf <- function (x, z = NULL, ..., type = NULL, max_area = NULL)
 #' @export
 anglr.PATH <- function (x, z = NULL, ..., type = NULL, max_area = NULL) {
   tabs <- silicate_to_gris_names(silicate::PATH(x))
+  pr4 <- get_proj(x)
   tabs$meta <- tibble::tibble(proj = pr4, ctime = format(Sys.time(), tz = "UTC"))
   thetype <- tabs[["b"]]$type[1]
   if (grepl("POLYGON", thetype)) {
