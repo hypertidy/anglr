@@ -9,5 +9,5 @@ my_extent <- st_as_sf(as(extent(c(153.185183093, 153.19443135, -27.705328446, -2
 anglr(my_extent, max_area = 0.008)
 
 test_that("dataframes with only geometry are handled", {
-  expect_that(anglr(my_extent, max_area = 0.008), is_a(""))
+  expect_that(anglr(my_extent, max_area = 0.008), is_a("trimesh"))
 })
