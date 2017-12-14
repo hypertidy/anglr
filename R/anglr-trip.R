@@ -1,7 +1,6 @@
 #' @name anglr
 #' @export
-anglr.trip <- 
-  function(x, ...) {
+anglr.trip <- function (x, z = NULL, ..., type = NULL, max_area = NULL) {
     ## this is just a copy of the lines version for now
     ## next step is to put all the attributes on the v table
     pr4 <- proj4string(x)

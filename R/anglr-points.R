@@ -1,7 +1,7 @@
 
 #' @rdname anglr
 #' @export
-anglr.SpatialMultiPoints <- function(x, ...) {
+anglr.SpatialMultiPoints <- function (x, z = NULL, ..., type = NULL, max_area = NULL) {
   pr4 <- proj4string(x)
   if (! "data" %in% slotNames(x)) {
     dummy <- data.frame(row_number = seq_along(x))
@@ -17,7 +17,7 @@ anglr.SpatialMultiPoints <- function(x, ...) {
 
 #' @rdname anglr
 #' @export
-anglr.SpatialPoints <- function(x, ...) {
+anglr.SpatialPoints <- function (x, z = NULL, ..., type = NULL, max_area = NULL) {
    pr4 <- proj4string(x)
    if (! "data" %in% slotNames(x)) {
      dummy <- data.frame(row_number = seq_along(x))
