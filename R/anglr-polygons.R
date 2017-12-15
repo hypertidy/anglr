@@ -28,50 +28,50 @@ tri_mesh_map_table1 <- function(tabs, max_area = NULL) {
   ## build the triangulation, with input max_area (defaults to NULL)
   tr <- RTriangle::triangulate(ps, a = max_area)
   
-  ## NOTE: the following only checks for presence of triangle centres within
-  ## known holes, so this doesn't pick up examples of overlapping areas e.g. 
-  ## https://github.com/hypertidy/anglr/issues/39
-  ## centroid of every triangle
-  
-  ## process the holes if present
-  if ("island_" %in% names(tabs$b) && any(!tabs$b$island_)) {
-    ## filter out all the hole geometry and build an sp polygon object with it
-    ## this 
-    ##   filters all the branches that are holes
-    ##   joins on the vertex instance index
-    ##   joins on the vertex values
-    ##   recomposes a SpatialPolygonsDataFrame using the spbabel::sp convention
-    holes <- dplyr::inner_join(dplyr::inner_join(dplyr::filter_(tabs$b, quote(!island_)), tabs$bXv, "branch_"), 
-                                           tabs$v, "vertex_")
-    holes[["order_"]] <- seq_len(nrow(holes))
-    holes <- spbabel::sp(holes)
-    
-    stopifnot(inherits(holes, "SpatialPolygons"))
-    ## centroid of every triangle
-    centroids <- matrix(unlist(lapply(split(tr$P[t(tr$T), ], rep(seq(nrow(tr$T)), each = 3)), .colMeans, 3, 2)), 
-                        ncol = 2, byrow = TRUE)
-    ## sp::over() is very efficient, but has to use high-level objects as input
-    badtris <- !is.na(over(SpatialPoints(centroids), sp::geometry(holes)))
-    ## presumably this will always be true inside this block (but should check some time)
-    if (any(badtris)) tr$T <- tr$T[!badtris, ]
-  }
- 
-  centroids <- matrix(unlist(lapply(split(tr$P[t(tr$T), ], rep(seq(nrow(tr$T)), each = 3)), .colMeans, 3, 2)), 
-                      ncol = 2, byrow = TRUE)
-  
-  ## actually we are missing concavities of some kinds, so hole removal is not enough
-  polys <- dplyr::inner_join(dplyr::inner_join(tabs$b, tabs$bXv, "branch_"), 
-                             tabs$v, "vertex_")
-  polys[["order_"]] <- seq_len(nrow(polys))
-  polys <- spbabel::sp(as.data.frame(polys))## duh avoid sp seppuku
- # holes <- spbabel::sp(holes)
-   
-  ## sp::over() is very efficient, but has to use high-level objects as input
-  badtris <- is.na(over(SpatialPoints(centroids), sp::geometry(polys)))
-  ## presumably this will always be true inside this block (but should check some time)
-  if (any(badtris)) tr$T <- tr$T[!badtris, ]
-  
-  
+ #  ## NOTE: the following only checks for presence of triangle centres within
+ #  ## known holes, so this doesn't pick up examples of overlapping areas e.g. 
+ #  ## https://github.com/hypertidy/anglr/issues/39
+ #  ## centroid of every triangle
+ #  
+ #  ## process the holes if present
+ #  if ("island_" %in% names(tabs$b) && any(!tabs$b$island_)) {
+ #    ## filter out all the hole geometry and build an sp polygon object with it
+ #    ## this 
+ #    ##   filters all the branches that are holes
+ #    ##   joins on the vertex instance index
+ #    ##   joins on the vertex values
+ #    ##   recomposes a SpatialPolygonsDataFrame using the spbabel::sp convention
+ #    holes <- dplyr::inner_join(dplyr::inner_join(dplyr::filter_(tabs$b, quote(!island_)), tabs$bXv, "branch_"), 
+ #                                           tabs$v, "vertex_")
+ #    holes[["order_"]] <- seq_len(nrow(holes))
+ #    holes <- spbabel::sp(holes)
+ #    
+ #    stopifnot(inherits(holes, "SpatialPolygons"))
+ #    ## centroid of every triangle
+ #    centroids <- matrix(unlist(lapply(split(tr$P[t(tr$T), ], rep(seq(nrow(tr$T)), each = 3)), .colMeans, 3, 2)), 
+ #                        ncol = 2, byrow = TRUE)
+ #    ## sp::over() is very efficient, but has to use high-level objects as input
+ #    badtris <- !is.na(over(SpatialPoints(centroids), sp::geometry(holes)))
+ #    ## presumably this will always be true inside this block (but should check some time)
+ #    if (any(badtris)) tr$T <- tr$T[!badtris, ]
+ #  }
+ # 
+ #  centroids <- matrix(unlist(lapply(split(tr$P[t(tr$T), ], rep(seq(nrow(tr$T)), each = 3)), .colMeans, 3, 2)), 
+ #                      ncol = 2, byrow = TRUE)
+ #  
+ #  ## actually we are missing concavities of some kinds, so hole removal is not enough
+ #  polys <- dplyr::inner_join(dplyr::inner_join(tabs$b, tabs$bXv, "branch_"), 
+ #                             tabs$v, "vertex_")
+ #  polys[["order_"]] <- seq_len(nrow(polys))
+ #  polys <- spbabel::sp(as.data.frame(polys))## duh avoid sp seppuku
+ # # holes <- spbabel::sp(holes)
+ #   
+ #  ## sp::over() is very efficient, but has to use high-level objects as input
+ #  badtris <- is.na(over(SpatialPoints(centroids), sp::geometry(polys)))
+ #  ## presumably this will always be true inside this block (but should check some time)
+ #  if (any(badtris)) tr$T <- tr$T[!badtris, ]
+ #  
+ #  
   
   
    
