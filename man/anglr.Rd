@@ -42,6 +42,8 @@ anglr(x, ...)
 
 \item{...}{arguments passed to methods}
 
+\item{type}{type of topology to create (LINE or POLYGON)}
+
 \item{max_area}{maximum area in coordinate system of x, passed to \code{\link[RTriangle]{triangulate}} 'a' argument}
 
 \item{na.rm}{remove missing values}

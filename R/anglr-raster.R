@@ -15,7 +15,7 @@
 anglr.RasterLayer <-function (x, z = NULL, ..., na.rm = TRUE, type = NULL, max_area = NULL) {
   if (!is.null(max_area)) {
     pixlen <- sqrt(max_area)
-    fact <- ceiling(mean(res(x)/pixlen))
+    fact <- ceiling(mean(raster::res(x)/pixlen))
     if (fact > 1) x <- raster::disaggregate(x, fact = fact, method = "bilinear")
   }
   if (is.null(z)) z <- x

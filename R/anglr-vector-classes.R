@@ -72,12 +72,12 @@ anglr.sf <- function (x, z = NULL, ..., type = NULL, max_area = NULL) {
       names(v)[names(v) == z] <- "z_"
       names(v)[names(v) == "vertex_"] <- "old"
       
-      gp <- dplyr::group_indices(v,  x_, y_, z_)
+      gp <- dplyr::group_indices(v,  .data$x_, .data$y_, .data$z_)
       v$vertex_ <- silicate::sc_uid(length(unique(gp)))[gp]
-      lXv <- v %>% dplyr::select(vertex_, segment_)
+      lXv <- v %>% dplyr::select(.data$vertex_, .data$segment_)
       out$lXv <- lXv
       v$old <- NULL
-      out$v <- dplyr::distinct(v, x_, y_, z_, vertex_)
+      out$v <- dplyr::distinct(v, .data$x_, .data$y_, .data$z_, .data$vertex_)
     }
     return(out)
   }
