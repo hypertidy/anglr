@@ -21,7 +21,7 @@ get_proj.PATH <- function(x, ...) {
 #' @importFrom silicate PATH
 #' @export
 
-anglr.sf <- function (x, z = NULL, ..., type = NULL, max_area = NULL) {
+anglr.sf <- function(x, z = NULL, ..., type = NULL, max_area = NULL) {
   pr4 <- get_proj(x)
   tabs <- silicate_to_gris_names(silicate::PATH(x))
   tabs$meta <- tibble::tibble(proj = pr4, ctime = format(Sys.time(), tz = "UTC"))
@@ -29,6 +29,20 @@ anglr.sf <- function (x, z = NULL, ..., type = NULL, max_area = NULL) {
   if (!is.null(type)) thetype <- type
   if (grepl("POLYGON", thetype)) {
     out <- anglr_polys(tabs, ..., max_area = max_area)
+    PP <- as.matrix(out$v[c("x_", "y_")])
+    TT <- matrix(match(out$tXv$vertex_, out$v$vertex_), ncol = 3, byrow = TRUE)
+    centroids <- matrix(unlist(lapply(split(PP[t(TT), ], rep(seq(nrow(TT)), each = 3)), .colMeans, 3, 2)), 
+                          ncol = 2, byrow = TRUE)
+    #badtris <- is.na(sp::over(SpatialPoints(centroids), sp::geometry(holes)))
+    a <- purrr::map_int(sf::st_intersects(sf::st_as_sf(setNames(as.data.frame(centroids), c("x", "y")), coords = c("x", "y")), 
+                      sf::st_set_crs(x, NA)), length)
+    
+    
+    badtris <- which(a == 0)
+    if (length(badtris) > 0) {
+      out$t <- out$t[-badtris, ]
+      out$tXv <- out$tXv %>% dplyr::inner_join(out$t, "triangle_") %>% dplyr::select(.data$triangle_, .data$vertex_)
+    }
     if (inherits(z, "BasicRaster")) {
       ee <- raster::extract(z, as.matrix(out$v[, c("x_", "y_")]), method = "bilinear")
       if (all(is.na(ee))) warning("all raster values NA, mixed projections not supported yet")
@@ -85,7 +99,7 @@ anglr.sf <- function (x, z = NULL, ..., type = NULL, max_area = NULL) {
   tabs
 }
 #' @export
-anglr.PATH <- function (x, z = NULL, ..., type = NULL, max_area = NULL) {
+anglr.PATH <- function(x, z = NULL, ..., type = NULL, max_area = NULL) {
   tabs <- silicate_to_gris_names(x)
   pr4 <- get_proj(x)
   tabs$meta <- tibble::tibble(proj = pr4, ctime = format(Sys.time(), tz = "UTC"))
@@ -104,19 +118,20 @@ anglr.PATH <- function (x, z = NULL, ..., type = NULL, max_area = NULL) {
 #' @rdname anglr
 #' @importFrom dplyr %>%  arrange distinct mutate
 #' @export
-anglr.SpatialLines <- function (x, z = NULL, ..., type = NULL, max_area = NULL) {
-  pr4 <- proj4string(x)
-  if (! "data" %in% slotNames(x)) {
-    dummy <- data.frame(row_number = seq_along(x))
-    x <- sp::SpatialLinesDataFrame(x, dummy, match.ID = FALSE)
-  }
-  tabs <- spbabel::map_table(x)
-  out <- anglr_lines(tabs)
-  #tabs <- silicate::PATH(x)
-  #tabs <- silicate_to_gris_names(tabs)
-  out$meta <- tibble::tibble(proj = pr4,
-                             ctime = format(Sys.time(), tz = "UTC"))
-  out
+anglr.SpatialLines <- function(x, z = NULL, ..., type = NULL, max_area = NULL) {
+  return(anglr(sf::st_as_sf(x), z = z, type = type, max_area = max_area, ...))
+  # pr4 <- proj4string(x)
+  # if (! "data" %in% slotNames(x)) {
+  #   dummy <- data.frame(row_number = seq_along(x))
+  #   x <- sp::SpatialLinesDataFrame(x, dummy, match.ID = FALSE)
+  # }
+  # tabs <- spbabel::map_table(x)
+  # out <- anglr_lines(tabs)
+  # #tabs <- silicate::PATH(x)
+  # #tabs <- silicate_to_gris_names(tabs)
+  # out$meta <- tibble::tibble(proj = pr4,
+  #                            ctime = format(Sys.time(), tz = "UTC"))
+  # out
 }
 
 
@@ -129,18 +144,19 @@ anglr.SpatialLines <- function (x, z = NULL, ..., type = NULL, max_area = NULL) 
 #' @importFrom spbabel map_table
 #' @importFrom tibble tibble
 #' @importFrom methods slotNames
-anglr.SpatialPolygons <- function (x, z = NULL, ..., type = NULL, max_area = NULL) {
-  pr4 <- proj4string(x)
-  x0 <- x
-  ## kludge for non DataFrames
-  if (! "data" %in% slotNames(x)) {
-    dummy <- data.frame(row_number = seq_along(x))
-    x <- sp::SpatialPolygonsDataFrame(x, dummy, match.ID = FALSE)
-  }
-  tabs <- spbabel::map_table(x)
-  out <- anglr_polys(tabs, max_area = max_area, ...)
-  out$meta <- tibble::tibble(proj = pr4,
-                             ctime = format(Sys.time(), tz = "UTC"))
-  out
+anglr.SpatialPolygons <- function(x, z = NULL, ..., type = NULL, max_area = NULL) {
+  return(anglr(sf::st_as_sf(x), z = z, type = type, max_area = max_area, ...))
+  # pr4 <- proj4string(x)
+  # x0 <- x
+  # ## kludge for non DataFrames
+  # if (! "data" %in% slotNames(x)) {
+  #   dummy <- data.frame(row_number = seq_along(x))
+  #   x <- sp::SpatialPolygonsDataFrame(x, dummy, match.ID = FALSE)
+  # }
+  # tabs <- spbabel::map_table(x)
+  # out <- anglr_polys(tabs, max_area = max_area, ...)
+  # out$meta <- tibble::tibble(proj = pr4,
+  #                            ctime = format(Sys.time(), tz = "UTC"))
+  # out
 }
 
