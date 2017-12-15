@@ -15,3 +15,4 @@ test_that("rgl objects can be ingested", {
   expect_that(anglr(o), throws_error("is not TRUE"))
   
 })
+
