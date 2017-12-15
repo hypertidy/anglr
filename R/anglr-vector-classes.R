@@ -86,7 +86,7 @@ anglr.sf <- function (x, z = NULL, ..., type = NULL, max_area = NULL) {
 }
 #' @export
 anglr.PATH <- function (x, z = NULL, ..., type = NULL, max_area = NULL) {
-  tabs <- silicate_to_gris_names(silicate::PATH(x))
+  tabs <- silicate_to_gris_names(x)
   pr4 <- get_proj(x)
   tabs$meta <- tibble::tibble(proj = pr4, ctime = format(Sys.time(), tz = "UTC"))
   thetype <- tabs[["b"]]$type[1]

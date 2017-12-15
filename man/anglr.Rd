@@ -20,7 +20,7 @@
 \method{anglr}{SpatialPoints}(x, z = NULL, ..., type = NULL,
   max_area = NULL)
 
-\method{anglr}{RasterLayer}(x, z = NULL, ..., type = NULL,
+\method{anglr}{RasterLayer}(x, z = NULL, ..., na.rm = TRUE, type = NULL,
   max_area = NULL)
 
 \method{anglr}{trip}(x, z = NULL, ..., type = NULL, max_area = NULL)
