@@ -12,7 +12,12 @@
 #' w <- raster(volcano)
 #' plot(anglr(w/300))
 #' 
-anglr.RasterLayer <-function (x, z = NULL, ..., type = NULL, max_area = NULL) {
+anglr.RasterLayer <-function (x, z = NULL, ..., na.rm = TRUE, type = NULL, max_area = NULL) {
+  if (!is.null(max_area)) {
+    pixlen <- sqrt(max_area)
+    fact <- ceiling(mean(res(x)/pixlen))
+    if (fact > 1) x <- raster::disaggregate(x, fact = fact, method = "bilinear")
+  }
   if (is.null(z)) z <- x
   x <- x[[1]]  ## just the oneth raster for now
   pr4 <- projection(x)
