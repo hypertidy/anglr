@@ -33,6 +33,7 @@ Suggests:
     rworldmap,
     rworldxtra,
     sf,
+    sfdct,
     testthat, 
     tidyr,
     trip,
