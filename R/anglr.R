@@ -4,6 +4,7 @@
 #'
 #' #' Methods exist for SpatialPolygons, SpatialLines, rgl mesh3d(triangle) ...
 #' @param x input data
+#' @param type type of topology to create (LINE or POLYGON)
 #' @param ... arguments passed to methods
 #' @param max_area maximum area in coordinate system of x, passed to \code{\link[RTriangle]{triangulate}} 'a' argument
 #' @return a list of tibble data frames, using the gris-map_table model
@@ -57,6 +58,6 @@
 #' ## we can nominate the output type so we aren't bound to what's come in
 #' #rgl.clear(); plot(anglr(st_cast(x, "MULTILINESTRING"), z = topo/1000, type = "POLYGON"));
 #' #rgl.clear(); plot(anglr(x, z = topo/1000, type = "LINE"));
-anglr <- function(x, ...) {
+anglr <- function (x, z = NULL, ..., type = NULL, max_area = NULL) {
   UseMethod("anglr")
 }

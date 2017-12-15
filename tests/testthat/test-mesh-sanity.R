@@ -36,3 +36,4 @@ test_that("triangle set is equivalent", {
   anglr(tp, z = "layer")$t %>% nrow() %>%  expect_equal(ntriangles)
   
 })
+
