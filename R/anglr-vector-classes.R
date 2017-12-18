@@ -28,21 +28,11 @@ anglr.sf <- function(x, z = NULL, ..., type = NULL, max_area = NULL) {
   thetype <- tabs[["b"]]$type[1]
   if (!is.null(type)) thetype <- type
   if (grepl("POLYGON", thetype)) {
-    out <- anglr_polys(tabs, ..., max_area = max_area)
-    PP <- as.matrix(out$v[c("x_", "y_")])
-    TT <- matrix(match(out$tXv$vertex_, out$v$vertex_), ncol = 3, byrow = TRUE)
-    centroids <- matrix(unlist(lapply(split(PP[t(TT), ], rep(seq(nrow(TT)), each = 3)), .colMeans, 3, 2)), 
-                          ncol = 2, byrow = TRUE)
-    #badtris <- is.na(sp::over(SpatialPoints(centroids), sp::geometry(holes)))
-    a <- purrr::map_int(sf::st_intersects(sf::st_as_sf(setNames(as.data.frame(centroids), c("x", "y")), coords = c("x", "y")), 
-                      sf::st_set_crs(x, NA)), length)
+    ## kludge until lines update
+    tabs <- silicate::PATH(x)
+    #out <- anglr_polys(tabs, ..., max_area = max_area)
+    out <- pfft_polys(tabs, ..., max_area = max_area)
     
-    
-    badtris <- which(a == 0)
-    if (length(badtris) > 0) {
-      out$t <- out$t[-badtris, ]
-      out$tXv <- out$tXv %>% dplyr::inner_join(out$t, "triangle_") %>% dplyr::select(.data$triangle_, .data$vertex_)
-    }
     if (inherits(z, "BasicRaster")) {
       ee <- raster::extract(z, as.matrix(out$v[, c("x_", "y_")]), method = "bilinear")
       if (all(is.na(ee))) warning("all raster values NA, mixed projections not supported yet")
@@ -100,17 +90,19 @@ anglr.sf <- function(x, z = NULL, ..., type = NULL, max_area = NULL) {
 }
 #' @export
 anglr.PATH <- function(x, z = NULL, ..., type = NULL, max_area = NULL) {
-  tabs <- silicate_to_gris_names(x)
   pr4 <- get_proj(x)
+  tabs <- x
   tabs$meta <- tibble::tibble(proj = pr4, ctime = format(Sys.time(), tz = "UTC"))
-  thetype <- tabs[["b"]]$type[1]
+  thetype <- tabs[["path"]]$type[1]
+  
+  tabs_g <- silicate_to_gris_names(x)
   if (grepl("POLYGON", thetype)) {
-    return(anglr_polys(tabs, ..., max_area = max_area))
+    return(pfft_polys(tabs, ..., max_area = max_area))
   }
   if (grepl("LINE", thetype)) {
-    return(anglr_lines(tabs))
+    return(anglr_lines(tabs_g))
   }
-  tabs
+  tabs_g
   ## could be NULL
   #stop("woah, no type in this PATH - todo")
 }
