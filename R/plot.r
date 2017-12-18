@@ -61,10 +61,15 @@ plot.trimesh <- function(x,  ..., add = FALSE, add_normals = FALSE) {
     tt$vb <- t(cbind(x$v$x_, x$v$y_, 0, 1))
   }
   vv <- x$v[, "vertex_"]; vv$row_n <- seq(nrow(vv))
-  pindex <- dplyr::inner_join(dplyr::inner_join(x$o[, c("object_", "color_")], x$t), 
-                              x$tXv)
-  
+  # pindex <- dplyr::inner_join(dplyr::inner_join(x$o[, c("object_", "color_")], x$t), 
+  #                             x$tXv)
+  # 
+  # vindex <- dplyr::inner_join(x$tXv, vv, "vertex_")
+  # 
+  ## ensure tXv sets the stage
+  pindex <- x$tXv %>% dplyr::inner_join(x$t) %>% dplyr::inner_join(x$o[c("object_", "color_")]) 
   vindex <- dplyr::inner_join(x$tXv, vv, "vertex_")
+  
   tt$it <- t(matrix(vindex$row_n, ncol = 3, byrow = TRUE))
   if (!add & length(rgl::rgl.dev.list()) < 1L) rgl::rgl.clear()
   if (add_normals) tt <- rgl::addNormals(tt)
