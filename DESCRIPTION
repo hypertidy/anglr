@@ -1,7 +1,7 @@
 Package: anglr
 Type: Package
 Title: Elevating Spatial Data With Topology
-Version: 0.4.5.9002
+Version: 0.4.6
 Authors@R: c(person("Michael D.","Sumner", role = c("aut", "cre"), email ="mdsumner@gmail.com"), 
              person("Miles", "McBain", role = c("ctb")))
 Description: Tidy topological approaches to spatial data to enable plotting using Open Graphics Library. 
@@ -10,6 +10,7 @@ Depends: R (>= 3.3.2)
 Imports:
     dplyr,
     methods,
+    pfft, 
     proj4,
     raster,
     rgl,
@@ -44,4 +45,4 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
 VignetteBuilder: knitr
-Remotes: hypertidy/silicate
+Remotes: hypertidy/silicate, mdsumner/pfft

@@ -1,5 +1,9 @@
 # anglr dev
 
+* new approach for polygons now using pfft package
+
+# anglr 0.4.6
+
 * new "z = " support in `anglr` for a feature name (to copy as a constant) or a raster object (to extract values onto vertices), 
   for now the raster must be in the same coordinate system as the input object
 
