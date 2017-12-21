@@ -73,7 +73,7 @@ rgl.clear()  ## rerun the cycle from clear to widget in browser contexts
 plot(p_mesh) 
 #plot(g, color = "white") 
 bg3d("black"); material3d(specular = "black")
-rglwidget(width =  900, height = 450)  ## not needed if you have a local device
+rglwidget()  ## not needed if you have a local device
 
 ```
 
