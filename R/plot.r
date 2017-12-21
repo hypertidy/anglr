@@ -61,19 +61,20 @@ plot.trimesh <- function(x,  ..., add = FALSE, add_normals = FALSE) {
     tt$vb <- t(cbind(x$v$x_, x$v$y_, 0, 1))
   }
   vv <- x$v[, "vertex_"]; vv$row_n <- seq(nrow(vv))
-  # pindex <- dplyr::inner_join(dplyr::inner_join(x$o[, c("object_", "color_")], x$t), 
-  #                             x$tXv)
-  # 
-  # vindex <- dplyr::inner_join(x$tXv, vv, "vertex_")
-  # 
-  ## ensure tXv sets the stage
+
   pindex <- x$tXv %>% dplyr::inner_join(x$t) %>% dplyr::inner_join(x$o[c("object_", "color_")]) 
   vindex <- dplyr::inner_join(x$tXv, vv, "vertex_")
+ 
   
-  tt$it <- t(matrix(vindex$row_n, ncol = 3, byrow = TRUE))
+  triangle <- x$t %>% dplyr::inner_join(x$o[c("object_", "color_")])
+  ## join up triangle's to vertices by on separately, per object
+  vertex <- purrr::map_df(split(triangle[c("color_", "triangle_")], triangle$object_), ~inner_join(.x, x$tXv)) %>% 
+    inner_join(vv)
+  
+  tt$it <- t(matrix(vertex$row_n, ncol = 3, byrow = TRUE))
   if (!add & length(rgl::rgl.dev.list()) < 1L) rgl::rgl.clear()
   if (add_normals) tt <- rgl::addNormals(tt)
-  rgl::shade3d(tt, col = pindex$color_, ...)
+  rgl::shade3d(tt, col = vertex$color_, ...)
   
   if ( rgl::rgl.useNULL()) rgl::rglwidget()  
   invisible(tt)

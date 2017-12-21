@@ -46,10 +46,10 @@ library(rgl)
 library(maptools)
 data(wrld_simpl)
 library(raster)
-
-## convert to triangles and plot 
+library(sf)
+## convert to triangles and plot
 library(anglr)
-cmesh <- anglr(wrld_simpl)
+cmesh <- anglr(st_as_sf(wrld_simpl))
 plot(cmesh)
 rglwidget()
 ```
