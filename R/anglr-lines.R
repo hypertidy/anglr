@@ -1,38 +1,45 @@
-
-line_mesh_map_table1 <- function(tabs) {
-  tabs$v$countingIndex <- seq_len(nrow(tabs$v))
-  nonuq <- dplyr::inner_join(tabs$bXv, tabs$v, "vertex_")
+anglr_lines <- function(tabs,   ...) {
+  tabs$vertex$countingIndex <- seq_len(nrow(tabs$vertex))
+  nonuq <- dplyr::inner_join(tabs$path_link_vertex, tabs$vertex, "vertex_")
   
-  tabs$b$object_id <- as.integer(factor(tabs$b$object_))
-  nonuq <- dplyr::inner_join(nonuq, tabs$b, "branch_")
+  tabs$path$object_id <- as.integer(factor(tabs$path$object_))
+  nonuq <- dplyr::inner_join(nonuq, tabs$path, "path_")
   
-          S = do.call(rbind, lapply(split(nonuq, nonuq$branch_),
-                                       function(x) cbind(path2seg(x$countingIndex), x$object_id[1])))
-  tabs$v$countingIndex <- NULL
-  tabs$v$vertex_ <- silicate::sc_uid(nrow(tabs$v))
-  #tabs$v <- tibble::tibble(x_ = pl$P[,1], y_ = pl$P[,2], vertex_ = spbabel:::id_n(nrow(pl$P)))
-  
-  tabs$b <- tabs$bXv <- NULL
-  #tabs$l <- tibble::tibble(segment_ = spbabel:::id_n(nrow(pl$S)), object_ = tabs$o$object_[1])
+  S = do.call(rbind, lapply(split(nonuq, nonuq$path_),
+                            function(x) cbind(path2seg(x$countingIndex), x$object_id[1])))
+  tabs$vertex$countingIndex <- NULL
+  tabs$vertex$vertex_ <- silicate::sc_uid(nrow(tabs$vertex))
   tabs$l <- tibble::tibble(segment_ = silicate::sc_uid(nrow(S)), object_ = tabs$o$object_[S[,3]])
   
   tabs$lXv <- tibble::tibble(segment_ = rep(tabs$l$segment_, each = 2), 
                              vertex_ = tabs$v$vertex_[as.vector(t(S[,1:2]))])
   
-  tabs
-}
-
-anglr_lines <- function(tabs, ...) {
-  outlist <- line_mesh_map_table1(tabs) 
   ## renormalize the vertices
-  allverts <- dplyr::inner_join(outlist$lXv, outlist$v, "vertex_")
+  allverts <- dplyr::inner_join(tabs$lXv, tabs$vertex, "vertex_")
   #browser()
   allverts$uvert <- as.integer(factor(paste(allverts$x_, allverts$y_, sep = "_")))
-  allverts$vertex_ <- spbabel:::id_n(length(unique(allverts$uvert)))[allverts$uvert]
-  outlist$lXv <- allverts[, c("segment_", "vertex_")]
-  outlist$v <- dplyr::distinct(allverts, .data$uvert, .keep_all = TRUE)
+  allverts$vertex_ <- silicate::sc_uid(length(unique(allverts$uvert)))[allverts$uvert]
+  tabs$lXv <- allverts[, c("segment_", "vertex_")]
+  tabs$v <- dplyr::distinct(allverts, .data$uvert, .keep_all = TRUE)
+  tabs$o <- tabs$object
+  tabs$object <- tabs$path <- tabs$vertex <- tabs$path_link_vertex <- NULL
   class(outlist) <- "linemesh"
   outlist
 }
+
+
+#anglr_lines <- function(tabs, ...) {
+  # outlist <- line_mesh_map_table1(tabs)
+  # ## renormalize the vertices
+  # allverts <- dplyr::inner_join(outlist$lXv, outlist$v, "vertex_")
+  # #browser()
+  # allverts$uvert <- as.integer(factor(paste(allverts$x_, allverts$y_, sep = "_")))
+  # allverts$vertex_ <- spbabel:::id_n(length(unique(allverts$uvert)))[allverts$uvert]
+  # outlist$lXv <- allverts[, c("segment_", "vertex_")]
+  # outlist$v <- dplyr::distinct(allverts, .data$uvert, .keep_all = TRUE)
+  # class(outlist) <- "linemesh"
+  # outlist
+#}
+
 
 

@@ -7,30 +7,28 @@ pfft_polys <- function(x, max_area = NULL,  ...) {
   RTri <- do.call(pfft::edge_RTriangle, dots)
   ptm <- pfft::path_triangle_map(x, RTri)
   
-  triangle <- tibble::tibble(triangle_ = silicate::sc_uid(nrow(RTri$T)), 
-                             triangle_idx = 1:nrow(RTri$T))
+  ## unique triangles
+  triangle <- tibble::tibble(triangle_ = silicate::sc_uid(nrow(RTri$T)))
+  ## all triangle instances
   ptm[["triangle_"]] <- triangle[["triangle_"]][ptm[["triangle_idx"]]]
-  ptm <- dplyr::inner_join(ptm, x[["path"]][c("path_", "object_", "subobject")])
+  ptm[["triangle_idx"]] <- NULL
+  ## any triangle that occurs an even number of times in a path per object is part of a hole
+  ptm <- dplyr::inner_join(ptm, x[["path"]][c("path_", "object_")])
   #> Joining, by = "path_"
-  ptm <- ptm %>% 
-    dplyr::group_by(.data$object_,  .data$subobject, .data$triangle_idx) %>% 
-    dplyr::mutate(n = n())  %>% dplyr::ungroup()  %>% 
-    dplyr::filter(.data$n < 2)
+  ptm <- ptm %>% dplyr::group_by(object_,triangle_) %>% 
+    dplyr::mutate(n = n()) %>% 
+    dplyr::ungroup()  #%>% 
+  
+  tt <- dplyr::select(ptm, object_, triangle_) %>% 
+    dplyr::anti_join(ptm %>% dplyr::filter(n %% 2 == 0) %>% 
+                       dplyr::select(object_, triangle_))
+  #> Joining, by = c("object_", "triangle_")
+  #if (length(remove_idx) > 0) TT <- RTri$T[-remove_idx, ] else TT <- RTri$T
+  tXv <- tibble::tibble(vertex_ = x[["vertex"]][["vertex_"]][t(RTri$T)], 
+                        triangle_ = rep(triangle[["triangle_"]], each = 3))
   
   
-  o <- x[["object"]]
-  tt <- ptm %>%    
-    dplyr::select(.data$object_, .data$triangle_)
-  remove_idx <-  setdiff(1:nrow(RTri$T), ptm$triangle_idx)
-  ptm <- ptm %>% dplyr::arrange(.data$triangle_idx)
-  TT <- if (length(remove_idx) > 0) RTri$T[-remove_idx, ] else RTri$T
-  
-  v <- tibble::tibble(x_ = RTri$P[,1], y_ = RTri$P[,2], vertex_ = silicate::sc_uid(nrow(RTri$P)))
-  tXv <- tibble::tibble(vertex_ = v[["vertex_"]][t(TT)], 
-                        triangle_ = rep(ptm[["triangle_"]], each = 3))
-  
-  #v <- x[["vertex"]]
-  outlist <- list(o = o, t = tt, tXv = tXv, v = v)
+  outlist <- list(o = x$o, t = tt, tXv = tXv, v = x[["vertex"]])
   class(outlist) <- "trimesh"
   outlist
 }
