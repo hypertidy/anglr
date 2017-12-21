@@ -52,7 +52,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -101,7 +101,7 @@
     
 
     <pre class="usage"><span class='co'># S3 method for trimesh</span>
-<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>add_normals</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for linemesh</span>
 <span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
@@ -123,6 +123,10 @@
     <tr>
       <th>add</th>
       <td><p>add to existing plot if exists</p></td>
+    </tr>
+    <tr>
+      <th>add_normals</th>
+      <td><p>if TRUE use `rgl::addNormals` to smooth the model before plotting</p></td>
     </tr>
     </table>
     

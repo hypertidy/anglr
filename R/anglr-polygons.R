@@ -6,7 +6,8 @@ pfft_polys <- function(x, max_area = NULL,  ...) {
   dots[["x"]] <- x
   RTri <- do.call(pfft::edge_RTriangle, dots)
   ptm <- pfft::path_triangle_map(x, RTri)
-  
+  #vertex <- x$v  ## for fun aRt
+  vertex <- tibble::tibble(x_ = RTri$P[,1], y_ = RTri$P[,2], vertex_ = silicate::sc_uid(nrow(RTri$P)))
   ## unique triangles
   triangle <- tibble::tibble(triangle_ = silicate::sc_uid(nrow(RTri$T)))
   ## all triangle instances
@@ -22,13 +23,11 @@ pfft_polys <- function(x, max_area = NULL,  ...) {
   tt <- dplyr::select(ptm, object_, triangle_) %>% 
     dplyr::anti_join(ptm %>% dplyr::filter(n %% 2 == 0) %>% 
                        dplyr::select(object_, triangle_))
-  #> Joining, by = c("object_", "triangle_")
-  #if (length(remove_idx) > 0) TT <- RTri$T[-remove_idx, ] else TT <- RTri$T
-  tXv <- tibble::tibble(vertex_ = x[["vertex"]][["vertex_"]][t(RTri$T)], 
+  tXv <- tibble::tibble(vertex_ = vertex[["vertex_"]][t(RTri$T)], 
                         triangle_ = rep(triangle[["triangle_"]], each = 3))
   
   
-  outlist <- list(o = x$o, t = tt, tXv = tXv, v = x[["vertex"]])
+  outlist <- list(o = x$o, t = tt, tXv = tXv, v = vertex)
   class(outlist) <- "trimesh"
   outlist
 }

@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Elevating Spatial • anglr</title>
+<title>Elevating Spatial Data With Topology • anglr</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
@@ -29,7 +29,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="/index.html">
+  <a href="index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -99,7 +99,7 @@
 <span class="co">#model &lt;- sf::st_read("some/shapefile.shp")</span>
 <span class="co">#model &lt;- raster::raster("some/gridraster.tif")</span>
 
-mesh &lt;-<span class="st"> </span><span class="kw">anglr</span>(model)
+mesh &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/anglr/topics/anglr">anglr</a></span>(model)
 <span class="kw"><a href="reference/plot-anglr.html">plot</a></span>(mesh)</code></pre></div>
 <p>This is too simplistic for general use but these meshes can be used to merge disparate data into a single form, or used to convert standard spatial objects to <code>rgl</code> ready forms.</p>
 <p>An example of merging vector and raster can be seen with this.</p>
@@ -114,15 +114,15 @@ nc &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumenta
 
 ## objects
 ## a relief map, triangles grouped by polygon with interpolated raster elevation 
-p_mesh &lt;-<span class="st"> </span><span class="kw">anglr</span>(nc, <span class="dt">max_area =</span> <span class="fl">0.008</span>) ## make small triangles ( sq lon-lat degree)
+p_mesh &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/anglr/topics/anglr">anglr</a></span>(nc, <span class="dt">max_area =</span> <span class="fl">0.008</span>) ## make small triangles ( sq lon-lat degree)
 <span class="co">#g &lt;- anglr(graticule::graticule(-85:-74, 32:37))</span>
-p_mesh<span class="op">$</span>v<span class="op">$</span>z_ &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/extract">extract</a></span>(r, <span class="kw">cbind</span>(p_mesh<span class="op">$</span>v<span class="op">$</span>x_, p_mesh<span class="op">$</span>v<span class="op">$</span>y_), <span class="dt">method =</span> <span class="st">"bilinear"</span>)
+p_mesh<span class="op">$</span>v<span class="op">$</span>z_ &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/extract">extract</a></span>(r, <span class="kw">cbind</span>(p_mesh<span class="op">$</span>v<span class="op">$</span>x_, p_mesh<span class="op">$</span>v<span class="op">$</span>y_), <span class="dt">method =</span> <span class="st">"bilinear"</span>)
 
 ## plot the scene
 <span class="kw">library</span>(rgl)
 
 <span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/scene">rgl.clear</a></span>()  ## rerun the cycle from clear to widget in browser contexts 
-<span class="kw"><a href="reference/plot-anglr.html">plot</a></span>(pmesh) 
+<span class="kw"><a href="reference/plot-anglr.html">plot</a></span>(p_mesh) 
 <span class="co">#plot(g, color = "white") </span>
 <span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/bg">bg3d</a></span>(<span class="st">"black"</span>); <span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/material">material3d</a></span>(<span class="dt">specular =</span> <span class="st">"black"</span>)
 <span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/rglwidget">rglwidget</a></span>(<span class="dt">width =</span>  <span class="dv">900</span>, <span class="dt">height =</span> <span class="dv">450</span>)  ## not needed if you have a local device</code></pre></div>
