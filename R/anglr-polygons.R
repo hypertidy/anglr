@@ -1,3 +1,41 @@
+
+#' @param x PATH
+pfft_polys <- function(x, max_area = NULL,  ...) {
+  dots <- list(...)
+  dots[["a"]] <- max_area
+  dots[["x"]] <- x
+  RTri <- do.call(pfft::edge_RTriangle, dots)
+  ptm <- pfft::path_triangle_map(x, RTri)
+  
+  triangle <- tibble::tibble(triangle_ = silicate::sc_uid(nrow(RTri$T)), 
+                             triangle_idx = 1:nrow(RTri$T))
+  ptm[["triangle_"]] <- triangle[["triangle_"]][ptm[["triangle_idx"]]]
+  ptm <- dplyr::inner_join(ptm, x[["path"]][c("path_", "object_", "subobject")])
+  #> Joining, by = "path_"
+  ptm <- ptm %>% 
+    dplyr::group_by(.data$object_,  .data$subobject, .data$triangle_idx) %>% 
+    dplyr::mutate(n = n())  %>% dplyr::ungroup()  %>% 
+    dplyr::filter(.data$n < 2)
+  
+  
+  o <- x[["object"]]
+  tt <- ptm %>%    
+    dplyr::select(.data$object_, .data$triangle_)
+  remove_idx <-  setdiff(1:nrow(RTri$T), ptm$triangle_idx)
+  ptm <- ptm %>% dplyr::arrange(.data$triangle_idx)
+  TT <- if (length(remove_idx) > 0) RTri$T[-remove_idx, ] else RTri$T
+  
+  v <- tibble::tibble(x_ = RTri$P[,1], y_ = RTri$P[,2], vertex_ = silicate::sc_uid(nrow(RTri$P)))
+  tXv <- tibble::tibble(vertex_ = v[["vertex_"]][t(TT)], 
+                        triangle_ = rep(ptm[["triangle_"]], each = 3))
+  
+  #v <- x[["vertex"]]
+  outlist <- list(o = o, t = tt, tXv = tXv, v = v)
+  class(outlist) <- "trimesh"
+  outlist
+}
+
+
 #' 
 #' 
 #' ## this could replace tri_mesh_map_table1
@@ -117,39 +155,3 @@
 #'   
 #' }
 
-
-#' @param x PATH
-pfft_polys <- function(x, max_area = NULL,  ...) {
-  dots <- list(...)
-  dots[["a"]] <- max_area
-  dots[["x"]] <- x
-  RTri <- do.call(pfft::edge_RTriangle, dots)
-  ptm <- pfft::path_triangle_map(x, RTri)
-  
-  triangle <- tibble::tibble(triangle_ = silicate::sc_uid(nrow(RTri$T)), 
-                             triangle_idx = 1:nrow(RTri$T))
-  ptm[["triangle_"]] <- triangle[["triangle_"]][ptm[["triangle_idx"]]]
-  ptm <- dplyr::inner_join(ptm, x[["path"]][c("path_", "object_", "subobject")])
-  #> Joining, by = "path_"
-  ptm <- ptm %>% 
-    dplyr::group_by(.data$object_,  .data$subobject, .data$triangle_idx) %>% 
-    dplyr::mutate(n = n())  %>% dplyr::ungroup()  %>% 
-    dplyr::filter(.data$n < 2)
-  
-  
-  o <- x[["object"]]
-  tt <- ptm %>%    
-    dplyr::select(.data$object_, .data$triangle_)
-  remove_idx <-  setdiff(1:nrow(RTri$T), ptm$triangle_idx)
-  ptm <- ptm %>% dplyr::arrange(.data$triangle_idx)
-  TT <- if (length(remove_idx) > 0) RTri$T[-remove_idx, ] else RTri$T
-  
-  v <- tibble::tibble(x_ = RTri$P[,1], y_ = RTri$P[,2], vertex_ = silicate::sc_uid(nrow(RTri$P)))
-  tXv <- tibble::tibble(vertex_ = v[["vertex_"]][t(TT)], 
-                        triangle_ = rep(ptm[["triangle_"]], each = 3))
-  
-  #v <- x[["vertex"]]
-  outlist <- list(o = o, t = tt, tXv = tXv, v = v)
-  class(outlist) <- "trimesh"
-  outlist
-}
