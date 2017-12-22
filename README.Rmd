@@ -51,20 +51,22 @@ This is too simplistic for general use but these meshes can be used to merge dis
 An example of merging vector and raster can be seen with this. 
 
 ```{r merge, eval=FALSE}
+## a global DEM
 f <- system.file("extdata/gebco1.tif", package = "anglr")
 ## ad hoc scaling as x,y and  z are different units
 r <- raster::raster(f)/1000
 
+
 library(sf)
+## North Carolina, the sf boilerplate polygon layer
 nc <- read_sf(system.file("shape/nc.shp", package="sf"))
+
+
 library(raster)
 library(anglr) ## devtools::install_github("hypertidy/anglr")
 
-## objects
 ## a relief map, triangles grouped by polygon with interpolated raster elevation 
-p_mesh <- anglr(nc, max_area = 0.008) ## make small triangles ( sq lon-lat degree)
-#g <- anglr(graticule::graticule(-85:-74, 32:37))
-p_mesh$v$z_ <- raster::extract(r, cbind(p_mesh$v$x_, p_mesh$v$y_), method = "bilinear")
+p_mesh <- anglr(nc, max_area = 0.008, z = r)
 
 ## plot the scene
 library(rgl)
@@ -76,6 +78,8 @@ bg3d("black"); material3d(specular = "black")
 rglwidget()  ## not needed if you have a local device
 
 ```
+
+Here the `z` argument to `anglr` is a raster, and so once the mesh is created the `z_` coordinate of the mesh is updated by extracting values from the raster (using bilinear interpolation method). If `z_` is alternately set to a column name in the layer this is used as a contstant offset for the `z_` value, and the mesh is "separated", by feature even if the original layer had touching neighbours. . 
 
 
 Multiple multi-part objects are decomposed to a set of related, linked tables. Object identity is maintained with attribute metadata and this is carried through to colour and other aesthetics in 3D plots.  

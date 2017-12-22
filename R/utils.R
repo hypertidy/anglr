@@ -1,3 +1,32 @@
+maybe_geom_column <- function(x, ...) {
+  names(x)[purrr::map_lgl(x, ~ inherits(.x, "list"))]
+}
+
+check_is_geom_column <- function(x, ...) {
+  any(class(x[[1]]) == "sfg")
+}
+
+find_geom_column <- function(x) {
+  purrr::map(maybe_geom_column(x), check_is_geom_column)
+}
+# 
+#     i <- which(lgl)
+#   nms <- names(x)
+#   if (length(i) > 1) {
+#     message(sprintf("found these geom columns %s using %s", 
+#                     paste(nms[i], collapse = ", "), 
+#                     nms[i[1]]))
+#     i <- i[1]
+#   }
+#   if (length(i) == 1) {
+#     nm <- nms[i]
+#     return(x[[nm]])
+#   }
+#   message("no geom column found")
+#   NULL
+# }
+
+
 #' @importFrom rlang .data
 silicate_to_gris_names <- function(x) {
   names(x) <- c("o", "b", "v", "bXv")

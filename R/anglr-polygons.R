@@ -27,7 +27,8 @@ pfft_polys <- function(x, max_area = NULL,  ...) {
                         triangle_ = rep(triangle[["triangle_"]], each = 3))
   
   
-  outlist <- list(o = x$o, t = tt, tXv = tXv, v = vertex)
+  outlist <- list(o = x$o, t = tt, tXv = tXv, v = vertex, 
+                  meta = x$meta)
   class(outlist) <- "trimesh"
   outlist
 }

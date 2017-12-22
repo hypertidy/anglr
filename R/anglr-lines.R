@@ -23,8 +23,8 @@ anglr_lines <- function(tabs,   ...) {
   tabs$v <- dplyr::distinct(allverts, .data$uvert, .keep_all = TRUE)
   tabs$o <- tabs$object
   tabs$object <- tabs$path <- tabs$vertex <- tabs$path_link_vertex <- NULL
-  class(outlist) <- "linemesh"
-  outlist
+  class(tabs) <- "linemesh"
+  tabs
 }
 
 

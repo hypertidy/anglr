@@ -103,20 +103,22 @@ mesh &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumen
 <span class="kw"><a href="reference/plot-anglr.html">plot</a></span>(mesh)</code></pre></div>
 <p>This is too simplistic for general use but these meshes can be used to merge disparate data into a single form, or used to convert standard spatial objects to <code>rgl</code> ready forms.</p>
 <p>An example of merging vector and raster can be seen with this.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata/gebco1.tif"</span>, <span class="dt">package =</span> <span class="st">"anglr"</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## a global DEM
+f &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata/gebco1.tif"</span>, <span class="dt">package =</span> <span class="st">"anglr"</span>)
 ## ad hoc scaling as x,y and  z are different units
 r &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/raster">raster</a></span>(f)<span class="op">/</span><span class="dv">1000</span>
 
+
 <span class="kw">library</span>(sf)
+## North Carolina, the sf boilerplate polygon layer
 nc &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/st_read">read_sf</a></span>(<span class="kw">system.file</span>(<span class="st">"shape/nc.shp"</span>, <span class="dt">package=</span><span class="st">"sf"</span>))
+
+
 <span class="kw">library</span>(raster)
 <span class="kw">library</span>(anglr) ## devtools::install_github("hypertidy/anglr")
 
-## objects
 ## a relief map, triangles grouped by polygon with interpolated raster elevation 
-p_mesh &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/anglr/topics/anglr">anglr</a></span>(nc, <span class="dt">max_area =</span> <span class="fl">0.008</span>) ## make small triangles ( sq lon-lat degree)
-<span class="co">#g &lt;- anglr(graticule::graticule(-85:-74, 32:37))</span>
-p_mesh<span class="op">$</span>v<span class="op">$</span>z_ &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/extract">extract</a></span>(r, <span class="kw">cbind</span>(p_mesh<span class="op">$</span>v<span class="op">$</span>x_, p_mesh<span class="op">$</span>v<span class="op">$</span>y_), <span class="dt">method =</span> <span class="st">"bilinear"</span>)
+p_mesh &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/anglr/topics/anglr">anglr</a></span>(nc, <span class="dt">max_area =</span> <span class="fl">0.008</span>, <span class="dt">z =</span> r)
 
 ## plot the scene
 <span class="kw">library</span>(rgl)
@@ -125,7 +127,7 @@ p_mesh<span class="op">$</span>v<span class="op">$</span>z_ &lt;-<span class="st
 <span class="kw"><a href="reference/plot-anglr.html">plot</a></span>(p_mesh) 
 <span class="co">#plot(g, color = "white") </span>
 <span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/bg">bg3d</a></span>(<span class="st">"black"</span>); <span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/material">material3d</a></span>(<span class="dt">specular =</span> <span class="st">"black"</span>)
-<span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/rglwidget">rglwidget</a></span>(<span class="dt">width =</span>  <span class="dv">900</span>, <span class="dt">height =</span> <span class="dv">450</span>)  ## not needed if you have a local device</code></pre></div>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/rglwidget">rglwidget</a></span>()  ## not needed if you have a local device</code></pre></div>
 <p>Multiple multi-part objects are decomposed to a set of related, linked tables. Object identity is maintained with attribute metadata and this is carried through to colour and other aesthetics in 3D plots.</p>
 <p>Plot methods take those tables and generate the “indexed array” structures needed for ‘rgl’. In this way we get the best of both worlds of “GIS” and “3D models”.</p>
 <div id="ongoing-design" class="section level2">
