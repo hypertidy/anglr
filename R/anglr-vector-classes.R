@@ -23,16 +23,16 @@ get_proj.PATH <- function(x, ...) {
 
 anglr.sf <- function(x, z = NULL, ..., type = NULL, max_area = NULL) {
   pr4 <- get_proj(x)
-  tabs <- silicate_to_gris_names(silicate::PATH(x))
-  tabs$meta <- tibble::tibble(proj = pr4, ctime = format(Sys.time(), tz = "UTC"))
-  thetype <- tabs[["b"]]$type[1]
+  tabs <- silicate::PATH(x)
+  meta <- tibble::tibble(proj = pr4, ctime = format(Sys.time(), tz = "UTC"))
+  thetype <- tabs[["path"]]$type[1]
   if (!is.null(type)) thetype <- type
   if (grepl("POLYGON", thetype)) {
     ## kludge until lines update
-    tabs <- silicate::PATH(x)
+    #tabs <- silicate::PATH(x)
     #out <- anglr_polys(tabs, ..., max_area = max_area)
     out <- pfft_polys(tabs, ..., max_area = max_area)
-    
+    out$meta <- meta
     if (inherits(z, "BasicRaster")) {
       ee <- raster::extract(z, as.matrix(out$v[, c("x_", "y_")]), method = "bilinear")
       if (all(is.na(ee))) warning("all raster values NA, mixed projections not supported yet")
@@ -60,6 +60,7 @@ anglr.sf <- function(x, z = NULL, ..., type = NULL, max_area = NULL) {
   }
   if (grepl("LINE", thetype)) {
     out <- anglr_lines(tabs)
+    out$meta <- meta
     if (inherits(z, "BasicRaster")) {
       ee <- raster::extract(z, as.matrix(out$v[, c("x_", "y_")]), method = "bilinear")
       if (all(is.na(ee))) warning("all raster values NA, mixed projections not supported yet")
