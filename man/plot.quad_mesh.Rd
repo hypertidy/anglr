@@ -19,7 +19,6 @@ qmesh
 \description{
 Title
 }
-\examples{
-example(anglr.RasterLayer)
-plot(w)
+\seealso{
+anglr.RasterLayer
 }

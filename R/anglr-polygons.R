@@ -16,13 +16,13 @@ pfft_polys <- function(x, max_area = NULL,  ...) {
   ## any triangle that occurs an even number of times in a path per object is part of a hole
   ptm <- dplyr::inner_join(ptm, x[["path"]][c("path_", "object_")], "path_")
   #> Joining, by = "path_"
-  ptm <- ptm %>% dplyr::group_by(object_,triangle_) %>% 
-    dplyr::mutate(n = n()) %>% 
+  ptm <- ptm %>% dplyr::group_by(.data$object_, .data$triangle_) %>% 
+    dplyr::mutate(n = dplyr::n()) %>% 
     dplyr::ungroup()  #%>% 
   
-  tt <- dplyr::select(ptm, object_, triangle_) %>% 
-    dplyr::anti_join(ptm %>% dplyr::filter(n %% 2 == 0) %>% 
-                       dplyr::select(object_, triangle_), c("object_", "triangle_"))
+  tt <- dplyr::select(ptm, .data$object_, .data$triangle_) %>% 
+    dplyr::anti_join(ptm %>% dplyr::filter(.data$n %% 2 == 0) %>% 
+                       dplyr::select(.data$object_, .data$triangle_), c("object_", "triangle_"))
   tXv <- tibble::tibble(vertex_ = vertex[["vertex_"]][t(RTri$T)], 
                         triangle_ = rep(triangle[["triangle_"]], each = 3))
   

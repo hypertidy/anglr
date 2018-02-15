@@ -5,7 +5,7 @@
 \alias{anglr.SpatialMultiPoints}
 \alias{anglr.SpatialPoints}
 \alias{anglr}
-\alias{anglr.RasterLayer}
+\alias{anglr.BasicRaster}
 \alias{anglr}
 \alias{anglr.trip}
 \alias{anglr.SpatialLines}
@@ -20,7 +20,7 @@
 \method{anglr}{SpatialPoints}(x, z = NULL, ..., type = NULL,
   max_area = NULL)
 
-\method{anglr}{RasterLayer}(x, z = NULL, ..., na.rm = TRUE, type = NULL,
+\method{anglr}{BasicRaster}(x, z = NULL, ..., na.rm = TRUE, type = NULL,
   max_area = NULL)
 
 \method{anglr}{trip}(x, z = NULL, ..., type = NULL, max_area = NULL)

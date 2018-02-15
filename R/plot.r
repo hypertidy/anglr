@@ -7,9 +7,7 @@
 #' @return qmesh
 #' @export
 #'
-#' @examples
-#' example(anglr.RasterLayer)
-#' plot(w)
+#' @seealso anglr.RasterLayer
 plot.quad_mesh <- function(x, ..., add = FALSE) {
   ## etc blah
   ob <- mkq_3d()
