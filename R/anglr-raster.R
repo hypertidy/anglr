@@ -12,7 +12,7 @@
 #' w <- raster(volcano)
 #' plot(anglr(w/300))
 #' 
-anglr.RasterLayer <-function (x, z = NULL, ..., na.rm = TRUE, type = NULL, max_area = NULL) {
+anglr.BasicRaster <- function(x, z = NULL, ..., na.rm = TRUE, type = NULL, max_area = NULL) {
   if (!is.null(max_area)) {
     pixlen <- sqrt(max_area)
     fact <- ceiling(mean(raster::res(x)/pixlen))
