@@ -1,3 +1,10 @@
+#' @noRd
+#' @examples 
+#' library(anglr)
+#' library(raster)
+#' r <- raster(volcano)
+#' a <- anglr(r)
+#' x <- quadToTriangle(a)
 quadToTriangle <- function(x) {
   v <- x$v
   v$vertex_ <- seq(nrow(v))
@@ -12,8 +19,3 @@ quadToTriangle <- function(x) {
   x
 }
 
-library(anglr)
-library(raster)
-r <- raster(volcano)
-a <- anglr(r)
-x <- quadToTriangle(a)
