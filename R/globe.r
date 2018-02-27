@@ -10,9 +10,8 @@
 #' @export
 #'
 #' @examples
-#' library(maptools)
-#' data(wrld_simpl)
-#' g <- globe(anglr(as(wrld_simpl, "SpatialLinesDataFrame")))
+#' data(simpleworld)
+#' g <- globe(anglr(as(simpleworld, "SpatialLinesDataFrame")))
 #' if (interactive()) {
 #'  plot(g, lwd = 3)
 #'  }

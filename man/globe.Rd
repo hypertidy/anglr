@@ -23,9 +23,8 @@ anglr object with vertices table modified
 Convert map coordinates to Geocentric (XYZ) coordinates.
 }
 \examples{
-library(maptools)
-data(wrld_simpl)
-g <- globe(anglr(as(wrld_simpl, "SpatialLinesDataFrame")))
+data(simpleworld)
+g <- globe(anglr(as(simpleworld, "SpatialLinesDataFrame")))
 if (interactive()) {
  plot(g, lwd = 3)
  }

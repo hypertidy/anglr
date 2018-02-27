@@ -4,10 +4,10 @@ context("points")
 
 ## TODO: Rename context
 library(anglr)
-library(maptools)
-data(wrld_simpl)
-pts <- as(as(wrld_simpl, "SpatialLinesDataFrame"), "SpatialPointsDataFrame")
-mpts <- as(as(wrld_simpl, "SpatialLinesDataFrame"), "SpatialMultiPointsDataFrame")
+
+data(simpleworld)
+pts <- as(as(simpleworld, "SpatialLinesDataFrame"), "SpatialPointsDataFrame")
+mpts <- as(as(simpleworld, "SpatialLinesDataFrame"), "SpatialMultiPointsDataFrame")
 test_that("points works", {
   expect_silent(anglr(pts))
 })

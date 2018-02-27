@@ -17,9 +17,8 @@
 #' @examples
 #' ## -----------------------------------------------
 #' ## POLYGONS
-#' library(maptools)
-#' data(wrld_simpl)
-#' b <- anglr(wrld_simpl)
+#' data(simpleworld)
+#' b <- anglr(simpleworld)
 #' plot(b)
 #' #if (require(rworldxtra)) {
 #'

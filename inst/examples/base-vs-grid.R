@@ -1,7 +1,6 @@
 library(rangl)
-data("wrld_simpl", package= "maptools")
 
-r <- plot(rangl(wrld_simpl))
+r <- plot(rangl(simpleworld))
 library(grid)
 
 
@@ -22,7 +21,7 @@ grid.path(x, y, id = id, gp = gpar(fill = "grey", col = NA))
 
 par(xpd = NA, mar = rep(0, 4), xaxs = "i", yaxs = "i")
 library(sp)
-system.time(plot(wrld_simpl, col = "grey", border = NA, asp = ""))
+system.time(plot(simpleworld, col = "grey", border = NA, asp = ""))
 
 
 grid.newpage()

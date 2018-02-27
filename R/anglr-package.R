@@ -36,3 +36,13 @@ NULL
 #' @docType data 
 NULL
 
+
+#' simple world 
+#' 
+#' A simple polygon map of world sovereign countries, a modified copy of
+#' the rnaturalearth counties110 (see data-raw/simpleworld.R for details). 
+#' @name simpleworld
+#' @docType data 
+#' @examples
+#' anglr(simpleworld[1:10, ])
+NULL
