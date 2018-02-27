@@ -21,8 +21,8 @@ Imports:
     spbabel (> 0.4.5),
     tibble, 
     viridis
-Suggests:
-    covr, 
+Suggests: 
+    covr,
     gibble,
     ggplot2,
     ggpolypath,
@@ -35,11 +35,12 @@ Suggests:
     rworldxtra,
     sf,
     sfdct,
-    testthat, 
+    testthat,
     tidyr,
     trip,
     knitr,
-    rmarkdown
+    rmarkdown,
+    rnaturalearth
 SystemRequirements: PROJ.4
 Encoding: UTF-8
 LazyData: true
