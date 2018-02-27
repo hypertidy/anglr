@@ -23,6 +23,7 @@ get_proj.PATH <- function(x, ...) {
 
 
 #' @importFrom silicate PATH
+#' @importFrom rlang .data
 #' @export
 anglr.PATH <- function(x, z = NULL, ..., type = NULL, max_area = NULL) {
   pr4 <- get_proj(x)

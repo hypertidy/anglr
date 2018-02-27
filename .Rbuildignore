@@ -13,3 +13,4 @@
 ^data-raw$
 ^D:\GIT\rangl\docs$
 ^inst/examples/rsconnect*
+^_pkgdown\.yml$
