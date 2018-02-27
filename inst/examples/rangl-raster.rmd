@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 Single layer rasters are supported. 
 
 ```{r, eval=FALSE}
-wrld <- rasterize(wrld_simpl, raster())
+wrld <- rasterize(simpleworld, raster())
 plot(rangl(wrld/10))
 rgl::rgl.snapshot("vignettes/readme-figure/README-raster.png"); rgl.close()
 

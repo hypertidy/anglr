@@ -1,8 +1,12 @@
 # anglr dev
 
-* big update for new silicate-based approach, thanks to Andreja Stojic for the feeback
+* Removed use of maptools wrld_simpl, replaced by in-built `simpleworld`. 
 
-* new approach for polygons now using pfft package
+* Big update for new silicate-based approach, thanks to Andreja Stojic for 
+ the feeback. 
+
+* New approach for polygons now using pfft package, identifying triangle
+ centroids by polygon. 
 
 # anglr 0.4.6
 

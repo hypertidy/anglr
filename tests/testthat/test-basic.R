@@ -20,8 +20,8 @@ test_that("holey polygons and non-holy polygons", {
   
 })
 
-library(maptools)
-data(wrld_simpl)
+
+data(simpleworld)
 test_that("simple plot", {
  b <- anglr(a)
  expect_true(!is.na(silicate::PATH(a)$meta$proj))
@@ -32,8 +32,8 @@ test_that("simple plot", {
     ## check that we work without a DataFrame
     b <- anglr(geometry(a))
       rgl::rgl.clear()
-   for (i in sample(seq(nrow(wrld_simpl)), 10)) {
-     globe(anglr(wrld_simpl[i, ]))
+   for (i in sample(seq(nrow(simpleworld)), 10)) {
+     globe(anglr(simpleworld[i, ]))
      rgl::rgl.clear()
 
  }

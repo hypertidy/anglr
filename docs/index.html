@@ -93,21 +93,15 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h1></div>
 <p>The general approach is to <code>anglr</code> your model and then plot it.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
-<span class="kw">library</span>(anglr)
-
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(anglr)
 <span class="co">#model &lt;- sf::st_read("some/shapefile.shp")</span>
 <span class="co">#model &lt;- raster::raster("some/gridraster.tif")</span>
-
 mesh &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/anglr/topics/anglr">anglr</a></span>(model)
 <span class="kw"><a href="reference/plot-anglr.html">plot</a></span>(mesh)</code></pre></div>
 <p>This is too simplistic for general use but these meshes can be used to merge disparate data into a single form, or used to convert standard spatial objects to <code>rgl</code> ready forms.</p>
 <p>An example of merging vector and raster can be seen with this.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## a global DEM
 f &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata/gebco1.tif"</span>, <span class="dt">package =</span> <span class="st">"anglr"</span>)
-## ad hoc scaling as x,y and  z are different units
-r &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/raster">raster</a></span>(f)<span class="op">/</span><span class="dv">1000</span>
-
 
 <span class="kw">library</span>(sf)
 ## North Carolina, the sf boilerplate polygon layer
@@ -117,6 +111,9 @@ nc &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumenta
 <span class="kw">library</span>(raster)
 <span class="kw">library</span>(anglr) ## devtools::install_github("hypertidy/anglr")
 
+## ad hoc scaling as x,y and  z are different units
+r &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/raster">raster</a></span>(f)<span class="op">/</span><span class="dv">1000</span>
+
 ## a relief map, triangles grouped by polygon with interpolated raster elevation 
 p_mesh &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/anglr/topics/anglr">anglr</a></span>(nc, <span class="dt">max_area =</span> <span class="fl">0.008</span>, <span class="dt">z =</span> r)
 
@@ -125,7 +122,6 @@ p_mesh &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocum
 
 <span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/scene">rgl.clear</a></span>()  ## rerun the cycle from clear to widget in browser contexts 
 <span class="kw"><a href="reference/plot-anglr.html">plot</a></span>(p_mesh) 
-<span class="co">#plot(g, color = "white") </span>
 <span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/bg">bg3d</a></span>(<span class="st">"black"</span>); <span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/material">material3d</a></span>(<span class="dt">specular =</span> <span class="st">"black"</span>)
 <span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/rglwidget">rglwidget</a></span>()  ## not needed if you have a local device</code></pre></div>
 <p>Here the <code>z</code> argument to <code>anglr</code> is a raster, and so once the mesh is created the <code>z_</code> coordinate of the mesh is updated by extracting values from the raster (using bilinear interpolation method). If <code>z_</code> is alternately set to a column name in the layer this is used as a contstant offset for the <code>z_</code> value, and the mesh is “separated”, by feature even if the original layer had touching neighbours. .</p>
@@ -135,7 +131,8 @@ p_mesh &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocum
 <h2 class="hasAnchor">
 <a href="#ongoing-design" class="anchor"></a>Ongoing design</h2>
 <p>The core work for translating spatial classes is done by the unspecialized ‘silicate::PATH’ function and its underlying decomposition generics.</p>
-<p><code>anglr</code> then decomposes further, from path-types to primitive-types - where “primitive” means topological primitives, vertices, line segments (edges), triangles. Crucially, polygons and lines are described by the same 1D primitives, and this is easy to do. Harder is to generate 2D primitives and for that we rely on <a href="https://www.cs.cmu.edu/~quake/triangle.html">Jonathan Richard Shewchuk’s Triangle</a>.</p>
+<p><code>anglr</code> then decomposes further, from path-types to primitive-types - where “primitive” means topological primitives, vertices, line segments (edges), triangles. Ongoing work in the <a href="https://github.com/hypertidy/silicate">silicate</a> package will support these types more fully.</p>
+<p>Crucially, polygons and lines are described by the same 1D primitives, and this is easy to do. Harder is to generate 2D primitives and for that we rely on <a href="https://www.cs.cmu.edu/~quake/triangle.html">Jonathan Richard Shewchuk’s Triangle</a>.</p>
 <p>Triangulation is with <code>RTriangle</code> package using “constrained mostly-Delaunay Triangulation” from the Triangle library, but could alternatively use <code>rgl</code> with its ear clipping algorithm, and related work is in the <code>laridae</code> project to bring CGAL facilities to R.</p>
 <p>With RTriangle we can set a max area for the triangles, so it can wrap around curves like globes and hills, and this can only be done by the addition of Steiner points. All of this takes us very far from the path-based types generally used by GIS-alikes.</p>
 </div>
@@ -207,8 +204,9 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 </ul>
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.org/hypertidy/anglr"><img src="https://travis-ci.org/hypertidy/anglr.svg?branch=master" alt="Travis-CI Build Status"></a></li>
-<li><a href="https://ci.appveyor.com/project/hypertidy/anglr"><img src="https://ci.appveyor.com/api/projects/status/github/hypertidy/anglr?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
+<li><a href="https://travis-ci.org/hypertidy/anglr"><img src="http://badges.herokuapp.com/travis/hypertidy/anglr?branch=master&amp;env=BUILD_NAME=trusty_release&amp;label=linux" alt="Travis-CI Build Status"></a></li>
+<li><a href="https://travis-ci.org/hypertidy/anglr"><img src="http://badges.herokuapp.com/travis/hypertidy/anglr?branch=master&amp;env=BUILD_NAME=osx_release&amp;label=osx" alt="Build Status"></a></li>
+<li><a href="https://ci.appveyor.com/project/mdsumner/anglr"><img src="https://ci.appveyor.com/api/projects/status/github/hypertidy/anglr?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
 <li><a href="https://cran.r-project.org/package=anglr"><img src="http://www.r-pkg.org/badges/version/anglr" alt="CRAN_Status_Badge"></a></li>
 <li><a href="https://codecov.io/github/hypertidy/anglr?branch=master"><img src="https://img.shields.io/codecov/c/github/hypertidy/anglr/master.svg" alt="Coverage Status"></a></li>
 </ul>

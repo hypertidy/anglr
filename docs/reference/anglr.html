@@ -171,16 +171,14 @@ https://github.com/hypertidy/anglr/issues/39</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>raster</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: sp</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘raster’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:dplyr’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    select</span></div><div class='input'><span class='no'>w</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/raster/topics/raster'>raster</a></span>(<span class='no'>volcano</span>)
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>raster</span>)
+<span class='no'>w</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/raster/topics/raster'>raster</a></span>(<span class='no'>volcano</span>)
 <span class='fu'><a href='plot-anglr.html'>plot</a></span>(<span class='fu'>anglr</span>(<span class='no'>w</span>/<span class='fl'>300</span>))
 
 <span class='co'>## -----------------------------------------------</span>
 <span class='co'>## POLYGONS</span>
-<span class='fu'>library</span>(<span class='no'>maptools</span>)</div><div class='output co'>#&gt; <span class='message'>Checking rgeos availability: TRUE</span></div><div class='input'><span class='fu'>data</span>(<span class='no'>wrld_simpl</span>)
-<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'>anglr</span>(<span class='no'>wrld_simpl</span>)
+<span class='fu'>data</span>(<span class='no'>simpleworld</span>)
+<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'>anglr</span>(<span class='no'>simpleworld</span>)
 <span class='fu'><a href='plot-anglr.html'>plot</a></span>(<span class='no'>b</span>)
 <span class='co'>#if (require(rworldxtra)) {</span>
 
@@ -221,10 +219,8 @@ https://github.com/hypertidy/anglr/issues/39</p>
 <span class='co'>#rgl.clear(); plot(anglr(x, z = topo/1000, type = "LINE"));</span>
 <span class='co'>## -----------------------------------------------</span>
 <span class='co'>## RGL TRIANGLES</span>
-<span class='fu'>library</span>(<span class='no'>rgl</span>)</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘rgl’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:anglr’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    triangulate</span></div><div class='input'>
+<span class='fu'>library</span>(<span class='no'>rgl</span>)
+
 <span class='no'>dod</span> <span class='kw'>&lt;-</span> <span class='fu'>anglr</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/rgl/topics/mesh3d'>dodecahedron3d</a></span>(<span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"cyan"</span>))
 <span class='no'>octo</span> <span class='kw'>&lt;-</span> <span class='fu'>anglr</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/rgl/topics/matrices'>translate3d</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/rgl/topics/mesh3d'>octahedron3d</a></span>(<span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"blue"</span>), <span class='fl'>6</span>, <span class='fl'>0</span>, <span class='fl'>0</span>))
 <span class='fu'><a href='plot-anglr.html'>plot</a></span>(<span class='no'>dod</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/reexports'>viridis</a></span>(<span class='fl'>5</span>)[<span class='fl'>1</span>], <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)

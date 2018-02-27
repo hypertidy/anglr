@@ -23,12 +23,9 @@ Usage
 The general approach is to `anglr` your model and then plot it.
 
 ``` r
-
 library(anglr)
-
 #model <- sf::st_read("some/shapefile.shp")
 #model <- raster::raster("some/gridraster.tif")
-
 mesh <- anglr(model)
 plot(mesh)
 ```
@@ -40,9 +37,6 @@ An example of merging vector and raster can be seen with this.
 ``` r
 ## a global DEM
 f <- system.file("extdata/gebco1.tif", package = "anglr")
-## ad hoc scaling as x,y and  z are different units
-r <- raster::raster(f)/1000
-
 
 library(sf)
 ## North Carolina, the sf boilerplate polygon layer
@@ -52,6 +46,9 @@ nc <- read_sf(system.file("shape/nc.shp", package="sf"))
 library(raster)
 library(anglr) ## devtools::install_github("hypertidy/anglr")
 
+## ad hoc scaling as x,y and  z are different units
+r <- raster::raster(f)/1000
+
 ## a relief map, triangles grouped by polygon with interpolated raster elevation 
 p_mesh <- anglr(nc, max_area = 0.008, z = r)
 
@@ -60,7 +57,6 @@ library(rgl)
 
 rgl.clear()  ## rerun the cycle from clear to widget in browser contexts 
 plot(p_mesh) 
-#plot(g, color = "white") 
 bg3d("black"); material3d(specular = "black")
 rglwidget()  ## not needed if you have a local device
 ```
@@ -76,7 +72,9 @@ Ongoing design
 
 The core work for translating spatial classes is done by the unspecialized 'silicate::PATH' function and its underlying decomposition generics.
 
-`anglr` then decomposes further, from path-types to primitive-types - where "primitive" means topological primitives, vertices, line segments (edges), triangles. Crucially, polygons and lines are described by the same 1D primitives, and this is easy to do. Harder is to generate 2D primitives and for that we rely on [Jonathan Richard Shewchuk's Triangle](https://www.cs.cmu.edu/~quake/triangle.html).
+`anglr` then decomposes further, from path-types to primitive-types - where "primitive" means topological primitives, vertices, line segments (edges), triangles. Ongoing work in the [silicate](https://github.com/hypertidy/silicate) package will support these types more fully.
+
+Crucially, polygons and lines are described by the same 1D primitives, and this is easy to do. Harder is to generate 2D primitives and for that we rely on [Jonathan Richard Shewchuk's Triangle](https://www.cs.cmu.edu/~quake/triangle.html).
 
 Triangulation is with `RTriangle` package using "constrained mostly-Delaunay Triangulation" from the Triangle library, but could alternatively use `rgl` with its ear clipping algorithm, and related work is in the `laridae` project to bring CGAL facilities to R.
 
