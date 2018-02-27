@@ -8,8 +8,10 @@ output:
     fig_height: 7
 vignette: >
   %\VignetteIndexEntry{Examples with anglr}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 
@@ -57,6 +59,8 @@ rglwidget()
 
 
 ```{r, webgl=TRUE}
+rgl::rgl.clear()
+
 sids <- raster::shapefile(system.file("shapes/sids.shp", package="maptools"))
 projection(sids) <- "+proj=longlat +ellps=clrk66"
 
@@ -71,15 +75,18 @@ plot(globe(smesh))
 mgl <- anglr(gl)
 mgl$o$color_ <- "black"
 plot(globe(mgl), lwd = 2)
+rgl::rglwidget()
 ```
 
 
 
 ## Holes are (trivially) supported. 
 
-It's trivial to have "holes", because there are no holes, because we have a true surface, composed of 2D primitives (triangles). 
+It's trivial to have *holes*, because there are no holes, we have a true surface, composed of 2D primitives (triangles). 
 
 ```{r,eval=TRUE, webgl=TRUE}
+rgl::rgl.clear()
+
 library(spbabel)
 data(holey)
 
@@ -88,6 +95,7 @@ sph <- sp(holey)
 
 glh <- anglr(sph)
 plot(glh)
+rgl::rglwidget()
 ```
 
 
@@ -97,8 +105,10 @@ plot(glh)
 
 
 ```{r, webgl=TRUE}
+rgl::rgl.clear()
 linehouse <- as(sph, "SpatialLinesDataFrame")
 plot(anglr(linehouse))
+rgl::rglwidget()
 ```
 
 
@@ -107,8 +117,11 @@ plot(anglr(linehouse))
 ## Globe lines
 
 ```{r, webgl=TRUE}
+rgl::rgl.clear()
+
 lmesh <- anglr(as(wrld_simpl, "SpatialLinesDataFrame"))
 plot(globe(lmesh))
+rgl::rglwidget()
 ```
 
 
@@ -120,13 +133,14 @@ plot(globe(lmesh))
 Rgl mesh3d objects that use "triangle" primitives are supported. 
 
 ```{r,webgl=TRUE}
-library(rgl)
+rgl::rgl.clear()
 
 dod <- anglr(dodecahedron3d(col = "cyan"))
 octo <- anglr(translate3d(octahedron3d(col = "blue"), 6, 0, 0))
 plot(dod, col = viridis::viridis(5)[1], alpha = 0.3)
 plot(octo, col = viridis::viridis(5)[5], alpha = 0.3)
 bg3d("grey")
+rgl::rglwidget()
 ```
 
 
@@ -141,12 +155,15 @@ And points work!  (Don't laugh).
 
 
 ```{r, webgl=TRUE}
+rgl::rgl.clear()
+
 library(anglr)
 library(maptools)
 data(wrld_simpl)
 mpts <- as(as(wrld_simpl, "SpatialLinesDataFrame"), "SpatialMultiPointsDataFrame")
 plot(anglr(mpts))
 rgl::view3d(theta = 25, phi = 3)
+rgl::rglwidget()
 ```
 
 
@@ -154,7 +171,14 @@ rgl::view3d(theta = 25, phi = 3)
 
 The trip package includes  a 'walrus818' data set courtesy of Anthony Fischbach.  Zoom around and see if you can find them. 
 
+
+Here we also use the *finite element* aspect of our topology 
+representation. We can forget about complicated algorithms to 
+cut and splice lines and just throw away triangles south of a chosen latitude. (Still needs work, but we've proved it works well enough. )
+
+
 ```{r, webgl=TRUE}
+rgl::rgl.clear()
 library(trip)
 library(anglr)
 data(walrus818)
@@ -165,21 +189,58 @@ gr <- graticule(lats = seq(40, 85, by = 5), ylim = c(35, 89.5), proj = prj)
 library(maptools)
 data(wrld_simpl)
 
-w <- spTransform(subset(wrld_simpl, coordinates(wrld_simpl)[,2] > -70),  prj)
-library(graticule)
+w <- spTransform(subset(wrld_simpl, coordinates(wrld_simpl)[,2] > 10),  prj)
 walrus <- spTransform(walrus818, prj)
 
 gr$color_ <- "black"
 rgl::par3d(windowRect = c(100, 100, 912 + 100, 912 +100))
 plot(anglr(gr))
 w$color_ <- sample(viridis::inferno(nrow(w)))
-plot(anglr(w), specular = "black")
+wmap <- anglr(w)
+tXv <- wmap$tXv %>% dplyr::inner_join(wmap$v)
+
+keep <- tibble::tibble(triangle_ = unique(tXv$triangle_[rgdal::project(as.matrix(tXv[c("x_", "y_")]), prj, inv = TRUE)[,2] > 35]))
+wmap$t <- wmap$t %>% dplyr::inner_join(keep)
+## trim by primitives
+
+## we mashed the graph and bit but it works, later we
+## can propagate the filter ...
+plot(wmap, specular = "black")
 plot(anglr(walrus))
 um <- structure(c(0.934230506420135, 0.343760699033737, 0.0950899347662926, 
                   0, -0.302941381931305, 0.905495941638947, -0.297159105539322, 
                   0, -0.188255190849304, 0.24880850315094, 0.950081348419189, 0, 
                   0, 0, 0, 1), .Dim = c(4L, 4L))
 par3d(userMatrix = um)
+rgl::rglwidget()
+```
+
+
+
+A polygon layer may be overlaid with a raster layer using the `z` argument. 
+
+```{r}
+rgl::rgl.clear()
+topo <- raster::raster(system.file("extdata", "gebco1.tif", package = "anglr"))
+poly <- subset(wrld_simpl, NAME == "India")
+prj <- "+proj=laea +lon_0=80 +lat_0=45 +datum=WGS84"
+poly_z <- anglr(poly, z = topo * 68, max_area = 0.02)
+poly_z$v[c("x_", "y_")] <- rgdal::project(as.matrix(poly_z$v[c("x_", "y_")]), prj)
+poly_z$meta$proj <- prj
+plot(poly_z)
+rgl::rglwidget()
+```
+
+A discrete transfer of `z` values can be used by nominating a 
+numeric column in the attributes. We could easily do extrude building footprints with this. 
+
+```{r}
+data("polymesh", package = "silicate")
+rgl::rgl.clear()
+polymesh$val <- abs(polymesh$layer - 8) * 0.01
+plot(anglr(polymesh, z = "val"))
+rgl::rglwidget()
 
 ```
+
 
