@@ -23,7 +23,7 @@ Imports:
     viridis
 Suggests: 
     covr,
-    gibble,
+    gibble (> 0.0.2),
     ggplot2,
     ggpolypath,
     graticule,

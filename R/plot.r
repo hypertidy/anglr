@@ -99,7 +99,7 @@ plot.linemesh <- function(x,  ..., add = FALSE) {
     
     vb <- t(cbind(x$v$x_, x$v$y_, 0))
   }
-  vv <- x$v[, "vertex_"]; vv$row_n <- seq(nrow(vv))
+  vv <- x$v["vertex_"]; vv$row_n <- seq(nrow(vv))
   pindex <- dplyr::inner_join(dplyr::inner_join(x$o[, c("object_", "color_")], x$l), 
                               x$lXv)
   
