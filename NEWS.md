@@ -1,5 +1,7 @@
 # anglr dev
 
+* big update for new silicate-based approach, thanks to Andreja Stojic for the feeback
+
 * new approach for polygons now using pfft package
 
 # anglr 0.4.6

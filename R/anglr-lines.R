@@ -23,23 +23,12 @@ anglr_lines <- function(tabs,   ...) {
   tabs$v <- dplyr::distinct(allverts, .data$uvert, .keep_all = TRUE)
   tabs$o <- tabs$object
   tabs$object <- tabs$path <- tabs$vertex <- tabs$path_link_vertex <- NULL
+
+  tabs <- tabs[c("o", "l", "lXv", "v", "meta")]
+  attr(tabs, "join_ramp") <- c("o", "l", "lXv", "v")
   class(tabs) <- "linemesh"
   tabs
 }
-
-
-#anglr_lines <- function(tabs, ...) {
-  # outlist <- line_mesh_map_table1(tabs)
-  # ## renormalize the vertices
-  # allverts <- dplyr::inner_join(outlist$lXv, outlist$v, "vertex_")
-  # #browser()
-  # allverts$uvert <- as.integer(factor(paste(allverts$x_, allverts$y_, sep = "_")))
-  # allverts$vertex_ <- spbabel:::id_n(length(unique(allverts$uvert)))[allverts$uvert]
-  # outlist$lXv <- allverts[, c("segment_", "vertex_")]
-  # outlist$v <- dplyr::distinct(allverts, .data$uvert, .keep_all = TRUE)
-  # class(outlist) <- "linemesh"
-  # outlist
-#}
 
 
 
