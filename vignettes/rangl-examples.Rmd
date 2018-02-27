@@ -27,7 +27,7 @@ collapse = TRUE,
 comment = "#>")
 rgl::par3d(windowRect = c(100, 100, 512 + 100, 512 +100))
 library(raster)
-library(maptools)
+
 ```
 
 # Introduction
@@ -42,16 +42,22 @@ Get some maps and plot in 3D - in plane view, or globe view.
 
 
 
-```{r,eval=TRUE, webgl=TRUE}
+Set up a simple world countries data set. 
 
+```{r,eval=TRUE, webgl=TRUE}
 library(rgl)
-library(maptools)
-data(wrld_simpl)
+simpleworld <- rnaturalearth::countries110
 library(raster)
 library(sf)
 ## convert to triangles and plot
 library(anglr)
-cmesh <- anglr(st_as_sf(wrld_simpl))
+```
+
+```{r,include=FALSE,echo=FALSE}
+simpleworld <- rgeos::gBuffer(simpleworld, width = 0, byid = TRUE)
+```
+```{r}
+cmesh <- anglr(simpleworld)
 plot(cmesh)
 rglwidget()
 ```
@@ -119,7 +125,7 @@ rgl::rglwidget()
 ```{r, webgl=TRUE}
 rgl::rgl.clear()
 
-lmesh <- anglr(as(wrld_simpl, "SpatialLinesDataFrame"))
+lmesh <- anglr(as(simpleworld, "SpatialLinesDataFrame"))
 plot(globe(lmesh))
 rgl::rglwidget()
 ```
@@ -158,9 +164,8 @@ And points work!  (Don't laugh).
 rgl::rgl.clear()
 
 library(anglr)
-library(maptools)
-data(wrld_simpl)
-mpts <- as(as(wrld_simpl, "SpatialLinesDataFrame"), "SpatialMultiPointsDataFrame")
+
+mpts <- as(as(simpleworld, "SpatialLinesDataFrame"), "SpatialMultiPointsDataFrame")
 plot(anglr(mpts))
 rgl::view3d(theta = 25, phi = 3)
 rgl::rglwidget()
@@ -186,10 +191,9 @@ data(walrus818)
 library(graticule)
 prj <-"+proj=laea +lon_0=0 +lat_0=90 +ellps=WGS84"
 gr <- graticule(lats = seq(40, 85, by = 5), ylim = c(35, 89.5), proj = prj)
-library(maptools)
-data(wrld_simpl)
 
-w <- spTransform(subset(wrld_simpl, coordinates(wrld_simpl)[,2] > 10),  prj)
+
+w <- spTransform(subset(simpleworld, coordinates(simpleworld)[,2] > 10),  prj)
 walrus <- spTransform(walrus818, prj)
 
 gr$color_ <- "black"
@@ -222,7 +226,7 @@ A polygon layer may be overlaid with a raster layer using the `z` argument.
 ```{r}
 rgl::rgl.clear()
 topo <- raster::raster(system.file("extdata", "gebco1.tif", package = "anglr"))
-poly <- subset(wrld_simpl, NAME == "India")
+poly <- subset(simpleworld, sovereignt == "India")
 prj <- "+proj=laea +lon_0=80 +lat_0=45 +datum=WGS84"
 poly_z <- anglr(poly, z = topo * 68, max_area = 0.02)
 poly_z$v[c("x_", "y_")] <- rgdal::project(as.matrix(poly_z$v[c("x_", "y_")]), prj)
