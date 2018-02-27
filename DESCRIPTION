@@ -16,7 +16,7 @@ Imports:
     rgl,
     rlang,
     RTriangle,
-    silicate (>= 0.0.3.9003),
+    silicate (>= 0.1.0.9001),
     sp,
     spbabel (> 0.4.5),
     tibble, 

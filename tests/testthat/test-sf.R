@@ -14,6 +14,6 @@ test_that("anglr sf works", {
   #anglr(sf_data_zoo$multipoint) 
   #anglr(sf_data_zoo$linestring) 
   #anglr(sf_data_zoo$multilinestring)  
-  anglr(sf_data_zoo$polygon)  
-  anglr(sf_data_zoo$multipolygon)  
+  expect_that(anglr(sf_data_zoo$polygon), is_a("trimesh"))
+  expect_that(anglr(sf_data_zoo$multipolygon)  , is_a("trimesh"))
 })

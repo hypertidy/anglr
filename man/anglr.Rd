@@ -8,8 +8,8 @@
 \alias{anglr.BasicRaster}
 \alias{anglr}
 \alias{anglr.trip}
-\alias{anglr.SpatialLines}
-\alias{anglr.SpatialPolygons}
+\alias{anglr}
+\alias{anglr.default}
 \alias{anglr}
 \alias{anglr.mesh3d}
 \title{Raster anglr}
@@ -25,11 +25,7 @@
 
 \method{anglr}{trip}(x, z = NULL, ..., type = NULL, max_area = NULL)
 
-\method{anglr}{SpatialLines}(x, z = NULL, ..., type = NULL,
-  max_area = NULL)
-
-\method{anglr}{SpatialPolygons}(x, z = NULL, ..., type = NULL,
-  max_area = NULL)
+\method{anglr}{default}(x, z = NULL, ..., type = NULL, max_area = NULL)
 
 anglr(x, ...)
 
