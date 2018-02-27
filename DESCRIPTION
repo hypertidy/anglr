@@ -1,7 +1,7 @@
 Package: anglr
 Type: Package
-Title: Elevating Spatial Data With Topology
-Version: 0.4.6
+Title: Elevating Spatial Data with Topology
+Version: 0.4.6.9003
 Authors@R: c(person("Michael D.","Sumner", role = c("aut", "cre"), email ="mdsumner@gmail.com"), 
              person("Miles", "McBain", role = c("ctb")))
 Description: Tidy topological approaches to spatial data, illustrated with plotting using Open Graphics Library. 

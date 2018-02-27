@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Elevating Spatial Data With Topology • anglr</title>
+<title>Elevating Spatial Data with Topology • anglr</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
@@ -128,6 +128,7 @@ p_mesh &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocum
 <span class="co">#plot(g, color = "white") </span>
 <span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/bg">bg3d</a></span>(<span class="st">"black"</span>); <span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/material">material3d</a></span>(<span class="dt">specular =</span> <span class="st">"black"</span>)
 <span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/rglwidget">rglwidget</a></span>()  ## not needed if you have a local device</code></pre></div>
+<p>Here the <code>z</code> argument to <code>anglr</code> is a raster, and so once the mesh is created the <code>z_</code> coordinate of the mesh is updated by extracting values from the raster (using bilinear interpolation method). If <code>z_</code> is alternately set to a column name in the layer this is used as a contstant offset for the <code>z_</code> value, and the mesh is “separated”, by feature even if the original layer had touching neighbours. .</p>
 <p>Multiple multi-part objects are decomposed to a set of related, linked tables. Object identity is maintained with attribute metadata and this is carried through to colour and other aesthetics in 3D plots.</p>
 <p>Plot methods take those tables and generate the “indexed array” structures needed for ‘rgl’. In this way we get the best of both worlds of “GIS” and “3D models”.</p>
 <div id="ongoing-design" class="section level2">
@@ -221,7 +222,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

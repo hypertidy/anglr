@@ -4,6 +4,23 @@ language: R
 sudo: required
 cache: packages
 
+matrix:
+    include:
+        - os: linux
+          r: release
+          dist: trusty # 14.04
+          env:
+           - BUILD_NAME=trusty_release
+           - DETAILS="release build"
+        - os: osx
+          r: release
+          before_install: ''
+          disable_homebrew: true
+          env:
+           - BUILD_NAME=osx_release
+           - DETAILS="release build"
+
+
 
 before_install:
   - sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable --yes
@@ -11,13 +28,6 @@ before_install:
   - sudo apt-get install --yes libv8-dev libudunits2-dev libproj-dev libgeos-dev libgeos++-dev libgdal-dev netcdf-bin
   - export RGL_USE_NULL=TRUE
   
-r_packages:
- - rgdal
- - maptools
- - sf
- - trip
- - rgeos
- 
 # We use clang, --without-libtool and --with-debug for faster build
 compiler:
   - clang
