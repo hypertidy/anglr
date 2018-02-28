@@ -9,7 +9,9 @@ anglr.trip <- function (x, z = NULL, ..., type = NULL, max_area = NULL) {
   v <- x$path_link_vertex %>% inner_join(x$vertex)
   
   if (inherits(z, "BasicRaster")) {
-    v$z_ <- raster::extract(x, as.matrix(v[c("x_", "y_")]))
+    xy <- as.matrix(v[c("x_", "y_")])
+    if (!grepl("longlat", x$meta$proj)) xy <- rgdal::project(xy, x$meta$proj, inv = TRUE)
+    v$z_ <- raster::extract(z, xy)
   } 
   if (is.character(z)) {
     if (z %in% names(v)) {
