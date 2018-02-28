@@ -111,6 +111,7 @@ rgl::rglwidget()
 
 ```{r, webgl=TRUE}
 rgl::rgl.clear()
+library(dplyr)
 linehouse <- as(sph, "SpatialLinesDataFrame")
 plot(anglr(linehouse))
 rgl::rglwidget()

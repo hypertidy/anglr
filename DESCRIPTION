@@ -7,10 +7,10 @@ Authors@R: c(person("Michael D.","Sumner", role = c("aut", "cre"), email ="mdsum
 Description: Tidy topological approaches to spatial data, illustrated with plotting using Open Graphics Library. 
 License: GPL-3
 Depends: R (>= 3.3.2)
-Imports:
+Imports: 
     dplyr,
     methods,
-    pfft, 
+    pfft,
     proj4,
     raster,
     rgl,
@@ -19,8 +19,9 @@ Imports:
     silicate (>= 0.1.0.9001),
     sp,
     spbabel (> 0.4.5),
-    tibble, 
-    viridis
+    tibble,
+    viridis,
+    unjoin
 Suggests: 
     covr,
     gibble (> 0.0.2),
