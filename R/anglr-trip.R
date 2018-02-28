@@ -24,7 +24,7 @@ anglr.trip <- function (x, z = NULL, ..., type = NULL, max_area = NULL) {
     
   }
   ## renormalize
-  vv <- unjoin::unjoin(v, x_, y_, z_)
+  vv <- unjoin::unjoin(v, .data$x_, .data$y_, .data$z_)
   vertex <- vv$.idx0
   path_link_vertex <- vv$data
   vertex$vertex_ <- silicate::sc_uid(nrow(vertex))
