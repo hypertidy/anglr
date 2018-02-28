@@ -1,5 +1,19 @@
 # anglr dev
 
+* Now re-exporting the magrittr pipe. 
+
+* Added `gebco1` as a built-in global elevation data set, to avoid 
+ reading from GeoTIFF. 
+
+* Internal function `anglr_lines` is now deprecated, and points to 
+ the silicate and plot3d approach. 
+ 
+* Added `copy_down` generic to dispatch on `sc` and subclasses, to  
+ transfer raw values, object column data, or raster values to vertices. 
+
+* Added `plot3d` methods to (eventually) replace `plot(anglr(x))` and `linemesh with `plot3d(silicate_model)` - currently only `SC` supported
+ and plots as (object-grouped) edges. Returns `rgl` form silently. 
+
 * Removed use of maptools wrld_simpl, replaced by in-built `simpleworld`. 
 
 * Big update for new silicate-based approach, thanks to Andreja Stojic for 
