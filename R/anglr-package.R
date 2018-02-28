@@ -46,3 +46,26 @@ NULL
 #' @examples
 #' anglr(simpleworld[1:10, ])
 NULL
+
+
+#' simple world elevation raster
+#' 
+#' A simple raster map of world topography, elevation relative to sea level in metres. Source
+#' data is Gebco 2014, converted to a much reduced 1 degree resolution global map.  
+#' @name gebco1
+#' @docType data 
+#' @examples
+#' data("gebco1", package = "anglr")
+#' library(silicate)
+#' laea <- "+proj=laea +lon_0=147 +lat_0=-42"
+#' x <- SC(simpleworld) %>% copy_down(gebco1)
+#' plot3d(x); rgl::aspect3d(1, 1, 0.07);rgl::rglwidget()
+#' 
+#' ## WARNING DON'T RUN THIS, it'll be fixed soon
+#' #x$vertex[c("x_", "y_")] <- proj4::ptransform(as.matrix(x$vertex[c("x_", "y_")]) * pi/180, 
+#'#   x$meta$proj, laea)
+#'# qm <- quadmesh::quadmesh(raster::aggregate(gebco1, fact = 4)); 
+#' #qm$vb[1:2, ] <- proj4::ptransform(t(qm$vb[1:2, ]), 
+#'#    x$meta$proj, laea)
+#'# plot3d(x); rgl::aspect3d(1, 1, 0.01); # rgl::rglwidget()
+NULL

@@ -1,4 +1,7 @@
 anglr_lines <- function(tabs,   ...) {
+  .Deprecated(new = "silicate::SC or silicate::TRI, and plot3d.SC", 
+              package = "anglr", 
+              old = "anglr(<line-topology>)")
   tabs$vertex$countingIndex <- seq_len(nrow(tabs$vertex))
   nonuq <- dplyr::inner_join(tabs$path_link_vertex, tabs$vertex, "vertex_")
   
