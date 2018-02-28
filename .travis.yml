@@ -3,7 +3,7 @@
 language: R
 sudo: required
 cache: packages
-
+warnings_are_errors: false
 
 addons:
   apt:
@@ -35,9 +35,6 @@ matrix:
            - DETAILS="release build"
 
 
-# We use clang, --without-libtool and --with-debug for faster build
-compiler:
-  - clang
 
 after_success:
   - Rscript -e 'covr::codecov()'
