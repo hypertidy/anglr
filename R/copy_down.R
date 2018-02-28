@@ -70,3 +70,15 @@ copy_down.PATH <- function(x, z = NULL, ..., .id = "z_") {
   }
   x
 }
+#' @name copy_down
+#' @export
+copy_down.TRI <- function(x, z = NULL, ..., .id = "z_") {
+  stopifnot(.id %in% names(x$object))
+  if (is.character(z)) {
+    ## we need the join_ramp
+    dmap <- x$object[c(z, "object_")] %>% 
+      dplyr::inner_join(x$triangle)
+##    WIP this is way trickier because we have to split the vertices again
+    }
+  x
+}
