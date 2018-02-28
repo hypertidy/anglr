@@ -1,6 +1,42 @@
 #' @name anglr
 #' @export
 anglr.trip <- function (x, z = NULL, ..., type = NULL, max_area = NULL) {
+  x <- silicate::PATH(x)
+  ## denormalize
+  
+  if (!is.null(z)) {
+    x$vertex$z_ <- 0
+  v <- x$path_link_vertex %>% inner_join(x$vertex)
+  
+  if (inherits(z, "BasicRaster")) {
+    v$z_ <- raster::extract(x, as.matrix(v[c("x_", "y_")]))
+  } 
+  if (is.character(z)) {
+    if (z %in% names(v)) {
+      message(sprintf("using vertex %s as z_", z))
+      v$z_ <- v[[z]]
+    } else if (z %in% names(x$object)){
+      message("object z_ not supported yet")
+      
+    }
+    
+  }
+  ## renormalize
+  vv <- unjoin::unjoin(v, x_, y_, z_)
+  vertex <- vv$.idx0
+  path_link_vertex <- vv$data
+  vertex$vertex_ <- silicate::sc_uid(nrow(vertex))
+  path_link_vertex$vertex_ <- vertex$vertex_[match(path_link_vertex$.idx0, vertex$.idx0)]
+  vertex$.idx0 <- NULL
+  path_link_vertex$.idx0 <- NULL
+  x$vertex <- vertex
+  x$path_link_vertex <- path_link_vertex
+  }
+  x$path$type <- "line"
+  
+  anglr(x)
+}
+anglr_oldtrip <- function (x, z = NULL, ..., type = NULL, max_area = NULL) {
     ## this is just a copy of the lines version for now
     ## next step is to put all the attributes on the v table
     pr4 <- proj4string(x)
