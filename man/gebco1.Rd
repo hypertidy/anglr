@@ -12,14 +12,16 @@ data is Gebco 2014, converted to a much reduced 1 degree resolution global map.
 data("gebco1", package = "anglr")
 library(silicate)
 laea <- "+proj=laea +lon_0=147 +lat_0=-42"
-x <- SC(simpleworld) \%>\% copy_down(gebco1)
+longlat <- "+init=epsg:4326"
+x <- SC(simpleworld) \%>\% copy_down(gebco1 + 500)
 plot3d(x); rgl::aspect3d(1, 1, 0.07);rgl::rglwidget()
 
-## WARNING DON'T RUN THIS, it'll be fixed soon
-#x$vertex[c("x_", "y_")] <- proj4::ptransform(as.matrix(x$vertex[c("x_", "y_")]) * pi/180, 
-#   x$meta$proj, laea)
-# qm <- quadmesh::quadmesh(raster::aggregate(gebco1, fact = 4)); 
-#qm$vb[1:2, ] <- proj4::ptransform(t(qm$vb[1:2, ]), 
-#    x$meta$proj, laea)
-# plot3d(x); rgl::aspect3d(1, 1, 0.01); # rgl::rglwidget()
+## WARNING: SC doesn't have meta yet ...
+## this is a lossless transformation of raster and vector to a projected
+## 3D scene
+x$vertex[c("x_", "y_")] <- proj4::ptransform(as.matrix(x$vertex[c("x_", "y_")]) * pi/180, 
+ longlat, laea)
+qm <- quadmesh::quadmesh(raster::aggregate(gebco1, fact = 4)); 
+qm$vb[1:2, ] <- t(proj4::ptransform(t(qm$vb[1:2, ]) * pi/180, longlat, laea))[1:2, ]
+plot3d(x); shade3d(qm, col = "white");  rgl::aspect3d(1, 1, 0.4); rgl::rglwidget()
 }
