@@ -42,10 +42,10 @@ copy_down.sc <- function(x, z = NULL, ..., .id = "z_") {
     p1 <- get_proj(x)
     p2 <- get_proj(z)
 
-    if (!anyNA(c(p1, p2)) && !(p1 == p2)) {
-      message("transforming model vertices to raster coordinate system")
-      xy <- proj4::ptransform(xy * pi/180, p1, p2, silent = TRUE)
-    }
+    #if (!anyNA(c(p1, p2)) && !(p1 == p2)) {
+    #  message("transforming model vertices to raster coordinate system")
+    #  xy <- proj4::ptransform(xy * pi/180, p1, p2, silent = TRUE)
+    #}
     z <- raster::extract(z[[1L]], xy, method = "bilinear")
   }
   if (is.null(z)) {
