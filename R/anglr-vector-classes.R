@@ -8,7 +8,7 @@
 get_proj <- function(x, ...) UseMethod("get_proj")
 get_proj.default <- function(x, ...) {
   mt <- try(x[["meta"]], silent = TRUE)
-  if (inherits(mt, "data.frame")) return(mt[["meta"]][["proj"]])
+  if (inherits(mt, "data.frame")) return(mt[["proj"]])
   op <- options(warn = -1)
   on.exit(op)
   rp <- try(raster::projection(x), silent = TRUE)
