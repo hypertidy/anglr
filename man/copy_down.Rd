@@ -52,5 +52,10 @@ No checking is done on the type of the result, and so there's nothing to stop th
 to expand out values, and nothing to stop the use of non numeric values being copied down. It's your model.
 }
 \examples{
-
+library(raster)
+r <- raster(volcano)
+cl <- silicate::SC(rasterToContour(r))
+plot3d(copy_down(cl, r)); rgl::rglwidget()
+## looks funny?
+auto_3d(z = 15); rgl::rglwidget()
 }
