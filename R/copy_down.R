@@ -27,7 +27,12 @@
 #' @export
 #'
 #' @examples
-#' 
+#' library(raster)
+#' r <- raster(volcano)
+#' cl <- silicate::SC(rasterToContour(r))
+#' plot3d(copy_down(cl, r)); rgl::rglwidget()
+#' ## looks funny?
+#' auto_3d(z = 15); rgl::rglwidget()
 copy_down <- function(x, z = NULL, ..., .id = "z_") {
   stopifnot(is.character(.id))
   UseMethod("copy_down")
