@@ -35,11 +35,10 @@ denorm_SEQ_addZ <- function(x, z, ..., .id = "z_") {
 ##' plot3d(x)
 ##' rgl::rglwidget()
 denorm_PRIM_addZ <- function(x, z, ..., .id = "z_") {
-  
+
   if (inherits(x, "SC")) {
     ## instances of primitives
-    priminst <- x$edge %>% inner_join(x$object_link_edge)
-    
+  priminst <- x$edge %>% inner_join(x$object_link_edge)
   priminst[["edge_"]] <- silicate::sc_uid(priminst)
   prim_long <- priminst %>% 
     gather(edge_vertex, vertex, -object_, -edge_)
