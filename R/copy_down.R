@@ -1,3 +1,21 @@
+# v <- out$tXv %>% dplyr::inner_join(out$t) %>% 
+#   dplyr::inner_join(out$o %>% dplyr::select(.data$object_, z), "object_") %>% 
+#   dplyr::inner_join(out$v %>% dplyr::select(.data$vertex_, .data$x_, .data$y_)) %>% 
+#   dplyr::select(.data$x_, .data$y_, z, .data$vertex_, .data$triangle_)
+# 
+# names(v)[names(v) == z] <- "z_"
+# names(v)[names(v) == "vertex_"] <- "old"
+# 
+# gp <- dplyr::group_indices(v,  .data$x_, .data$y_, .data$z_)
+# v$vertex_ <- silicate::sc_uid(length(unique(gp)))[gp]
+# tXv <- v %>% dplyr::select(.data$vertex_, .data$triangle_)
+# out$tXv <- tXv
+# v$old <- NULL
+# 
+# 
+
+
+
 #' Copy down values to vertices
 #'
 #' Copy down provides ways to transfer object level data values to
@@ -55,9 +73,29 @@ copy_down.sc <- function(x, z = NULL, ..., .id = "z_") {
   if (is.null(z)) {
     ## nothing required
   } else {
-    x$vertex[[.id]] <- z
-  }
+    if (length(z) == 1L) x$vertex[[.id]] <- z
+    if (length(z) == nrow(x$object)) {
+      edge_instances <- x$edge %>% inner_join(x$object_link_edge)
+      edge_instances[["edge_"]] <- silicate::sc_uid(nrow(edge_instances))
+      edge_instances <- edge_instances %>% gather(edge_vertex, vertex, -object_, -edge_)
+      edge_instances[[.id]] <- z[match(edge_instances$object_, x$object$object_)]
+      edge_instances <- edge_instances %>% inner_join(x$vertex, c("vertex" = "vertex_"))
+      edge_instances[["vertex"]] <- group_indices(edge_instances, "x_", "y_", "z_")
+    }
+  } 
+  
   x  
+}
+#' @name copy_down
+#' @export
+copy_down.SC <- function(x, z = NULL, ..., .id = "z_") {
+  dmap <- x$object[c(z, "object_")] %>% 
+    dplyr::inner_join(x$object_link_edge[c("edge_", "object_")], "object_") %>%
+    dplyr::select(z, edge_) %>% 
+    dplyr::inner_join(x$edge, "edge_")  %>% 
+    dplyr::select(z, vertex_) %>% dplyr::distinct(vertex_, .keep_all = TRUE)
+  x$vertex[[.id]] <- dmap[[z]][match(dmap$vertex_, x$vertex$vertex_)]
+  
 }
 #' @name copy_down
 #' @export
