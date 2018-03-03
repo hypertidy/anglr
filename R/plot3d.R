@@ -114,7 +114,7 @@ vindex <- match(c(t(as.matrix(pindex[c(".vertex0", ".vertex1", ".vertex2")]))), 
     rgl::rgl.clear()
   }
   #vindex <- match(unlist(v_id), x$vertex$vertex_)
-  rgl::triangles3d(vb[vindex,])
+  rgl::triangles3d(vb[vindex,], col = rep(pindex$color_, each = 3))
   if (getOption("rgl.useNULL") && interactive() && runif(1, 0, 1) > 0.96) {
     message("rgl NULL device in use, do you need to run rgl::rglwidget()?")
   }
