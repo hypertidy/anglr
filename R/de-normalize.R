@@ -9,8 +9,11 @@
 
 ## sequence/path-based works for ARC or PATH
 denorm_SEQ_addZ <- function(x, z, ..., .id = "z_") {
-  coords <- vertex_link(x) %>% dplyr::inner_join(x$vertex, "vertex_")
-  coords[[.id]] <- z
+  group <- if(inherits(x, "PATH")) "path" else "object_link_arc"
+  
+  coords <- vertex_link(x) %>% dplyr::inner_join(x$vertex, "vertex_") %>% 
+    dplyr::inner_join(x[[group]])
+  coords[[.id]] <- z[match(coords$object_, x$object$object_)]
   coords[["vertex"]] <- NULL
   data <- unjoin::unjoin(coords, x_, y_, .id, key_col = "vertex")
   x$vertex <- data$vertex
@@ -41,7 +44,7 @@ denorm_PRIM_addZ <- function(x, z, ..., .id = "z_") {
   priminst <- x$edge %>% inner_join(x$object_link_edge)
   priminst[["edge_"]] <- silicate::sc_uid(priminst)
   prim_long <- priminst %>% 
-    gather(edge_vertex, vertex, -object_, -edge_)
+    tidyr::gather(edge_vertex, vertex, -object_, -edge_)
   prim_long[[.id]] <- z[match(prim_long$object_, x$object$object_)]
   prim_long <- prim_long %>% inner_join(x$vertex, c("vertex" = "vertex_"))
   prim_long$vertex <- NULL
@@ -84,22 +87,23 @@ vertex_link.PATH <- function(x) {
   x[["path_link_vertex"]]
 } 
 ## return name of thing_link_vertex table
+
 'vertex_link<-' <- function(x, value) {
   UseMethod("vertex_link<-") 
 }
-'vertex_link<-.SC<-' <- function(x, value) {
+'vertex_link<-.SC' <- function(x, value) {
   x[["edge_link_vertex"]] <- value
   x
 } 
-'vertex_link<-.TRI<-' <- function(x, value) {
+'vertex_link<-.TRI' <- function(x, value) {
   x[["triangle_link_vertex"]] <- value
   x
 } 
-'vertex_link<-.ARC<-' <- function(x, value) {
+'vertex_link<-.ARC' <- function(x, value) {
   x[["arc_link_vertex"]] <- value
   x
 } 
-'vertex_link<-.PATH<-' <- function(x, value) {
+'vertex_link<-.PATH' <- function(x, value) {
   x[["path_link_vertex"]] <- value
   x
 } 

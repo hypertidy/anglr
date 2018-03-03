@@ -22,7 +22,8 @@ Imports:
     tibble,
     viridis,
     unjoin,
-    magrittr
+    magrittr,
+    tidyr
 Suggests: 
     covr,
     gibble (> 0.0.2),
@@ -38,7 +39,6 @@ Suggests:
     sf,
     sfdct,
     testthat,
-    tidyr,
     trip,
     knitr,
     rmarkdown,
