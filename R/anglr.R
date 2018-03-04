@@ -60,3 +60,102 @@
 anglr <- function (x, z = NULL, ..., type = NULL, max_area = NULL) {
   UseMethod("anglr")
 }
+
+
+## anglr generic will have a "type" - surface or segment
+## use this to specify or override the inferred type, and that calls anglr_lines or anglr_polys
+
+## generic will
+## get_proj
+
+
+
+
+#' @rdname anglr
+#' @importFrom dplyr %>%  arrange distinct mutate
+#' @importFrom sp geometry  over SpatialPoints proj4string CRS SpatialPolygonsDataFrame
+#' @importFrom dplyr inner_join
+#' @importFrom RTriangle pslg triangulate
+#' @importFrom spbabel map_table
+#' @importFrom tibble tibble
+#' @importFrom methods slotNames
+#' @export
+
+#' @name anglr
+#' @export
+anglr.default <- function(x, z = NULL, ..., type = NULL, max_area = NULL) {
+  ## we don't need methods for sf, Spatial etc because PATH covers those
+  anglr(PATH(x), z = z, ..., type = type, max_area = max_area)
+}
+
+
+anglr_lines <- function(tabs,   ...) {
+  .Deprecated(new = "silicate::SC or silicate::TRI, and plot3d.SC", 
+              package = "anglr", 
+              old = "anglr(<line-topology>)")
+  tabs$vertex$countingIndex <- seq_len(nrow(tabs$vertex))
+  nonuq <- dplyr::inner_join(tabs$path_link_vertex, tabs$vertex, "vertex_")
+  
+  tabs$path$object_id <- as.integer(factor(tabs$path$object_))
+  nonuq <- dplyr::inner_join(nonuq, tabs$path, "path_")
+  
+  S = do.call(rbind, lapply(split(nonuq, nonuq$path_),
+                            function(x) cbind(path2seg(x$countingIndex), x$object_id[1])))
+  tabs$vertex$countingIndex <- NULL
+  tabs$vertex$vertex_ <- silicate::sc_uid(nrow(tabs$vertex))
+  tabs$l <- tibble::tibble(segment_ = silicate::sc_uid(nrow(S)), object_ = tabs$o$object_[S[,3]])
+  
+  tabs$lXv <- tibble::tibble(segment_ = rep(tabs$l$segment_, each = 2), 
+                             vertex_ = tabs$v$vertex_[as.vector(t(S[,1:2]))])
+  
+  ## renormalize the vertices
+  allverts <- dplyr::inner_join(tabs$lXv, tabs$vertex, "vertex_")
+  #browser()
+  allverts$uvert <- as.integer(factor(paste(allverts$x_, allverts$y_, sep = "_")))
+  allverts$vertex_ <- silicate::sc_uid(length(unique(allverts$uvert)))[allverts$uvert]
+  tabs$lXv <- allverts[, c("segment_", "vertex_")]
+  tabs$v <- dplyr::distinct(allverts, .data$uvert, .keep_all = TRUE)
+  tabs$o <- tabs$object
+  tabs$object <- tabs$path <- tabs$vertex <- tabs$path_link_vertex <- NULL
+  
+  tabs <- tabs[c("o", "l", "lXv", "v", "meta")]
+  attr(tabs, "join_ramp") <- c("o", "l", "lXv", "v")
+  class(tabs) <- "linemesh"
+  tabs
+}
+
+
+
+
+#' @rdname anglr
+#' @export
+anglr.SpatialMultiPoints <- function (x, z = NULL, ..., type = NULL, max_area = NULL) {
+  pr4 <- proj4string(x)
+  if (! "data" %in% slotNames(x)) {
+    dummy <- data.frame(row_number = seq_along(x))
+    x <- sp::SpatialMultiPointsDataFrame(x, dummy, match.ID = FALSE)
+  }
+  tabs <- spbabel::map_table(x)
+  tabs$meta <- tibble::tibble(proj = pr4, x = "x_", y = "y_", ctime = format(Sys.time(), tz = "UTC"))
+  
+  class(tabs) <- "pointmesh"
+  tabs
+}
+
+
+#' @rdname anglr
+#' @export
+anglr.SpatialPoints <- function (x, z = NULL, ..., type = NULL, max_area = NULL) {
+  pr4 <- proj4string(x)
+  if (! "data" %in% slotNames(x)) {
+    dummy <- data.frame(row_number = seq_along(x))
+    x <- sp::SpatialPointsDataFrame(x, dummy, match.ID = FALSE)
+  }
+  tabs <- spbabel::map_table(x)
+  tabs$meta <- tibble::tibble(proj = pr4, x = "x_", y = "y_", ctime = format(Sys.time(), tz = "UTC"))
+  
+  class(tabs) <- "pointmesh"
+  tabs
+}
+
+
