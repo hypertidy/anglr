@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' data(simpleworld)
-#' g <- globe(anglr(as(simpleworld, "SpatialLinesDataFrame")))
+#' g <- globe(silicate::PATH(as(simpleworld, "SpatialLinesDataFrame")))
 #' if (interactive()) {
 #'  plot(g, lwd = 3)
 #'  }
@@ -23,21 +23,20 @@ globe <- function(x, ...) {
 #' @rdname globe
 globe.default <- function(x, gproj = "+proj=geocent +ellps=WGS84", ...) {
   p4 <- x$meta$proj[1]
-  haveZ <- "z_" %in% names(x$v)
+  vertex <- x$vertex
+  haveZ <- "z_" %in% names(vertex)
   
   ## need to handle if we already have a "z_"
   if (haveZ) {
-    ll <- as.matrix(x$v[, c("x_", "y_", "z_")])
+    ll <- as.matrix(vertex[, c("x_", "y_", "z_")])
     
   } else { 
-    ll <- cbind(as.matrix(x$v[, c("x_", "y_")]), 0)
+    ll <- cbind(as.matrix(vertex[, c("x_", "y_")]), 0)
   }
   
   if (grepl("longlat", p4)) ll <- ll * pi / 180
   xyz <- proj4::ptransform(ll, src.proj = p4, dst.proj = gproj)
-  x$vertex$x_ <- xyz[,1]
-  x$vertex$y_ <- xyz[,2]
-  x$vertex$z_ <- xyz[,3]
+  x$vertex[c("x_", "y_", "z_")] <- as.data.frame(xyz)
   x$meta <- rbind(x$meta[1, ], x$meta)
   x$meta$proj[1] <- gproj
   x$meta$ctime[1] <- format(Sys.time(), tz = "UTC")
