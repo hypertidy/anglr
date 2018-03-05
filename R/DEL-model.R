@@ -156,16 +156,3 @@ edge_RTriangle <- function (x, ...)
                                                                                 x[["vertex"]][["vertex_"]]), ncol = 2, byrow = TRUE))
   RTriangle::triangulate(ps, ...)
 }
-#' @importFrom rgl plot3d
-#' @export
-plot3d.DEL <- function(x, ...,  add = FALSE) {
-  nms <- intersect(c("x_", "y_", "z_"), names(x$vertex))
-  if (length(nms) < 3) z <- 0 else z <- NULL
-  V <- cbind(as.matrix(x$vertex[nms]), z)
-  tXv <- dplyr::inner_join(x$triangle, x$object_link_triangle)
-  TT <- rbind(match(tXv$.vertex0, x$vertex$vertex_), 
-              match(tXv$.vertex1, x$vertex$vertex_),
-              match(tXv$.vertex2, x$vertex$vertex_))
-  if (!add) rgl::rgl.clear()
-  rgl::rgl.triangles(t(V[TT, ]))
-}
