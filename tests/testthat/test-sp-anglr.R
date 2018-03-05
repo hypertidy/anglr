@@ -7,7 +7,7 @@ library(raster)
 
 test_that("sp works", {
   for (i in sample(seq_len(nrow(simpleworld)), 10)) {
-    expect_silent(cmesh <- anglr(simpleworld[i, ]))
+    expect_warning(cmesh <- anglr(simpleworld[i, ]))
     
   }
   
