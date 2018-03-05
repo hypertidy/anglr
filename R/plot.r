@@ -1,3 +1,21 @@
+plot.DEL <- function(x, ..., add = FALSE) {
+  
+  if (!add) plot(x$vertex[c("x_", "y_")], type = "n")
+  cols <- viridis::viridis(nrow(sc_object(x)))
+  for (i in seq_len(nrow(x$object))) { 
+    asub <- dplyr::filter(x$object_link_triangle, .data$object_ == x$object$object_[i]) %>%
+      dplyr::inner_join(x$triangle) %>% 
+      dplyr::transmute(.data$.vertex0, .data$.vertex1, .data$.vertex2, fill = NA_character_) %>% 
+      t() %>% 
+      as.vector() 
+    asub <-   tibble::tibble(vertex_ = asub)
+    asub <- head(asub, -1L)
+    graphics::polypath(dplyr::left_join(asub,x$vertex,  "vertex_") %>% dplyr::select(.data$x_, .data$y_), 
+                       col = cols[i], ...)
+    
+  }
+}
+
 
 #' Title
 #'
