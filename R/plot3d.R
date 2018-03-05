@@ -13,6 +13,9 @@
 #' x <- SC(sf::read_sf(system.file("shape", "nc.shp", package = "sf")) %>% 
 #'    mutate(color_ = rainbow(100)))
 #' plot3d(x); rglwidget()
+#' worldz <- QUAD(gebco1)
+#' ## an easy way to exaggerate z is to reduce the radius of the globe
+#' plot3d(globe(worldz, gproj = "+proj=geocent +a=10000"))
 plot3d.SC <- function(x, ..., add = FALSE) {
   if (!"color_" %in% names(x$object)) {
     x$object$color_ <- trimesh_cols(nrow(x$object))
@@ -39,6 +42,27 @@ plot3d.SC <- function(x, ..., add = FALSE) {
   ## TODO need an rgl level classed object
   invisible(list(v = vb, is = vindex))
 }
+#' @name plot3d
+#' @export
+plot3d.QUAD <- function(x, ..., add = FALSE) {
+  scl <- function(x) (x - min(x, na.rm = TRUE))/diff(range(x, na.rm = TRUE))
+  ## etc blah
+  ob <- mkq_3d()
+  ob$vb <- t(cbind(as.matrix(x$v[, c("x_", "y_", "z_")]), 1))
+  ob$ib <- matrix(x$quad_link_vertex$vertex_, nrow = 4)
+  cols <- viridis::viridis(min(c(1000, nrow(x$quad))))
+  qXv <- x$quad_link_vertex
+  qXv$value <- x$quad$value[qXv$quad_]
+  ob$material$col <- cols[scl(x$quad$value[qXv$quad_]) * length(cols) + 1]
+  if (!add & length(rgl::rgl.dev.list()) < 1L) rgl::rgl.clear()
+  
+  rgl::shade3d(ob, ...)
+  #if ( rgl::rgl.useNULL()) force(rgl::rglwidget()  )
+  
+  invisible(ob)
+}
+
+
 #' @name plot3d
 #' @export
 plot3d.PATH <- function(x, ..., add = FALSE) {

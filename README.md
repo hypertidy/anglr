@@ -17,6 +17,8 @@ The basic idea is to create toplogical objects from a variety of sources:
 -   igraph
 -   Lidar
 
+Currently `anglr` derives directly from [silicate](https://github.com/hypertidy/silicate) and provides plot3d methods for each of the models SC, PATH, ARC and TRI. Anglr adds two more models DEL (for high-quality triangulation) and QUAD (for raster data).
+
 Usage
 =====
 

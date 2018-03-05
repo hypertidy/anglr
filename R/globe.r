@@ -35,9 +35,9 @@ globe.default <- function(x, gproj = "+proj=geocent +ellps=WGS84", ...) {
   
   if (grepl("longlat", p4)) ll <- ll * pi / 180
   xyz <- proj4::ptransform(ll, src.proj = p4, dst.proj = gproj)
-  x$v$x_ <- xyz[,1]
-  x$v$y_ <- xyz[,2]
-  x$v$z_ <- xyz[,3]
+  x$vertex$x_ <- xyz[,1]
+  x$vertex$y_ <- xyz[,2]
+  x$vertex$z_ <- xyz[,3]
   x$meta <- rbind(x$meta[1, ], x$meta)
   x$meta$proj[1] <- gproj
   x$meta$ctime[1] <- format(Sys.time(), tz = "UTC")

@@ -1,5 +1,13 @@
 # anglr dev
 
+* The plot methods for QUAD now maps cell value to colour. 
+
+* new QUAD model, for raster data. By default the raster cell values are treated as
+ a fill aesthetic, and used to provide colour on a flat mesh. The `copy_down` method
+ for a QUAD requires only one argument will put the cell values on the geometry for z_. 
+ This separation is required especially for more general geometries like XYZ geocentric, 
+ because the cell value and geometric Z are not necessarily related. 
+ 
 * Now re-exporting the magrittr pipe. 
 
 * Added `gebco1` as a built-in global elevation data set, to avoid 
