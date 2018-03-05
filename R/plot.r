@@ -44,6 +44,8 @@ plot.quad_mesh <- function(x, ..., add = FALSE) {
 #' @name plot-anglr
 #' @aliases plot
 plot.trimesh <- function(x,  ..., add = FALSE, add_normals = FALSE) {
+  .Deprecated(new = "plot.TRI", package = "anglr", old = "plot(<tri_mesh>)")
+  
   if (!"color_" %in% names(x$o)) {
     x$o$color_ <- trimesh_cols(nrow(x$o))
   }
@@ -86,6 +88,8 @@ plot.trimesh <- function(x,  ..., add = FALSE, add_normals = FALSE) {
 #' @name plot-anglr
 #' @export
 plot.linemesh <- function(x,  ..., add = FALSE) {
+  .Deprecated(new = "plot.PATH or plot.SC", package = "anglr", old = "plot(<line_mesh>)")
+  
   if (!"color_" %in% names(x$o)) {
     x$o$color_ <- trimesh_cols(nrow(x$o))
   }

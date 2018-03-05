@@ -84,15 +84,16 @@ anglr <- function (x, z = NULL, ..., type = NULL, max_area = NULL) {
 #' @name anglr
 #' @export
 anglr.default <- function(x, z = NULL, ..., type = NULL, max_area = NULL) {
+  .Deprecated(new = "silicate::SC or silicate::TRI, and plot3d.SC", 
+              package = "anglr", 
+              old = "anglr(<line-topology>)")
   ## we don't need methods for sf, Spatial etc because PATH covers those
   anglr(PATH(x), z = z, ..., type = type, max_area = max_area)
 }
 
 
 anglr_lines <- function(tabs,   ...) {
-  .Deprecated(new = "silicate::SC or silicate::TRI, and plot3d.SC", 
-              package = "anglr", 
-              old = "anglr(<line-topology>)")
+  
   tabs$vertex$countingIndex <- seq_len(nrow(tabs$vertex))
   nonuq <- dplyr::inner_join(tabs$path_link_vertex, tabs$vertex, "vertex_")
   
