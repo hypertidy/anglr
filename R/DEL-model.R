@@ -34,36 +34,50 @@
 DEL <- function(x, ..., max_area = NULL) {
   UseMethod("DEL")
 }
+#' @name DEL
 #' @export
-DEL.SC <- function(x, ...) {
+DEL.SC <- function(x, ..., max_area = NULL) {
   v <- x$vertex
   a <- match(x$edge$.vertex0, v$vertex_)
   b <- match(x$edge$.vertex1, v$vertex_)
-  p <- RTriangle::pslg(as.matrix(dplyr::select(v, .data$x_, .data$y_)), 
+ # for (i in seq_len(dim(x$object)[1L])) {
+    p <- RTriangle::pslg(as.matrix(dplyr::select(v, .data$x_, .data$y_)), 
                        S = cbind(a, b))
-  t <- RTriangle::triangulate(p, ...)
-  ## need pfft to drop holes...
-  meta <- tibble(proj = get_proj(x), ctime = Sys.time())
+    t <- RTriangle::triangulate(p, a = max_area, ...)
   
-  structure(list(TRI = t$T, V = cbind(t$P, 0)), class = "TRI")
+  ## need to identify segments that were input and are
+  ## shared by two triangles, set to invisible
+  
+    vertex <- tibble::tibble(x_ = t$P[,1], 
+                           y_ = t$P[,2], 
+                           vertex_ = sc_uid(dim(t$P)[1L]))
+    triangle <- tibble::tibble(.vertex0 = vertex$vertex_[t$T[,1L]],
+                             .vertex1 = vertex$vertex_[t$T[,2L]], 
+                             .vertex2 = vertex$vertex_[t$T[,3L]], 
+                             triangle_ = sc_uid(dim(t$T)[1L])
+                             )
+  object_link_triangle <- tibble::tibble(triangle_ = triangle$triangle_, 
+                                         object_ = x$object$object_[1])
+    meta <- tibble(proj = get_proj(x), ctime = Sys.time())
+  structure(list(object = x$object[1, ], 
+                 object_link_triangle = object_link_triangle, 
+                 triangle = triangle,
+                 vertex = vertex, 
+                 meta = meta), class = c("DEL", "TRI"))
+  #structure(list(TRI = t$T, V = cbind(t$P, 0)), class = "TRI")
+}
+#' @name DEL
+#' @export
+DEL.default <- function(x, ..., max_area = NULL) {
+  DEL(SC(x), ... , max_area = max_area)
 }
 
-#' @export
-DEL.default <- function(x, ...) {
-  DEL(SC(x), ...)
-}
-## from pfft
-edge_RTriangle <- function (x, ...) 
-{
-  ps <- RTriangle::pslg(P = as.matrix(x[["vertex"]][c("x_", 
-                                                      "y_")]), S = matrix(match(silicate::sc_edge(x) %>% dplyr::select(.data$.vertex0, 
-                                                                                                                       .data$.vertex1) %>% as.matrix() %>% t() %>% as.vector(), 
-                                                                                x[["vertex"]][["vertex_"]]), ncol = 2, byrow = TRUE))
-  RTriangle::triangulate(ps, ...)
-}
 ## DEL for a PATH is a copy of pfft_polys that returns a DEL, TRI, sc
 ## TRI for a PATH returns a TRI, sc (just decido triangles)
-DEL.PATH <- function(x, max_area = NULL,  ...) {
+
+#' @name DEL
+#' @export
+DEL.PATH <- function(x,  ..., max_area = NULL) {
     dots <- list(...)
     dots[["a"]] <- max_area
     dots[["x"]] <- x
@@ -106,15 +120,16 @@ DEL.PATH <- function(x, max_area = NULL,  ...) {
   }
 
 
-#' @importFrom rgl plot3d
-#' @export
-plot3d.DEL <- function(x) {
-  nms <- intersect(c("x_", "y_", "z_"), names(x$vertex))
-  if (length(nms) < 3) z <- 0 else z <- NULL
-  V <- cbind(as.matrix(x$vertex[nms]), z)
-  tXv <- dplyr::inner_join(x$triangle, x$object_link_triangle)
-  TT <- rbind(match(tXv$.vertex0, x$vertex$vertex_), 
-              match(tXv$.vertex1, x$vertex$vertex_),
-                    match(tXv$.vertex2, x$vertex$vertex_))
-  rgl::rgl.triangles(t(V[TT, ]))
+
+## from pfft
+edge_RTriangle <- function (x, ...) 
+{
+  ps <- RTriangle::pslg(P = as.matrix(x[["vertex"]][c("x_", 
+                                                      "y_")]), S = matrix(match(silicate::sc_edge(x) %>% dplyr::select(.data$.vertex0, 
+                                                                                                                       .data$.vertex1) %>% as.matrix() %>% t() %>% as.vector(), 
+                                                                                x[["vertex"]][["vertex_"]]), ncol = 2, byrow = TRUE))
+  RTriangle::triangulate(ps, ...)
 }
+
+
+
