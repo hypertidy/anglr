@@ -1,6 +1,31 @@
 
 #' Title
 #'
+#' @param x QUAD
+#' @param ... args passed to rgl plot
+#' @param add reset plot?
+#' @return qmesh
+#' @export
+#'
+#' @seealso anglr.RasterLayer
+plot3d.QUAD <- function(x, ..., add = FALSE) {
+  ## etc blah
+  ob <- mkq_3d()
+  ob$vb <- t(cbind(as.matrix(x$v[, c("x_", "y_", "z_")]), 1))
+  ob$ib <- matrix(x$quad_link_vertex$vertex_, nrow = 4)
+  ob$material$col <- trimesh_cols(nrow(x$quad))[ob$ib]
+  #rgl::shade3d(ob, col = trimesh_cols(nrow(x$qd))[ob$ib], ...)
+  if (!add & length(rgl::rgl.dev.list()) < 1L) rgl::rgl.clear()
+  
+  rgl::shade3d(ob, ...)
+  #if ( rgl::rgl.useNULL()) force(rgl::rglwidget()  )
+  
+  invisible(ob)
+}
+
+
+#' Title
+#'
 #' @param x quad_mesh
 #' @param ... args passed to rgl plot
 #' @param add reset plot?
@@ -9,6 +34,7 @@
 #'
 #' @seealso anglr.RasterLayer
 plot.quad_mesh <- function(x, ..., add = FALSE) {
+  .Deprecated(new = "plot.QUAD", package = "anglr", old = "plot(<quad_mesh>)")
   ## etc blah
   ob <- mkq_3d()
   ob$vb <- t(cbind(as.matrix(x$v[, c("x_", "y_", "z_")]), 1))
