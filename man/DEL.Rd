@@ -2,9 +2,21 @@
 % Please edit documentation in R/DEL-model.R
 \name{DEL}
 \alias{DEL}
+\alias{DEL}
+\alias{DEL.SC}
+\alias{DEL}
+\alias{DEL.default}
+\alias{DEL}
+\alias{DEL.PATH}
 \title{DEL Delaunay model}
 \usage{
 DEL(x, ..., max_area = NULL)
+
+\method{DEL}{SC}(x, max_area = NULL, ...)
+
+\method{DEL}{default}(x, ...)
+
+\method{DEL}{PATH}(x, max_area = NULL, ...)
 }
 \arguments{
 \item{x}{input model}

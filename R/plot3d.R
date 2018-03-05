@@ -130,7 +130,8 @@ plot3d.TRI <- function(x, ..., add = FALSE) {
   } else {
     vb <- cbind(x$vertex$x_, x$vertex$y_, 0)
   }
-  pindex <- dplyr::inner_join(x$triangle, x$object[, c("object_", "color_")], "object_")
+  pindex <- dplyr::inner_join(x$object_link_triangle, x$object[, c("object_", "color_")], "object_") %>% 
+    dplyr::inner_join(x$triangle, "triangle_")
   ##vindex <- dplyr::inner_join(x$triangle, x$vertex, "vertex_")
 vindex <- match(c(t(as.matrix(pindex[c(".vertex0", ".vertex1", ".vertex2")]))), x$vertex$vertex_)
   #v_id <- lapply(split(vindex, vindex$arc_), function(x) as.vector(path2seg(x$vertex_)))
