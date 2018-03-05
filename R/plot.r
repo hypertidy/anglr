@@ -1,7 +1,11 @@
 plot.DEL <- function(x, ..., add = FALSE) {
   
   if (!add) plot(x$vertex[c("x_", "y_")], type = "n")
-  cols <- viridis::viridis(nrow(sc_object(x)))
+  if ("color_" %in% names(x$object)) {
+    cols <- x$object$color_
+  } else {
+    cols <- viridis::viridis(nrow(sc_object(x)))
+  }
   for (i in seq_len(nrow(x$object))) { 
     asub <- dplyr::filter(x$object_link_triangle, .data$object_ == x$object$object_[i]) %>%
       dplyr::inner_join(x$triangle) %>% 
