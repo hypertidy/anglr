@@ -36,6 +36,12 @@ DEL <- function(x, ..., max_area = NULL) {
 }
 #' @name DEL
 #' @export
+DEL.default <- function(x, ...) {
+  DEL(SC(x), ...)
+}
+
+#' @name DEL
+#' @export
 DEL.SC <- function(x, max_area = NULL, ...)  {
  objs <- vector("list", nrow(x$object))
   for (i in seq_along(objs)) {
@@ -73,7 +79,9 @@ DEL.SC <- function(x, max_area = NULL, ...)  {
     count <- count + max(TRIS[[i]])
     TRIS[[i]] <- TRIStemp
   }
-
+  ## need to identify segments that were input and are
+  ## shared by two triangles, set to invisible
+  
   TRIS <- do.call(rbind, TRIS)
   triangle <- dplyr::mutate(triangle, .vertex0 = vertex$vertex_[TRIS[,1]],
                             .vertex1 = vertex$vertex_[TRIS[,2]],
@@ -94,11 +102,7 @@ DEL.SC <- function(x, max_area = NULL, ...)  {
   
 }
 
-#' @name DEL
-#' @export
-DEL.default <- function(x, ...) {
-  DEL(SC(x), ...)
-}
+ 
 
 ## DEL for a PATH is a copy of pfft_polys that returns a DEL, TRI, sc
 ## TRI for a PATH returns a TRI, sc (just decido triangles)
@@ -147,6 +151,49 @@ DEL.PATH <- function(x, max_area = NULL,  ...) {
   
 }
 
+# DEL.PATH <- function(x,  ..., max_area = NULL) {
+#     dots <- list(...)
+#     dots[["a"]] <- max_area
+#     dots[["x"]] <- x
+#   
+#     ## TRIANGULATE with PATH-identity  
+#     RTri <- do.call(edge_RTriangle, dots)
+#     ## object/path_link_triangle (path_triangle_map)
+#     ptm <- pfft::path_triangle_map(x, RTri)
+#     
+#     ## unique triangles
+#     triangle <- tibble::tibble(triangle_ = silicate::sc_uid(nrow(RTri$T)))
+# 
+#     ## all triangle instances
+#     ptm[["triangle_"]] <- triangle[["triangle_"]][ptm[["triangle_idx"]]]
+#     ptm[["triangle_idx"]] <- NULL
+#     
+#     ## any triangle that occurs an even number of times in a path 
+#     ## per object is part of a hole
+#     ptm <- dplyr::inner_join(ptm, x[["path"]][c("path_", "object_")], "path_")
+#     object_link_triangle <- ptm %>% dplyr::group_by(.data$object_, .data$triangle_) %>% 
+#       dplyr::mutate(visible_ = !(n() %% 2 == 0)) %>%  ## see globalVariables declaration for "n"
+#       dplyr::ungroup()  
+#     vertex <- tibble::tibble(x_ = RTri$P[,1], y_ = RTri$P[,2], 
+#                              vertex_ = silicate::sc_uid(nrow(RTri$P)))
+# 
+#     triangle <- dplyr::mutate(triangle, .vertex0 = vertex$vertex_[RTri$T[,1]],
+#                               .vertex1 = vertex$vertex_[RTri$T[,2]],
+#                               .vertex2 = vertex$vertex_[RTri$T[,3]])
+#     
+#     tXv <- tibble::tibble(vertex_ = vertex[["vertex_"]][t(RTri$T)], 
+#                           triangle_ = rep(triangle[["triangle_"]], each = 3))
+#     
+#     meta <- tibble(proj = get_proj(x), ctime = Sys.time())
+#   
+#     structure(list(object = x$object, object_link_triangle = object_link_triangle, 
+#                    triangle = triangle, 
+#                    vertex = vertex, 
+#                    meta = meta), class = c("DEL", "TRI", "sc"))
+#     
+#   }
+
+
 ## from pfft
 edge_RTriangle <- function (x, ...) 
 {
@@ -156,3 +203,4 @@ edge_RTriangle <- function (x, ...)
                                                                                 x[["vertex"]][["vertex_"]]), ncol = 2, byrow = TRUE))
   RTriangle::triangulate(ps, ...)
 }
+
