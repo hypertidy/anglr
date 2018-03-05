@@ -1,7 +1,17 @@
+#' Title
+#'
+#' @param x 
+#' @param ... 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 QUAD <- function(x, ...) {
   UseMethod("QUAD")
 }
-
+#' @name QUAD
+#' @export
 QUAD.BasicRaster <- function(x, ...) {
    x <- x[[1]]  ## just the oneth raster for now
   pr4 <- get_proj(x)
@@ -16,9 +26,9 @@ QUAD.BasicRaster <- function(x, ...) {
 #  }
   o <- tibble(object_ = 1L, xmin = xmin(x), xmax = xmax(x), ymin = ymin(x), ymax = ymax(x), nrow = nrow(x), ncol = ncol(x))
   qXv <- tibble(vertex_ = as.vector(ind1), quad_ = rep(seq(ncol(ind1)), each = 4))
-  z <- raster::extract(x, exy, method = "bilinear")
-  v <- tibble(x_ = exy[,1], y_ = exy[,2], z_ = z)
-  l <- list(object = o, quad = tibble(quad = seq(ncol(ind1)), object_ = 1), quad_link_vertex = qXv, vertex = v)
+  #z <- raster::extract(x, exy, method = "bilinear")
+  v <- tibble(x_ = exy[,1], y_ = exy[,2], z_ = 0)
+  l <- list(object = o, quad = tibble(quad = seq(ncol(ind1)), object_ = 1, value = raster::values(x)), quad_link_vertex = qXv, vertex = v)
   l$meta <- tibble::tibble(proj = pr4, x = "x_", y = "y_", ctime = format(Sys.time(), tz = "UTC"))
   class(l) <- c("QUAD", "sc")
   l

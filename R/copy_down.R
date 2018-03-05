@@ -118,6 +118,17 @@ copy_down.ARC <- function(x, z = NULL, ..., .id = "z_") {
   denorm_SEQ_addZ(x, z = z, ..., .id = .id)
 }
 
+#' @name copy_down
+#' @export
+copy_down.QUAD <- function(x, z = NULL, ..., .id = "z_") {
+  qXv <- x$quad_link_vertex
+  if (!"vertex_" %in% names(x$vertex)) x$vertex[["vertex_"]] <- seq(nrow(x$vertex))
+  qXv$value <- x$quad$value[qXv$quad_]
+  qXv <- dplyr::distinct(qXv, .data$vertex_, .keep_all = TRUE)
+  x$vertex[[.id]] <- qXv$value[match(x$vertex$vertex_, qXv$vertex_)]
+  x
+}
+
 #  #@name copy_down
 #  #@export
 # copy_down.SC <- function(x, z = NULL, ..., .id = "z_") {
