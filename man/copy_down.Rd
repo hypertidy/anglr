@@ -3,24 +3,24 @@
 \name{copy_down}
 \alias{copy_down}
 \alias{copy_down}
-\alias{copy_down.sc}
-\alias{copy_down}
 \alias{copy_down.SC}
+\alias{copy_down}
+\alias{copy_down.TRI}
 \alias{copy_down}
 \alias{copy_down.PATH}
 \alias{copy_down}
-\alias{copy_down.TRI}
+\alias{copy_down.ARC}
 \title{Copy down values to vertices}
 \usage{
 copy_down(x, z = NULL, ..., .id = "z_")
 
-\method{copy_down}{sc}(x, z = NULL, ..., .id = "z_")
-
 \method{copy_down}{SC}(x, z = NULL, ..., .id = "z_")
+
+\method{copy_down}{TRI}(x, z = NULL, ..., .id = "z_")
 
 \method{copy_down}{PATH}(x, z = NULL, ..., .id = "z_")
 
-\method{copy_down}{TRI}(x, z = NULL, ..., .id = "z_")
+\method{copy_down}{ARC}(x, z = NULL, ..., .id = "z_")
 }
 \arguments{
 \item{x}{a silicate model}

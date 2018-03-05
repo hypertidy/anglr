@@ -61,7 +61,9 @@ get_proj.PATH <- function(x, ...) {
 }
 
 
-
+widg <- function() {
+  rgl::rglwidget()
+}
 maybe_geom_column <- function(x, ...) {
   names(x)[purrr::map_lgl(x, ~ inherits(.x, "list"))]
 }

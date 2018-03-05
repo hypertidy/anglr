@@ -1,43 +1,26 @@
-#' Raster anglr
-#' 
-#' Colours not supported, this just gives the viridis palette sequentially. 
-#' @param z \code{\link[raster]{raster}}, by default \code{x} is used
-#' @param na.rm remove missing values
-#' @return quad_mesh
-#' @name anglr
-#' @export
-#' @importFrom raster projection values xmin xmax ymin ymax
-#' @examples
-#' library(raster)
-#' w <- raster(volcano)
-#' plot(anglr(w/300))
-#' 
-anglr.BasicRaster <- function(x, z = NULL, ..., na.rm = TRUE, type = NULL, max_area = NULL) {
-  .Deprecated(new = "QUAD", package = "anglr", old = "anglr(<raster>)")
-  if (!is.null(max_area)) {
-    pixlen <- sqrt(max_area)
-    fact <- ceiling(mean(raster::res(x)/pixlen))
-    if (fact > 1) x <- raster::disaggregate(x, fact = fact, method = "bilinear")
-  }
-  if (is.null(z)) z <- x
-  x <- x[[1]]  ## just the oneth raster for now
-  pr4 <- projection(x)
+QUAD <- function(x, ...) {
+  UseMethod("QUAD")
+}
+
+QUAD.BasicRaster <- function(x, ...) {
+   x <- x[[1]]  ## just the oneth raster for now
+  pr4 <- get_proj(x)
   exy <- edges0(x)
   ind <- apply(prs0(seq(ncol(x) + 1)), 1, p_4, nc = ncol(x) + 1)
   ## all face indexes
   ind0 <- as.vector(ind) +
     rep(seq(0, length = nrow(x), by = ncol(x) + 1), each = 4 * ncol(x))
-  ind1 <- matrix(ind0, nrow = 4)
-  if (na.rm) {
-    ind1 <- ind1[,!is.na(values(x))]
-  }
-  o <- tibble(object_ = 1, xmin = xmin(x), xmax = xmax(x), ymin = ymin(x), ymax = ymax(x), nrow = nrow(x), ncol = ncol(x), proj = projection(x))
+  ind1 <- matrix(ind0, nrow = 4L)
+#  if (na.rm) {
+#    ind1 <- ind1[,!is.na(values(x))]
+#  }
+  o <- tibble(object_ = 1L, xmin = xmin(x), xmax = xmax(x), ymin = ymin(x), ymax = ymax(x), nrow = nrow(x), ncol = ncol(x))
   qXv <- tibble(vertex_ = as.vector(ind1), quad_ = rep(seq(ncol(ind1)), each = 4))
-  if (!is.null(z)) z <- raster::extract(z, exy, method = "bilinear") else z <- 0
+  z <- raster::extract(x, exy, method = "bilinear")
   v <- tibble(x_ = exy[,1], y_ = exy[,2], z_ = z)
-  l <- list(o = o, qd = tibble(quad = seq(ncol(ind1)), object_ = 1), qXv = qXv, v = v)
+  l <- list(object = o, quad = tibble(quad = seq(ncol(ind1)), object_ = 1), quad_link_vertex = qXv, vertex = v)
   l$meta <- tibble::tibble(proj = pr4, x = "x_", y = "y_", ctime = format(Sys.time(), tz = "UTC"))
-  class(l) <- "quad_mesh"
+  class(l) <- c("QUAD", "sc")
   l
 }
 
