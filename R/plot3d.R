@@ -130,8 +130,9 @@ plot3d.TRI <- function(x, ..., add = FALSE) {
   } else {
     vb <- cbind(x$vertex$x_, x$vertex$y_, 0)
   }
-  pindex <- dplyr::inner_join(x$object_link_triangle, x$object[, c("object_", "color_")], "object_") %>% 
-    dplyr::inner_join(x$triangle, "triangle_")
+  pindex <- dplyr::inner_join(x$triangle,  x$object_link_triangle,  "triangle_") %>% 
+  dplyr::inner_join(x$object[, c("object_", "color_")], "object_") 
+    
   ##vindex <- dplyr::inner_join(x$triangle, x$vertex, "vertex_")
 vindex <- match(c(t(as.matrix(pindex[c(".vertex0", ".vertex1", ".vertex2")]))), x$vertex$vertex_)
   #v_id <- lapply(split(vindex, vindex$arc_), function(x) as.vector(path2seg(x$vertex_)))
@@ -140,7 +141,7 @@ vindex <- match(c(t(as.matrix(pindex[c(".vertex0", ".vertex1", ".vertex2")]))), 
   }
   #vindex <- match(unlist(v_id), x$vertex$vertex_)
   rgl::triangles3d(vb[vindex,], col = rep(pindex$color_, each = 3))
-  if (getOption("rgl.useNULL") && interactive() && runif(1, 0, 1) > 0.96) {
+  if (!is.null(getOption("rgl.useNULL")) && interactive() && runif(1, 0, 1) > 0.96) {
     message("rgl NULL device in use, do you need to run rgl::rglwidget()?")
   }
   ## TODO need an rgl level classed object
