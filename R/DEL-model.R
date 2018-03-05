@@ -35,9 +35,10 @@ DEL <- function(x, ..., max_area = NULL) {
   UseMethod("DEL")
 }
 #' @name DEL
+#' @importFrom silicate SC
 #' @export
 DEL.default <- function(x, ...) {
-  DEL(SC(x), ...)
+  DEL(silicate::SC(x), ...)
 }
 
 #' @name DEL

@@ -24,7 +24,7 @@ Convert map coordinates to Geocentric (XYZ) coordinates.
 }
 \examples{
 data(simpleworld)
-g <- globe(anglr(as(simpleworld, "SpatialLinesDataFrame")))
+g <- globe(silicate::PATH(as(simpleworld, "SpatialLinesDataFrame")))
 if (interactive()) {
  plot(g, lwd = 3)
  }
