@@ -9,6 +9,7 @@ The 'anglr' package illustrates some generalizations of GIS-y tasks in R with a 
 
 The basic idea is to create toplogical objects from a variety of sources:
 
+-   silicate forms
 -   simple features
 -   Spatial features
 -   rgl 3D objects
@@ -22,17 +23,19 @@ Currently `anglr` derives directly from [silicate](https://github.com/hypertidy/
 Usage
 =====
 
-The general approach is to `anglr` your model and then plot it.
+The general approach is to `silicate` your data, use `copy_down` to augment the model with a Z coordinate, and then `plot3d` it.
 
 ``` r
 library(anglr)
-#model <- sf::st_read("some/shapefile.shp")
-#model <- raster::raster("some/gridraster.tif")
-mesh <- anglr(model)
-plot(mesh)
+model <- sf::st_read("some/shapefile.shp")
+araster <- raster::raster("some/gridraster.tif")
+mesh <- copy_down(silicate::SC(model), araster)
+plot3d(mesh)
 ```
 
-This is too simplistic for general use but these meshes can be used to merge disparate data into a single form, or used to convert standard spatial objects to `rgl` ready forms.
+The copy down process will copy feature attributes (a constant measure) or raster attributes (a continuous measure) in the appropriate way. After copy down the mesh will be unique in XYZ, whereas the usual starting point is uniqueness in XY.
+
+These *mesh* or *topological* forms can be used to merge disparate data into a single form, or used to convert standard spatial objects to `rgl` ready forms.
 
 An example of merging vector and raster can be seen with this.
 
@@ -51,14 +54,17 @@ library(anglr) ## devtools::install_github("hypertidy/anglr")
 ## ad hoc scaling as x,y and  z are different units
 r <- raster::raster(f)/1000
 
+p_mesh <- DEL(nc, max_area = 0.008)
+
 ## a relief map, triangles grouped by polygon with interpolated raster elevation 
-p_mesh <- anglr(nc, max_area = 0.008, z = r)
+p_mesh <- copy_down(p_mesh, gebco1)
+
 
 ## plot the scene
 library(rgl)
 
 rgl.clear()  ## rerun the cycle from clear to widget in browser contexts 
-plot(p_mesh) 
+plot3(p_mesh) 
 bg3d("black"); material3d(specular = "black")
 rglwidget()  ## not needed if you have a local device
 ```
