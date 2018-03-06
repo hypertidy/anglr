@@ -87,6 +87,10 @@ In the silicate models, complex objects are decomposed to a set of related, link
 
 Plot (3D) methods take those tables and generate the "indexed array" structures needed for 'rgl'. (`plot3d` will return the rgl-model form). This gets us part of the way towards having the best of both worlds of GIS and 3D graphics.
 
+Another example shows this approach applied to a 3D multipatch shapefile, with a few easy steps we can plot a wiremesh or roof/floor polygons from a civic building footprint.
+
+<http://rpubs.com/cyclemumner/367010>
+
 Ongoing design
 --------------
 

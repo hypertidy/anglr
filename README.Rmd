@@ -22,6 +22,8 @@ knitr::opts_chunk$set(
 rgl::par3d(windowRect = c(100, 100, 512 + 100, 512 +100))
 ```
 
+
+
 NOTE: none of these 3D scenes can be viewed on github so a temporary copy of this readme with the figures rendered is here: http://rpubs.com/cyclemumner/367003
 
 
@@ -108,6 +110,11 @@ rglwidget()  ## not needed if you have a local device
 In the silicate models, complex objects are decomposed to a set of related, linked tables. Object identity is maintained with attribute metadata and this is carried through to colour and other aesthetics.  
 
 Plot (3D) methods take those tables and generate the "indexed array" structures needed for 'rgl'. (`plot3d` will return the rgl-model form). This gets us part of the way towards having the best of both worlds of GIS and 3D graphics.
+
+
+Another example shows this approach applied to a 3D multipatch shapefile, with a few easy steps we can plot a wiremesh or roof/floor polygons from a civic building footprint. 
+
+http://rpubs.com/cyclemumner/367010
 
 
 ## Ongoing design

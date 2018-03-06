@@ -26,9 +26,9 @@ auto_3d <- function(x = 1, y = 1, z = 1, keep_xy = TRUE, exag = TRUE, silent = F
   asp <- 1/(thr/min(thr))
   if (keep_xy) asp[1:2] <- 1
   if (exag) asp <- asp * c(x, y, z)
-  if (getOption("rgl.useNULL") && interactive() && runif(1, 0, 1) > 0.96) {
-    message("rgl NULL device in use, do you need to run rgl::rglwidget()?")
-  }
+  #if (!is.null(getOption("rgl.useNULL")) && interactive() && runif(1, 0, 1) > 0.96) {
+  #  message("rgl NULL device in use, do you need to run rgl::rglwidget()?")
+  #}
   if (!silent) {
     psp <- format(asp, digits = 3)
     print(sprintf("original axis lengths x,y,z: %s", paste(format(thr), collapse = ",", sep = "")))
