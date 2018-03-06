@@ -1,5 +1,7 @@
 ---
 output: github_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 
@@ -24,7 +26,7 @@ rgl::par3d(windowRect = c(100, 100, 512 + 100, 512 +100))
 
 The 'anglr' package illustrates some generalizations of GIS-y tasks in R with a database-y approach. 
 
-The basic idea is to create toplogical objects from a variety of sources: 
+The basic idea is to showcase topological forms of objects from a variety of sources: 
 
 * silicate forms
 * simple features
@@ -35,11 +37,11 @@ The basic idea is to create toplogical objects from a variety of sources:
 * igraph
 * Lidar
 
-Currently `anglr` derives directly from [silicate](https://github.com/hypertidy/silicate) and provides plot3d methods for each of the models SC, PATH, ARC and TRI. Anglr adds two more models DEL (for high-quality triangulation) and QUAD (for raster data). 
+To do this anglr works with forms defined by [silicate](https://github.com/hypertidy/silicate) and (after [rgl](https://cran.r-project.org/package=rgl)) provides `plot3d` methods for each of the models `SC`, `PATH`, `ARC` and `TRI`. Here we add two more models `DEL` (for high-quality triangulation) and `QUAD` (for raster data). 
 
 # Usage
 
-The general approach is to `silicate` your data, use `copy_down` to augment the model with a Z coordinate, and then `plot3d` it. 
+The general approach is re-model your data using one of these models, optionally use `copy_down` to augment the model with a Z coordinate, and then `plot3d` it. 
 
 ```{r usage, eval=FALSE}
 library(anglr)
@@ -57,22 +59,21 @@ An example of merging vector and raster can be seen with this.
 
 ```{r merge, eval=FALSE}
 ## a global DEM
-f <- system.file("extdata/gebco1.tif", package = "anglr")
-
+data("gebco1", package = "anglr")
 library(sf)
 ## North Carolina, the sf boilerplate polygon layer
 nc <- read_sf(system.file("shape/nc.shp", package="sf"))
 
 
 library(raster)
-library(anglr) ## devtools::install_github("hypertidy/anglr")
+library(anglr) 
 library(silicate)
 ## ad hoc scaling as x,y and  z are different units
 r <- raster::raster(f)/1000
 
 p_mesh <- DEL(nc, max_area = 0.008)
 
-## a relief map, triangles grouped by polygon with interpolated raster elevation 
+## a relief map, composed of triangles grouped by polygon with ##  interpolated raster elevation 
 p_mesh <- copy_down(p_mesh, gebco1)
 
 
