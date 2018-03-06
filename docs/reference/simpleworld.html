@@ -18,6 +18,8 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -25,6 +27,11 @@
 <script src="../pkgdown.js"></script>
   
   
+<meta property="og:title" content="simple world — simpleworld" />
+
+<meta property="og:description" content="A simple polygon map of world sovereign countries, a modified copy of
+the rnaturalearth counties110 (see data-raw/simpleworld.R for details)." />
+<meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -136,55 +143,55 @@ the rnaturalearth counties110 (see data-raw/simpleworld.R for details).</p>
 #&gt; # A tibble: 1,217 x 2
 #&gt;    object_    triangle_ 
 #&gt;    &lt;chr&gt;      &lt;chr&gt;     
-#&gt;  1 db4ca378ec 1b779540ca
-#&gt;  2 db4ca378ec e4155296fb
-#&gt;  3 db4ca378ec 0a83358e8b
-#&gt;  4 db4ca378ec 12f14bb0c7
-#&gt;  5 db4ca378ec ecf921c787
-#&gt;  6 db4ca378ec 3e68150c4e
-#&gt;  7 db4ca378ec f54f2c2f38
-#&gt;  8 db4ca378ec 8730cac0d4
-#&gt;  9 db4ca378ec 92cd9b8982
-#&gt; 10 db4ca378ec 210173c49f
+#&gt;  1 3a46efe8e8 7ccf4881f3
+#&gt;  2 3a46efe8e8 f7a3f5796a
+#&gt;  3 3a46efe8e8 1eab56a0c8
+#&gt;  4 3a46efe8e8 3499485649
+#&gt;  5 3a46efe8e8 f03ae16c3c
+#&gt;  6 3a46efe8e8 8fbde97172
+#&gt;  7 3a46efe8e8 b7999694a1
+#&gt;  8 3a46efe8e8 f600f1fe09
+#&gt;  9 3a46efe8e8 f38392b0c2
+#&gt; 10 3a46efe8e8 6829431c15
 #&gt; # ... with 1,207 more rows
 #&gt; 
 #&gt; $tXv
 #&gt; # A tibble: 3,651 x 2
 #&gt;    vertex_    triangle_ 
 #&gt;    &lt;chr&gt;      &lt;chr&gt;     
-#&gt;  1 cc732bd4d5 74e9e26734
-#&gt;  2 c4c1b5048d 74e9e26734
-#&gt;  3 2e138a6f7e 74e9e26734
-#&gt;  4 0cfac43808 e1bd412c54
-#&gt;  5 2e138a6f7e e1bd412c54
-#&gt;  6 c4c1b5048d e1bd412c54
-#&gt;  7 c4c1b5048d fb9664db5c
-#&gt;  8 90c0963fbb fb9664db5c
-#&gt;  9 0cfac43808 fb9664db5c
-#&gt; 10 f9d00eb119 be92a9ef70
+#&gt;  1 9314845441 c43ca0eb8a
+#&gt;  2 6f35c024a7 c43ca0eb8a
+#&gt;  3 1284056651 c43ca0eb8a
+#&gt;  4 1ba0751d86 87df4c87b9
+#&gt;  5 1284056651 87df4c87b9
+#&gt;  6 6f35c024a7 87df4c87b9
+#&gt;  7 6f35c024a7 603d43698e
+#&gt;  8 402c4a2cac 603d43698e
+#&gt;  9 1ba0751d86 603d43698e
+#&gt; 10 1827449bbb 3f24dc91ca
 #&gt; # ... with 3,641 more rows
 #&gt; 
 #&gt; $v
 #&gt; # A tibble: 1,257 x 3
 #&gt;       x_    y_ vertex_   
 #&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     
-#&gt;  1  61.2  35.7 4f47a03d1f
-#&gt;  2  62.2  35.3 c009ee9cf4
-#&gt;  3  63.0  35.4 617565b6ae
-#&gt;  4  63.2  35.9 5b5f58019a
-#&gt;  5  64.0  36.0 cd504a2b68
-#&gt;  6  64.5  36.3 0b7fd66f7b
-#&gt;  7  64.7  37.1 fd4c0cf158
-#&gt;  8  65.6  37.3 3e8f44f931
-#&gt;  9  65.7  37.7 f3862ea430
-#&gt; 10  66.2  37.4 cb8aa9cd37
+#&gt;  1  61.2  35.7 b5f8678570
+#&gt;  2  62.2  35.3 f028b7084f
+#&gt;  3  63.0  35.4 31ccab7513
+#&gt;  4  63.2  35.9 98c860e05c
+#&gt;  5  64.0  36.0 8db0de5ffa
+#&gt;  6  64.5  36.3 9402cecba3
+#&gt;  7  64.7  37.1 a2987facbc
+#&gt;  8  65.6  37.3 90a6ff2256
+#&gt;  9  65.7  37.7 e5dea59089
+#&gt; 10  66.2  37.4 f0d6667dff
 #&gt; # ... with 1,247 more rows
 #&gt; 
 #&gt; $meta
 #&gt; # A tibble: 1 x 2
 #&gt;   proj                                                            ctime        
 #&gt;   &lt;chr&gt;                                                           &lt;chr&gt;        
-#&gt; 1 +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 2018-02-27 1…
+#&gt; 1 +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 2018-03-06 1…
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "trimesh"</div></pre>

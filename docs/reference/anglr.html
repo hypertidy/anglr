@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Raster anglr — anglr.SpatialMultiPoints • anglr</title>
+<title>Raster anglr — anglr • anglr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -18,6 +18,8 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -25,6 +27,11 @@
 <script src="../pkgdown.js"></script>
   
   
+<meta property="og:title" content="Raster anglr — anglr" />
+
+<meta property="og:description" content="Colours not supported, this just gives the viridis palette sequentially.
+Create primitive-based "mesh" structures from various inputs." />
+<meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -101,25 +108,25 @@
 <p>Create primitive-based "mesh" structures from various inputs.</p>
     
 
-    <pre class="usage"><span class='co'># S3 method for SpatialMultiPoints</span>
-<span class='fu'>anglr</span>(<span class='no'>x</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='co'># S3 method for SpatialPoints</span>
-<span class='fu'>anglr</span>(<span class='no'>x</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='co'># S3 method for BasicRaster</span>
+    <pre class="usage"><span class='co'># S3 method for BasicRaster</span>
 <span class='fu'>anglr</span>(<span class='no'>x</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='co'># S3 method for trip</span>
 <span class='fu'>anglr</span>(<span class='no'>x</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
+<span class='fu'>anglr</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
 <span class='co'># S3 method for default</span>
 <span class='fu'>anglr</span>(<span class='no'>x</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
-<span class='fu'>anglr</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='co'># S3 method for SpatialMultiPoints</span>
+<span class='fu'>anglr</span>(<span class='no'>x</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='co'># S3 method for SpatialPoints</span>
+<span class='fu'>anglr</span>(<span class='no'>x</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='co'># S3 method for mesh3d</span>
 <span class='fu'>anglr</span>(<span class='no'>x</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
@@ -140,16 +147,16 @@
       <td><p>arguments passed to methods</p></td>
     </tr>
     <tr>
+      <th>na.rm</th>
+      <td><p>remove missing values</p></td>
+    </tr>
+    <tr>
       <th>type</th>
       <td><p>type of topology to create (LINE or POLYGON)</p></td>
     </tr>
     <tr>
       <th>max_area</th>
       <td><p>maximum area in coordinate system of x, passed to <code><a href='http://www.rdocumentation.org/packages/RTriangle/topics/triangulate'>triangulate</a></code> 'a' argument</p></td>
-    </tr>
-    <tr>
-      <th>na.rm</th>
-      <td><p>remove missing values</p></td>
     </tr>
     </table>
     
@@ -171,16 +178,22 @@ https://github.com/hypertidy/anglr/issues/39</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>raster</span>)
-<span class='no'>w</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/raster/topics/raster'>raster</a></span>(<span class='no'>volcano</span>)
-<span class='fu'><a href='plot-anglr.html'>plot</a></span>(<span class='fu'>anglr</span>(<span class='no'>w</span>/<span class='fl'>300</span>))
-
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>raster</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: sp</span></div><div class='input'><span class='no'>w</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/raster/topics/raster'>raster</a></span>(<span class='no'>volcano</span>)
+<span class='fu'><a href='plot-anglr.html'>plot</a></span>(<span class='fu'>anglr</span>(<span class='no'>w</span>/<span class='fl'>300</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: 'anglr(&lt;raster&gt;)' is deprecated.</span>
+#&gt; <span class='warning'>Use 'QUAD' instead.</span>
+#&gt; <span class='warning'>See help("Deprecated") and help("anglr-deprecated").</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'plot(&lt;quad_mesh&gt;)' is deprecated.</span>
+#&gt; <span class='warning'>Use 'plot.QUAD' instead.</span>
+#&gt; <span class='warning'>See help("Deprecated") and help("anglr-deprecated").</span></div><div class='input'>
 <span class='co'>## -----------------------------------------------</span>
 <span class='co'>## POLYGONS</span>
 <span class='fu'>data</span>(<span class='no'>simpleworld</span>)
-<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'>anglr</span>(<span class='no'>simpleworld</span>)
-<span class='fu'><a href='plot-anglr.html'>plot</a></span>(<span class='no'>b</span>)
-<span class='co'>#if (require(rworldxtra)) {</span>
+<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'>anglr</span>(<span class='no'>simpleworld</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: 'anglr(&lt;line-topology&gt;)' is deprecated.</span>
+#&gt; <span class='warning'>Use 'silicate::SC or silicate::TRI, and plot3d.SC' instead.</span>
+#&gt; <span class='warning'>See help("Deprecated") and help("anglr-deprecated").</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'anglr(x)' is deprecated.</span>
+#&gt; <span class='warning'>Use 'use silicate::SC(x) or silicate::TRI(x)' instead.</span>
+#&gt; <span class='warning'>See help("Deprecated") and help("anglr-deprecated").</span></div><div class='input'><span class='fu'><a href='plot-anglr.html'>plot</a></span>(<span class='no'>b</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: 'plot(&lt;tri_mesh&gt;)' is deprecated.</span>
+#&gt; <span class='warning'>Use 'plot.TRI' instead.</span>
+#&gt; <span class='warning'>See help("Deprecated") and help("anglr-deprecated").</span></div><div class='input'><span class='co'>#if (require(rworldxtra)) {</span>
 
 <span class='co'>#data(countriesHigh)</span>
 <span class='co'>#sv &lt;- c("New Zealand", "Antarctica", "Papua New Guinea",</span>
@@ -219,13 +232,17 @@ https://github.com/hypertidy/anglr/issues/39</p>
 <span class='co'>#rgl.clear(); plot(anglr(x, z = topo/1000, type = "LINE"));</span>
 <span class='co'>## -----------------------------------------------</span>
 <span class='co'>## RGL TRIANGLES</span>
-<span class='fu'>library</span>(<span class='no'>rgl</span>)
-
+<span class='fu'>library</span>(<span class='no'>rgl</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘rgl’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:anglr’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    triangulate</span></div><div class='input'>
 <span class='no'>dod</span> <span class='kw'>&lt;-</span> <span class='fu'>anglr</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/rgl/topics/mesh3d'>dodecahedron3d</a></span>(<span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"cyan"</span>))
 <span class='no'>octo</span> <span class='kw'>&lt;-</span> <span class='fu'>anglr</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/rgl/topics/matrices'>translate3d</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/rgl/topics/mesh3d'>octahedron3d</a></span>(<span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"blue"</span>), <span class='fl'>6</span>, <span class='fl'>0</span>, <span class='fl'>0</span>))
-<span class='fu'><a href='plot-anglr.html'>plot</a></span>(<span class='no'>dod</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/reexports'>viridis</a></span>(<span class='fl'>5</span>)[<span class='fl'>1</span>], <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)
-<span class='fu'><a href='plot-anglr.html'>plot</a></span>(<span class='no'>octo</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/reexports'>viridis</a></span>(<span class='fl'>5</span>)[<span class='fl'>5</span>], <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)
-<span class='fu'><a href='http://www.rdocumentation.org/packages/rgl/topics/bg'>bg3d</a></span>(<span class='st'>"grey"</span>)</div></pre>
+<span class='fu'><a href='plot-anglr.html'>plot</a></span>(<span class='no'>dod</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/reexports'>viridis</a></span>(<span class='fl'>5</span>)[<span class='fl'>1</span>], <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: 'plot(&lt;tri_mesh&gt;)' is deprecated.</span>
+#&gt; <span class='warning'>Use 'plot.TRI' instead.</span>
+#&gt; <span class='warning'>See help("Deprecated") and help("anglr-deprecated").</span></div><div class='input'><span class='fu'><a href='plot-anglr.html'>plot</a></span>(<span class='no'>octo</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/reexports'>viridis</a></span>(<span class='fl'>5</span>)[<span class='fl'>5</span>], <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: 'plot(&lt;tri_mesh&gt;)' is deprecated.</span>
+#&gt; <span class='warning'>Use 'plot.TRI' instead.</span>
+#&gt; <span class='warning'>See help("Deprecated") and help("anglr-deprecated").</span></div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/rgl/topics/bg'>bg3d</a></span>(<span class='st'>"grey"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

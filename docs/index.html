@@ -8,8 +8,11 @@
 <title>Elevating Spatial Data with Topology • anglr</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="jquery.sticky-kit.min.js"></script><script src="pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<script src="jquery.sticky-kit.min.js"></script><script src="pkgdown.js"></script><meta property="og:title" content="Elevating Spatial Data with Topology">
+<meta property="og:description" content="Tidy topological approaches to spatial data, illustrated with plotting using Open Graphics Library. ">
+<meta name="twitter:card" content="summary">
+<!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
@@ -74,12 +77,14 @@
 <div class="contents">
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+<p>NOTE: none of these 3D scenes can be viewed on github so a temporary copy of this readme with the figures rendered is here: <a href="http://rpubs.com/cyclemumner/367003" class="uri">http://rpubs.com/cyclemumner/367003</a></p>
 <div id="topological-forms-for-plotting-spatial-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#topological-forms-for-plotting-spatial-data" class="anchor"></a>Topological forms for plotting spatial data</h2>
 <p>The ‘anglr’ package illustrates some generalizations of GIS-y tasks in R with a database-y approach.</p>
-<p>The basic idea is to create toplogical objects from a variety of sources:</p>
+<p>The basic idea is to showcase topological forms of objects from a variety of sources:</p>
 <ul>
+<li>silicate forms</li>
 <li>simple features</li>
 <li>Spatial features</li>
 <li>rgl 3D objects</li>
@@ -88,59 +93,72 @@
 <li>igraph</li>
 <li>Lidar</li>
 </ul>
+<p>To do this anglr works with forms defined by <a href="https://github.com/hypertidy/silicate">silicate</a> and (after <a href="https://cran.r-project.org/package=rgl">rgl</a>) provides <code>plot3d</code> methods for each of the models <code>SC</code>, <code>PATH</code>, <code>ARC</code> and <code>TRI</code>. Here we add two more models <code>DEL</code> (for high-quality triangulation) and <code>QUAD</code> (for raster data).</p>
 </div>
 <div id="usage" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h1></div>
-<p>The general approach is to <code>anglr</code> your model and then plot it.</p>
+<p>The general approach is re-model your data using one of these models, optionally use <code>copy_down</code> to augment the model with a Z coordinate, and then <code>plot3d</code> it.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(anglr)
-<span class="co">#model &lt;- sf::st_read("some/shapefile.shp")</span>
-<span class="co">#model &lt;- raster::raster("some/gridraster.tif")</span>
-mesh &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/anglr/topics/anglr">anglr</a></span>(model)
-<span class="kw"><a href="reference/plot-anglr.html">plot</a></span>(mesh)</code></pre></div>
-<p>This is too simplistic for general use but these meshes can be used to merge disparate data into a single form, or used to convert standard spatial objects to <code>rgl</code> ready forms.</p>
+model &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/st_read">st_read</a></span>(<span class="st">"some/shapefile.shp"</span>)
+araster &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/raster">raster</a></span>(<span class="st">"some/gridraster.tif"</span>)
+mesh &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/anglr/topics/copy_down">copy_down</a></span>(silicate<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/silicate/topics/SC">SC</a></span>(model), araster)
+<span class="kw"><a href="http://www.rdocumentation.org/packages/anglr/topics/plot3d">plot3d</a></span>(mesh)</code></pre></div>
+<p>The copy down process will copy feature attributes (a constant measure) or raster attributes (a continuous measure) in the appropriate way. After copy down the mesh will be unique in XYZ, whereas the usual starting point is uniqueness in XY.</p>
+<p>These <em>mesh</em> or <em>topological</em> forms can be used to merge disparate data into a single form, or used to convert standard spatial objects to <code>rgl</code> ready forms.</p>
 <p>An example of merging vector and raster can be seen with this.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## a global DEM
-f &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata/gebco1.tif"</span>, <span class="dt">package =</span> <span class="st">"anglr"</span>)
-
+<span class="kw">data</span>(<span class="st">"gebco1"</span>, <span class="dt">package =</span> <span class="st">"anglr"</span>)
 <span class="kw">library</span>(sf)
 ## North Carolina, the sf boilerplate polygon layer
 nc &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/st_read">read_sf</a></span>(<span class="kw">system.file</span>(<span class="st">"shape/nc.shp"</span>, <span class="dt">package=</span><span class="st">"sf"</span>))
 
 
 <span class="kw">library</span>(raster)
-<span class="kw">library</span>(anglr) ## devtools::install_github("hypertidy/anglr")
+<span class="kw">library</span>(anglr) 
+<span class="kw">library</span>(silicate)
 
-## ad hoc scaling as x,y and  z are different units
-r &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/raster">raster</a></span>(f)<span class="op">/</span><span class="dv">1000</span>
+p_mesh &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/anglr/topics/DEL">DEL</a></span>(nc, <span class="dt">max_area =</span> <span class="fl">0.002</span>)
+## a relief map, composed of triangles grouped by polygon with ##  interpolated raster elevation 
+p_mesh &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/anglr/topics/copy_down">copy_down</a></span>(p_mesh, <span class="dt">z =</span> gebco1)
 
-## a relief map, triangles grouped by polygon with interpolated raster elevation 
-p_mesh &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/anglr/topics/anglr">anglr</a></span>(nc, <span class="dt">max_area =</span> <span class="fl">0.008</span>, <span class="dt">z =</span> r)
 
 ## plot the scene
 <span class="kw">library</span>(rgl)
 
 <span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/scene">rgl.clear</a></span>()  ## rerun the cycle from clear to widget in browser contexts 
-<span class="kw"><a href="reference/plot-anglr.html">plot</a></span>(p_mesh) 
+<span class="kw"><a href="http://www.rdocumentation.org/packages/anglr/topics/plot3d">plot3d</a></span>(p_mesh) 
 <span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/bg">bg3d</a></span>(<span class="st">"black"</span>); <span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/material">material3d</a></span>(<span class="dt">specular =</span> <span class="st">"black"</span>)
+<span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/aspect3d">aspect3d</a></span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">.1</span>)
 <span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/rglwidget">rglwidget</a></span>()  ## not needed if you have a local device</code></pre></div>
-<p>Here the <code>z</code> argument to <code>anglr</code> is a raster, and so once the mesh is created the <code>z_</code> coordinate of the mesh is updated by extracting values from the raster (using bilinear interpolation method). If <code>z_</code> is alternately set to a column name in the layer this is used as a contstant offset for the <code>z_</code> value, and the mesh is “separated”, by feature even if the original layer had touching neighbours. .</p>
-<p>Multiple multi-part objects are decomposed to a set of related, linked tables. Object identity is maintained with attribute metadata and this is carried through to colour and other aesthetics in 3D plots.</p>
-<p>Plot methods take those tables and generate the “indexed array” structures needed for ‘rgl’. In this way we get the best of both worlds of “GIS” and “3D models”.</p>
+<p>Here the <code>z</code> argument to <code>copy_down</code> is a raster, and so the <code>z_</code> coordinate of the mesh is updated by extracting values from the raster. If <code>z_</code> is alternately set to a column in the layer or a specific vector of values this is used as a constant offset for the <code>z_</code> value, and the mesh is <em>separated by feature</em>.</p>
+<p>We only use TRI here both to illustrate its availability, but also because we only need poor quality triangles for planar geometry.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+c_mesh &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/anglr/topics/copy_down">copy_down</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/silicate/topics/TRI">TRI</a></span>(nc), <span class="dt">z =</span> p_mesh<span class="op">$</span>object<span class="op">$</span>BIR74)
+
+<span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/scene">rgl.clear</a></span>()
+a &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/anglr/topics/plot3d">plot3d</a></span>(c_mesh) 
+<span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/bg">bg3d</a></span>(<span class="st">"black"</span>); <span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/material">material3d</a></span>(<span class="dt">specular =</span> <span class="st">"black"</span>)
+<span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/aspect3d">aspect3d</a></span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">.2</span>)
+<span class="kw"><a href="http://www.rdocumentation.org/packages/rgl/topics/rglwidget">rglwidget</a></span>()  ## not needed if you have a local device</code></pre></div>
+<p>In the silicate models, complex objects are decomposed to a set of related, linked tables. Object identity is maintained with attribute metadata and this is carried through to colour and other aesthetics.</p>
+<p>Plot (3D) methods take those tables and generate the “indexed array” structures needed for ‘rgl’. (<code>plot3d</code> will return the rgl-model form). This gets us part of the way towards having the best of both worlds of GIS and 3D graphics.</p>
+<p>Another example shows this approach applied to a 3D multipatch shapefile, with a few easy steps we can plot a wiremesh or roof/floor polygons from a civic building footprint.</p>
+<p><a href="http://rpubs.com/cyclemumner/367010" class="uri">http://rpubs.com/cyclemumner/367010</a></p>
 <div id="ongoing-design" class="section level2">
 <h2 class="hasAnchor">
 <a href="#ongoing-design" class="anchor"></a>Ongoing design</h2>
-<p>The core work for translating spatial classes is done by the unspecialized ‘silicate::PATH’ function and its underlying decomposition generics.</p>
-<p><code>anglr</code> then decomposes further, from path-types to primitive-types - where “primitive” means topological primitives, vertices, line segments (edges), triangles. Ongoing work in the <a href="https://github.com/hypertidy/silicate">silicate</a> package will support these types more fully.</p>
-<p>Crucially, polygons and lines are described by the same 1D primitives, and this is easy to do. Harder is to generate 2D primitives and for that we rely on <a href="https://www.cs.cmu.edu/~quake/triangle.html">Jonathan Richard Shewchuk’s Triangle</a>.</p>
-<p>Triangulation is with <code>RTriangle</code> package using “constrained mostly-Delaunay Triangulation” from the Triangle library, but could alternatively use <code>rgl</code> with its ear clipping algorithm, and related work is in the <code>laridae</code> project to bring CGAL facilities to R.</p>
+<p>The core work for translating spatial classes is done by the unspecialized ‘silicate::PATH’ function and its underlying decomposition generics. Ongoing work in the <a href="https://github.com/hypertidy/silicate">silicate</a> package will improve and support these types more fully.</p>
+<p>Planar polygons and lines are described by the same 1D primitives, and this is easy to do. Harder is to generate 2D primitives and for that we rely on <a href="https://www.cs.cmu.edu/~quake/triangle.html">Jonathan Richard Shewchuk’s Triangle</a>.</p>
+<p>Triangulation in DEL is with <code>RTriangle</code> package using “constrained mostly-Delaunay Triangulation” from the Triangle library, and TRI in silicate uses ear-clipping via Mapbox’s <code>earcut.hpp</code> (this is analogous to but faster and more robust than <code><a href="http://www.rdocumentation.org/packages/rgl/topics/triangulate">rgl::triangulate</a></code>). Independent work for mostly-Delaunay methods is in the <code>laridae</code> project.</p>
 <p>With RTriangle we can set a max area for the triangles, so it can wrap around curves like globes and hills, and this can only be done by the addition of Steiner points. All of this takes us very far from the path-based types generally used by GIS-alikes.</p>
 </div>
 <div id="grids" class="section level2">
 <h2 class="hasAnchor">
 <a href="#grids" class="anchor"></a>Grids</h2>
-<p>Raster gridded data are decomposed to “quad” forms, essentially a 2D primitive with four corners rather than 3. This works well in rgl but is slow in the browser for some reason, but we can always break quads down to triangles if needed.</p>
-<p>Texture mapping is possible with rgl, but it needs a local coordinate system mapped to the index space of a PNG image. It’s easy enough but requires a bit of awkward preparation, not yet simplified. Some different approaches:</p>
+<p>Raster gridded data are decomposed to <code>QUAD</code> forms, essentially a 2D primitive with four corners rather than three. This works well in rgl and is super fast using the quadmesh package that can translate from the raster package.</p>
+<p>Texture mapping is possible with rgl, but it needs a local coordinate system mapped to the index space of a PNG image. It’s easy enough but requires a bit of awkward preparation, not yet simplified.</p>
+<p>Some different approaches:</p>
 <p><a href="https://rpubs.com/cyclemumner/frink-polyogn" class="uri">https://rpubs.com/cyclemumner/frink-polyogn</a></p>
 <p>Deprecated use of rangl here, but shows the general texture coordinate approach required:</p>
 <p><a href="https://gist.github.com/mdsumner/dc80283de50bb23ff7681b14768b9367" class="uri">https://gist.github.com/mdsumner/dc80283de50bb23ff7681b14768b9367</a></p>
@@ -199,7 +217,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <p><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></p>
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Michael D. Sumner <br><small class="roles"> Author, maintainer </small> </li>
+<li>Michael D. Sumner <br><small class="roles"> Author, maintainer </small>  </li>
 <li><a href="authors.html">All authors...</a></li>
 </ul>
 <h2>Dev status</h2>
