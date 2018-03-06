@@ -25,6 +25,9 @@ DEL(x, ..., max_area = NULL)
 
 \item{max}{area WIP and all the other args for Triangle}
 }
+\value{
+DEL model
+}
 \description{
 The Delaunary criterion forms the basis of this model, is its
 definining characteristic without being compulsory. From Wikipedia: 

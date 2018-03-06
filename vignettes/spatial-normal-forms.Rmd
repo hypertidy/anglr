@@ -8,8 +8,10 @@ output:
     fig_height: 7
 vignette: >
   %\VignetteIndexEntry{sf zoo}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
@@ -80,6 +82,7 @@ str(as(geometry(pnganz[1,]), "SpatialLines"))
 If we convert these data to "normal form", we actually need at least three tables, one each for the objects, the paths, and the coordinates (vertices). The `map_table` function in the `spbabel` package creates these but also adds another link table between paths and vertices to enable de-duplication of shared vertices. The de-duplication is required for triangulating the polygons, and other topological operations. 
 
 ```{r}
+## please note, map_table was a very early silicate::PATH
 ptabs <- spbabel::map_table(pnganz)
 print(names(ptabs))
 print(sapply(ptabs, nrow))
@@ -137,33 +140,39 @@ The coordinate-path structures used above for polygons and lines are very explic
 
 The next step in topological relationships is to represent each *segment* of a line rather than the entire path. To do this we need a table of segments, and a link table to store the identity of the two vertices used by those segments. 
 
-This has been implemented in the package `anglr`. 
+This has been implemented in the package `anglr`, but (more recently) replaced by models in silicate. 
 
 ```{r}
-lsegment <- anglr::anglr(as(pnganz, "SpatialLinesDataFrame"))
+lsegment <- silicate::SC(as(pnganz, "SpatialLinesDataFrame"))
 as.data.frame(lapply(lsegment, nrow))
 ```
 
 
-```{r,eval=FALSE,include=FALSE}
+```{r convex-hull-delaunay-xyz}
+rgl::rgl.clear()
 library(geosphere)
 library(anglr)
-x <- globe(anglr(SpatialMultiPoints(list(randomCoordinates(5e4)), 
-                   proj4string = CRS("+proj=longlat +ellps=WGS84 +no_defs"))), 
+xyz <- proj4::ptransform(randomCoordinates(5e4) * pi/180, 
+                   "+init=epsg:4326", 
            "+proj=geocent +a=1")
 
-tri <- geometry::convhulln(cbind(x$v$x_, x$v$y_, x$v$z_))
-rgl::triangles3d(cbind(x$v$x_, x$v$y_, x$v$z_)[t(tri), ], 
+
+tri <- geometry::convhulln(xyz)
+rgl::triangles3d(xyz[t(tri), ], 
                  specular = "black", 
                  color = "skyblue", alpha = 0.4)
 
-plot(globe(lsegment, "+proj=geocent +a=1.1"))
-
+plot3d(globe(lsegment, "+proj=geocent +a=1.05"), add = TRUE)
+rgl::rglwidget()
 ```
 
 This is no different for polygons when we store them as polygon paths, so then why is the segment/edge model useful? It provides a table to store metrics such as the length of the segment, its duration in time, and other information. The segment/edge model is also a required precursor for building a triangulated mesh. This brings us to an important stage of the story. 
 
 ## Polygons are not composed of primitives
+
+
+WIP everything from here needs updating for the new silicate regime. MDS 2018-03-06. 
+
 
 Lines and polygons are stored as paths of coordinates, but lines can be decomposed to a more abstract form. Once in this form we can (in R) plot the lines much more quickly as segments, each with their own individual properties. 
 
@@ -177,21 +186,22 @@ Not surprisingly, our connected line doesn't make much sense, but worse our atte
 
 ```{r}
 par(mar = rep(0, 4))
-plot(lsegment$v$x_, lsegment$v$y_, asp = 1, pch = ".", axes = FALSE)
+plot(lsegment$vertex$x_, lsegment$vertex$y_, asp = 1, pch = ".", axes = FALSE)
 
-lsegment$o$color <- viridis::viridis(nrow(lsegment$o))
-
-segs <- 
-    lsegment$lXv %>%
-    inner_join(lsegment$l) %>% 
-    inner_join(lsegment$o) %>% 
-    inner_join(lsegment$v) %>%
-    dplyr::select(color, vertex_, segment_, x_, y_) %>%
-    group_by(segment_) %>%
-    mutate(x__ = lead(x_), y__ = lead(y_)) %>%
-    filter(row_number() == 1)
-    
-segments(segs$x_, segs$y_, segs$x__, segs$y__, col = segs$color, lwd = 4)
+lsegment$object$color <- viridis::viridis(nrow(lsegment$object))
+plot(lsegment)
+## we used to use this
+# segs <- 
+#     lsegment$ %>%
+#     inner_join(lsegment$l) %>% 
+#     inner_join(lsegment$o) %>% 
+#     inner_join(lsegment$v) %>%
+#     dplyr::select(color, vertex_, segment_, x_, y_) %>%
+#     group_by(segment_) %>%
+#     mutate(x__ = lead(x_), y__ = lead(y_)) %>%
+#     filter(row_number() == 1)
+#     
+# segments(segs$x_, segs$y_, segs$x__, segs$y__, col = segs$color, lwd = 4)
 ```
 
 This is not lovely code, though it is straight forward and systematic. Treated as segments we automatically get the right "topology" of our lines, we joined the object attribute down to the actual pairs of coordinates and plotted all the segments individually. We managed to keep our object-part-coordinate hierarchy, though we've chosen primitives belonging to objects rather than paths as the model. This is also convenient for the next step because line segments are what we need for generating primitives to represent the polygons as surfaces. 
@@ -200,10 +210,10 @@ This is not lovely code, though it is straight forward and systematic. Treated a
 
 Treat the polygon as segments build a triangulation, a surface of 2D triangle primitives. 
 
-```{r}
-prim2D <- anglr::anglr(pnganz)
-plot(pnganz, border = "black", col = "transparent", lwd = 4)
-prim2D$o$color <- viridis::viridis(nrow(prim2D$o))
+```{r, eval = FALSE}
+prim2D <- DEL(pnganz)
+plot3d(pnganz, border = "black", col = "transparent", lwd = 4)
+prim2D$object$color_ <- viridis::viridis(nrow(prim2D$object))
 
 library(purrr)
 library(tidyr)
@@ -225,14 +235,14 @@ walk(tri$triangle, ~polygon(x = .$x_,
 
 The plot walk above may be inefficient, but it's purely to illustrate that we have the shapes in the right form. This is used in anglr to plot the shapes in 3D, either in native planar form or as a surface of a globe. 
 
-```{r prim2D, webgl=TRUE}
+```{r prim2D, webgl=TRUE, eval=FALSE}
 library(rgl)
 rgl.clear()
 plot(prim2D, specular = "black")
 rglwidget()
 ```
 
-```{r globe-prim2D, webgl=TRUE}
+```{r globe-prim2D, webgl=TRUE, eval=FALSE}
 rgl.clear()
 plot(anglr::globe(prim2D), specular = "black")
 rglwidget()
@@ -242,7 +252,7 @@ Why do this? It's not just to plot a globe, but to see why it's helpful to see w
 
 Run the layer through `globe()` and print out the vertices table. 
 
-```{r}
+```{r, eval=FALSE}
 prim2D$v
 anglr::globe(prim2D)$v
 
@@ -250,7 +260,7 @@ anglr::globe(prim2D)$v
 
 The only thing that happened was that the input `x_` and `y_` were converted to geocentric "x, y, z" coordinates. Under the hood this is done by driving the transformation with PROJ.4 (via the R package `proj4`). The PROJ.4 family in use is  "geocent", i.e. here the `meta` table simply records the history of transformations. 
 
-```{r}
+```{r, eval=FALSE}
 anglr::globe(prim2D)$meta[, c("proj", "ctime")]
 
 ```
@@ -260,7 +270,7 @@ We can otherwise do anything we like with the vertices, including reprojecting t
 A relief map of North Carolina counties. 
 
 
-```{r polygon-terrain, webgl=TRUE}
+```{r polygon-terrain, webgl=TRUE, eval=FALSE}
 f <- system.file("extdata/gebco1.tif", package = "anglr")
 ## ad hoc scaling as x,y and  z are different units
 r <- raster::raster(f)/1000
@@ -285,7 +295,7 @@ rglwidget()
 
 What if we didn't set the `max_area` and only got the triangulation needed to stay within the polygons?
 
-```{r no-steiner, webgl=TRUE}
+```{r no-steiner, webgl=TRUE, eval=FALSE}
 p <- anglr(nc, max_area = 0.008) ## make small triangles (0.2 sq lon-lat degree)
 g <- anglr(graticule::graticule(-85:-74, 32:37))
 p$v$z_ <- raster::extract(r, cbind(p$v$x_, p$v$y_), method = "bilinear")

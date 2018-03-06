@@ -25,7 +25,7 @@
 #' @param x input model
 #' @param ... passed to the underlying Triangle library
 #' @param max area WIP and all the other args for Triangle
-#' @return
+#' @return DEL model
 #' @export
 #'
 #' @examples

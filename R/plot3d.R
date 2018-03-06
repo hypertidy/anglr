@@ -5,7 +5,6 @@
 #' @param add 
 #' 
 #' @return vertices and segment indices, invisibly
-#' @export
 #' @importFrom rgl plot3d
 #' @export plot3d
 #' @name plot3d
@@ -17,6 +16,7 @@
 #' worldz <- QUAD(gebco1)
 #' ## an easy way to exaggerate z is to reduce the radius of the globe
 #' plot3d(globe(worldz, gproj = "+proj=geocent +a=10000"))
+#' @export
 plot3d.SC <- function(x, ..., add = FALSE) {
   if (!"color_" %in% names(x$object)) {
     x$object$color_ <- trimesh_cols(nrow(x$object))
@@ -146,7 +146,7 @@ vindex <- match(c(t(as.matrix(pindex[c(".vertex0", ".vertex1", ".vertex2")]))), 
   #  message("rgl NULL device in use, do you need to run rgl::rglwidget()?")
   #}
   ## TODO need an rgl level classed object
-  invisible(list(v = vb, it = vindex))
+  invisible(list(vb = t(vb), it = t(vindex)))
   
 }
 
