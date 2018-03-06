@@ -115,8 +115,9 @@ rgl::rglwidget()
 ```{r, webgl=TRUE}
 rgl::rgl.clear()
 library(dplyr)
+library(sp)
 linehouse <- as(sph, "SpatialLinesDataFrame")
-plot3d(SC(linehouse))
+plot3d(PATH(linehouse))
 rgl::rglwidget()
 ```
 
