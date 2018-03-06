@@ -8,6 +8,7 @@
 #' @export
 #' @importFrom rgl plot3d
 #' @export plot3d
+#' @name plot3d
 #' @examples
 #' library(silicate)
 #' x <- SC(sf::read_sf(system.file("shape", "nc.shp", package = "sf")) %>% 

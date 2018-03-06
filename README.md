@@ -2,12 +2,14 @@
 [![Travis-CI Build Status](http://badges.herokuapp.com/travis/hypertidy/anglr?branch=master&env=BUILD_NAME=trusty_release&label=linux)](https://travis-ci.org/hypertidy/anglr) [![Build Status](http://badges.herokuapp.com/travis/hypertidy/anglr?branch=master&env=BUILD_NAME=osx_release&label=osx)](https://travis-ci.org/hypertidy/anglr) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/hypertidy/anglr?branch=master&svg=true)](https://ci.appveyor.com/project/mdsumner/anglr) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/anglr)](https://cran.r-project.org/package=anglr) [![Coverage Status](https://img.shields.io/codecov/c/github/hypertidy/anglr/master.svg)](https://codecov.io/github/hypertidy/anglr?branch=master)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+NOTE: none of these 3D scenes can be viewed on github so a temporary copy of this readme with the figures rendered is here: <http://rpubs.com/cyclemumner/367003>
+
 Topological forms for plotting spatial data
 -------------------------------------------
 
 The 'anglr' package illustrates some generalizations of GIS-y tasks in R with a database-y approach.
 
-The basic idea is to create toplogical objects from a variety of sources:
+The basic idea is to showcase topological forms of objects from a variety of sources:
 
 -   silicate forms
 -   simple features
@@ -18,12 +20,12 @@ The basic idea is to create toplogical objects from a variety of sources:
 -   igraph
 -   Lidar
 
-Currently `anglr` derives directly from [silicate](https://github.com/hypertidy/silicate) and provides plot3d methods for each of the models SC, PATH, ARC and TRI. Anglr adds two more models DEL (for high-quality triangulation) and QUAD (for raster data).
+To do this anglr works with forms defined by [silicate](https://github.com/hypertidy/silicate) and (after [rgl](https://cran.r-project.org/package=rgl)) provides `plot3d` methods for each of the models `SC`, `PATH`, `ARC` and `TRI`. Here we add two more models `DEL` (for high-quality triangulation) and `QUAD` (for raster data).
 
 Usage
 =====
 
-The general approach is to `silicate` your data, use `copy_down` to augment the model with a Z coordinate, and then `plot3d` it.
+The general approach is re-model your data using one of these models, optionally use `copy_down` to augment the model with a Z coordinate, and then `plot3d` it.
 
 ``` r
 library(anglr)
@@ -41,59 +43,69 @@ An example of merging vector and raster can be seen with this.
 
 ``` r
 ## a global DEM
-f <- system.file("extdata/gebco1.tif", package = "anglr")
-
+data("gebco1", package = "anglr")
 library(sf)
 ## North Carolina, the sf boilerplate polygon layer
 nc <- read_sf(system.file("shape/nc.shp", package="sf"))
 
 
 library(raster)
-library(anglr) ## devtools::install_github("hypertidy/anglr")
+library(anglr) 
+library(silicate)
 
-## ad hoc scaling as x,y and  z are different units
-r <- raster::raster(f)/1000
-
-p_mesh <- DEL(nc, max_area = 0.008)
-
-## a relief map, triangles grouped by polygon with interpolated raster elevation 
-p_mesh <- copy_down(p_mesh, gebco1)
+p_mesh <- DEL(nc, max_area = 0.002)
+## a relief map, composed of triangles grouped by polygon with ##  interpolated raster elevation 
+p_mesh <- copy_down(p_mesh, z = gebco1)
 
 
 ## plot the scene
 library(rgl)
 
 rgl.clear()  ## rerun the cycle from clear to widget in browser contexts 
-plot3(p_mesh) 
+plot3d(p_mesh) 
 bg3d("black"); material3d(specular = "black")
+aspect3d(1, 1, .1)
 rglwidget()  ## not needed if you have a local device
 ```
 
-Here the `z` argument to `anglr` is a raster, and so once the mesh is created the `z_` coordinate of the mesh is updated by extracting values from the raster (using bilinear interpolation method). If `z_` is alternately set to a column name in the layer this is used as a contstant offset for the `z_` value, and the mesh is "separated", by feature even if the original layer had touching neighbours. .
+Here the `z` argument to `copy_down` is a raster, and so the `z_` coordinate of the mesh is updated by extracting values from the raster. If `z_` is alternately set to a column in the layer or a specific vector of values this is used as a constant offset for the `z_` value, and the mesh is *separated by feature*.
 
-Multiple multi-part objects are decomposed to a set of related, linked tables. Object identity is maintained with attribute metadata and this is carried through to colour and other aesthetics in 3D plots.
+We only use TRI here both to illustrate its availability, but also because we only need poor quality triangles for planar geometry.
 
-Plot methods take those tables and generate the "indexed array" structures needed for 'rgl'. In this way we get the best of both worlds of "GIS" and "3D models".
+``` r
+
+c_mesh <- copy_down(TRI(nc), z = p_mesh$object$BIR74)
+
+rgl.clear()
+a <- plot3d(c_mesh) 
+bg3d("black"); material3d(specular = "black")
+aspect3d(1, 1, .2)
+rglwidget()  ## not needed if you have a local device
+```
+
+In the silicate models, complex objects are decomposed to a set of related, linked tables. Object identity is maintained with attribute metadata and this is carried through to colour and other aesthetics.
+
+Plot (3D) methods take those tables and generate the "indexed array" structures needed for 'rgl'. (`plot3d` will return the rgl-model form). This gets us part of the way towards having the best of both worlds of GIS and 3D graphics.
 
 Ongoing design
 --------------
 
-The core work for translating spatial classes is done by the unspecialized 'silicate::PATH' function and its underlying decomposition generics.
+The core work for translating spatial classes is done by the unspecialized 'silicate::PATH' function and its underlying decomposition generics. Ongoing work in the [silicate](https://github.com/hypertidy/silicate) package will improve and support these types more fully.
 
-`anglr` then decomposes further, from path-types to primitive-types - where "primitive" means topological primitives, vertices, line segments (edges), triangles. Ongoing work in the [silicate](https://github.com/hypertidy/silicate) package will support these types more fully.
+Planar polygons and lines are described by the same 1D primitives, and this is easy to do. Harder is to generate 2D primitives and for that we rely on [Jonathan Richard Shewchuk's Triangle](https://www.cs.cmu.edu/~quake/triangle.html).
 
-Crucially, polygons and lines are described by the same 1D primitives, and this is easy to do. Harder is to generate 2D primitives and for that we rely on [Jonathan Richard Shewchuk's Triangle](https://www.cs.cmu.edu/~quake/triangle.html).
-
-Triangulation is with `RTriangle` package using "constrained mostly-Delaunay Triangulation" from the Triangle library, but could alternatively use `rgl` with its ear clipping algorithm, and related work is in the `laridae` project to bring CGAL facilities to R.
+Triangulation in DEL is with `RTriangle` package using "constrained mostly-Delaunay Triangulation" from the Triangle library, and TRI in silicate uses ear-clipping via Mapbox's `earcut.hpp` (this is analogous to but faster and more robust than `rgl::triangulate`). Independent work for mostly-Delaunay methods is in the `laridae` project.
 
 With RTriangle we can set a max area for the triangles, so it can wrap around curves like globes and hills, and this can only be done by the addition of Steiner points. All of this takes us very far from the path-based types generally used by GIS-alikes.
 
 Grids
 -----
 
-Raster gridded data are decomposed to "quad" forms, essentially a 2D primitive with four corners rather than 3. This works well in rgl but is slow in the browser for some reason, but we can always break quads down to triangles if needed.
+Raster gridded data are decomposed to `QUAD` forms, essentially a 2D primitive with four corners rather than three. This works well in rgl and is super fast using the quadmesh package that can translate from the raster package.
 
-Texture mapping is possible with rgl, but it needs a local coordinate system mapped to the index space of a PNG image. It's easy enough but requires a bit of awkward preparation, not yet simplified. Some different approaches:
+Texture mapping is possible with rgl, but it needs a local coordinate system mapped to the index space of a PNG image. It's easy enough but requires a bit of awkward preparation, not yet simplified.
+
+Some different approaches:
 
 <https://rpubs.com/cyclemumner/frink-polyogn>
 
