@@ -54,18 +54,24 @@ denorm_PRIM_addZ <- function(x, z, ..., .id = "z_") {
   x$vertex <- dplyr::distinct(prim_long, x_, y_, z_, vertex_)
   }
   if (inherits(x, "TRI")) {
-    priminst <- x$triangle %>% inner_join(x$object)
+    priminst <- x$triangle %>% inner_join(x$object_link_triangle)
     priminst[["triangle_"]] <- silicate::sc_uid(priminst)
+    
     prim_long <- priminst %>% tidyr::gather(tri_vertex, vertex, -object_, -triangle_)
     prim_long[[.id]] <- z[match(prim_long$object_, x$object$object_)]
     
     prim_long <- prim_long %>% inner_join(x$vertex, c("vertex" = "vertex_"))
     prim_long$vertex <- NULL
     prim_long$vertex_ <- silicate::sc_uid(nrow(prim_long))
-    x$triangle <- prim_long[c("tri_vertex", "vertex_", "triangle_", "object_")] %>% 
+    prim_wide <-  prim_long[c("tri_vertex", "vertex_", "triangle_", "object_")] %>% 
       tidyr::spread(tri_vertex, vertex_)
-    x$vertex <- dplyr::distinct(prim_long, x_, y_, z_, vertex_)
+    x$object_link_triangle <- dplyr::distinct(prim_wide, .data$object_, .data$triangle_)
+  x$triangle <- dplyr::distinct(prim_wide, .data$triangle_, .data$.vertex0, .data$.vertex1, .data$.vertex2)  
+      
+    #x$triangle$object_ <- NULL  ## can't keep this here
     
+    x$vertex <- dplyr::distinct(prim_long, x_, y_, z_, vertex_)
+    print("TRI")
   }
 x  
 }
