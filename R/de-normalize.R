@@ -25,8 +25,9 @@ denorm_SEQ_addZ <- function(x, z, ..., .id = "z_") {
   x
 }
 
-## PRIM works for SC, TRI
-#' @noRD
+#'  PRIM works for SC, TRI
+#' 
+#' @noRd
 #' @examples
 ##' fifty <- fiftystater::fifty_states %>%
 ##' dplyr::transmute(x_ = long, y_ = lat, branch_ = group, object_ = id, order_ = order, island_ = !hole) %>%

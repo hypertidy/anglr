@@ -4,17 +4,23 @@
 \alias{QUAD}
 \alias{QUAD}
 \alias{QUAD.BasicRaster}
-\title{Title}
+\title{QUAD model}
 \usage{
 QUAD(x, ...)
 
 \method{QUAD}{BasicRaster}(x, ...)
 }
 \arguments{
-\item{x}{}
+\item{x}{raster alike}
 
-\item{...}{}
+\item{...}{ignored}
+}
+\value{
+QUAD model
 }
 \description{
-Title
+The QUAD model
+}
+\examples{
+QUAD(raster::raster(volcano))
 }

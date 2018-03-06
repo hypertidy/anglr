@@ -51,14 +51,16 @@ library(raster)
 library(sf)
 ## convert to triangles and plot
 library(anglr)
+library(silicate)
 ```
 
 ```{r,include=FALSE,echo=FALSE}
 simpleworld <- rgeos::gBuffer(simpleworld, width = 0, byid = TRUE)
 ```
 ```{r}
-cmesh <- anglr(simpleworld)
+cmesh <- DEL(simpleworld)
 plot(cmesh)
+plot3d(cmesh)
 rglwidget()
 ```
 
@@ -75,11 +77,11 @@ gl <- graticule::graticule(seq(xmin(ex), xmax(ex), length = 15),
 
 
 ## convert to triangles, but wrap onto globe then plot
-smesh <- anglr(sids)
-plot(globe(smesh))
-mgl <- anglr(gl)
+smesh <- DEL(sids)
+plot3d(globe(smesh))
+mgl <- SC(gl)
 mgl$o$color_ <- "black"
-plot(globe(mgl), lwd = 2)
+plot3d(globe(mgl), lwd = 2, add = TRUE)
 rgl::rglwidget()
 ```
 
@@ -98,8 +100,9 @@ data(holey)
 ## SpatialPolygonsDataFrame
 sph <- sp(holey)
 
-glh <- anglr(sph)
+glh <- TRI(sph)
 plot(glh)
+plot3d(glh)
 rgl::rglwidget()
 ```
 
@@ -113,7 +116,7 @@ rgl::rglwidget()
 rgl::rgl.clear()
 library(dplyr)
 linehouse <- as(sph, "SpatialLinesDataFrame")
-plot(anglr(linehouse))
+plot3d(SC(linehouse))
 rgl::rglwidget()
 ```
 
@@ -125,8 +128,8 @@ rgl::rglwidget()
 ```{r, webgl=TRUE}
 rgl::rgl.clear()
 
-lmesh <- anglr(as(simpleworld, "SpatialLinesDataFrame"))
-plot(globe(lmesh))
+lmesh <- SC(as(simpleworld, "SpatialLinesDataFrame"))
+plot3d(globe(lmesh))
 rgl::rglwidget()
 ```
 
@@ -137,6 +140,8 @@ rgl::rglwidget()
 ## rgl objects
 
 Rgl mesh3d objects that use "triangle" primitives are supported. 
+
+(This is meant to be deprecated but we'll need a bit more work to create silicate models from rgl). 
 
 ```{r,webgl=TRUE}
 rgl::rgl.clear()
@@ -157,16 +162,16 @@ To complete the support for these rgl objects we need quads, and to allows a mix
 ## Points
 
 
-And points work!  (Don't laugh). 
+And points work!  (Don't laugh, actually they don't work atm). 
 
 
-```{r, webgl=TRUE}
+```{r, eval=FALSE}
 rgl::rgl.clear()
 
 library(anglr)
 
 mpts <- as(as(simpleworld, "SpatialLinesDataFrame"), "SpatialMultiPointsDataFrame")
-plot(anglr(mpts))
+plot3d(ARC(mpts))
 rgl::view3d(theta = 25, phi = 3)
 rgl::rglwidget()
 ```
@@ -182,7 +187,9 @@ representation. We can forget about complicated algorithms to
 cut and splice lines and just throw away triangles south of a chosen latitude. (Still needs work, but we've proved it works well enough. )
 
 
-```{r, webgl=TRUE}
+Needs work: 
+
+```{r, eval=FALSE}
 rgl::rgl.clear()
 library(trip)
 library(anglr)
@@ -198,9 +205,9 @@ walrus <- spTransform(walrus818, prj)
 
 gr$color_ <- "black"
 rgl::par3d(windowRect = c(100, 100, 912 + 100, 912 +100))
-plot(anglr(gr))
+plot3d(SC(gr))
 w$color_ <- sample(viridis::inferno(nrow(w)))
-wmap <- anglr(w)
+wmap <- TRI(w)
 tXv <- wmap$tXv %>% dplyr::inner_join(wmap$v)
 
 keep <- tibble::tibble(triangle_ = unique(tXv$triangle_[rgdal::project(as.matrix(tXv[c("x_", "y_")]), prj, inv = TRUE)[,2] > 35]))
@@ -209,8 +216,8 @@ wmap$t <- wmap$t %>% dplyr::inner_join(keep)
 
 ## we mashed the graph and bit but it works, later we
 ## can propagate the filter ...
-plot(wmap, specular = "black")
-plot(anglr(walrus))
+plot3d(wmap, specular = "black", add = TRUE)
+plot3d(SC(walrus), add = TRUE)
 um <- structure(c(0.934230506420135, 0.343760699033737, 0.0950899347662926, 
                   0, -0.302941381931305, 0.905495941638947, -0.297159105539322, 
                   0, -0.188255190849304, 0.24880850315094, 0.950081348419189, 0, 
@@ -235,14 +242,13 @@ plot(poly_z)
 rgl::rglwidget()
 ```
 
-A discrete transfer of `z` values can be used by nominating a 
-numeric column in the attributes. We could easily do extrude building footprints with this. 
+A discrete transfer of `z` values can be done directly by `copy_down`. 
 
 ```{r}
 data("polymesh", package = "silicate")
 rgl::rgl.clear()
 polymesh$val <- abs(polymesh$layer - 8) * 0.01
-plot(anglr(polymesh, z = "val"))
+plot3d(copy_down(TRI(polymesh), z = polymesh$val))
 rgl::rglwidget()
 
 ```

@@ -1,12 +1,15 @@
-#' Title
+#' QUAD model
+#' 
+#' The QUAD model
 #'
-#' @param x 
-#' @param ... 
+#' @param x raster alike
+#' @param ... ignored
 #'
-#' @return
+#' @return QUAD model
 #' @export
 #'
 #' @examples
+#' QUAD(raster::raster(volcano))
 QUAD <- function(x, ...) {
   UseMethod("QUAD")
 }
