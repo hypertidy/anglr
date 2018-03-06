@@ -37,9 +37,9 @@ plot3d.SC <- function(x, ..., add = FALSE) {
   }
   rgl::segments3d(vb[vindex,], 
       col = rep(pindex$color_[match(x$edge$edge_, pindex$edge_)], each = 2))
-   if (getOption("rgl.useNULL") && interactive() && runif(1, 0, 1) > 0.96) {
-     message("rgl NULL device in use, do you need to run rgl::rglwidget()?")
-   }
+   #if (!is.null(getOption("rgl.useNULL")) && interactive() && runif(1, 0, 1) > 0.96) {
+  #   message("rgl NULL device in use, do you need to run rgl::rglwidget()?")
+  # }
   ## TODO need an rgl level classed object
   invisible(list(v = vb, is = vindex))
 }
@@ -112,9 +112,9 @@ plot3d.ARC <- function(x, ..., add = FALSE) {
  vindex <- match(unlist(v_id), x$vertex$vertex_)
   rgl::segments3d(vb[vindex,], 
                   col = rep(pindex$color_[match(x$arc_link_vertex$arc_, pindex$arc_)], each = 2))
-  if (getOption("rgl.useNULL") && interactive() && runif(1, 0, 1) > 0.96) {
-    message("rgl NULL device in use, do you need to run rgl::rglwidget()?")
-  }
+  #if (!is.null(getOption("rgl.useNULL")) && interactive() && runif(1, 0, 1) > 0.96) {
+  #  message("rgl NULL device in use, do you need to run rgl::rglwidget()?")
+  #}
   ## TODO need an rgl level classed object
   invisible(list(v = vb, is = vindex))
   
@@ -142,9 +142,9 @@ vindex <- match(c(t(as.matrix(pindex[c(".vertex0", ".vertex1", ".vertex2")]))), 
   }
   #vindex <- match(unlist(v_id), x$vertex$vertex_)
   rgl::triangles3d(vb[vindex,], col = rep(pindex$color_, each = 3))
-  if (!is.null(getOption("rgl.useNULL")) && interactive() && runif(1, 0, 1) > 0.96) {
-    message("rgl NULL device in use, do you need to run rgl::rglwidget()?")
-  }
+  #if (!is.null(getOption("rgl.useNULL")) && interactive() && runif(1, 0, 1) > 0.96) {
+  #  message("rgl NULL device in use, do you need to run rgl::rglwidget()?")
+  #}
   ## TODO need an rgl level classed object
   invisible(list(v = vb, it = vindex))
   
