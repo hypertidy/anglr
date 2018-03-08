@@ -16,13 +16,13 @@ auto_3d(x = 1, y = 1, z = 1, keep_xy = TRUE, exag = TRUE,
 
 \item{keep_xy}{should xy be forced to maintain their current aspect ratio}
 
-\item{exag}{should the x, y, z factors be applied, set to `FALSE` to ignore}
+\item{exag}{should the x, y, z factors be applied, set to \code{FALSE} to ignore}
 }
 \value{
-the output of `rgl::par3d` invisibly
+the output of \code{rgl::par3d} invisibly
 }
 \description{
-Automatically modify the aspect ratio of a scene to 
+Automatically modify the aspect ratio of a scene to
 rescale drastically different data ranges into something more
 pleasing.
 }

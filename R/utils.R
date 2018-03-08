@@ -38,29 +38,6 @@ auto_3d <- function(x = 1, y = 1, z = 1, keep_xy = TRUE, exag = TRUE, silent = F
 }
 
 
-
-get_proj <- function(x, ...) UseMethod("get_proj")
-get_proj.default <- function(x, ...) {
-  mt <- try(x[["meta"]], silent = TRUE)
-  if (inherits(mt, "data.frame")) return(mt[["proj"]])
-  op <- options(warn = -1)
-  on.exit(op)
-  rp <- try(raster::projection(x), silent = TRUE)
-  if (inherits(rp, "try-error")) rp < - NA
-  as.character(rp)
-}
-get_proj.sf <- function(x, ...) {
-  attr(x[[attr(x, "sf_column")]], "crs")[["proj4string"]]
-}
-get_proj.sfc <- function(x, ...) {
-  attr(x, "crs")[["proj4string"]]
-}
-## should be a sc method, but silicate needs meta everywhere
-get_proj.PATH <- function(x, ...) {
-  x$meta$proj
-}
-
-
 widg <- function() {
   rgl::rglwidget()
 }

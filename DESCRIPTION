@@ -43,6 +43,7 @@ Suggests:
     knitr,
     rmarkdown,
     rnaturalearth
+Roxygen: list(markdown = TRUE)
 SystemRequirements: PROJ.4
 Encoding: UTF-8
 LazyData: true

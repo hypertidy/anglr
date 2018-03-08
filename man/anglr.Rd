@@ -60,7 +60,7 @@ Create primitive-based "mesh" structures from various inputs.
 \section{Warning}{
 
 anglr only checks for presence of triangle centres within
-known holes, so this doesn't pick up examples of overlapping areas e.g. 
+known holes, so this doesn't pick up examples of overlapping areas e.g.
 https://github.com/hypertidy/anglr/issues/39
 }
 
