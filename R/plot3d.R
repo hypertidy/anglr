@@ -23,12 +23,8 @@ plot3d.SC <- function(x, ..., add = FALSE) {
   }
   if (!requireNamespace("rgl", quietly = TRUE))
     stop("rgl required")
-  haveZ <- "z_" %in% names(x$vertex)
-  if (haveZ) {
-    vb <- cbind(x$vertex$x_, x$vertex$y_, x$vertex$z_)
-  } else {
-    vb <- cbind(x$vertex$x_, x$vertex$y_, 0)
-  }
+  Z <- if("z_" %in% names(x$vertex)) x$vertex$z_ else 0
+  vb <- cbind(x$vertex$x_, x$vertex$y_, Z)
   pindex <- dplyr::inner_join(x$object_link_edge, x$object[, c("object_", "color_")], "object_")
   vindex <- rbind(match(x$edge$.vertex0, x$vertex$vertex_),
                   match(x$edge$.vertex1, x$vertex$vertex_))
