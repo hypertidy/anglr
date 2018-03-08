@@ -23,7 +23,7 @@
 
 \item{add}{add to existing plot if exists}
 
-\item{add_normals}{if TRUE use `rgl::addNormals` to smooth the model before plotting}
+\item{add_normals}{if TRUE use \code{rgl::addNormals} to smooth the model before plotting}
 }
 \value{
 the rgl mesh3d object, invisibly

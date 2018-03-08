@@ -43,16 +43,16 @@ Copy down provides ways to transfer object level data values to
 vertex level.
 }
 \details{
-Various methods are used depending on the second argument `z`.
+Various methods are used depending on the second argument \code{z}.
 
-If z is a raster (`BasicRaster`) a numeric value for each vertex is found by bilinear
-interpolation using `raster::extract(raster, vertex, method = "bilinear")`. Vertices
-are transformed into the space used by the raster if possible. (WIP ... Otherwise a warning is issued if 
+If z is a raster (\code{BasicRaster}) a numeric value for each vertex is found by bilinear
+interpolation using \code{raster::extract(raster, vertex, method = "bilinear")}. Vertices
+are transformed into the space used by the raster if possible. (WIP ... Otherwise a warning is issued if
 there's not overlap ... WIP)
 
 If z is a character value, that column is taken from the object table.
 
-The `.id` argument must be character and exist as a column name in the object table.
+The \code{.id} argument must be character and exist as a column name in the object table.
 
 If z is a vector it's simply copied down.
 

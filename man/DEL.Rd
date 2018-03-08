@@ -30,25 +30,25 @@ DEL model
 }
 \description{
 The Delaunary criterion forms the basis of this model, is its
-definining characteristic without being compulsory. From Wikipedia: 
+definining characteristic without being compulsory. From Wikipedia:
 The "Delaunay triangulation (also known as a Delone triangulation) for a given
 set P of discrete points in a plane is a triangulation DT(P) such that no
 point in P is inside the circumcircle of any triangle in DT(P). Delaunay
 triangulations maximize the minimum angle of all the angles of the triangles
 in the triangulation; they tend to avoid sliver triangles. . . . The
 Delaunay triangulation corresponds to the dual graph of the Voronoi
-diagram of P" 
-\url{https://en.wikipedia.org/wiki/Delaunay_triangulation}. 
-The Delaunay model is a constrained triangulation with a variety 
+diagram of P"
+\url{https://en.wikipedia.org/wiki/Delaunay_triangulation}.
+The Delaunay model is a constrained triangulation with a variety
 of constraint and qualification types. The Delaunay model has the
-odd but defining characterist of not being always consistent 
-with the Delaunay criterion. Edge inclusion is 
+odd but defining characterist of not being always consistent
+with the Delaunay criterion. Edge inclusion is
 non-negotiable, but other constraints include (limit, or avoid)
-Steiner vertex insertion, a limit on the maximum area of a triangle, 
+Steiner vertex insertion, a limit on the maximum area of a triangle,
 minimum triangle angle and strict adherence to the Delaunay criterion.
 }
 \details{
-The Delaunay model is the *mostly Delaunay* scheme used 
+The Delaunay model is the \emph{mostly Delaunay} scheme used
 by the provable-quality meshers.
 }
 \examples{
