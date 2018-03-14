@@ -103,6 +103,7 @@ DEL.SC <- function(x, max_area = NULL, ...)  {
  object_link_triangle <- dplyr::distinct(triangle[c("object_", "triangle_")])
  triangle$visible <- TRUE
  triangle$object_ <- NULL
+ vertex$Pidx <- NULL
   meta <- tibble(proj = get_proj(x), ctime = Sys.time())
   structure(list(object = x$object, 
                  object_link_triangle = object_link_triangle,
