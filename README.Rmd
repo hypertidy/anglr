@@ -147,11 +147,12 @@ https://gist.github.com/mdsumner/dc80283de50bb23ff7681b14768b9367
 
 We must use a version of R that is 3.3.2 or later, and `anglr` can only be installed from Github, and that at least requires the package `devtools`. 
 
-Also required are packages 'rgl' and 'RTriangle', so first make sure you can install and use these. On a fresh installation of R these package together require a lot of other contributed packages, and that can take some time. 
+Also required are packages 'rgl' and 'RTriangle' and 'sf', so first make sure you can install and use these. On a fresh installation of R these package together require a lot of other contributed packages, and that can take some time. 
 
 ```{r,eval=FALSE}
 install.packages("rgl")
 install.packages("RTriangle")
+install.packages("sf")
 install.packages("devtools")
 ```
 
