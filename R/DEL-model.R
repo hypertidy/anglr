@@ -44,6 +44,9 @@ DEL.default <- function(x, ...) {
 #' @name DEL
 #' @export
 DEL.SC <- function(x, max_area = NULL, ...)  {
+
+    ## we need a pfft::edge_triangle_map
+  ## https://github.com/hypertidy/silicate/issues/62#issuecomment-372898877
  objs <- vector("list", nrow(x$object))
   for (i in seq_along(objs)) {
     x1 <- x
