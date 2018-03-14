@@ -70,8 +70,13 @@ DEL.SC <- function(x, max_area = NULL, ...)  {
   triangle <- tibble::tibble(triangle_ = silicate::sc_uid(nT))
   
   P <- do.call(rbind, lapply(objs, function(x) x$P))
-  vertex <- tibble::tibble(x_ = P[,1], y_ = P[,2], 
-                           vertex_ = silicate::sc_uid(nrow(P)))
+  f <- as.integer(factor(paste(P[,1], P[,2], sep = "-")))
+  P <- cbind(P, f)
+  P_unique <- P[!duplicated(f), ]
+#print(P_unique)
+  vertex <- tibble::tibble(x_ = P_unique[,1], y_ = P_unique[,2], 
+                           vertex_ = silicate::sc_uid(nrow(P_unique)),
+                           Pidx = P_unique[,3])
   TRIS <- lapply(objs, function(x) x$T)
   count <- 0
 
@@ -84,16 +89,20 @@ DEL.SC <- function(x, max_area = NULL, ...)  {
   ## shared by two triangles, set to invisible
   
   TRIS <- do.call(rbind, TRIS)
-  triangle <- dplyr::mutate(triangle, .vertex0 = vertex$vertex_[TRIS[,1]],
-                            .vertex1 = vertex$vertex_[TRIS[,2]],
-                            .vertex2 = vertex$vertex_[TRIS[,3]],  
+  #browser()
+  #TRIS[] <- match(TRIS, P[,3])
+  v0 <- match(P[TRIS[,1],3], vertex$Pidx)
+  v1 <- match(P[TRIS[,2],3], vertex$Pidx)
+  v2 <- match(P[TRIS[,3],3], vertex$Pidx)
+  #print(P)
+  #print(TRIS)
+ triangle <- dplyr::mutate(triangle, .vertex0 = vertex$vertex_[v0],
+                            .vertex1 = vertex$vertex_[v1],
+                            .vertex2 = vertex$vertex_[v2],  
                             object_ = rep(x$object$object_, n_t))
  object_link_triangle <- dplyr::distinct(triangle[c("object_", "triangle_")])
  triangle$visible <- TRUE
  triangle$object_ <- NULL
-  tXv <- tibble::tibble(vertex_ = vertex[["vertex_"]][t(TRIS)], 
-                        triangle_ = rep(triangle[["triangle_"]], each = 3))
-  
   meta <- tibble(proj = get_proj(x), ctime = Sys.time())
   structure(list(object = x$object, 
                  object_link_triangle = object_link_triangle,

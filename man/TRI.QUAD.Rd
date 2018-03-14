@@ -4,7 +4,7 @@
 \alias{TRI.QUAD}
 \title{TRI model extensions}
 \usage{
-TRI.QUAD(x, ...)
+\method{TRI}{QUAD}(x, ...)
 }
 \arguments{
 \item{x}{QUAD}
@@ -15,9 +15,11 @@ TRI model from silicate is extended by methods for QUAD.
 \examples{
 library(anglr)
 library(raster)
-r <- raster(volcano)
+r <- setExtent(raster(volcano), extent(0, nrow(volcano), 0, ncol(volcano)))
 a <- QUAD(r)
-x <- TRI(a)
-
-mesh <- DEL(x, max_area = 0.1)
+x <- copy_down(TRI(a), r)
+nrow(x$vertex)
+mesh <- DEL(x, max_area = .2)
+mesh <- copy_down(mesh, r)
+nrow(mesh$vertex)
 }
