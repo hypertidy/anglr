@@ -101,6 +101,36 @@
     </div>
 
     <div class="contents">
+    <div id="anglr-0-4-7" class="section level1">
+<h1 class="hasAnchor">
+<a href="#anglr-0-4-7" class="anchor"></a>anglr 0.4.7</h1>
+<ul>
+<li><p>Added a <code>TRI</code> method for <code>QUAD</code>.</p></li>
+<li><p><code>DEL.SC</code> now removes duplicate vertices like <code>DEL.PATH</code> always did, but triangulation is still done per object since we don’t yet have edge to path logic required for object classification within the mesh.</p></li>
+<li><p>Improved the triangulation and triangulation to edges logic.</p></li>
+<li><p>The plot methods for QUAD now maps cell value to colour.</p></li>
+<li><p>new QUAD model, for raster data. By default the raster cell values are treated as a fill aesthetic, and used to provide colour on a flat mesh. The <code>copy_down</code> method for a QUAD requires only one argument will put the cell values on the geometry for z_. This separation is required especially for more general geometries like XYZ geocentric, because the cell value and geometric Z are not necessarily related.</p></li>
+<li><p>Now re-exporting the magrittr pipe.</p></li>
+<li><p>Added <code>gebco1</code> as a built-in global elevation data set, to avoid reading from GeoTIFF.</p></li>
+<li><p>Internal function <code>anglr_lines</code> is now deprecated, and points to the silicate and plot3d approach.</p></li>
+<li><p>Added <code>copy_down</code> generic to dispatch on <code>sc</code> and subclasses, to<br>
+transfer raw values, object column data, or raster values to vertices.</p></li>
+<li><p>Added <code>plot3d</code> methods to (eventually) replace <code><a href="../reference/plot-anglr.html">plot(anglr(x))</a></code> and <code>linemesh with</code>plot3d(silicate_model)<code>- currently only</code>SC<code>supported  and plots as (object-grouped) edges. Returns</code>rgl` form silently.</p></li>
+<li><p>Removed use of maptools wrld_simpl, replaced by in-built <code>simpleworld</code>.</p></li>
+<li><p>Big update for new silicate-based approach, thanks to Andreja Stojic for the feeback.</p></li>
+<li><p>New approach for polygons now using pfft package, identifying triangle centroids by polygon.</p></li>
+</ul>
+</div>
+    <div id="anglr-0-4-6" class="section level1">
+<h1 class="hasAnchor">
+<a href="#anglr-0-4-6" class="anchor"></a>anglr 0.4.6</h1>
+<ul>
+<li><p>new “z =” support in <code>anglr</code> for a feature name (to copy as a constant) or a raster object (to extract values onto vertices), for now the raster must be in the same coordinate system as the input object</p></li>
+<li><p>new <code>add_normals</code> argument for plotting triangulations</p></li>
+<li><p>rename package (from rangl)</p></li>
+<li><p>now faster by relying on silicate for <code>sf</code></p></li>
+</ul>
+</div>
     <div id="rangl-0-4-5" class="section level1">
 <h1 class="hasAnchor">
 <a href="#rangl-0-4-5" class="anchor"></a>rangl 0.4.5</h1>
@@ -146,7 +176,6 @@
 <li>first release to Github</li>
 </ul>
 </div>
-    NA
     </div>
   </div>
 
@@ -154,11 +183,12 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#anglr-0-4-7">0.4.7</a></li>
+        <li><a href="#anglr-0-4-6">0.4.6</a></li>
         <li><a href="#rangl-0-4-5">0.4.5</a></li>
         <li><a href="#rangl-0-3-0">0.3.0</a></li>
         <li><a href="#rangl-0-2-0">0.2.0</a></li>
         <li><a href="#trimesh-0-1-0">0.1.0</a></li>
-        <li><a href="#NA">NA</a></li>
       </ul>
     </div>
   </div>

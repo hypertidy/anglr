@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Tidy tables for topological spatial data structures. — anglr-package • anglr</title>
+<title>TRI model extensions — TRI.QUAD • anglr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -27,17 +27,9 @@
 <script src="../pkgdown.js"></script>
   
   
-<meta property="og:title" content="Tidy tables for topological spatial data structures. — anglr-package" />
+<meta property="og:title" content="TRI model extensions — TRI.QUAD" />
 
-<meta property="og:description" content="The 'anglr' package helps transcend the following general limitations:
-coordinates beyond X and Y, or longitude and latitude
-storing attributes on vertices, primitives, branches (parts), or objects
-topology and geometry are properly separated
-spatial data can be properly represented as a graph of spatial primitives
-polygons as true surfaces, not just glorified lines with a path-filling rule
-TBD higher dimensional primitives are possible
-TBD n-dimensional rasters with curvilinear coordinates, and the discrete-continuous distinction
-" />
+<meta property="og:description" content="TRI model from silicate is extended by methods for QUAD." />
 <meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -107,57 +99,42 @@ TBD n-dimensional rasters with curvilinear coordinates, and the discrete-continu
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Tidy tables for topological spatial data structures.</h1>
+    <h1>TRI model extensions</h1>
     </div>
 
     
-    <p>The 'anglr' package helps transcend the following general limitations:</p><ul>
-<li><p>coordinates beyond X and Y, or longitude and latitude</p></li>
-<li><p>storing attributes on vertices, primitives, branches (parts), or objects</p></li>
-<li><p>topology and geometry are properly separated</p></li>
-<li><p>spatial data can be properly represented as a graph of spatial primitives</p></li>
-<li><p>polygons as true surfaces, not just glorified lines with a path-filling rule</p></li>
-<li><p>TBD higher dimensional primitives are possible</p></li>
-<li><p>TBD n-dimensional rasters with curvilinear coordinates, and the discrete-continuous distinction</p></li>
-</ul>
+    <p>TRI model from silicate is extended by methods for QUAD.</p>
     
 
-        
-    <h2 class="hasAnchor" id="i-creation"><a class="anchor" href="#i-creation"></a>I. Creation</h2>
-
+    <pre class="usage"><span class='co'># S3 method for QUAD</span>
+<span class='fu'>TRI</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
-    <table><tr><td>
-<code>anglr</code> </td>
-<td> create a anglr table set from various input types  </td>
-</tr></table>
-    
-    <h2 class="hasAnchor" id="ii-plotting"><a class="anchor" href="#ii-plotting"></a>II. Plotting</h2>
-
-    
-    <table><tr><td>
-<code><a href='globe.html'>globe</a></code> </td>
-<td> convert X,Y planar or angular to 3D on the surface of a globe, based on the data in longitude-latitude form </td>
-</tr><tr><td>
-<code><a href='plot-anglr.html'>plot.trimesh</a></code> </td>
-<td> plot 2D topology in 3D geometry space </td>
-</tr><tr><td>
-<code><a href='plot-anglr.html'>plot.linemesh</a></code> </td>
-<td> plot 1D topology in 3D geometry space </td>
-</tr><tr><td>
-<code><a href='plot-anglr.html'>plot.pointmesh</a></code> </td>
-<td> plot 0D topology in 3D geometry space </td>
-</tr></table>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>QUAD</p></td>
+    </tr>
+    </table>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>anglr</span>)
+<span class='fu'>library</span>(<span class='no'>raster</span>)
+<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/raster/topics/setExtent'>setExtent</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/raster/topics/raster'>raster</a></span>(<span class='no'>volcano</span>), <span class='fu'><a href='http://www.rdocumentation.org/packages/raster/topics/extent'>extent</a></span>(<span class='fl'>0</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/raster/topics/ncell'>nrow</a></span>(<span class='no'>volcano</span>), <span class='fl'>0</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/raster/topics/ncell'>ncol</a></span>(<span class='no'>volcano</span>)))
+<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>QUAD</span>(<span class='no'>r</span>)
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>copy_down</span>(<span class='fu'>TRI</span>(<span class='no'>a</span>), <span class='no'>r</span>)
+<span class='fu'><a href='http://www.rdocumentation.org/packages/raster/topics/ncell'>nrow</a></span>(<span class='no'>x</span>$<span class='no'>vertex</span>)</div><div class='output co'>#&gt; [1] 5456</div><div class='input'><span class='no'>mesh</span> <span class='kw'>&lt;-</span> <span class='fu'>DEL</span>(<span class='no'>x</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='fl'>.2</span>)</div><div class='output co'>#&gt; <span class='message'>Joining, by = "triangle_"</span></div><div class='input'><span class='no'>mesh</span> <span class='kw'>&lt;-</span> <span class='fu'>copy_down</span>(<span class='no'>mesh</span>, <span class='no'>r</span>)
+<span class='fu'><a href='http://www.rdocumentation.org/packages/raster/topics/ncell'>nrow</a></span>(<span class='no'>mesh</span>$<span class='no'>vertex</span>)</div><div class='output co'>#&gt; [1] 25547</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      
-      <li><a href="#i-creation">I. Creation</a></li>
-
-      <li><a href="#ii-plotting">II. Plotting</a></li>
-          </ul>
+      <li><a href="#arguments">Arguments</a></li>
+            
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

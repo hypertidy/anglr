@@ -152,13 +152,13 @@ vertex level.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Various methods are used depending on the second argument `z`.</p>
-<p>If z is a raster (`BasicRaster`) a numeric value for each vertex is found by bilinear
-interpolation using `raster::extract(raster, vertex, method = "bilinear")`. Vertices
-are transformed into the space used by the raster if possible. (WIP ... Otherwise a warning is issued if 
+    <p>Various methods are used depending on the second argument <code>z</code>.</p>
+<p>If z is a raster (<code>BasicRaster</code>) a numeric value for each vertex is found by bilinear
+interpolation using <code><a href='http://www.rdocumentation.org/packages/raster/topics/extract'>raster::extract(raster, vertex, method = "bilinear")</a></code>. Vertices
+are transformed into the space used by the raster if possible. (WIP ... Otherwise a warning is issued if
 there's not overlap ... WIP)</p>
 <p>If z is a character value, that column is taken from the object table.</p>
-<p>The `.id` argument must be character and exist as a column name in the object table.</p>
+<p>The <code>.id</code> argument must be character and exist as a column name in the object table.</p>
 <p>If z is a vector it's simply copied down.</p>
 <p>No checking is done on the type of the result, and so there's nothing to stop the use of the recyling rule
 to expand out values, and nothing to stop the use of non numeric values being copied down. It's your model.</p>

@@ -92,6 +92,7 @@
 <li>regular raster grids</li>
 <li>igraph</li>
 <li>Lidar</li>
+<li>others - let me know!</li>
 </ul>
 <p>To do this anglr works with forms defined by <a href="https://github.com/hypertidy/silicate">silicate</a> and (after <a href="https://cran.r-project.org/package=rgl">rgl</a>) provides <code>plot3d</code> methods for each of the models <code>SC</code>, <code>PATH</code>, <code>ARC</code> and <code>TRI</code>. Here we add two more models <code>DEL</code> (for high-quality triangulation) and <code>QUAD</code> (for raster data).</p>
 </div>
@@ -166,10 +167,14 @@ a &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentat
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>Also required are packages ‘rgl’ and ‘RTriangle’, so first make sure you can install and use these.</p>
+<p>We must use a version of R that is 3.3.2 or later, and <code>anglr</code> can only be installed from Github, and that at least requires the package <code>devtools</code>.</p>
+<p>Also required are packages ‘rgl’ and ‘RTriangle’, so first make sure you can install and use these. On a fresh installation of R these package together require a lot of other contributed packages, and that can take some time.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"rgl"</span>)
 <span class="kw">install.packages</span>(<span class="st">"RTriangle"</span>)
-devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"hypertidy/anglr"</span>)</code></pre></div>
+<span class="kw">install.packages</span>(<span class="st">"devtools"</span>)</code></pre></div>
+<p>With that out of the way, install from Github using devtools.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"hypertidy/anglr"</span>)</code></pre></div>
+<p>Feel free to contact me via the <a href="https://github.com/hypertidy/anglr/issues/">Issues</a> if you have problems, or these notes don’t make sense.</p>
 <div id="ubuntudebian" class="section level3">
 <h3 class="hasAnchor">
 <a href="#ubuntudebian" class="anchor"></a>Ubuntu/Debian</h3>

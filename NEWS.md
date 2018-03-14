@@ -1,4 +1,12 @@
-# anglr dev
+# anglr 0.4.7
+
+* Added a `TRI` method for `QUAD`. 
+
+* `DEL.SC` now removes duplicate vertices like `DEL.PATH` always did, but triangulation is
+ still done per object since we don't yet have edge to path logic required for object classification
+ within the mesh. 
+
+* Improved the triangulation and triangulation to edges logic.
 
 * The plot methods for QUAD now maps cell value to colour. 
 
