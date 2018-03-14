@@ -206,7 +206,6 @@ https://github.com/hypertidy/anglr/issues
 
 ## Examples
 
-See the vignettes: https://hypertidy.github.io/anglr/articles/index.html
 
 
 
