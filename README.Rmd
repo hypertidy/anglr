@@ -155,6 +155,7 @@ install.packages("RTriangle")
 install.packages("devtools")
 ```
 
+
 With that out of the way, install from Github using devtools. 
 
 ```{r,eval=FALSE}
