@@ -1,5 +1,6 @@
 #' 3D object plot
 #'
+#' 
 #' @param x silicate model, SC, TRI, ARC, or PATH
 #' @param ... 
 #' @param add 
@@ -45,17 +46,25 @@ plot3d.QUAD <- function(x, ..., add = FALSE) {
   scl <- function(x) (x - min(x, na.rm = TRUE))/diff(range(x, na.rm = TRUE))
   ## etc blah
   ob <- mkq_3d()
-  ob$vb <- t(cbind(as.matrix(x$v[, c("x_", "y_", "z_")]), 1))
-  ob$ib <- matrix(x$quad_link_vertex$vertex_, nrow = 4)
-  cols <- viridis::viridis(min(c(1000, nrow(x$quad))))
-  qXv <- x$quad_link_vertex
-  qXv$value <- x$quad$value[qXv$quad_]
-  ob$material$col <- cols[scl(x$quad$value[qXv$quad_]) * length(cols) + 1]
-  if (!add & length(rgl::rgl.dev.list()) < 1L) rgl::rgl.clear()
-  
+  exy <- get_edges(x)
+  v <- tibble(x_ = exy[,1], y_ = exy[,2], z_ = if (is.null(x$vertex)) 0 else x$vertex$z_)
+  ob$vb <- t(cbind(as.matrix(v[, c("x_", "y_", "z_")]), 1))
+  qXv <- get_qXv(x)
+  ob$ib <- matrix(qXv$vertex_, nrow = 4)
+  cols <- viridis::viridis(min(c(1000, prod(unlist(x$object[c("nrows", "ncols")])))))
+  #qXv <- x$quad_link_vertex
+  if (!is.null(x$quad)) {
+    qXv$value <- x$quad$value[qXv$quad_]
+    
+    
+  } else {
+    qXv$value <- x$vertex$z_[qXv$vertex_]
+  }
+  ob$material$col <- cols[scl(qXv$value) * length(cols) + 1]
+  if (!add) {
+    rgl::rgl.clear()
+  }
   rgl::shade3d(ob, ...)
-  #if ( rgl::rgl.useNULL()) force(rgl::rglwidget()  )
-  
   invisible(ob)
 }
 

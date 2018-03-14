@@ -121,12 +121,25 @@ copy_down.ARC <- function(x, z = NULL, ..., .id = "z_") {
 #' @name copy_down
 #' @export
 copy_down.QUAD <- function(x, z = NULL, ..., .id = "z_") {
-  qXv <- x$quad_link_vertex
-  if (!"vertex_" %in% names(x$vertex)) x$vertex[["vertex_"]] <- seq(nrow(x$vertex))
-  qXv$value <- x$quad$value[qXv$quad_]
-  qXv <- dplyr::distinct(qXv, .data$vertex_, .keep_all = TRUE)
-  x$vertex[[.id]] <- qXv$value[match(x$vertex$vertex_, qXv$vertex_)]
-  x
+ #vertex <- tibble(x_ = exy[,1], y_ = exy[,2], z_ = 0)
+  
+  if (is.null(z)) {
+    qXv <- get_qXv(x)
+    ##
+    if (is.null(x$quad)) stop("nothing to copy down")
+    qXv$value <- x$quad$value[qXv$quad_]
+    qXv <- dplyr::distinct(qXv, .data$vertex_, .keep_all = TRUE)
+    
+    ##if (!"vertex_" %in% names(vertex)) vertex[["vertex_"]] <- seq(nrow(vertex))
+    vertex <- setNames(tibble(a = qXv$value), .id)
+  } else {
+    exy <- get_edges(x)
+    vertex <- setNames(tibble(a = raster::extract(z, exy)), .id)
+  }
+   
+  x$vertex <- vertex
+  x$quad <- NULL
+  x  
 }
 
 #  #@name copy_down

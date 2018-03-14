@@ -23,10 +23,16 @@ TRI.QUAD <- function(x, ...) {
 
 
 quadToTriangle <- function(x) {
-  v <-x$vertex
+  exy <- get_edges(x)
+  v <- tibble(x_ = exy[,1], y_ = exy[,2])
+  if (is.null(x$vertex)) {
+   v$z_ <- 0
+  } else {
+    v$z_ <- x$vertex$z_
+  }
   v$vertex_ <- seq(nrow(v))
   meta <- x$meta
-  qXv <- x$quad_link_vertex
+  qXv <- get_qXv(x)
   n4 <- nrow(qXv) / 4L
   tXv_long <- tibble::tibble(vertex_ = qXv$vertex_[rep(c(1, 2, 3, 1, 3, 4), n4) + rep(seq(1, length = n4, by = 4)-1, each = 6)])
 tXv <- tibble::tibble(triangle_ = silicate::sc_uid(nrow(tXv_long)/3))
