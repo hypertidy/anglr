@@ -19,6 +19,7 @@ The basic idea is to showcase topological forms of objects from a variety of sou
 -   regular raster grids
 -   igraph
 -   Lidar
+-   others - let me know!
 
 To do this anglr works with forms defined by [silicate](https://github.com/hypertidy/silicate) and (after [rgl](https://cran.r-project.org/package=rgl)) provides `plot3d` methods for each of the models `SC`, `PATH`, `ARC` and `TRI`. Here we add two more models `DEL` (for high-quality triangulation) and `QUAD` (for raster data).
 
@@ -120,13 +121,23 @@ Deprecated use of rangl here, but shows the general texture coordinate approach 
 Installation
 ------------
 
-Also required are packages 'rgl' and 'RTriangle', so first make sure you can install and use these.
+We must use a version of R that is 3.3.2 or later, and `anglr` can only be installed from Github, and that at least requires the package `devtools`.
+
+Also required are packages 'rgl' and 'RTriangle', so first make sure you can install and use these. On a fresh installation of R these package together require a lot of other contributed packages, and that can take some time.
 
 ``` r
 install.packages("rgl")
 install.packages("RTriangle")
+install.packages("devtools")
+```
+
+With that out of the way, install from Github using devtools.
+
+``` r
 devtools::install_github("hypertidy/anglr")
 ```
+
+Feel free to contact me via the [Issues](https://github.com/hypertidy/anglr/issues/) if you have problems, or these notes don't make sense.
 
 ### Ubuntu/Debian
 
