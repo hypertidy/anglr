@@ -1,3 +1,7 @@
+# anglr dev
+
+* Old `anglr()` function now defunct. 
+
 # anglr 0.4.7
 
 * Added a `TRI` method for `QUAD`. 

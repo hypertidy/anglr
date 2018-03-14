@@ -14,6 +14,8 @@
 #' plot(octo, col = viridis::viridis(5)[5], alpha = 0.3)
 #' bg3d("grey")
 anglr.mesh3d <- function (x, z = NULL, ..., type = NULL, max_area = NULL) {
+  .Deprecated(new = "rgl types not currently supported", package = "anglr")
+  "silicate::SC or silicate::TRI, and plot3d.SC"
   stopifnot(x$primitivetype == "triangle")
   if ("ib" %in% names(x)) {
     warning("object has quad primitives as well as triangles,\n only the triangles will be carried through")
@@ -33,8 +35,5 @@ anglr.mesh3d <- function (x, z = NULL, ..., type = NULL, max_area = NULL) {
 
 
 
-anglr <- function(x, ...) {
-  UseMethod("anglr")
-}
 
 #mesh.mesh3d

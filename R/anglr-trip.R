@@ -1,6 +1,7 @@
 #' @name anglr
 #' @export
 anglr.trip <- function (x, z = NULL, ..., type = NULL, max_area = NULL) {
+  .Defunct(new = "SC", package = "anglr")
   x <- silicate::PATH(x)
   ## denormalize
   

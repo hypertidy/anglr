@@ -5,7 +5,8 @@
 \alias{anglr-package}
 \title{Tidy tables for topological spatial data structures.}
 \description{
-The 'anglr' package helps transcend the following general limitations:
+The 'anglr' package show-cases getting past limitations in spatial data by
+extending models in the `silicate`` package:
 \itemize{
 \item coordinates beyond X and Y, or longitude and latitude
 \item storing attributes on vertices, primitives, branches (parts), or objects
@@ -19,7 +20,8 @@ The 'anglr' package helps transcend the following general limitations:
 \section{I. Creation}{
 
 \tabular{ll}{
-\code{\link{anglr}} \tab create a anglr table set from various input types  \cr
+\code{\link{DEL}} \tab create a mostly-Delaunay shape-preserving constrained triangulation  \cr
+\code{\link{QUAD}} \tab create a (raster-like) quad mesh  \cr
 }
 }
 
@@ -27,9 +29,9 @@ The 'anglr' package helps transcend the following general limitations:
 
 \tabular{ll}{
 \code{\link{globe}} \tab convert X,Y planar or angular to 3D on the surface of a globe, based on the data in longitude-latitude form \cr
-\code{\link{plot.trimesh}} \tab plot 2D topology in 3D geometry space \cr
-\code{\link{plot.linemesh}} \tab plot 1D topology in 3D geometry space \cr
-\code{\link{plot.pointmesh}} \tab plot 0D topology in 3D geometry space \cr
+\code{\link{plot3d.SC}} \tab plot 1D topology in 3D geometry space \cr
+\code{\link{plot3d.TRI}} \tab plot 2D topology in 3D geometry space (DEL or TRI) \cr
+\code{\link{plot3d.QUAD}} \tab plot quad-cell topology in 3D geometry space \cr
 }
 }
 

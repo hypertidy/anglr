@@ -179,6 +179,4 @@ Let me know if you have problems, or are interested in this work. See the issues
 Examples
 --------
 
-See the vignettes: <https://hypertidy.github.io/anglr/articles/index.html>
-
 Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.

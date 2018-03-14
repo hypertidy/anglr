@@ -19,7 +19,7 @@
 
 \method{anglr}{trip}(x, z = NULL, ..., type = NULL, max_area = NULL)
 
-anglr(x, ...)
+anglr(x, z = NULL, ..., type = NULL, max_area = NULL)
 
 \method{anglr}{default}(x, z = NULL, ..., type = NULL, max_area = NULL)
 

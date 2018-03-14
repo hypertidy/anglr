@@ -9,5 +9,5 @@ A simple polygon map of world sovereign countries, a modified copy of
 the rnaturalearth counties110 (see data-raw/simpleworld.R for details).
 }
 \examples{
-anglr(simpleworld[1:10, ])
+DEL(simpleworld[1:10, ])
 }

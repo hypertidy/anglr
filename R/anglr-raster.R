@@ -13,7 +13,8 @@
 #' plot(anglr(w/300))
 #' 
 anglr.BasicRaster <- function(x, z = NULL, ..., na.rm = TRUE, type = NULL, max_area = NULL) {
-  .Deprecated(new = "QUAD", package = "anglr", old = "anglr(<raster>)")
+  .Defunct(new = "QUAD", package = "anglr")
+  ## .Deprecated(new = "QUAD", package = "anglr", old = "anglr(<raster>)")
   if (!is.null(max_area)) {
     pixlen <- sqrt(max_area)
     fact <- ceiling(mean(raster::res(x)/pixlen))
