@@ -32,8 +32,13 @@ plot3d.SC <- function(x, ..., add = FALSE) {
   if (!add) {
     rgl::rgl.clear()
   }
-  rgl::segments3d(vb[vindex,], 
-      col = rep(pindex$color_[match(x$edge$edge_, pindex$edge_)], each = 2))
+  ## make a default set of colours if not passed in
+  if ("col" %in% names(list(...))) {
+    rgl::segments3d(vb[vindex,], 
+        col = rep(pindex$color_[match(x$edge$edge_, pindex$edge_)], each = 2), ...)
+   } else {
+    rgl::segments3d(vb[vindex,], ...)
+    }
    #if (!is.null(getOption("rgl.useNULL")) && interactive() && runif(1, 0, 1) > 0.96) {
   #   message("rgl NULL device in use, do you need to run rgl::rglwidget()?")
   # }
