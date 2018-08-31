@@ -1,24 +1,54 @@
-plot.DEL <- function(x, ..., add = FALSE) {
-  
-  if (!add) plot(x$vertex[c("x_", "y_")], type = "n")
-  if ("color_" %in% names(x$object)) {
-    cols <- x$object$color_
-  } else {
-    cols <- viridis::viridis(nrow(sc_object(x)))
-  }
-  for (i in seq_len(nrow(x$object))) { 
-    asub <- dplyr::filter(x$object_link_triangle, .data$object_ == x$object$object_[i]) %>%
-      dplyr::inner_join(x$triangle) %>% 
-      dplyr::transmute(.data$.vertex0, .data$.vertex1, .data$.vertex2, fill = NA_character_) %>% 
-      t() %>% 
-      as.vector() 
-    asub <-   tibble::tibble(vertex_ = asub)
-    asub <- head(asub, -1L)
-    graphics::polypath(dplyr::left_join(asub,x$vertex,  "vertex_") %>% dplyr::select(.data$x_, .data$y_), 
-                       col = cols[i], ...)
-    
-  }
+#' Plot QUAD
+#'
+#' Plot a QUAD mesh. 
+#' @param x 
+#' @param ... 
+#' @param add 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' plot(QUAD(raster::raster(volcano)))
+plot.QUAD <- function(x, ..., add = FALSE) {
+  if (!is.null(x$quad)) {
+    x$object$crs <- x$meta$proj
+    qd <- do.call(raster::raster, 
+                  x$object[c("xmn", "xmx", "ymn", "ymx", "nrows", "ncols", "crs")])
+    qd[] <- x$quad$value
+    l <- list(...)
+    if (is.null(l$col)) l$col <- viridis::viridis(100)
+    l$x <- qd
+    do.call(raster::plot, l)
+    return(invisible(NULL))
+  } 
+  tr <- TRI(x)
+  plot(tr, border = NA, ...)
+  invisible(NULL)
 }
+
+
+# plot.DEL <- function(x, ..., add = FALSE) {
+#   
+#   if (!add) plot(x$vertex[c("x_", "y_")], type = "n")
+#   if ("color_" %in% names(x$object)) {
+#     cols <- x$object$color_
+#   } else {
+#     cols <- viridis::viridis(nrow(sc_object(x)))
+#   }
+#   for (i in seq_len(nrow(x$object))) { 
+#     asub <- dplyr::filter(x$object_link_triangle, .data$object_ == x$object$object_[i]) %>%
+#       dplyr::inner_join(x$triangle) %>% 
+#       dplyr::transmute(.data$.vertex0, .data$.vertex1, .data$.vertex2, fill = NA_character_) %>% 
+#       t() %>% 
+#       as.vector() 
+#     asub <-   tibble::tibble(vertex_ = asub)
+#     asub <- head(asub, -1L)
+#     graphics::polypath(dplyr::left_join(asub,x$vertex,  "vertex_") %>% dplyr::select(.data$x_, .data$y_), 
+#                        col = cols[i], ...)
+#     
+#   }
+#}
 
 
 #' Title

@@ -17,7 +17,15 @@
 #' @importFrom silicate TRI
 #' @export TRI
 TRI.QUAD <- function(x, ...) {
-  quadToTriangle(x)
+  out <- quadToTriangle(x)
+  ## try expanding object to pairs of triangles
+  f <- factor(x$quad$value)
+  
+  out$object <- tibble::tibble(object_ = sc_uid(nlevels(f)), 
+                               value = levels(f))
+  out$object_link_triangle$object_ <- rep(out$object$object_[f], each = 2)
+#  out$
+  out
 }
 
 

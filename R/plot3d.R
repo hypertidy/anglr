@@ -46,8 +46,10 @@ plot3d.QUAD <- function(x, ..., add = FALSE) {
   scl <- function(x) (x - min(x, na.rm = TRUE))/diff(range(x, na.rm = TRUE))
   ## etc blah
   ob <- mkq_3d()
-  exy <- get_edges(x)
-  v <- tibble(x_ = exy[,1], y_ = exy[,2], z_ = if (is.null(x$vertex)) 0 else x$vertex$z_)
+  #exy <- get_edges(x)
+  #v <- tibble(x_ = exy[,1], y_ = exy[,2], z_ = if (is.null(x$vertex)) 0 else x$vertex$z_)
+  v <- get_vertex(x)
+  v[["z_"]] <- if (is.null(x$vertex$z_))  0 else x$vertex$z_
   ob$vb <- t(cbind(as.matrix(v[, c("x_", "y_", "z_")]), 1))
   qXv <- get_qXv(x)
   ob$ib <- matrix(qXv$vertex_, nrow = 4)

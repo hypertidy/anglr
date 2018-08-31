@@ -3,18 +3,27 @@ reproject <- function(x, target = NULL, ..., source) {
    UseMethod("reproject")   
 }
 
-reproject.sc <- function(x, target = NULL, ..., family = "laea", source) {
+reproject.sc <- function(x, target = NULL, ..., family = "laea", source = NULL) {
   if (is.null(target)) {
     target <- make_local(x, family = family)
   }
-  source <- get_proj(x)
+  if (is.null(source)) source <- get_proj(x)
   fac <- if (grepl("longlat", source)) pi/180 else 1
-  z <- if ("z_" %in% names(x$vertex)) z<- x$vertex[["z_"]] else 0
-  verts <- cbind(as.matrix(x$vertex[c("x_", "y_")]), 0)
-  
-  x$vertex[c("x_", "y_", "z_")] <- tibble::as_tibble(proj4::ptransform(verts * fac, 
+#  z <- if ("z_" %in% names(x$vertex)) z<- x$vertex[["z_"]] else 0
+#  verts <- cbind(as.matrix(x$vertex[c("x_", "y_")]), 0)
+  verts <- get_vertex(x)
+  verts$z_ <- if (is.null(x$vertex$z_)) 0 else x$vertex$z_
+  if (inherits(x, "QUAD") && is.null(x$vertex)) {
+    x$vertex <- verts
+    x$quad <- NULL
+  }
+  x$vertex[c("x_", "y_", "z_")] <- tibble::as_tibble(proj4::ptransform(as.matrix(verts[c("x_", "y_", "z_")]) * fac, 
                                                src.proj = source, 
                                                dst.proj = target))
+  meta <- get_meta(x)
+  meta["ctime"] <- Sys.time()
+  meta["proj"] <- target
+  x$meta <- rbind(meta, x$meta)
   x
                                                   
 }
@@ -33,6 +42,25 @@ tokenize <- function(x) {
 }
 make_local <- function(x, family = "laea") {
   UseMethod("make_local")
+}
+make_local.QUAD <- function(x, family = "laea", ...) {
+  proj <- get_proj(x)
+  if (grepl("longlat", proj)) {
+#    xy <- as.matrix(x$vertex[c("x_", "y_")])
+    lon <- unlist(x$object[c("xmn", "xmx")])
+    lat <- unlist(x$object[c("ymn", "ymx")])
+    
+    #if ("z_" %in% names(x$vertex)) Z <- x$vertex[["z_"]] else 0
+    lon <- round(mean(lon), digits = 4)
+    lat <- round(mean(lat), digits = 4)
+    target <- sprintf("+proj=%s +lon_=%f +lat_0=%s +datum=WGS84", family, lon, lat)
+  } else {
+    ## we ignoring conic families
+    tokens <- defaults(tokenize(proj))
+    tokens$proj <- family
+    target <- paste(paste("+", names(tokens), "=", tokens, sep = ""), collapse = " ")
+  }
+  target
 }
 make_local.sc <- function(x, family = "laea", ...) {
   proj <- get_proj(x)

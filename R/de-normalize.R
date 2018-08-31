@@ -55,7 +55,8 @@ denorm_PRIM_addZ <- function(x, z, ..., .id = "z_") {
   x$vertex <- dplyr::distinct(prim_long, x_, y_, z_, vertex_)
   }
   if (inherits(x, "TRI")) {
-    priminst <- x$triangle %>% inner_join(x$object_link_triangle)
+    x$vertex$z_ <- NULL
+    priminst <- x$triangle %>% inner_join(x$object_link_triangle, "triangle_")
     priminst[["triangle_"]] <- silicate::sc_uid(priminst)
     
     prim_long <- priminst %>% tidyr::gather(tri_vertex, vertex, -object_, -triangle_)
@@ -73,6 +74,8 @@ denorm_PRIM_addZ <- function(x, z, ..., .id = "z_") {
     
     x$vertex <- dplyr::distinct(prim_long, x_, y_, z_, vertex_)
     print("TRI")
+    #browser()
+    
   }
 x  
 }
