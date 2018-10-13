@@ -3,21 +3,13 @@
 \name{plot3d}
 \alias{plot3d}
 \alias{plot3d.SC}
-\alias{plot3d}
 \alias{plot3d.QUAD}
-\alias{plot3d}
 \alias{plot3d.PATH}
-\alias{plot3d}
 \alias{plot3d.sf}
-\alias{plot3d}
 \alias{plot3d.sfc}
-\alias{plot3d}
 \alias{plot3d.Spatial}
-\alias{plot3d}
 \alias{plot3d.trip}
-\alias{plot3d}
 \alias{plot3d.ARC}
-\alias{plot3d}
 \alias{plot3d.TRI}
 \title{3D object plot}
 \usage{

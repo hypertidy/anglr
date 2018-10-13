@@ -2,7 +2,6 @@
 % Please edit documentation in R/QUAD-model.R
 \name{QUAD}
 \alias{QUAD}
-\alias{QUAD}
 \alias{QUAD.BasicRaster}
 \title{QUAD model}
 \usage{

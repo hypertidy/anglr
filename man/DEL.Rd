@@ -2,11 +2,8 @@
 % Please edit documentation in R/DEL-model.R
 \name{DEL}
 \alias{DEL}
-\alias{DEL}
 \alias{DEL.default}
-\alias{DEL}
 \alias{DEL.SC}
-\alias{DEL}
 \alias{DEL.PATH}
 \title{DEL Delaunay model}
 \usage{
@@ -52,6 +49,6 @@ The Delaunay model is the \emph{mostly Delaunay} scheme used
 by the provable-quality meshers.
 }
 \examples{
-plot3d.DEL(DEL(simpleworld))
+plot3d(DEL(simpleworld))
 rgl::rglwidget()
 }

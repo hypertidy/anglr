@@ -4,24 +4,22 @@
 \name{anglr}
 \alias{anglr}
 \alias{anglr.BasicRaster}
-\alias{anglr}
 \alias{anglr.trip}
-\alias{anglr}
-\alias{anglr}
 \alias{anglr.default}
 \alias{anglr.SpatialMultiPoints}
 \alias{anglr.SpatialPoints}
 \alias{anglr.mesh3d}
 \title{Raster anglr}
 \usage{
-\method{anglr}{BasicRaster}(x, z = NULL, ..., na.rm = TRUE, type = NULL,
-  max_area = NULL)
+\method{anglr}{BasicRaster}(x, z = NULL, ..., na.rm = TRUE,
+  type = NULL, max_area = NULL)
 
 \method{anglr}{trip}(x, z = NULL, ..., type = NULL, max_area = NULL)
 
 anglr(x, z = NULL, ..., type = NULL, max_area = NULL)
 
-\method{anglr}{default}(x, z = NULL, ..., type = NULL, max_area = NULL)
+\method{anglr}{default}(x, z = NULL, ..., type = NULL,
+  max_area = NULL)
 
 \method{anglr}{SpatialMultiPoints}(x, z = NULL, ..., type = NULL,
   max_area = NULL)
@@ -29,7 +27,8 @@ anglr(x, z = NULL, ..., type = NULL, max_area = NULL)
 \method{anglr}{SpatialPoints}(x, z = NULL, ..., type = NULL,
   max_area = NULL)
 
-\method{anglr}{mesh3d}(x, z = NULL, ..., type = NULL, max_area = NULL)
+\method{anglr}{mesh3d}(x, z = NULL, ..., type = NULL,
+  max_area = NULL)
 }
 \arguments{
 \item{x}{input data}
