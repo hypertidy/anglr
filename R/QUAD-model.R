@@ -1,3 +1,35 @@
+globe.QUAD <- function(x, gproj = "+proj=geocent +ellps=WGS84", ...) {
+  p4 <- x$meta$proj[1]
+  if (is.null(x$vertex)) {
+    vertex <- setNames(tibble::as_tibble(coordinates(objdf_toraster(x$object))), c("x_", "y_"))
+  } else {
+    vertex <- x$vertex
+  }
+  haveZ <- "z_" %in% names(vertex)
+  
+  ## need to handle if we already have a "z_"
+  if (haveZ) {
+    ll <- as.matrix(vertex[, c("x_", "y_", "z_")])
+    
+  } else { 
+     ll <- cbind(as.matrix(vertex[, c("x_", "y_")]), 0)
+  }
+  
+   if (grepl("longlat", p4)) ll <- ll * pi / 180
+   xyz <- proj4::ptransform(ll, src.proj = p4, dst.proj = gproj)
+   vertex$x_ <- xyz[,1]
+   vertex$y_ <- xyz[,2]
+   vertex$z_ <- xyz[,3]
+   x$vertex <- tibble::as_tibble(vertex)
+  x$meta <- rbind(x$meta[1, ], x$meta)
+  x$meta$proj[1] <- gproj
+  x$meta$ctime[1] <- format(Sys.time(), tz = "UTC")
+  x
+}
+
+objdf_toraster <- function(obj) {
+  do.call(raster, as.list(obj[c("xmn", "xmx", "ymn", "ymx", "nrows", "ncols")]))
+}
 #' QUAD model
 #' 
 #' The QUAD model
