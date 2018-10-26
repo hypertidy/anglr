@@ -2,15 +2,10 @@
 % Please edit documentation in R/copy_down.R
 \name{copy_down}
 \alias{copy_down}
-\alias{copy_down}
 \alias{copy_down.SC}
-\alias{copy_down}
 \alias{copy_down.TRI}
-\alias{copy_down}
 \alias{copy_down.PATH}
-\alias{copy_down}
 \alias{copy_down.ARC}
-\alias{copy_down}
 \alias{copy_down.QUAD}
 \title{Copy down values to vertices}
 \usage{

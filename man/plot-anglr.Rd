@@ -4,9 +4,7 @@
 \alias{plot-anglr}
 \alias{plot.trimesh}
 \alias{plot}
-\alias{plot-anglr}
 \alias{plot.linemesh}
-\alias{plot-anglr}
 \alias{plot.pointmesh}
 \title{Plot objects in OpenGL}
 \usage{

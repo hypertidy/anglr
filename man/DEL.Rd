@@ -2,11 +2,8 @@
 % Please edit documentation in R/DEL-model.R
 \name{DEL}
 \alias{DEL}
-\alias{DEL}
 \alias{DEL.default}
-\alias{DEL}
 \alias{DEL.SC}
-\alias{DEL}
 \alias{DEL.PATH}
 \title{DEL Delaunay model}
 \usage{
