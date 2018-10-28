@@ -26,9 +26,11 @@ plot3d.SC <- function(x, ..., add = FALSE) {
     stop("rgl required")
   Z <- if("z_" %in% names(x$vertex)) x$vertex$z_ else 0
   vb <- cbind(x$vertex$x_, x$vertex$y_, Z)
-  pindex <- dplyr::inner_join(x$object_link_edge, x$object[, c("object_", "color_")], "object_")
-  vindex <- rbind(match(x$edge$.vertex0, x$vertex$vertex_),
-                  match(x$edge$.vertex1, x$vertex$vertex_))
+
+  pindex <- dplyr::inner_join(x$edge, x$object[, c("object_", "color_")], "object_")
+  vindex <- rbind(match(x$edge$.vx0, x$vertex$vertex_),
+                  match(x$edge$.vx1, x$vertex$vertex_))
+#browser()
   if (!add) {
     rgl::rgl.clear()
   }
@@ -37,7 +39,7 @@ plot3d.SC <- function(x, ..., add = FALSE) {
     rgl::segments3d(vb[vindex,], ...)
    } else {
      rgl::segments3d(vb[vindex,], 
-                     col = rep(pindex$color_[match(x$edge$edge_, pindex$edge_)], each = 2), ...)
+                     col = rep(pindex$color_, each = 2), ...)
      
     }
    #if (!is.null(getOption("rgl.useNULL")) && interactive() && runif(1, 0, 1) > 0.96) {

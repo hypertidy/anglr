@@ -51,9 +51,9 @@ DEL.SC <- function(x, max_area = NULL, ...)  {
   for (i in seq_along(objs)) {
     x1 <- x
     x1$object <- x1$object[i, ]
-    x1$object_link_edge <- x1$object_link_edge %>% dplyr::filter(object_ == x1$object$object_[1])
-    x1$edge <- x$edge[x$edge$edge_ %in% x1$object_link_edge$edge_, ]
-    ordered_verts <- t(apply(as.matrix(x1$edge[c(".vertex0", ".vertex1")]), 1, sort))
+    #x1$object_link_edge <- x1$object_link_edge %>% dplyr::filter(object_ == x1$object$object_[1])
+    x1$edge <- x$edge[x$edge$object_ %in% x1$object$object_, ]
+    ordered_verts <- t(apply(as.matrix(x1$edge[c(".vx0", ".vx1")]), 1, sort))
     x1$vertex <- x$vertex[x$vertex$vertex_ %in% c(ordered_verts), ]
     
 
@@ -212,8 +212,8 @@ DEL.PATH <- function(x, max_area = NULL,  ...) {
 edge_RTriangle <- function (x, ...) 
 {
   ps <- RTriangle::pslg(P = as.matrix(x[["vertex"]][c("x_", 
-                                                      "y_")]), S = matrix(match(silicate::sc_edge(x) %>% dplyr::select(.data$.vertex0, 
-                                                                                                                       .data$.vertex1) %>% as.matrix() %>% t() %>% as.vector(), 
+                                                      "y_")]), S = matrix(match(silicate::sc_edge(x) %>% dplyr::select(.data$.vx0, 
+                                                                                                                       .data$.vx1) %>% as.matrix() %>% t() %>% as.vector(), 
                                                                                 x[["vertex"]][["vertex_"]]), ncol = 2, byrow = TRUE))
   RTriangle::triangulate(ps, ...)
 }

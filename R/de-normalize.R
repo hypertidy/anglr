@@ -42,7 +42,8 @@ denorm_PRIM_addZ <- function(x, z, ..., .id = "z_") {
 
   if (inherits(x, "SC")) {
     ## instances of primitives
-  priminst <- x$edge %>% inner_join(x$object_link_edge)
+  priminst <- x$edge #%>% inner_join(x$object_link_edge)
+  ## note that silicate/SC doesn't have a labelled edge, only object_ and .vx0 ,.vx1
   priminst[["edge_"]] <- silicate::sc_uid(priminst)
   prim_long <- priminst %>% 
     tidyr::gather(edge_vertex, vertex, -object_, -edge_)
@@ -50,8 +51,10 @@ denorm_PRIM_addZ <- function(x, z, ..., .id = "z_") {
   prim_long <- prim_long %>% inner_join(x$vertex, c("vertex" = "vertex_"))
   prim_long$vertex <- NULL
   prim_long$vertex_ <- silicate::sc_uid(nrow(prim_long))
-  x$edge <- prim_long[c("edge_vertex", "vertex_", "edge_")] %>% tidyr::spread(edge_vertex, vertex_)
-  x$object_link_edge <- dplyr::distinct(prim_long, object_, edge_)
+
+  x$edge <- prim_long[c("edge_vertex", "vertex_", "edge_", "object_")] %>% tidyr::spread(edge_vertex, vertex_)
+  x$edge$edge_ <- NULL  ## no explicit edge ID
+  #x$object_link_edge <- dplyr::distinct(prim_long, object_, edge_)
   x$vertex <- dplyr::distinct(prim_long, x_, y_, z_, vertex_)
   }
   if (inherits(x, "TRI")) {
