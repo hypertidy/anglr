@@ -80,27 +80,27 @@ plot3d.QUAD <- function(x, ..., add = FALSE) {
 #' @name plot3d
 #' @export
 plot3d.PATH <- function(x, ..., add = FALSE) {
-  plot3d(silicate::SC(x), ...)
+  plot3d(silicate::SC(x), ..., add = add)
 }
 #' @name plot3d
 #' @export
 plot3d.sf <- function(x, ..., add = FALSE) {
-  plot3d(silicate::SC(x), ...)
+  plot3d(silicate::SC(x), ..., add = add)
 }
 #' @name plot3d
 #' @export
 plot3d.sfc <- function(x, ..., add = FALSE) {
-  plot3d(silicate::SC(x), ...)
+  plot3d(silicate::SC(x), ..., add = add)
 }
 #' @name plot3d
 #' @export
 plot3d.Spatial <- function(x, ..., add = FALSE) {
-  plot3d(silicate::SC(x), ...)
+  plot3d(silicate::SC(x), ..., add = add)
 }
 #' @name plot3d
 #' @export
 plot3d.trip <- function(x, ..., add = FALSE) {
-  plot3d(silicate::SC(x), ...)
+  plot3d(silicate::SC(x), ..., add = add)
 }
 
 
