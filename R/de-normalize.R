@@ -70,7 +70,7 @@ denorm_PRIM_addZ <- function(x, z, ..., .id = "z_") {
     prim_wide <-  prim_long[c("tri_vertex", "vertex_", "triangle_", "object_")] %>% 
       tidyr::spread(tri_vertex, vertex_)
     x$object_link_triangle <- dplyr::distinct(prim_wide, .data$object_, .data$triangle_)
-  x$triangle <- dplyr::distinct(prim_wide, .data$triangle_, .data$.vertex0, .data$.vertex1, .data$.vertex2)  
+    x$triangle <- dplyr::distinct(prim_wide, .data$triangle_, .data$.vertex0, .data$.vertex1, .data$.vertex2)  
       
     #x$triangle$object_ <- NULL  ## can't keep this here
     
