@@ -42,7 +42,8 @@
 vertices and segment indices, invisibly
 }
 \description{
-3D object plot
+For SC edges are matched to their object/s. One object's properties is applied as colour.
+If \code{color_} column is present on the data object table it is used.
 }
 \examples{
 library(silicate)

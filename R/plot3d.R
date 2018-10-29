@@ -1,6 +1,7 @@
 #' 3D object plot
 #'
-#' 
+#' For SC edges are matched to their object/s. One object's properties is applied as colour. 
+#' If `color_` column is present on the data object table it is used. 
 #' @param x silicate model, SC, TRI, ARC, or PATH
 #' @param ... 
 #' @param add 
@@ -27,7 +28,10 @@ plot3d.SC <- function(x, ..., add = FALSE) {
   Z <- if("z_" %in% names(x$vertex)) x$vertex$z_ else 0
   vb <- cbind(x$vertex$x_, x$vertex$y_, Z)
 
-  pindex <- dplyr::inner_join(x$edge, x$object[, c("object_", "color_")], "object_")
+  pindex <- dplyr::inner_join(dplyr::inner_join(x$edge[c("edge_")], x$object_link_edge[c("edge_", "object_")], "edge_"), 
+                              x$object[, c("object_", "color_")], "object_")
+  ## one object wins
+  pindex <- dplyr::distinct(pindex, .data$edge_, .keep_all = TRUE)
   vindex <- rbind(match(x$edge$.vx0, x$vertex$vertex_),
                   match(x$edge$.vx1, x$vertex$vertex_))
 #browser()
@@ -80,27 +84,27 @@ plot3d.QUAD <- function(x, ..., add = FALSE) {
 #' @name plot3d
 #' @export
 plot3d.PATH <- function(x, ..., add = FALSE) {
-  plot3d(silicate::SC(x), ...)
+  plot3d(silicate::SC(x), ..., add = add)
 }
 #' @name plot3d
 #' @export
 plot3d.sf <- function(x, ..., add = FALSE) {
-  plot3d(silicate::SC(x), ...)
+  plot3d(silicate::SC(x), ..., add = add)
 }
 #' @name plot3d
 #' @export
 plot3d.sfc <- function(x, ..., add = FALSE) {
-  plot3d(silicate::SC(x), ...)
+  plot3d(silicate::SC(x), ..., add = add)
 }
 #' @name plot3d
 #' @export
 plot3d.Spatial <- function(x, ..., add = FALSE) {
-  plot3d(silicate::SC(x), ...)
+  plot3d(silicate::SC(x), ..., add = add)
 }
 #' @name plot3d
 #' @export
 plot3d.trip <- function(x, ..., add = FALSE) {
-  plot3d(silicate::SC(x), ...)
+  plot3d(silicate::SC(x), ..., add = add)
 }
 
 
@@ -144,11 +148,11 @@ plot3d.TRI <- function(x, ..., add = FALSE) {
   } else {
     vb <- cbind(x$vertex$x_, x$vertex$y_, 0)
   }
-  pindex <- dplyr::inner_join(x$triangle,  x$object_link_triangle,  "triangle_") %>% 
+  pindex <- x$triangle %>% #%>%  dplyr::inner_join(x$object_link_triangle,  "triangle_") %>% 
   dplyr::inner_join(x$object[, c("object_", "color_")], "object_") 
     
   ##vindex <- dplyr::inner_join(x$triangle, x$vertex, "vertex_")
-vindex <- match(c(t(as.matrix(pindex[c(".vertex0", ".vertex1", ".vertex2")]))), x$vertex$vertex_)
+vindex <- match(c(t(as.matrix(pindex[c(".vx0", ".vx1", ".vx2")]))), x$vertex$vertex_)
   #v_id <- lapply(split(vindex, vindex$arc_), function(x) as.vector(path2seg(x$vertex_)))
   if (!add) {
     rgl::rgl.clear()
