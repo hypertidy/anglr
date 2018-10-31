@@ -39,7 +39,7 @@
 \item{add}{}
 }
 \value{
-vertices and segment indices, invisibly
+rgl shape3d types (note that "segment3d" is currently an imaginary shape3d type)
 }
 \description{
 For SC edges are matched to their object/s. One object's properties is applied as colour.

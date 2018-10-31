@@ -6,7 +6,7 @@
 #' @param ... 
 #' @param add 
 #' 
-#' @return vertices and segment indices, invisibly
+#' @return rgl shape3d types (note that "segment3d" is currently an imaginary shape3d type)
 #' @importFrom rgl plot3d
 #' @export plot3d
 #' @name plot3d
@@ -50,7 +50,16 @@ plot3d.SC <- function(x, ..., add = FALSE) {
   #   message("rgl NULL device in use, do you need to run rgl::rglwidget()?")
   # }
   ## TODO need an rgl level classed object
-  invisible(list(v = vb, is = vindex))
+  #invisible(list(v = vb, is = vindex))
+  invisible(structure(list(vb = rbind(t(vb), 0), 
+                           is = vindex,
+                 primitivetype = "segment", 
+                 material = list(col = pindex$color_)), 
+            class = c("segment3d", "shape3d")))
+}
+
+shade3d.segment3d <- function(x, ...) {
+  rgl::segments3d(t(x$vb[1:3,])[x$is, ], col = rep(x$material$col, each = 2), ...)
 }
 #' @name plot3d
 #' @export
@@ -131,11 +140,12 @@ plot3d.ARC <- function(x, ..., add = FALSE) {
  vindex <- match(unlist(v_id), x$vertex$vertex_)
   rgl::segments3d(vb[vindex,], 
                   col = rep(pindex$color_[match(x$arc_link_vertex$arc_, pindex$arc_)], each = 2))
-  #if (!is.null(getOption("rgl.useNULL")) && interactive() && runif(1, 0, 1) > 0.96) {
-  #  message("rgl NULL device in use, do you need to run rgl::rglwidget()?")
-  #}
-  ## TODO need an rgl level classed object
-  invisible(list(v = vb, is = vindex))
+  ## there's no shape3d for segments
+  invisible(structure(list(vb = rbind(t(vb), 0), 
+                           is = matrix(vindex, nrow = 2),
+                           primitivetype = "segment", 
+                           material = list(col = pindex$color_)), 
+                      class = c("segment3d", "shape3d")))
   
 }
 #' @name plot3d
@@ -161,12 +171,11 @@ vindex <- match(c(t(as.matrix(pindex[c(".vx0", ".vx1", ".vx2")]))), x$vertex$ver
   }
   #vindex <- match(unlist(v_id), x$vertex$vertex_)
   rgl::triangles3d(vb[vindex,], col = rep(pindex$color_, each = 3))
-  #if (!is.null(getOption("rgl.useNULL")) && interactive() && runif(1, 0, 1) > 0.96) {
-  #  message("rgl NULL device in use, do you need to run rgl::rglwidget()?")
-  #}
-  ## TODO need an rgl level classed object
-  invisible(list(vb = t(vb), it = t(vindex)))
-  
+  invisible(structure(list(vb = rbind(t(vb), 0), it = matrix(vindex, nrow = 3),
+                 primitivetype = "triangle", 
+                 material = list(col = pindex$color_), 
+                 normals = NULL, texcoords = NULL), 
+            class = c("mesh3d", "shape3d")))
 }
 
 
