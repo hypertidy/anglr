@@ -103,8 +103,9 @@ because we only need poor quality triangles for planar geometry.
 
 ``` r
 
-c_mesh <- copy_down(TRI(nc), z = p_mesh$object$BIR74)
-
+## either form works
+#c_mesh <- copy_down(TRI(nc), z = p_mesh$object$BIR74)
+c_mesh <- copy_down(TRI(nc), z = "BIR74")
 rgl.clear()
 a <- plot3d(c_mesh) 
 bg3d("black"); material3d(specular = "black")
