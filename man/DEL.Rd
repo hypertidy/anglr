@@ -49,6 +49,6 @@ The Delaunay model is the \emph{mostly Delaunay} scheme used
 by the provable-quality meshers.
 }
 \examples{
-plot3d.DEL(DEL(simpleworld))
+plot3d(DEL(simpleworld))
 rgl::rglwidget()
 }

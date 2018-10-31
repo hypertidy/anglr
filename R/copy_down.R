@@ -53,11 +53,20 @@
 #' auto_3d(z = 15); rgl::rglwidget()
 copy_down <- function(x, z = NULL, ..., .id = "z_") {
   stopifnot(is.character(.id))
-  UseMethod("copy_down")
+
+  UseMethod("copy_down", )
 }
 
+find_z <- function(x, z) {
+  if (is.character(z)) {
+    if (length(z) > 1 || !z[1] %in% names(x$object)) stop("z must be a named column on object")
+    z <- x$object[[z]]
+    if (!is.numeric(z)) warning("z is not numeric")
+  }
+  z
+}
 copy_downRaster<- function(x, z = NULL, ..., .id = "z_") {
-    
+    z <- find_z(x, z)
     xy <- as.matrix(x$vertex[c("x_", "y_")])
     p1 <- get_proj(x)
     p2 <- get_proj(z)
@@ -83,6 +92,7 @@ copy_downRaster<- function(x, z = NULL, ..., .id = "z_") {
 #' @name copy_down
 #' @export
 copy_down.SC <- function(x, z = NULL, ..., .id = "z_") {
+  z <- find_z(x, z)
   if (inherits(z, "BasicRaster")) {
    return(copy_downRaster(x, z = z, ..., .id = .id) )
   }
@@ -92,6 +102,7 @@ copy_down.SC <- function(x, z = NULL, ..., .id = "z_") {
 #' @name copy_down
 #' @export
 copy_down.TRI <- function(x, z = NULL, ..., .id = "z_") {
+  z <- find_z(x, z)
   if (inherits(z, "BasicRaster")) {
     return(copy_downRaster(x, z = z, ..., .id = .id) )
   }
@@ -101,6 +112,7 @@ copy_down.TRI <- function(x, z = NULL, ..., .id = "z_") {
 #' @name copy_down
 #' @export
 copy_down.PATH <- function(x, z = NULL, ..., .id = "z_") {
+  z <- find_z(x, z)
   if (inherits(z, "BasicRaster")) {
     return(copy_downRaster(x, z = z, ..., .id = .id) ) 
   }
@@ -111,6 +123,7 @@ copy_down.PATH <- function(x, z = NULL, ..., .id = "z_") {
 #' @name copy_down
 #' @export
 copy_down.ARC <- function(x, z = NULL, ..., .id = "z_") {
+  z <- find_z(x, z)
   if (inherits(z, "BasicRaster")) {
     return(copy_downRaster(x, z = z, ..., .id = .id) )
   }
@@ -122,7 +135,7 @@ copy_down.ARC <- function(x, z = NULL, ..., .id = "z_") {
 #' @export
 copy_down.QUAD <- function(x, z = NULL, ..., .id = "z_") {
  #vertex <- tibble(x_ = exy[,1], y_ = exy[,2], z_ = 0)
-  
+  z <- find_z(x, z)
   if (is.null(z)) {
     qXv <- get_qXv(x)
     ##

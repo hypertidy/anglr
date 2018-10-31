@@ -39,50 +39,54 @@ denorm_SEQ_addZ <- function(x, z, ..., .id = "z_") {
 ##' plot3d(x)
 ##' rgl::rglwidget()
 denorm_PRIM_addZ <- function(x, z, ..., .id = "z_") {
-
+  
   if (inherits(x, "SC")) {
     ## instances of primitives
-  priminst <- x$edge %>% inner_join(x$object_link_edge)
-  priminst[["edge_"]] <- silicate::sc_uid(priminst)
-  prim_long <- priminst %>% 
-    tidyr::gather(edge_vertex, vertex, -object_, -edge_)
-  prim_long[[.id]] <- z[match(prim_long$object_, x$object$object_)]
-  prim_long <- prim_long %>% inner_join(x$vertex, c("vertex" = "vertex_"))
-  prim_long$vertex <- NULL
-  prim_long$vertex_ <- silicate::sc_uid(nrow(prim_long))
-  x$edge <- prim_long[c("edge_vertex", "vertex_", "edge_")] %>% tidyr::spread(edge_vertex, vertex_)
-  x$object_link_edge <- dplyr::distinct(prim_long, object_, edge_)
-  x$vertex <- dplyr::distinct(prim_long, x_, y_, z_, vertex_)
+    priminst <- x$edge %>% inner_join(x$object_link_edge, "edge_")
+    ## note that silicate/SC doesn't have a labelled edge, only object_ and .vx0 ,.vx1
+    #priminst[["edge_"]] <- silicate::sc_uid(priminst)
+    prim_long <- priminst %>% 
+      tidyr::gather(edge_vertex, vertex, -object_, -edge_)
+    prim_long[[.id]] <- z[match(prim_long$object_, x$object$object_)]
+    prim_long <- prim_long %>% inner_join(x$vertex, c("vertex" = "vertex_"))
+    prim_long$vertex <- NULL
+    prim_long$vertex_ <- silicate::sc_uid(nrow(prim_long))
+    
+    x$edge <- prim_long[c("edge_vertex", "vertex_", "edge_", "object_")] %>% tidyr::spread(edge_vertex, vertex_)
+    #x$edge$edge_ <- NULL  ## no explicit edge ID
+    #x$object_link_edge <- dplyr::distinct(prim_long, object_, edge_)
+    x$vertex <- dplyr::distinct(prim_long, x_, y_, z_, vertex_)
   }
   if (inherits(x, "TRI")) {
-    x$vertex$z_ <- NULL
-    priminst <- x$triangle %>% inner_join(x$object_link_triangle, "triangle_")
-    priminst[["triangle_"]] <- silicate::sc_uid(priminst)
-    
+# <<<<<<< HEAD
+#     x$vertex$z_ <- NULL
+#     priminst <- x$triangle %>% inner_join(x$object_link_triangle, "triangle_")
+#     priminst[["triangle_"]] <- silicate::sc_uid(priminst)
+#     
+# =======
+ 
+    priminst <- x$triangle 
+    priminst[["triangle_"]] <- silicate::sc_uid(priminst)  ## FIXME: temporary triangle_ id not needed
+#>>>>>>> 86522b992e9f0bc3c4385233da195b45bc77a410
     prim_long <- priminst %>% tidyr::gather(tri_vertex, vertex, -object_, -triangle_)
     prim_long[[.id]] <- z[match(prim_long$object_, x$object$object_)]
-    
     prim_long <- prim_long %>% inner_join(x$vertex, c("vertex" = "vertex_"))
     prim_long$vertex <- NULL
     prim_long$vertex_ <- silicate::sc_uid(nrow(prim_long))
     prim_wide <-  prim_long[c("tri_vertex", "vertex_", "triangle_", "object_")] %>% 
       tidyr::spread(tri_vertex, vertex_)
-    x$object_link_triangle <- dplyr::distinct(prim_wide, .data$object_, .data$triangle_)
-  x$triangle <- dplyr::distinct(prim_wide, .data$triangle_, .data$.vertex0, .data$.vertex1, .data$.vertex2)  
-      
-    #x$triangle$object_ <- NULL  ## can't keep this here
-    
+
+    x$triangle <- dplyr::distinct(prim_wide, .data$object_, .data$.vx0, .data$.vx1, .data$.vx2)  
+
+    x$triangle$triangle_ <- NULL ## FIXME: temporary triangle_ id not needed
     x$vertex <- dplyr::distinct(prim_long, x_, y_, z_, vertex_)
-    print("TRI")
-    #browser()
-    
   }
-x  
+  x  
 }
 
 ## return name of think_link_vertex table
 vertex_link <- function(x) {
- UseMethod("vertex_link") 
+  UseMethod("vertex_link") 
 }
 # vertex_link.SC <- function(x) {
 #   x[["edge_link_vertex"]]
