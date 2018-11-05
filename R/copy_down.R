@@ -76,7 +76,10 @@ copy_downRaster<- function(x, z = NULL, ..., .id = "z_") {
         
       } else {
      message("transforming model vertices to raster coordinate system for copy down")
-     xy <- proj4::ptransform(xy * pi/180, p1, p2, silent = TRUE)[, c(1, 2)]
+        scale_rad_in <- if (grepl("longlat", p1)) pi / 180 else 1
+     xy <- proj4::ptransform(xy * scale_rad_in, p1, p2, silent = TRUE)[, c(1, 2)]
+     scale_rad_out <- if (grepl("longlat", p2)) 180 / pi else 1
+     xy <- xy * scale_rad_out
       }
      }
     z <- raster::extract(z[[1L]], xy, method = "bilinear")
