@@ -44,27 +44,37 @@ DEL.default <- function(x, ...) {
 #' @name DEL
 #' @export
 DEL.SC <- function(x, max_area = NULL, ...)  {
-
+  ## find if any objects have < 3 verts
+  edge_per_object_lt <- x$object["object_"] %>% dplyr::inner_join(x$object_link_edge) %>% 
+    group_by(object_) %>% tally(n()) %>% dplyr::filter(n < 3)
+  if (nrow(edge_per_object_lt) > 0) {
+    ## need anti_join.sc
+    x <- dplyr::filter(x, !object_ %in% edge_per_object_lt$object_)
+  }
+  
+  #%>% dplyr::inner_join(x$edge)
     ## we need a pfft::edge_triangle_map
   ## https://github.com/hypertidy/silicate/issues/62#issuecomment-372898877
  objs <- vector("list", nrow(x$object))
   for (i in seq_along(objs)) {
     x1 <- x
     x1$object <- x1$object[i, ]
-    #x1$object_link_edge <- x1$object_link_edge %>% dplyr::filter(object_ == x1$object$object_[1])
     x1$edge <- x1$object %>% dplyr::inner_join(x1$object_link_edge, "object_") %>% dplyr::inner_join(x1$edge, "edge_")
-    #x1$edge <- x$edge[x$edge$object_ %in% x1$object$object_, ]
     ordered_verts <- t(apply(as.matrix(x1$edge[c(".vx0", ".vx1")]), 1, sort))
     x1$vertex <- x$vertex[x$vertex$vertex_ %in% c(ordered_verts), ]
     
-
-    dots <- list(...)
+dots <- list()
+#    dots <- list(...)
     
     dots[["a"]] <- max_area
     dots[["x"]] <- x1
-    ## TRIANGULATE
-    RTri <- do.call(edge_RTriangle, dots)
-    objs[[i]] <- RTri
+    # if (nrow(x1$vertex) < 3) {
+    #   objs[[i]] <- NULL
+    # } else {
+    #   ## TRIANGULATE
+      RTri <- do.call(edge_RTriangle, dots)
+      objs[[i]] <- RTri
+    #}
   }
 
 
