@@ -1,5 +1,7 @@
 # anglr dev
 
+* New data sets, `cad_tas` and `cont_tas`. 
+
 * Old `anglr()` function now defunct. 
 
 # anglr 0.4.7

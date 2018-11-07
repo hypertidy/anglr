@@ -38,6 +38,13 @@ NULL
 #' @docType data 
 NULL
 
+#' Cadastre and Contour
+#' 
+#' Sympatric cadastre layer and line contour layer. 
+#' @name cad_tas
+#' @aliases cont_tas
+#' @docType data 
+NULL
 
 #' simple world 
 #' 
