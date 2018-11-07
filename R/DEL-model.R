@@ -54,11 +54,10 @@ DEL.SC <- function(x, max_area = NULL, ...)  {
     drop <- x$vertex$vertex_ %in% c(x$edge$.vx0, x$edge$.vx1)
     if (any(drop)) x$vertex <- x$vertex[drop, ]
   }
-  
-  #%>% dplyr::inner_join(x$edge)
-    ## we need a pfft::edge_triangle_map
+
+  ## we need a pfft::edge_triangle_map
   ## https://github.com/hypertidy/silicate/issues/62#issuecomment-372898877
- objs <- vector("list", nrow(x$object))
+  objs <- vector("list", nrow(x$object))
   for (i in seq_along(objs)) {
     x1 <- x
     x1$object <- x1$object[i, ]
@@ -66,41 +65,34 @@ DEL.SC <- function(x, max_area = NULL, ...)  {
     ordered_verts <- t(apply(as.matrix(x1$edge[c(".vx0", ".vx1")]), 1, sort))
     x1$vertex <- x$vertex[x$vertex$vertex_ %in% c(ordered_verts), ]
     
-dots <- list()
-#    dots <- list(...)
+    dots <- list(...)
     
     dots[["a"]] <- max_area
     dots[["x"]] <- x1
-    # if (nrow(x1$vertex) < 3) {
-    #   objs[[i]] <- NULL
-    # } else {
-    #   ## TRIANGULATE
-      RTri <- do.call(edge_RTriangle, dots)
-      objs[[i]] <- RTri
-    #}
+    RTri <- do.call(edge_RTriangle, dots)
+    objs[[i]] <- RTri
   }
-
-
+  
+  
   ## unique triangles
- n_t <- unlist(lapply(objs, function(x) nrow(x$T)))
- bad <- n_t < 1
- if (all(bad)) stop("nothing triangulatable")
- objs <- objs[!bad]
- n_t <- n_t[!bad]
- nT <- sum(n_t)
-  #triangle <- tibble::tibble(triangle_ = silicate::sc_uid(nT))
+  n_t <- unlist(lapply(objs, function(x) nrow(x$T)))
+  bad <- n_t < 1
+  if (all(bad)) stop("nothing triangulatable")
+  objs <- objs[!bad]
+  n_t <- n_t[!bad]
+  nT <- sum(n_t)
   
   P <- do.call(rbind, lapply(objs, function(x) x$P))
   f <- as.integer(factor(paste(P[,1], P[,2], sep = "-")))
   P <- cbind(P, f)
   P_unique <- P[!duplicated(f), ]
-#print(P_unique)
+  
   vertex <- tibble::tibble(x_ = P_unique[,1], y_ = P_unique[,2], 
                            vertex_ = silicate::sc_uid(nrow(P_unique)),
                            Pidx = P_unique[,3])
   TRIS <- lapply(objs, function(x) x$T)
   count <- 0
-
+  
   for (i in seq_along(TRIS)) {
     TRIStemp <- TRIS[[i]] + count
     count <- count + max(TRIS[[i]])
@@ -110,36 +102,29 @@ dots <- list()
   ## shared by two triangles, set to invisible
   
   TRIS <- do.call(rbind, TRIS)
-  #browser()
-  #TRIS[] <- match(TRIS, P[,3])
+  
   v0 <- match(P[TRIS[,1],3], vertex$Pidx)
   v1 <- match(P[TRIS[,2],3], vertex$Pidx)
   v2 <- match(P[TRIS[,3],3], vertex$Pidx)
-  #print(P)
-  #print(TRIS)
- triangle <- tibble::tibble(.vx0 = vertex$vertex_[v0],
-                            .vx1 = vertex$vertex_[v1],
-                            .vx2 = vertex$vertex_[v2],  
-                            object_ = rep(x$object$object_[!bad], n_t))
- #browser()
- #object_link_triangle <- dplyr::distinct(triangle[c("object_", "triangle_")]) 
-#triangle <- triangle %>% 
-#   dplyr::group_by(.data$object_, .data$triangle_) %>% 
-#   dplyr::mutate(visible_ = !(n() %% 2 == 0)) 
- 
- triangle$visible <- TRUE
-# triangle$object_ <- NULL
- vertex$Pidx <- NULL
+  
+  
+  triangle <- tibble::tibble(.vx0 = vertex$vertex_[v0],
+                             .vx1 = vertex$vertex_[v1],
+                             .vx2 = vertex$vertex_[v2],  
+                             object_ = rep(x$object$object_[!bad], n_t))
+  
+  triangle$visible <- TRUE
+  vertex$Pidx <- NULL
   meta <- tibble(proj = get_proj(x), ctime = Sys.time())
-  structure(list(object = x$object, 
-                 #object_link_triangle = object_link_triangle,
+  structure(list(object = x$object[!bad, ],  ## this is tenuous, using !bad throughout 
+                 
                  triangle = triangle, 
                  vertex = vertex, 
                  meta = meta), class = c("DEL", "TRI", "sc"))
   
 }
 
- 
+
 
 ## DEL for a PATH is a copy of pfft_polys that returns a DEL, TRI, sc
 ## TRI for a PATH returns a TRI, sc (just decido triangles)

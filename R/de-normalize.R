@@ -54,7 +54,7 @@ denorm_PRIM_addZ <- function(x, z, ..., .id = "z_") {
     
     x$edge <- prim_long[c("edge_vertex", "vertex_", "edge_", "object_")] %>% tidyr::spread(edge_vertex, vertex_)
     x$edge$object_ <- NULL
-    print(names(prim_long))
+    #print(names(prim_long))
     #x$edge$edge_ <- NULL  ## no explicit edge ID
     #x$object_link_edge <- dplyr::distinct(prim_long, object_, edge_)
     
