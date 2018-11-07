@@ -45,11 +45,14 @@ DEL.default <- function(x, ...) {
 #' @export
 DEL.SC <- function(x, max_area = NULL, ...)  {
   ## find if any objects have < 3 verts
-  edge_per_object_lt <- x$object["object_"] %>% dplyr::inner_join(x$object_link_edge) %>% 
-    group_by(object_) %>% tally(n()) %>% dplyr::filter(n < 3)
+  edge_per_object_lt <- x$object["object_"] %>% dplyr::inner_join(x$object_link_edge, "object_") %>% 
+    dplyr::group_by(.data$object_) %>% dplyr::tally(n()) %>% dplyr::filter(n < 3)
   if (nrow(edge_per_object_lt) > 0) {
+    message("dropping untriangulatable objects")
     ## need anti_join.sc
     x <- dplyr::filter(x, !object_ %in% edge_per_object_lt$object_)
+    drop <- x$vertex$vertex_ %in% c(x$edge$.vx0, x$edge$.vx1)
+    if (any(drop)) x$vertex <- x$vertex[drop, ]
   }
   
   #%>% dplyr::inner_join(x$edge)
@@ -80,6 +83,10 @@ dots <- list()
 
   ## unique triangles
  n_t <- unlist(lapply(objs, function(x) nrow(x$T)))
+ bad <- n_t < 1
+ if (all(bad)) stop("nothing triangulatable")
+ objs <- objs[!bad]
+ n_t <- n_t[!bad]
  nT <- sum(n_t)
   #triangle <- tibble::tibble(triangle_ = silicate::sc_uid(nT))
   
@@ -113,7 +120,7 @@ dots <- list()
  triangle <- tibble::tibble(.vx0 = vertex$vertex_[v0],
                             .vx1 = vertex$vertex_[v1],
                             .vx2 = vertex$vertex_[v2],  
-                            object_ = rep(x$object$object_, n_t))
+                            object_ = rep(x$object$object_[!bad], n_t))
  #browser()
  #object_link_triangle <- dplyr::distinct(triangle[c("object_", "triangle_")]) 
 #triangle <- triangle %>% 
