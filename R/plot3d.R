@@ -173,7 +173,7 @@ vindex <- match(c(t(as.matrix(pindex[c(".vx0", ".vx1", ".vx2")]))), x$vertex$ver
   rgl::triangles3d(vb[vindex,], col = rep(pindex$color_, each = 3))
   invisible(structure(list(vb = rbind(t(vb), 1), it = matrix(vindex, nrow = 3),
                  primitivetype = "triangle", 
-                 material = list(col = pindex$color_), 
+                 material = list(col = rep(pindex$color_, each = 3)), 
                  normals = NULL, texcoords = NULL), 
             class = c("mesh3d", "shape3d")))
 }
