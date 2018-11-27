@@ -162,7 +162,11 @@ plot3d.TRI <- function(x, ..., add = FALSE) {
   }
   pindex <- x$triangle %>% #%>%  dplyr::inner_join(x$object_link_triangle,  "triangle_") %>% 
   dplyr::inner_join(x$object[, c("object_", "color_")], "object_") 
-    
+  if ("visible_" %in% names(pindex)) {
+  
+    pindex <- pindex %>% dplyr::filter(.data$visible_)
+    if (nrow(pindex) < 1) warning("all visible_ property on '$triangle' are set to 'FALSE', nothing to plot")
+  }
   ##vindex <- dplyr::inner_join(x$triangle, x$vertex, "vertex_")
 vindex <- match(c(t(as.matrix(pindex[c(".vx0", ".vx1", ".vx2")]))), x$vertex$vertex_)
   #v_id <- lapply(split(vindex, vindex$arc_), function(x) as.vector(path2seg(x$vertex_)))

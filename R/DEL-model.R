@@ -38,8 +38,13 @@ DEL <- function(x, ..., max_area = NULL) {
 #' @importFrom silicate SC
 #' @export
 DEL.default <- function(x, ...) {
-  DEL(silicate::SC(x), ...)
+  p <- try(silicate::PATH(x), silent = TRUE)
+  if (inherits(p, "try-error")) {
+    stop("cannot convert 'x' to a PATH, try 'DEL(silicate::SC(x))' rather than 'DEL(x)'")
+  }
+  DEL(p, ...)
 }
+
 
 #' @name DEL
 #' @export
@@ -113,7 +118,7 @@ DEL.SC <- function(x, max_area = NULL, ...)  {
                              .vx2 = vertex$vertex_[v2],  
                              object_ = rep(x$object$object_[!bad], n_t))
   
-  triangle$visible <- TRUE
+  
   vertex$Pidx <- NULL
   meta <- tibble(proj = get_proj(x), ctime = Sys.time())
   structure(list(object = x$object[!bad, ],  ## this is tenuous, using !bad throughout 
@@ -157,16 +162,17 @@ DEL.PATH <- function(x, max_area = NULL,  ...) {
   vertex <- tibble::tibble(x_ = RTri$P[,1], y_ = RTri$P[,2], 
                            vertex_ = silicate::sc_uid(nrow(RTri$P)))
   
-  triangle <- dplyr::mutate(triangle, .vertex0 = vertex$vertex_[RTri$T[,1]],
-                            .vertex1 = vertex$vertex_[RTri$T[,2]],
-                            .vertex2 = vertex$vertex_[RTri$T[,3]])
-  
-  tXv <- tibble::tibble(vertex_ = vertex[["vertex_"]][t(RTri$T)], 
-                        triangle_ = rep(triangle[["triangle_"]], each = 3))
+  triangle <- dplyr::mutate(triangle, .vx0 = vertex$vertex_[RTri$T[,1]],
+                            .vx1 = vertex$vertex_[RTri$T[,2]],
+                            .vx2 = vertex$vertex_[RTri$T[,3]])
+  triangle <- object_link_triangle[c("triangle_", "object_", "visible_")] %>% dplyr::inner_join(triangle, "triangle_")
+  triangle$triangle_ <- NULL
+#  tXv <- tibble::tibble(vertex_ = vertex[["vertex_"]][t(RTri$T)], 
+#                        triangle_ = rep(triangle[["triangle_"]], each = 3))
   
   meta <- tibble(proj = get_proj(x), ctime = Sys.time())
   
-  structure(list(object = x$object, object_link_triangle = object_link_triangle, 
+  structure(list(object = x$object, #object_link_triangle = object_link_triangle, 
                  triangle = triangle, 
                  vertex = vertex, 
                  meta = meta), class = c("DEL", "TRI", "sc"))
