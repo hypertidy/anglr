@@ -5,7 +5,7 @@
 \title{Auto aspect ratio}
 \usage{
 auto_3d(x = 1, y = 1, z = 1, keep_xy = TRUE, exag = TRUE,
-  silent = FALSE)
+  verbose = TRUE)
 }
 \arguments{
 \item{x}{exaggeration for x}
@@ -17,6 +17,8 @@ auto_3d(x = 1, y = 1, z = 1, keep_xy = TRUE, exag = TRUE,
 \item{keep_xy}{should xy be forced to maintain their current aspect ratio}
 
 \item{exag}{should the x, y, z factors be applied, set to \code{FALSE} to ignore}
+
+\item{verbose}{keep shush}
 }
 \value{
 the output of \code{rgl::par3d} invisibly

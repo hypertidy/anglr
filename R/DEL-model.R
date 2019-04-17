@@ -24,7 +24,7 @@
 #' by the provable-quality meshers. 
 #' @param x input model
 #' @param ... passed to the underlying Triangle library
-#' @param max area WIP and all the other args for Triangle
+#' @param max_area the maximum area of a triangle
 #' @return DEL model
 #' @export
 #'
@@ -36,6 +36,7 @@ DEL <- function(x, ..., max_area = NULL) {
 }
 #' @name DEL
 #' @importFrom silicate PATH
+#' @importFrom rlang .data
 #' @export
 DEL.default <- function(x, ...) {
   p <- try(silicate::PATH(x), silent = TRUE)
@@ -55,12 +56,13 @@ DEL.PATH0 <- function(x, max_area = NULL, ...) {
 #' @export
 DEL.SC <- function(x, max_area = NULL, ...)  {
   ## find if any objects have < 3 verts
-  edge_per_object_lt <- x$object["object_"] %>% dplyr::inner_join(x$object_link_edge, "object_") %>% 
+  edge_per_object_lt <- x$object["object_"] %>% 
+    dplyr::inner_join(x$object_link_edge, "object_") %>% 
     dplyr::group_by(.data$object_) %>% dplyr::tally(dplyr::n()) %>% dplyr::filter(n < 3)
   if (nrow(edge_per_object_lt) > 0) {
     message("dropping untriangulatable objects")
     ## need anti_join.sc
-    x <- dplyr::filter(x, !object_ %in% edge_per_object_lt$object_)
+    x <- dplyr::filter(x, !.data$object_ %in% edge_per_object_lt$object_)
     drop <- x$vertex$vertex_ %in% c(x$edge$.vx0, x$edge$.vx1)
     if (any(drop)) x$vertex <- x$vertex[drop, ]
   }

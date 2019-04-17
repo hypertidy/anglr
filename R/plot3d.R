@@ -3,8 +3,8 @@
 #' For SC edges are matched to their object/s. One object's properties is applied as colour. 
 #' If `color_` column is present on the data object table it is used. 
 #' @param x silicate model, SC, TRI, ARC, or PATH
-#' @param ... 
-#' @param add 
+#' @param ... passed to segments3d
+#' @param add add to plot or not
 #' 
 #' @return rgl shape3d types (note that "segment3d" is currently an imaginary shape3d type)
 #' @importFrom rgl plot3d

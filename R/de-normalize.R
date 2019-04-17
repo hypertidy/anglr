@@ -8,6 +8,7 @@
 # y, z (unjoin)
 
 ## sequence/path-based works for ARC or PATH
+#' @importFrom silicate sc_uid
 denorm_SEQ_addZ <- function(x, z, ..., .id = "z_") {
   group <- if(inherits(x, "PATH")) "path" else "object_link_arc"
   
@@ -52,25 +53,16 @@ denorm_PRIM_addZ <- function(x, z, ..., .id = "z_") {
     prim_long$vertex <- NULL
     prim_long$vertex_ <- silicate::sc_uid(nrow(prim_long))
     
-    x$edge <- prim_long[c("edge_vertex", "vertex_", "edge_", "object_")] %>% tidyr::spread(edge_vertex, vertex_)
+    x$edge <- prim_long[c("edge_vertex", "vertex_", "edge_", "object_")] %>% 
+      tidyr::spread(.data$edge_vertex, .data$vertex_)
     x$edge$object_ <- NULL
-    #print(names(prim_long))
-    #x$edge$edge_ <- NULL  ## no explicit edge ID
-    #x$object_link_edge <- dplyr::distinct(prim_long, object_, edge_)
-    
+
     }
   if (inherits(x, "TRI")) {
-# <<<<<<< HEAD
-#     x$vertex$z_ <- NULL
-#     priminst <- x$triangle %>% inner_join(x$object_link_triangle, "triangle_")
-#     priminst[["triangle_"]] <- silicate::sc_uid(priminst)
-#     
-# =======
- 
+
     priminst <- x$triangle 
     priminst[["triangle_"]] <- silicate::sc_uid(priminst)  ## FIXME: temporary triangle_ id not needed
-#>>>>>>> 86522b992e9f0bc3c4385233da195b45bc77a410
-    prim_long <- priminst %>% tidyr::gather(tri_vertex, vertex, -object_, -triangle_)
+    prim_long <- priminst %>% tidyr::gather(tri_vertex, vertex, -.data$object_, -.data$triangle_)
     prim_long[[.id]] <- z[match(prim_long$object_, x$object$object_)]
     prim_long <- prim_long %>% inner_join(x$vertex, c("vertex" = "vertex_"))
     prim_long$vertex <- NULL
@@ -84,9 +76,9 @@ denorm_PRIM_addZ <- function(x, z, ..., .id = "z_") {
     
   }
   if ("z_" %in% names(prim_long)) {
-    x$vertex <- dplyr::distinct(prim_long, x_, y_, z_, vertex_)
+    x$vertex <- dplyr::distinct(prim_long, .data$x_, .data$y_, .data$z_, .data$vertex_)
   } else {
-    x$vertex <- dplyr::distinct(prim_long, x_, y_, vertex_)
+    x$vertex <- dplyr::distinct(prim_long, .data$x_, .data$y_, .data$vertex_)
   }
   x  
 }

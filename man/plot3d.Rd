@@ -34,9 +34,9 @@
 \arguments{
 \item{x}{silicate model, SC, TRI, ARC, or PATH}
 
-\item{...}{}
+\item{...}{passed to segments3d}
 
-\item{add}{}
+\item{add}{add to plot or not}
 }
 \value{
 rgl shape3d types (note that "segment3d" is currently an imaginary shape3d type)

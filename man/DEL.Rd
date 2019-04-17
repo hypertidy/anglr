@@ -23,7 +23,7 @@ DEL(x, ..., max_area = NULL)
 
 \item{...}{passed to the underlying Triangle library}
 
-\item{max}{area WIP and all the other args for Triangle}
+\item{max_area}{the maximum area of a triangle}
 }
 \value{
 DEL model
