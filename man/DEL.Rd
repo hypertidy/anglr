@@ -3,6 +3,7 @@
 \name{DEL}
 \alias{DEL}
 \alias{DEL.default}
+\alias{DEL.PATH0}
 \alias{DEL.SC}
 \alias{DEL.PATH}
 \title{DEL Delaunay model}
@@ -10,6 +11,8 @@
 DEL(x, ..., max_area = NULL)
 
 \method{DEL}{default}(x, ...)
+
+\method{DEL}{PATH0}(x, max_area = NULL, ...)
 
 \method{DEL}{SC}(x, max_area = NULL, ...)
 

@@ -41,7 +41,8 @@ Suggests:
     trip,
     knitr,
     rmarkdown,
-    rnaturalearth
+    rnaturalearth,
+    quadmesh
 Roxygen: list(markdown = TRUE)
 SystemRequirements: PROJ.4
 Encoding: UTF-8

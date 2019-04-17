@@ -27,7 +27,7 @@ pfft_polys <- function(x, max_area = NULL,  ...) {
   
  
   ptm <- ptm %>% dplyr::group_by(.data$object_, .data$triangle_) %>% 
-    dplyr::mutate(n = n()) %>%  ## see globalVariables declaration for "n"
+    dplyr::mutate(n = dplyr::n()) %>%  ## see globalVariables declaration for "n"
     dplyr::ungroup()  #%>% 
   
   tt <- dplyr::select(ptm, .data$object_, .data$triangle_) %>% 

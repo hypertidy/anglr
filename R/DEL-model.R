@@ -35,7 +35,7 @@ DEL <- function(x, ..., max_area = NULL) {
   UseMethod("DEL")
 }
 #' @name DEL
-#' @importFrom silicate SC
+#' @importFrom silicate PATH
 #' @export
 DEL.default <- function(x, ...) {
   p <- try(silicate::PATH(x), silent = TRUE)
@@ -44,14 +44,19 @@ DEL.default <- function(x, ...) {
   }
   DEL(p, ...)
 }
-
+#' @name DEL
+#' @importFrom silicate SC
+#' @export
+DEL.PATH0 <- function(x, max_area = NULL, ...) {
+  DEL(PATH(x), max_area = max_area, ...)
+}
 
 #' @name DEL
 #' @export
 DEL.SC <- function(x, max_area = NULL, ...)  {
   ## find if any objects have < 3 verts
   edge_per_object_lt <- x$object["object_"] %>% dplyr::inner_join(x$object_link_edge, "object_") %>% 
-    dplyr::group_by(.data$object_) %>% dplyr::tally(n()) %>% dplyr::filter(n < 3)
+    dplyr::group_by(.data$object_) %>% dplyr::tally(dplyr::n()) %>% dplyr::filter(n < 3)
   if (nrow(edge_per_object_lt) > 0) {
     message("dropping untriangulatable objects")
     ## need anti_join.sc
@@ -137,6 +142,7 @@ DEL.SC <- function(x, max_area = NULL, ...)  {
 #' @name DEL
 #' @export
 DEL.PATH <- function(x, max_area = NULL,  ...) {
+
   dots <- list(...)
   dots[["a"]] <- max_area
   dots[["x"]] <- x
@@ -145,7 +151,7 @@ DEL.PATH <- function(x, max_area = NULL,  ...) {
   RTri <- do.call(edge_RTriangle, dots)
   ## object/path_link_triangle (path_triangle_map)
   ptm <- pfft::path_triangle_map(x, RTri)
-  
+  #ptm$path_ <- as.integer(factor(ptm$path_))
   ## unique triangles
   triangle <- tibble::tibble(triangle_ = silicate::sc_uid(nrow(RTri$T)))
   
@@ -155,9 +161,11 @@ DEL.PATH <- function(x, max_area = NULL,  ...) {
   
   ## any triangle that occurs an even number of times in a path 
   ## per object is part of a hole
-  ptm <- dplyr::inner_join(ptm, x[["path"]][c("path_", "object_")], "path_")
+  path <- x$path
+  path$path_ <- as.character(path$path_)
+  ptm <- dplyr::inner_join(ptm, path[c("path_", "object_")], "path_")
   object_link_triangle <- ptm %>% dplyr::group_by(.data$object_, .data$triangle_) %>% 
-    dplyr::mutate(visible_ = !(n() %% 2 == 0)) %>%  ## see globalVariables declaration for "n"
+    dplyr::mutate(visible_ = !(dplyr::n() %% 2 == 0)) %>%  ## see globalVariables declaration for "n"
     dplyr::ungroup()  
   vertex <- tibble::tibble(x_ = RTri$P[,1], y_ = RTri$P[,2], 
                            vertex_ = silicate::sc_uid(nrow(RTri$P)))
@@ -178,48 +186,6 @@ DEL.PATH <- function(x, max_area = NULL,  ...) {
                  meta = meta), class = c("DEL", "TRI", "sc"))
   
 }
-
-# DEL.PATH <- function(x,  ..., max_area = NULL) {
-#     dots <- list(...)
-#     dots[["a"]] <- max_area
-#     dots[["x"]] <- x
-#   
-#     ## TRIANGULATE with PATH-identity  
-#     RTri <- do.call(edge_RTriangle, dots)
-#     ## object/path_link_triangle (path_triangle_map)
-#     ptm <- pfft::path_triangle_map(x, RTri)
-#     
-#     ## unique triangles
-#     triangle <- tibble::tibble(triangle_ = silicate::sc_uid(nrow(RTri$T)))
-# 
-#     ## all triangle instances
-#     ptm[["triangle_"]] <- triangle[["triangle_"]][ptm[["triangle_idx"]]]
-#     ptm[["triangle_idx"]] <- NULL
-#     
-#     ## any triangle that occurs an even number of times in a path 
-#     ## per object is part of a hole
-#     ptm <- dplyr::inner_join(ptm, x[["path"]][c("path_", "object_")], "path_")
-#     object_link_triangle <- ptm %>% dplyr::group_by(.data$object_, .data$triangle_) %>% 
-#       dplyr::mutate(visible_ = !(n() %% 2 == 0)) %>%  ## see globalVariables declaration for "n"
-#       dplyr::ungroup()  
-#     vertex <- tibble::tibble(x_ = RTri$P[,1], y_ = RTri$P[,2], 
-#                              vertex_ = silicate::sc_uid(nrow(RTri$P)))
-# 
-#     triangle <- dplyr::mutate(triangle, .vertex0 = vertex$vertex_[RTri$T[,1]],
-#                               .vertex1 = vertex$vertex_[RTri$T[,2]],
-#                               .vertex2 = vertex$vertex_[RTri$T[,3]])
-#     
-#     tXv <- tibble::tibble(vertex_ = vertex[["vertex_"]][t(RTri$T)], 
-#                           triangle_ = rep(triangle[["triangle_"]], each = 3))
-#     
-#     meta <- tibble(proj = get_proj(x), ctime = Sys.time())
-#   
-#     structure(list(object = x$object, object_link_triangle = object_link_triangle, 
-#                    triangle = triangle, 
-#                    vertex = vertex, 
-#                    meta = meta), class = c("DEL", "TRI", "sc"))
-#     
-#   }
 
 
 ## from pfft

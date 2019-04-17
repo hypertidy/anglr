@@ -2,12 +2,15 @@
 % Please edit documentation in R/plot.r
 \name{plot-anglr}
 \alias{plot-anglr}
+\alias{plot.quad_mesh}
 \alias{plot.trimesh}
 \alias{plot}
 \alias{plot.linemesh}
 \alias{plot.pointmesh}
-\title{Plot objects in OpenGL}
+\title{Title}
 \usage{
+\method{plot}{quad_mesh}(x, ..., add = FALSE)
+
 \method{plot}{trimesh}(x, ..., add = FALSE, add_normals = FALSE)
 
 \method{plot}{linemesh}(x, ..., add = FALSE)
@@ -15,15 +18,23 @@
 \method{plot}{pointmesh}(x, ..., add = FALSE)
 }
 \arguments{
+\item{x}{quad_mesh}
+
+\item{...}{args passed to rgl plot}
+
+\item{add}{reset plot?}
+
+\item{add_normals}{if TRUE use \code{rgl::addNormals} to smooth the model before plotting}
+
 \item{x}{object from \code{\link{anglr}}}
 
 \item{...}{args for underlying plotting}
 
 \item{add}{add to existing plot if exists}
-
-\item{add_normals}{if TRUE use \code{rgl::addNormals} to smooth the model before plotting}
 }
 \value{
+qmesh
+
 the rgl mesh3d object, invisibly
 }
 \description{
@@ -33,4 +44,7 @@ Plot using the \code{\link[rgl]{rgl-package}}.
 The data structures from \code{\link{anglr}} are converted to their analogous forms
 used by the \code{\link[rgl]{rgl}} package and plotted. These plot methods return
 the rgl form invisibly.
+}
+\seealso{
+anglr.RasterLayer
 }
