@@ -6,7 +6,7 @@ Authors@R: c(person("Michael D.","Sumner", role = c("aut", "cre"), email ="mdsum
              person("Miles", "McBain", role = c("ctb")))
 Description: Tidy topological approaches to spatial data, illustrated with plotting using Open Graphics Library. 
 License: GPL-3
-Depends: R (>= 3.4.0),  silicate (>= 0.1.5)
+Depends: R (>= 3.4.0),  silicate (>= 0.1.5.9002)
 Imports: 
     dplyr,
     gibble (>= 0.1.1.9001),
