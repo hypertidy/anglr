@@ -14,7 +14,7 @@
 
 #' The Delaunay model is a constrained triangulation with a variety 
 #' of constraint and qualification types. The Delaunay model has the
-#' odd but defining characterist of not being always consistent 
+#' odd but defining characteristic of not being always consistent 
 #' with the Delaunay criterion. Edge inclusion is 
 #' non-negotiable, but other constraints include (limit, or avoid)
 #' Steiner vertex insertion, a limit on the maximum area of a triangle, 

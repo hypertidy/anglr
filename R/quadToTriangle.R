@@ -14,7 +14,8 @@
 #' a <- QUAD(r)
 #' x <- copy_down(TRI(a), r)
 #' nrow(x$vertex)
-#' mesh <- DEL(silicate::SC(x), max_area = .2)
+#' sc <- silicate::SC(x)
+#' mesh <- DEL(sc, max_area = .2)
 #' mesh <- copy_down(mesh, r)
 #' nrow(mesh$vertex)
 #' @importFrom silicate TRI sc_uid
@@ -26,7 +27,8 @@ TRI.QUAD <- function(x, ...) {
   
   out$object <- tibble::tibble(object_ = silicate::sc_uid(nlevels(f)), 
                                value = levels(f))
-  out$object_link_triangle$object_ <- rep(out$object$object_[f], each = 2)
+  out$triangle$object_ <- rep(out$object$object_, each = 2L)
+  #out$object_link_triangle$object_ <- rep(out$object$object_[f], each = 2)
 #  out$
   out
 }
@@ -56,9 +58,8 @@ tXv[c(".vx0", ".vx1", ".vx2")] <- as.data.frame(matrix(as.integer(tXv_long$verte
     tXv$.vx0 <- uid[tXv$.vx0]
     tXv$.vx1 <- uid[tXv$.vx1]
     tXv$.vx2 <- uid[tXv$.vx2]
-    
-  x <- list(object = tibble::tibble(object_ = "1"), object_link_triangle = 
-              tibble::tibble(triangle_ = tXv$triangle_, object_ = "1"), 
+    tXv$object_ <- "1"  ## no link table any more
+  x <- list(object = tibble::tibble(object_ = "1"),  
             triangle = tXv, 
             vertex = v, meta = meta)
   class(x) <- c("TRI", "sc")

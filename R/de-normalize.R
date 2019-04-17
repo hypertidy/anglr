@@ -16,7 +16,7 @@ denorm_SEQ_addZ <- function(x, z, ..., .id = "z_") {
     dplyr::inner_join(x[[group]])
   coords[[.id]] <- z[match(coords$object_, x$object$object_)]
   coords[["vertex"]] <- NULL
-  data <- unjoin::unjoin(coords, x_, y_, .id, key_col = "vertex")
+  data <- unjoin::unjoin(coords, .data$x_, .data$y_, .id, key_col = "vertex")
   x$vertex <- data$vertex
   x$vertex$vertex_ <- sc_uid(nrow(x$vertex))
   data$data$vertex_ <- x$vertex$vertex_[match(data$data$vertex, x$vertex$vertex)]
@@ -47,7 +47,7 @@ denorm_PRIM_addZ <- function(x, z, ..., .id = "z_") {
     ## note that silicate/SC doesn't have a labelled edge, only object_ and .vx0 ,.vx1
     #priminst[["edge_"]] <- silicate::sc_uid(priminst)
     prim_long <- priminst %>% 
-      tidyr::gather(edge_vertex, vertex, -object_, -edge_)
+      tidyr::gather(.data$edge_vertex, .data$vertex, -.data$object_, -.data$edge_)
     prim_long[[.id]] <- z[match(prim_long$object_, x$object$object_)]
     prim_long <- prim_long %>% inner_join(x$vertex, c("vertex" = "vertex_"))
     prim_long$vertex <- NULL
@@ -62,7 +62,7 @@ denorm_PRIM_addZ <- function(x, z, ..., .id = "z_") {
 
     priminst <- x$triangle 
     priminst[["triangle_"]] <- silicate::sc_uid(priminst)  ## FIXME: temporary triangle_ id not needed
-    prim_long <- priminst %>% tidyr::gather(tri_vertex, vertex, -.data$object_, -.data$triangle_)
+    prim_long <- priminst %>% tidyr::gather(.data$tri_vertex, .data$vertex, -.data$object_, -.data$triangle_)
     prim_long[[.id]] <- z[match(prim_long$object_, x$object$object_)]
     prim_long <- prim_long %>% inner_join(x$vertex, c("vertex" = "vertex_"))
     prim_long$vertex <- NULL
