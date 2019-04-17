@@ -1,16 +1,16 @@
 #' Plot QUAD
 #'
 #' Plot a QUAD mesh. 
-#' @param x 
-#' @param ... 
-#' @param add 
-#'
-#' @return
+#' @param x a QUAD object
+#' @param ... passed to set up plot when silicate mesh is plotted
+#' @param add add to the current plot?
+#' @name plot
+#' @return returns the data plotted in the form used, invisibly
 #' @export
-#'
+#' @importFrom graphics plot
+#' @export plot
 #' @examples
 #' plot(QUAD(raster::raster(volcano)))
-
 plot.QUAD <- function(x, ..., add = FALSE) {
   if (!is.null(x$quad)) {
     x$object$crs <- x$meta$proj
@@ -25,11 +25,11 @@ plot.QUAD <- function(x, ..., add = FALSE) {
   } 
   tr <- TRI(x)
   plot(tr, border = NA, ...)
-  invisible(NULL)
+  invisible(tr)
 }
 
 
-#' @name plot-anglr
+#' @name plot
 #' @export
 plot.linemesh <- function(x,  ..., add = FALSE) {
   .Deprecated(new = "plot.PATH or plot.SC", package = "anglr", old = "plot(<line_mesh>)")
@@ -64,7 +64,7 @@ plot.linemesh <- function(x,  ..., add = FALSE) {
 
 }
 
-#' @name plot-anglr
+#' @name plot
 #' @export
 plot.pointmesh <- function(x,  ..., add = FALSE) {
   if (!"color_" %in% names(x$o)) {
