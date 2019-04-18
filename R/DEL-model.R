@@ -55,9 +55,11 @@ DEL.PATH0 <- function(x, max_area = NULL, ...) {
 #' @name DEL
 #' @export
 DEL.SC <- function(x, max_area = NULL, ...)  {
-  ## find if any objects have < 3 verts
+  ## find if any objects have < 3 edges
   edge_per_object_lt <- x$object["object_"] %>% 
     dplyr::inner_join(x$object_link_edge, "object_") %>% 
+    dplyr::inner_join(x$object_link_edge, "object_") %>% 
+    
     dplyr::group_by(.data$object_) %>% dplyr::tally(dplyr::n()) %>% dplyr::filter(n < 3)
   if (nrow(edge_per_object_lt) > 0) {
     message("dropping untriangulatable objects")
@@ -77,7 +79,7 @@ DEL.SC <- function(x, max_area = NULL, ...)  {
     ordered_verts <- t(apply(as.matrix(x1$edge[c(".vx0", ".vx1")]), 1, sort))
     x1$vertex <- x$vertex[x$vertex$vertex_ %in% c(ordered_verts), ]
     
-    dots <- list(...)
+    dots <- list()
     
     dots[["a"]] <- max_area
     dots[["x"]] <- x1

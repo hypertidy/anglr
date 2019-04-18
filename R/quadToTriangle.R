@@ -10,14 +10,15 @@
 #' @examples 
 #' library(anglr)
 #' library(raster)
-#' r <- setExtent(raster(volcano), extent(0, nrow(volcano), 0, ncol(volcano)))
+#' v <- volcano[1:10, 1:6]
+#' r <- setExtent(raster(v), extent(0, nrow(v), 0, ncol(v)))
 #' a <- QUAD(r)
 #' x <- copy_down(TRI(a), r)
 #' nrow(x$vertex)
 #' sc <- silicate::SC(x)
-#' mesh <- DEL(sc, max_area = .2)
-#' mesh <- copy_down(mesh, r)
-#' nrow(mesh$vertex)
+#' #mesh <- DEL(sc, max_area = .2)
+#' #mesh <- copy_down(mesh, r)
+#' #nrow(mesh$vertex)
 #' @importFrom silicate TRI sc_uid
 #' @export TRI
 TRI.QUAD <- function(x, ...) {
@@ -27,7 +28,7 @@ TRI.QUAD <- function(x, ...) {
   
   out$object <- tibble::tibble(object_ = silicate::sc_uid(nlevels(f)), 
                                value = levels(f))
-  out$triangle$object_ <- rep(out$object$object_, each = 2L)
+  out$triangle$object_ <- out$object$object_[as.integer(out$triangle$object_)]
   #out$object_link_triangle$object_ <- rep(out$object$object_[f], each = 2)
 #  out$
   out

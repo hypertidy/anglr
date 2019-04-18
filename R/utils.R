@@ -31,7 +31,7 @@ auto_3d <- function(x = 1, y = 1, z = 1, keep_xy = TRUE, exag = TRUE, verbose = 
   #if (!is.null(getOption("rgl.useNULL")) && interactive() && runif(1, 0, 1) > 0.96) {
   #  message("rgl NULL device in use, do you need to run rgl::rglwidget()?")
   #}
-  if (!silent) {
+  if (verbose) {
     psp <- format(asp, digits = 3)
     print(sprintf("original axis lengths x,y,z: %s", paste(format(thr), collapse = ",", sep = "")))
     print(sprintf("applying 'aspect3d(%s, %s, %s)'", psp[1], psp[2], psp[3]))

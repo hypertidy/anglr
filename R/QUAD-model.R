@@ -14,6 +14,7 @@ QUAD <- function(x, ...) {
   UseMethod("QUAD")
 }
 #' @name QUAD
+#' @importFrom raster xmin xmax ymin ymax
 #' @export
 QUAD.BasicRaster <- function(x, ...) {
   x <- x[[1]]  ## just the oneth raster for now

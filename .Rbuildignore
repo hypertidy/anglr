@@ -11,6 +11,7 @@
 ^docs$
 ^prepare_package.r$
 ^data-raw$
-^D:\GIT\rangl\docs$
-^inst/examples/rsconnect*
+^inst/examples$
+^inst/extdata/hobart5m.rds$
+^inst/extdata/water_lake_superior_basin.gpkg$
 ^_pkgdown\.yml$

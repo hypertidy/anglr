@@ -68,7 +68,7 @@ denorm_PRIM_addZ <- function(x, z, ..., .id = "z_") {
     prim_long$vertex <- NULL
     prim_long$vertex_ <- silicate::sc_uid(nrow(prim_long))
     prim_wide <-  prim_long[c("tri_vertex", "vertex_", "triangle_", "object_")] %>% 
-      tidyr::spread(tri_vertex, vertex_)
+      tidyr::spread("tri_vertex", "vertex_")
 
     x$triangle <- dplyr::distinct(prim_wide, .data$object_, .data$.vx0, .data$.vx1, .data$.vx2)  
 
