@@ -145,6 +145,7 @@ DEL.SC <- function(x, max_area = NULL, ...)  {
 
 #' @name DEL
 #' @export
+#' @importFrom tibble tibble
 DEL.PATH <- function(x, max_area = NULL,  ...) {
 
   dots <- list(...)

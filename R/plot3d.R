@@ -13,11 +13,9 @@
 #' @examples
 #' library(silicate)
 #' x <- SC(sf::read_sf(system.file("shape", "nc.shp", package = "sf")) %>% 
-#'    mutate(color_ = rainbow(100)))
-#' plot3d(x); rglwidget()
+#'    dplyr::mutate(color_ = rainbow(100)))
+#' plot3d(x); rgl::rglwidget()
 #' worldz <- QUAD(gebco1)
-#' ## an easy way to exaggerate z is to reduce the radius of the globe
-#' plot3d(globe(worldz, gproj = "+proj=geocent +a=10000"))
 #' @export
 plot3d.SC <- function(x, ..., add = FALSE) {
   if (!"color_" %in% names(x$object)) {

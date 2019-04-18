@@ -18,12 +18,13 @@ TRI model from silicate is extended by methods for QUAD.
 \examples{
 library(anglr)
 library(raster)
-r <- setExtent(raster(volcano), extent(0, nrow(volcano), 0, ncol(volcano)))
+v <- volcano[1:10, 1:6]
+r <- setExtent(raster(v), extent(0, nrow(v), 0, ncol(v)))
 a <- QUAD(r)
 x <- copy_down(TRI(a), r)
 nrow(x$vertex)
 sc <- silicate::SC(x)
-mesh <- DEL(sc, max_area = .2)
-mesh <- copy_down(mesh, r)
-nrow(mesh$vertex)
+#mesh <- DEL(sc, max_area = .2)
+#mesh <- copy_down(mesh, r)
+#nrow(mesh$vertex)
 }

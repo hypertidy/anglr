@@ -10,7 +10,7 @@ globe(x, ...)
 \method{globe}{default}(x, gproj = "+proj=geocent +ellps=WGS84", ...)
 }
 \arguments{
-\item{x}{list of tibbles, in \code{\link{anglr}} form}
+\item{x}{list of tibbles, in silicate form}
 
 \item{...}{arguments to methods (none used)}
 

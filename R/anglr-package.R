@@ -79,6 +79,6 @@ NULL
 #' if (requireNamespace("quadmesh", quietly = TRUE)) {
 #'  qm <- quadmesh::quadmesh(raster::aggregate(gebco1, fact = 4)); 
 #'  qm$vb[1:2, ] <- t(proj4::ptransform(t(qm$vb[1:2, ]) * pi/180, longlat, laea))[1:2, ]
-#'  plot3d(x); shade3d(qm, col = "white");  rgl::aspect3d(1, 1, 0.4); rgl::rglwidget()
+#'  plot3d(x); rgl::shade3d(qm, col = "white");  rgl::aspect3d(1, 1, 0.4); rgl::rglwidget()
 #' }
 NULL

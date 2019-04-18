@@ -94,6 +94,7 @@ copy_downRaster<- function(x, z = NULL, ..., .id = "z_") {
 
 #' @name copy_down
 #' @export
+#' @importFrom dplyr inner_join
 copy_down.SC <- function(x, z = NULL, ..., .id = "z_") {
   z <- find_z(x, z)
   if (inherits(z, "BasicRaster")) {
@@ -136,6 +137,7 @@ copy_down.ARC <- function(x, z = NULL, ..., .id = "z_") {
 
 #' @name copy_down
 #' @export
+#' @importFrom stats setNames
 copy_down.QUAD <- function(x, z = NULL, ..., .id = "z_") {
  #vertex <- tibble(x_ = exy[,1], y_ = exy[,2], z_ = 0)
   z <- find_z(x, z)

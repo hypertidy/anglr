@@ -2,7 +2,7 @@
 #' Convert map coordinates to Geocentric (XYZ) coordinates. 
 #'
 #' 
-#' @param x list of tibbles, in \code{\link{anglr}} form
+#' @param x list of tibbles, in silicate form
 #' @param gproj Geocentric PROJ.4 string, defaults to WGS84
 #' @param ... arguments to methods (none used)
 #'
