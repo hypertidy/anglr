@@ -38,15 +38,16 @@ The `anglr` package generalizes GIS in R with a flexible approach to spatial dat
 * igraph
 * many others are readily available, get in touch!
 
-To do this anglr works with forms defined by [silicate](https://github.com/hypertidy/silicate) and (after [rgl](https://cran.r-project.org/package=rgl)) provides `plot3d` methods for each of the models `SC`, `PATH`, `ARC` and `TRI`. The anglr package adds two `DEL` (for high-quality triangulation) and `QUAD` (very WIP, for raster data). 
+To do this anglr works with forms defined by [silicate](https://github.com/hypertidy/silicate) and (after [rgl](https://cran.r-project.org/package=rgl)) and provides `plot3d()` methods for each of the models `SC()`, `PATH()`, `ARC()` and `TRI()`. The anglr package adds two  more `DEL()` (for high-quality triangulation) and `QUAD()` (very WIP, for raster data). 
 
 # Usage
 
-The general approach is re-model data, optionally use `copy_down` to augment the data with a Z coordinate, and then plot it with `plot3d()`
+The general approach is to re-model the data into mesh-form via one of the models, then `copy_down()` attribute or raster data to a Z coordinate, and plot with `plot3d()`: 
 
-PSEUDOCODE: 
+
 
 ```{r usage, eval=FALSE}
+## PSEUDOCODE
 library(anglr)
 model <- sf::st_read("some/shapefile.shp")
 araster <- raster::raster("some/gridraster.tif")

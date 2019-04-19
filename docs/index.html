@@ -66,10 +66,10 @@
     
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-<div id="topological-forms-for-plotting-spatial-data" class="section level2">
+<div id="topological-forms-for-spatial-data" class="section level2">
 <h2 class="hasAnchor">
-<a href="#topological-forms-for-plotting-spatial-data" class="anchor"></a>Topological forms for plotting spatial data</h2>
-<p>The ‘anglr’ package generalizes GIS in R with a flexible approach to spatial data, using <em>topological forms</em> that can be derived from a variety of data types:</p>
+<a href="#topological-forms-for-spatial-data" class="anchor"></a>Topological forms for spatial data</h2>
+<p>The <code>anglr</code> package generalizes GIS in R with a flexible approach to spatial data, using <em>topological forms</em> that can be derived from a variety of data types:</p>
 <ul>
 <li>simple features or Spatial objects</li>
 <li>rgl 3D objects</li>
@@ -80,18 +80,18 @@
 <li>igraph</li>
 <li>many others are readily available, get in touch!</li>
 </ul>
-<p>To do this anglr works with forms defined by <a href="https://github.com/hypertidy/silicate">silicate</a> and (after <a href="https://cran.r-project.org/package=rgl">rgl</a>) provides <code>plot3d</code> methods for each of the models <code>SC</code>, <code>PATH</code>, <code>ARC</code> and <code>TRI</code>. The anglr package adds two <code>DEL</code> (for high-quality triangulation) and <code>QUAD</code> (very WIP, for raster data).</p>
+<p>To do this anglr works with forms defined by <a href="https://github.com/hypertidy/silicate">silicate</a> and (after <a href="https://cran.r-project.org/package=rgl">rgl</a>) and provides <code><a href="reference/plot3d.html">plot3d()</a></code> methods for each of the models <code><a href="https://www.rdocumentation.org/packages/silicate/topics/SC">SC()</a></code>, <code><a href="https://www.rdocumentation.org/packages/silicate/topics/PATH">PATH()</a></code>, <code><a href="https://www.rdocumentation.org/packages/silicate/topics/ARC">ARC()</a></code> and <code><a href="reference/TRI.html">TRI()</a></code>. The anglr package adds two more <code><a href="reference/DEL.html">DEL()</a></code> (for high-quality triangulation) and <code><a href="reference/QUAD.html">QUAD()</a></code> (very WIP, for raster data).</p>
 </div>
 <div id="usage" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h1></div>
-<p>The general approach is re-model data, optionally use <code>copy_down</code> to augment the data with a Z coordinate, and then plot it with <code><a href="reference/plot3d.html">plot3d()</a></code></p>
-<p>PSEUDOCODE:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(anglr)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">model &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st_read">st_read</a></span>(<span class="st">"some/shapefile.shp"</span>)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">araster &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/raster">raster</a></span>(<span class="st">"some/gridraster.tif"</span>)</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">mesh &lt;-<span class="st"> </span><span class="kw"><a href="reference/copy_down.html">copy_down</a></span>(silicate<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/silicate/topics/SC">SC</a></span>(model), araster)</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw"><a href="reference/plot3d.html">plot3d</a></span>(mesh)</a></code></pre></div>
+<p>The general approach is to re-model the data into mesh-form via one of the models, then <code><a href="reference/copy_down.html">copy_down()</a></code> attribute or raster data to a Z coordinate, and plot with <code><a href="reference/plot3d.html">plot3d()</a></code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co">## PSEUDOCODE</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(anglr)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">model &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st_read">st_read</a></span>(<span class="st">"some/shapefile.shp"</span>)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">araster &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/raster">raster</a></span>(<span class="st">"some/gridraster.tif"</span>)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">mesh &lt;-<span class="st"> </span><span class="kw"><a href="reference/copy_down.html">copy_down</a></span>(silicate<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/silicate/topics/SC">SC</a></span>(model), araster)</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw"><a href="reference/plot3d.html">plot3d</a></span>(mesh)</a></code></pre></div>
 <p>The <em>copy down</em> process will copy feature attributes (a constant measure) or raster attributes (a continuous measure) in the appropriate way. After copy the mesh will be unique in XYZ, whereas the usual starting point is uniqueness in XY.</p>
 <p>These <em>mesh</em> or <em>topological</em> forms can be used to merge disparate data into a single form, or to convert standard spatial objects to <code>rgl</code>-ready forms.</p>
 <div id="demo-01---merge-vector-and-raster-data" class="section level2">
