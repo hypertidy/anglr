@@ -26,9 +26,9 @@ rgl::par3d(windowRect = c(100, 100, 512 + 100, 512 +100))
 
 
 
-## Topological forms for plotting spatial data
+## Topological forms for spatial data
 
-The 'anglr' package generalizes GIS in R with a flexible approach to spatial data, using topological forms of data that can be derived from a variety of sources: 
+The `anglr` package generalizes GIS in R with a flexible approach to spatial data, using *topological forms* that can be derived from a variety of data types: 
 
 * simple features or Spatial objects
 * rgl 3D objects
@@ -57,6 +57,7 @@ plot3d(mesh)
 The *copy down* process will copy feature attributes (a constant measure) or raster attributes (a continuous measure) in the appropriate way. After copy the mesh will be unique in XYZ, whereas the usual starting point is uniqueness in XY. 
 
 These *mesh* or *topological* forms can be used to merge disparate data into a single form, or to convert standard spatial objects to `rgl`-ready forms. 
+
 
 ## Demo 01 - merge vector and raster data
 

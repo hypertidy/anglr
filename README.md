@@ -13,11 +13,11 @@ Status](https://img.shields.io/codecov/c/github/hypertidy/anglr/master.svg)](htt
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-## Topological forms for plotting spatial data
+## Topological forms for spatial data
 
-The ‘anglr’ package generalizes GIS in R with a flexible approach to
-spatial data, using topological forms of data that can be derived from a
-variety of sources:
+The `anglr` package generalizes GIS in R with a flexible approach to
+spatial data, using *topological forms* that can be derived from a
+variety of data types:
 
   - simple features or Spatial objects
   - rgl 3D objects
