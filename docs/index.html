@@ -69,32 +69,31 @@
 <div id="topological-forms-for-plotting-spatial-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#topological-forms-for-plotting-spatial-data" class="anchor"></a>Topological forms for plotting spatial data</h2>
-<p>The ‘anglr’ package illustrates some generalizations of GIS-y tasks in R with a database-y approach.</p>
-<p>The basic idea is to showcase topological forms of objects from a variety of sources:</p>
+<p>The ‘anglr’ package generalizes GIS in R with a flexible approach to spatial data, using topological forms of data that can be derived from a variety of sources:</p>
 <ul>
-<li>silicate forms</li>
-<li>simple features</li>
-<li>Spatial features</li>
+<li>simple features or Spatial objects</li>
 <li>rgl 3D objects</li>
 <li>trip objects (and general animal tracking data types)</li>
-<li>regular raster grids</li>
+<li>
+<a href="https://github.com/hypertidy/silicate">silicate</a> forms</li>
+<li>raster grids</li>
 <li>igraph</li>
-<li>Lidar</li>
-<li>others - let me know!</li>
+<li>many others are readily available, get in touch!</li>
 </ul>
-<p>To do this anglr works with forms defined by <a href="https://github.com/hypertidy/silicate">silicate</a> and (after <a href="https://cran.r-project.org/package=rgl">rgl</a>) provides <code>plot3d</code> methods for each of the models <code>SC</code>, <code>PATH</code>, <code>ARC</code> and <code>TRI</code>. Here we add two more models <code>DEL</code> (for high-quality triangulation) and <code>QUAD</code> (for raster data).</p>
+<p>To do this anglr works with forms defined by <a href="https://github.com/hypertidy/silicate">silicate</a> and (after <a href="https://cran.r-project.org/package=rgl">rgl</a>) provides <code>plot3d</code> methods for each of the models <code>SC</code>, <code>PATH</code>, <code>ARC</code> and <code>TRI</code>. The anglr package adds two <code>DEL</code> (for high-quality triangulation) and <code>QUAD</code> (very WIP, for raster data).</p>
 </div>
 <div id="usage" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h1></div>
-<p>The general approach is re-model your data using one of these models, optionally use <code>copy_down</code> to augment the model with a Z coordinate, and then <code>plot3d</code> it.</p>
+<p>The general approach is re-model data, optionally use <code>copy_down</code> to augment the data with a Z coordinate, and then plot it with <code><a href="reference/plot3d.html">plot3d()</a></code></p>
+<p>PSEUDOCODE:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(anglr)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">model &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st_read">st_read</a></span>(<span class="st">"some/shapefile.shp"</span>)</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3">araster &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/raster">raster</a></span>(<span class="st">"some/gridraster.tif"</span>)</a>
 <a class="sourceLine" id="cb1-4" data-line-number="4">mesh &lt;-<span class="st"> </span><span class="kw"><a href="reference/copy_down.html">copy_down</a></span>(silicate<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/silicate/topics/SC">SC</a></span>(model), araster)</a>
 <a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw"><a href="reference/plot3d.html">plot3d</a></span>(mesh)</a></code></pre></div>
-<p>The copy down process will copy feature attributes (a constant measure) or raster attributes (a continuous measure) in the appropriate way. After copy down the mesh will be unique in XYZ, whereas the usual starting point is uniqueness in XY.</p>
-<p>These <em>mesh</em> or <em>topological</em> forms can be used to merge disparate data into a single form, or used to convert standard spatial objects to <code>rgl</code> ready forms.</p>
+<p>The <em>copy down</em> process will copy feature attributes (a constant measure) or raster attributes (a continuous measure) in the appropriate way. After copy the mesh will be unique in XYZ, whereas the usual starting point is uniqueness in XY.</p>
+<p>These <em>mesh</em> or <em>topological</em> forms can be used to merge disparate data into a single form, or to convert standard spatial objects to <code>rgl</code>-ready forms.</p>
 <div id="demo-01---merge-vector-and-raster-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#demo-01---merge-vector-and-raster-data" class="anchor"></a>Demo 01 - merge vector and raster data</h2>
@@ -125,14 +124,14 @@
 <a class="sourceLine" id="cb2-24" data-line-number="24"><span class="kw"><a href="https://www.rdocumentation.org/packages/rgl/topics/rglwidget">rglwidget</a></span>()  <span class="co">## not needed if you have a local device</span></a></code></pre></div>
 <p>Follow this link to see the result:</p>
 <p><a href="https://hypertidy.github.io/anglr-demos/demo01.html">Demo02</a></p>
-<p>Here the <code>z</code> argument to <code>copy_down</code> is a raster, and so the <code>z_</code> coordinate of the mesh is updated by extracting values from the raster.</p>
+<p>Here the <code>z</code> argument to <code><a href="reference/copy_down.html">copy_down()</a></code> is a raster, and so the <code>z_</code> coordinate of the mesh is updated by extracting values from the raster using bilinear interpolation.</p>
 </div>
 <div id="demo-02---copy-discrete-values-to-polygon-elevation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#demo-02---copy-discrete-values-to-polygon-elevation" class="anchor"></a>Demo 02 - copy discrete values to polygon elevation</h2>
-<p>An <a href="https://hypertidy.github.io/anglr-demos/demo02.html">example of elevating polygons with constant attribute values</a>, a discrete interpretation that requirings breaking the mesh.</p>
-<p>If <code>z</code> set to a column in the layer or a specific vector of values this is used as a constant offset for the <code>z_</code> value, and the mesh is <em>separated by feature</em>.</p>
-<p>We only use TRI here both to illustrate its availability, but also because we only need poor quality triangles for planar geometry.</p>
+<p>An <a href="https://hypertidy.github.io/anglr-demos/demo02.html">example of elevating polygons with constant attribute values</a>, a discrete interpretation that requires separating the (until-now) continuous mesh of polygon features.</p>
+<p>With argument <code>z</code> set to a column in the layer or a specific vector of values this is used as a constant offset for the <code>z_</code> value, and the mesh is <em>separated by feature</em>.</p>
+<p>(The simpler TRI model is used here because we only need poor quality triangles for planar geometry. )</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">## either form works</span></a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#c_mesh &lt;- copy_down(TRI(nc), z = p_mesh$object$BIR74)</span></a>

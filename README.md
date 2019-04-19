@@ -15,34 +15,31 @@ Status](https://img.shields.io/codecov/c/github/hypertidy/anglr/master.svg)](htt
 
 ## Topological forms for plotting spatial data
 
-The ‘anglr’ package illustrates some generalizations of GIS-y tasks in R
-with a database-y approach.
-
-The basic idea is to showcase topological forms of objects from a
+The ‘anglr’ package generalizes GIS in R with a flexible approach to
+spatial data, using topological forms of data that can be derived from a
 variety of sources:
 
-  - silicate forms
-  - simple features
-  - Spatial features
+  - simple features or Spatial objects
   - rgl 3D objects
   - trip objects (and general animal tracking data types)
-  - regular raster grids
+  - [silicate](https://github.com/hypertidy/silicate) forms
+  - raster grids
   - igraph
-  - Lidar
-  - others - let me know\!
+  - many others are readily available, get in touch\!
 
 To do this anglr works with forms defined by
 [silicate](https://github.com/hypertidy/silicate) and (after
 [rgl](https://cran.r-project.org/package=rgl)) provides `plot3d` methods
-for each of the models `SC`, `PATH`, `ARC` and `TRI`. Here we add two
-more models `DEL` (for high-quality triangulation) and `QUAD` (for
-raster data).
+for each of the models `SC`, `PATH`, `ARC` and `TRI`. The anglr package
+adds two `DEL` (for high-quality triangulation) and `QUAD` (very WIP,
+for raster data).
 
 # Usage
 
-The general approach is re-model your data using one of these models,
-optionally use `copy_down` to augment the model with a Z coordinate, and
-then `plot3d` it.
+The general approach is re-model data, optionally use `copy_down` to
+augment the data with a Z coordinate, and then plot it with `plot3d()`
+
+PSEUDOCODE:
 
 ``` r
 library(anglr)
@@ -52,14 +49,14 @@ mesh <- copy_down(silicate::SC(model), araster)
 plot3d(mesh)
 ```
 
-The copy down process will copy feature attributes (a constant measure)
-or raster attributes (a continuous measure) in the appropriate way.
-After copy down the mesh will be unique in XYZ, whereas the usual
+The *copy down* process will copy feature attributes (a constant
+measure) or raster attributes (a continuous measure) in the appropriate
+way. After copy the mesh will be unique in XYZ, whereas the usual
 starting point is uniqueness in XY.
 
 These *mesh* or *topological* forms can be used to merge disparate data
-into a single form, or used to convert standard spatial objects to `rgl`
-ready forms.
+into a single form, or to convert standard spatial objects to
+`rgl`-ready forms.
 
 ## Demo 01 - merge vector and raster data
 
@@ -99,21 +96,23 @@ Follow this link to see the result:
 
 [Demo02](https://hypertidy.github.io/anglr-demos/demo01.html)
 
-Here the `z` argument to `copy_down` is a raster, and so the `z_`
-coordinate of the mesh is updated by extracting values from the raster.
+Here the `z` argument to `copy_down()` is a raster, and so the `z_`
+coordinate of the mesh is updated by extracting values from the raster
+using bilinear interpolation.
 
 ## Demo 02 - copy discrete values to polygon elevation
 
 An [example of elevating polygons with constant attribute
 values](https://hypertidy.github.io/anglr-demos/demo02.html), a discrete
-interpretation that requirings breaking the mesh.
+interpretation that requires separating the (until-now) continuous mesh
+of polygon features.
 
-If `z` set to a column in the layer or a specific vector of values this
-is used as a constant offset for the `z_` value, and the mesh is
-*separated by feature*.
+With argument `z` set to a column in the layer or a specific vector of
+values this is used as a constant offset for the `z_` value, and the
+mesh is *separated by feature*.
 
-We only use TRI here both to illustrate its availability, but also
-because we only need poor quality triangles for planar geometry.
+(The simpler TRI model is used here because we only need poor quality
+triangles for planar geometry. )
 
 ``` r
 
