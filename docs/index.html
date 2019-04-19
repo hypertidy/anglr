@@ -66,7 +66,6 @@
     
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-<p>NOTE: none of these 3D scenes can be viewed on github so a temporary copy of this readme with the figures rendered is here: <a href="http://rpubs.com/cyclemumner/367003" class="uri">http://rpubs.com/cyclemumner/367003</a></p>
 <div id="topological-forms-for-plotting-spatial-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#topological-forms-for-plotting-spatial-data" class="anchor"></a>Topological forms for plotting spatial data</h2>
@@ -96,7 +95,10 @@
 <a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw"><a href="reference/plot3d.html">plot3d</a></span>(mesh)</a></code></pre></div>
 <p>The copy down process will copy feature attributes (a constant measure) or raster attributes (a continuous measure) in the appropriate way. After copy down the mesh will be unique in XYZ, whereas the usual starting point is uniqueness in XY.</p>
 <p>These <em>mesh</em> or <em>topological</em> forms can be used to merge disparate data into a single form, or used to convert standard spatial objects to <code>rgl</code> ready forms.</p>
-<p>An example of merging vector and raster can be seen with this.</p>
+<div id="demo-01---merge-vector-and-raster-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#demo-01---merge-vector-and-raster-data" class="anchor"></a>Demo 01 - merge vector and raster data</h2>
+<p>An <a href="https://hypertidy.github.io/anglr-demos/demo01.html">example of merging vector and raster</a>, with a continuous interpretation applied to the polygon mesh and underlying elevation.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">## a global DEM</span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"gebco1"</span>, <span class="dt">package =</span> <span class="st">"anglr"</span>)</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(sf)</a>
@@ -121,7 +123,15 @@
 <a class="sourceLine" id="cb2-22" data-line-number="22"><span class="kw"><a href="https://www.rdocumentation.org/packages/rgl/topics/bg">bg3d</a></span>(<span class="st">"black"</span>); <span class="kw"><a href="https://www.rdocumentation.org/packages/rgl/topics/material">material3d</a></span>(<span class="dt">specular =</span> <span class="st">"black"</span>)</a>
 <a class="sourceLine" id="cb2-23" data-line-number="23"><span class="kw"><a href="https://www.rdocumentation.org/packages/rgl/topics/aspect3d">aspect3d</a></span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">.1</span>)</a>
 <a class="sourceLine" id="cb2-24" data-line-number="24"><span class="kw"><a href="https://www.rdocumentation.org/packages/rgl/topics/rglwidget">rglwidget</a></span>()  <span class="co">## not needed if you have a local device</span></a></code></pre></div>
-<p>Here the <code>z</code> argument to <code>copy_down</code> is a raster, and so the <code>z_</code> coordinate of the mesh is updated by extracting values from the raster. If <code>z_</code> is alternately set to a column in the layer or a specific vector of values this is used as a constant offset for the <code>z_</code> value, and the mesh is <em>separated by feature</em>.</p>
+<p>Follow this link to see the result:</p>
+<p><a href="https://hypertidy.github.io/anglr-demos/demo01.html">Demo02</a></p>
+<p>Here the <code>z</code> argument to <code>copy_down</code> is a raster, and so the <code>z_</code> coordinate of the mesh is updated by extracting values from the raster.</p>
+</div>
+<div id="demo-02---copy-discrete-values-to-polygon-elevation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#demo-02---copy-discrete-values-to-polygon-elevation" class="anchor"></a>Demo 02 - copy discrete values to polygon elevation</h2>
+<p>An <a href="https://hypertidy.github.io/anglr-demos/demo02.html">example of elevating polygons with constant attribute values</a>, a discrete interpretation that requirings breaking the mesh.</p>
+<p>If <code>z</code> set to a column in the layer or a specific vector of values this is used as a constant offset for the <code>z_</code> value, and the mesh is <em>separated by feature</em>.</p>
 <p>We only use TRI here both to illustrate its availability, but also because we only need poor quality triangles for planar geometry.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">## either form works</span></a>
@@ -132,10 +142,13 @@
 <a class="sourceLine" id="cb3-7" data-line-number="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/rgl/topics/bg">bg3d</a></span>(<span class="st">"black"</span>); <span class="kw"><a href="https://www.rdocumentation.org/packages/rgl/topics/material">material3d</a></span>(<span class="dt">specular =</span> <span class="st">"black"</span>)</a>
 <a class="sourceLine" id="cb3-8" data-line-number="8"><span class="kw"><a href="https://www.rdocumentation.org/packages/rgl/topics/aspect3d">aspect3d</a></span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">.2</span>)</a>
 <a class="sourceLine" id="cb3-9" data-line-number="9"><span class="kw"><a href="https://www.rdocumentation.org/packages/rgl/topics/rglwidget">rglwidget</a></span>()  <span class="co">## not needed if you have a local device</span></a></code></pre></div>
+<p>Follow this link to see the result:</p>
+<p><a href="https://hypertidy.github.io/anglr-demos/demo02.html">Demo02</a></p>
 <p>In the silicate models, complex objects are decomposed to a set of related, linked tables. Object identity is maintained with attribute metadata and this is carried through to colour and other aesthetics.</p>
 <p>Plot (3D) methods take those tables and generate the “indexed array” structures needed for ‘rgl’. (<code>plot3d</code> will return the rgl-model form). This gets us part of the way towards having the best of both worlds of GIS and 3D graphics.</p>
 <p>Another example shows this approach applied to a 3D multipatch shapefile, with a few easy steps we can plot a wiremesh or roof/floor polygons from a civic building footprint.</p>
 <p><a href="http://rpubs.com/cyclemumner/367010" class="uri">http://rpubs.com/cyclemumner/367010</a></p>
+</div>
 <div id="ongoing-design" class="section level2">
 <h2 class="hasAnchor">
 <a href="#ongoing-design" class="anchor"></a>Ongoing design</h2>

@@ -13,10 +13,6 @@ Status](https://img.shields.io/codecov/c/github/hypertidy/anglr/master.svg)](htt
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-NOTE: none of these 3D scenes can be viewed on github so a temporary
-copy of this readme with the figures rendered is here:
-<http://rpubs.com/cyclemumner/367003>
-
 ## Topological forms for plotting spatial data
 
 The ‘anglr’ package illustrates some generalizations of GIS-y tasks in R
@@ -65,7 +61,12 @@ These *mesh* or *topological* forms can be used to merge disparate data
 into a single form, or used to convert standard spatial objects to `rgl`
 ready forms.
 
-An example of merging vector and raster can be seen with this.
+## Demo 01 - merge vector and raster data
+
+An [example of merging vector and
+raster](https://hypertidy.github.io/anglr-demos/demo01.html), with a
+continuous interpretation applied to the polygon mesh and underlying
+elevation.
 
 ``` r
 ## a global DEM
@@ -94,11 +95,22 @@ aspect3d(1, 1, .1)
 rglwidget()  ## not needed if you have a local device
 ```
 
+Follow this link to see the result:
+
+[Demo02](https://hypertidy.github.io/anglr-demos/demo01.html)
+
 Here the `z` argument to `copy_down` is a raster, and so the `z_`
 coordinate of the mesh is updated by extracting values from the raster.
-If `z_` is alternately set to a column in the layer or a specific vector
-of values this is used as a constant offset for the `z_` value, and the
-mesh is *separated by feature*.
+
+## Demo 02 - copy discrete values to polygon elevation
+
+An [example of elevating polygons with constant attribute
+values](https://hypertidy.github.io/anglr-demos/demo02.html), a discrete
+interpretation that requirings breaking the mesh.
+
+If `z` set to a column in the layer or a specific vector of values this
+is used as a constant offset for the `z_` value, and the mesh is
+*separated by feature*.
 
 We only use TRI here both to illustrate its availability, but also
 because we only need poor quality triangles for planar geometry.
@@ -114,6 +126,10 @@ bg3d("black"); material3d(specular = "black")
 aspect3d(1, 1, .2)
 rglwidget()  ## not needed if you have a local device
 ```
+
+Follow this link to see the result:
+
+[Demo02](https://hypertidy.github.io/anglr-demos/demo02.html)
 
 In the silicate models, complex objects are decomposed to a set of
 related, linked tables. Object identity is maintained with attribute
