@@ -64,7 +64,7 @@ data is Gebco 2014, converted to a much reduced 1 degree resolution global map."
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">anglr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9003</span>
       </span>
     </div>
 
@@ -123,13 +123,13 @@ data is Gebco 2014, converted to a much reduced 1 degree resolution global map.<
 <span class='co'>## WARNING: SC doesn't have meta yet ...</span>
 <span class='co'>## this is a lossless transformation of raster and vector to a projected</span>
 <span class='co'>## 3D scene</span>
-<span class='no'>x</span>$<span class='no'>vertex</span>[<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"x_"</span>, <span class='st'>"y_"</span>)] <span class='kw'>&lt;-</span> <span class='kw pkg'>proj4</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/proj4/topics/transform'>ptransform</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>as.matrix</a></span>(<span class='no'>x</span>$<span class='no'>vertex</span>[<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"x_"</span>, <span class='st'>"y_"</span>)]) * <span class='no'>pi</span>/<span class='fl'>180</span>,
- <span class='no'>longlat</span>, <span class='no'>laea</span>)
-<span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/ns-load'>requireNamespace</a></span>(<span class='st'>"quadmesh"</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)) {
- <span class='no'>qm</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>quadmesh</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/quadmesh/topics/quadmesh'>quadmesh</a></span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/raster/topics/aggregate'>aggregate</a></span>(<span class='no'>gebco1</span>, <span class='kw'>fact</span> <span class='kw'>=</span> <span class='fl'>4</span>));
- <span class='no'>qm</span>$<span class='no'>vb</span>[<span class='fl'>1</span>:<span class='fl'>2</span>, ] <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/t'>t</a></span>(<span class='kw pkg'>proj4</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/proj4/topics/transform'>ptransform</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/t'>t</a></span>(<span class='no'>qm</span>$<span class='no'>vb</span>[<span class='fl'>1</span>:<span class='fl'>2</span>, ]) * <span class='no'>pi</span>/<span class='fl'>180</span>, <span class='no'>longlat</span>, <span class='no'>laea</span>))[<span class='fl'>1</span>:<span class='fl'>2</span>, ]
- <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>x</span>); <span class='kw pkg'>rgl</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rgl/topics/mesh3d'>shade3d</a></span>(<span class='no'>qm</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"white"</span>);  <span class='kw pkg'>rgl</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rgl/topics/aspect3d'>aspect3d</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0.4</span>); <span class='kw pkg'>rgl</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rgl/topics/rglwidget'>rglwidget</a></span>()
-}</div></pre>
+<span class='co'>#x$vertex[c("x_", "y_")] &lt;- reproj::reproj(as.matrix(x$vertex[c("x_", "y_")])[, 1:2, drop = FALSE], </span>
+<span class='co'>#   target = laea, source = longlat)</span>
+<span class='co'>#if (requireNamespace("quadmesh", quietly = TRUE)) {</span>
+ <span class='co'>#qm &lt;- quadmesh::quadmesh(raster::aggregate(gebco1, fact = 4)); </span>
+<span class='co'>#  qm$vb[1:2, ] &lt;- t(proj4::ptransform(t(qm$vb[1:2, ]) * pi/180, longlat, laea))[1:2, ]</span>
+<span class='co'># plot3d(x); rgl::shade3d(qm, col = "white");  rgl::aspect3d(1, 1, 0.4); rgl::rglwidget()</span>
+<span class='co'>#}</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

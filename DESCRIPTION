@@ -29,19 +29,13 @@ Suggests:
     ggplot2,
     ggpolypath,
     graticule,
-    maptools,
     purrr,
-    rgdal,
-    rgeos,
-    rworldmap,
-    rworldxtra,
     sf,
     sfdct,
     testthat,
     trip,
     knitr,
     rmarkdown,
-    rnaturalearth,
     quadmesh
 Roxygen: list(markdown = TRUE)
 SystemRequirements: PROJ.4

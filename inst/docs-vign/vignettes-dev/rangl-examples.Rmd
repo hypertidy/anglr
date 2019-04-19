@@ -46,7 +46,6 @@ Set up a simple world countries data set.
 
 ```{r,eval=TRUE, webgl=TRUE}
 library(rgl)
-simpleworld <- rnaturalearth::countries110
 library(raster)
 library(sf)
 ## convert to triangles and plot

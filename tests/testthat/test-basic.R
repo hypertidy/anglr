@@ -2,10 +2,8 @@
 context("basic")
 library(anglr)
 library(silicate)
-library(rworldxtra)
-data(countriesHigh)
 
-a <- subset(countriesHigh, SOVEREIGNT == "Australia")
+a <- simpleworld[9, ]
 library("spbabel")
 data("holey")
 test_that("holey polygons and non-holy polygons", {
