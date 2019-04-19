@@ -8,7 +8,7 @@
 #'
 #' @return anglr object with vertices table modified
 #' @export
-#'
+#' @importFrom reproj reproj
 #' @examples
 #' data(simpleworld)
 #' g <- globe(silicate::PATH(as(simpleworld, "SpatialLinesDataFrame")))
@@ -34,8 +34,8 @@ globe.default <- function(x, gproj = "+proj=geocent +ellps=WGS84", ...) {
     ll <- cbind(as.matrix(vertex[, c("x_", "y_")]), 0)
   }
   
-  if (grepl("longlat", p4)) ll <- ll * pi / 180
-  xyz <- proj4::ptransform(ll, src.proj = p4, dst.proj = gproj)
+  
+  xyz <- reproj::reproj(ll, source = p4, target = gproj)
   x$vertex[c("x_", "y_", "z_")] <- as.data.frame(xyz)
   x$meta <- rbind(x$meta[1, ], x$meta)
   x$meta$proj[1] <- gproj

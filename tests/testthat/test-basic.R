@@ -15,7 +15,7 @@ test_that("holey polygons and non-holy polygons", {
     expect_that(  tm <- TRI(sph), is_a("TRI"))
   expect_true(!is.na(silicate::PATH(a)$meta$proj))
   expect_true(!is.na(b$meta$proj))
-    plot(b)
-    globe(b)
+  expect_silent(  plot(b))
+    expect_silent(globe(b))
 
 })

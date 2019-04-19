@@ -1,5 +1,8 @@
 # anglr dev
 
+* Now using reproj package instead of proj4 directly. 
+
+
 * New data sets, `cad_tas` and `cont_tas`. 
 
 * Old `anglr()` function now defunct. 

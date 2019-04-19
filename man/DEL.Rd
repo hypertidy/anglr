@@ -10,13 +10,13 @@
 \usage{
 DEL(x, ..., max_area = NULL)
 
-\method{DEL}{default}(x, ...)
+\method{DEL}{default}(x, ..., max_area = NULL)
 
-\method{DEL}{PATH0}(x, max_area = NULL, ...)
+\method{DEL}{PATH0}(x, ..., max_area = NULL)
 
-\method{DEL}{SC}(x, max_area = NULL, ...)
+\method{DEL}{SC}(x, ..., max_area = NULL)
 
-\method{DEL}{PATH}(x, max_area = NULL, ...)
+\method{DEL}{PATH}(x, ..., max_area = NULL)
 }
 \arguments{
 \item{x}{input model}

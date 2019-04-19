@@ -8,18 +8,16 @@ reproject.sc <- function(x, target = NULL, ..., family = "laea", source = NULL) 
     target <- make_local(x, family = family)
   }
   if (is.null(source)) source <- get_proj(x)
-  fac <- if (grepl("longlat", source)) pi/180 else 1
-#  z <- if ("z_" %in% names(x$vertex)) z<- x$vertex[["z_"]] else 0
-#  verts <- cbind(as.matrix(x$vertex[c("x_", "y_")]), 0)
+
   verts <- get_vertex(x)
   verts$z_ <- if (is.null(x$vertex$z_)) 0 else x$vertex$z_
   if (inherits(x, "QUAD") && is.null(x$vertex)) {
     x$vertex <- verts
     x$quad <- NULL
   }
-  x$vertex[c("x_", "y_", "z_")] <- tibble::as_tibble(proj4::ptransform(as.matrix(verts[c("x_", "y_", "z_")]) * fac, 
-                                               src.proj = source, 
-                                               dst.proj = target))
+  x$vertex[c("x_", "y_", "z_")] <- tibble::as_tibble(reproj::reproj(as.matrix(verts[c("x_", "y_", "z_")]), 
+                                               source = source, 
+                                               target = target))
   meta <- get_meta(x)
   meta["ctime"] <- Sys.time()
   meta["proj"] <- target

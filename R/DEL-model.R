@@ -38,23 +38,23 @@ DEL <- function(x, ..., max_area = NULL) {
 #' @importFrom silicate PATH
 #' @importFrom rlang .data
 #' @export
-DEL.default <- function(x, ...) {
+DEL.default <- function(x, ..., max_area = NULL) {
   p <- try(silicate::PATH(x), silent = TRUE)
   if (inherits(p, "try-error")) {
     stop("cannot convert 'x' to a PATH, try 'DEL(silicate::SC(x))' rather than 'DEL(x)'")
   }
-  DEL(p, ...)
+  DEL(p, ..., max_area = max_area)
 }
 #' @name DEL
 #' @importFrom silicate SC
 #' @export
-DEL.PATH0 <- function(x, max_area = NULL, ...) {
-  DEL(PATH(x), max_area = max_area, ...)
+DEL.PATH0 <- function(x, ..., max_area = NULL) {
+  DEL(PATH(x),  ..., max_area = max_area)
 }
 
 #' @name DEL
 #' @export
-DEL.SC <- function(x, max_area = NULL, ...)  {
+DEL.SC <- function(x, ..., max_area = NULL)  {
   ## find if any objects have < 3 edges
   edge_per_object_lt <- x$object["object_"] %>% 
     dplyr::inner_join(x$object_link_edge, "object_") %>% 
@@ -146,7 +146,7 @@ DEL.SC <- function(x, max_area = NULL, ...)  {
 #' @name DEL
 #' @export
 #' @importFrom tibble tibble
-DEL.PATH <- function(x, max_area = NULL,  ...) {
+DEL.PATH <- function(x, ..., max_area = NULL) {
 
   dots <- list(...)
   dots[["a"]] <- max_area

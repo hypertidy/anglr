@@ -74,11 +74,11 @@ NULL
 #' ## WARNING: SC doesn't have meta yet ...
 #' ## this is a lossless transformation of raster and vector to a projected
 #' ## 3D scene
-#' x$vertex[c("x_", "y_")] <- proj4::ptransform(as.matrix(x$vertex[c("x_", "y_")]) * pi/180, 
-#'  longlat, laea)
-#' if (requireNamespace("quadmesh", quietly = TRUE)) {
-#'  qm <- quadmesh::quadmesh(raster::aggregate(gebco1, fact = 4)); 
-#'  qm$vb[1:2, ] <- t(proj4::ptransform(t(qm$vb[1:2, ]) * pi/180, longlat, laea))[1:2, ]
-#'  plot3d(x); rgl::shade3d(qm, col = "white");  rgl::aspect3d(1, 1, 0.4); rgl::rglwidget()
-#' }
+#' #x$vertex[c("x_", "y_")] <- reproj::reproj(as.matrix(x$vertex[c("x_", "y_")])[, 1:2, drop = FALSE], 
+#' #   target = laea, source = longlat)
+#' #if (requireNamespace("quadmesh", quietly = TRUE)) {
+#'  #qm <- quadmesh::quadmesh(raster::aggregate(gebco1, fact = 4)); 
+#'#  qm$vb[1:2, ] <- t(proj4::ptransform(t(qm$vb[1:2, ]) * pi/180, longlat, laea))[1:2, ]
+#' # plot3d(x); rgl::shade3d(qm, col = "white");  rgl::aspect3d(1, 1, 0.4); rgl::rglwidget()
+#' #}
 NULL
