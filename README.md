@@ -24,7 +24,6 @@ variety of data types:
   - trip objects (and general animal tracking data types)
   - [silicate](https://github.com/hypertidy/silicate) forms
   - raster grids
-  - igraph
   - many others are readily available, get in touch\!
 
 To do this anglr works with forms defined by
@@ -176,18 +175,11 @@ primitive with four corners rather than three. This works well in rgl
 and is super fast using the quadmesh package that can translate from the
 raster package.
 
-Texture mapping is possible with rgl, but it needs a local coordinate
-system mapped to the index space of a PNG image. It’s easy enough but
-requires a bit of awkward preparation, not yet simplified.
-
-Some different approaches:
-
-<https://rpubs.com/cyclemumner/frink-polyogn>
-
-Deprecated use of rangl here, but shows the general texture coordinate
-approach required:
-
-<https://gist.github.com/mdsumner/dc80283de50bb23ff7681b14768b9367>
+Texture mapping is possible with rgl, and the [quadmesh
+package](https://CRAN.R-project.org/package=quadmesh) makes it very easy
+to incorporate an elevation raster with a raster image in the
+`quadmesh()` function. There is some ongoing work to integrate anglr and
+quadmesh more cleanly.
 
 ## Installation
 

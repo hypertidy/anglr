@@ -77,7 +77,6 @@
 <li>
 <a href="https://github.com/hypertidy/silicate">silicate</a> forms</li>
 <li>raster grids</li>
-<li>igraph</li>
 <li>many others are readily available, get in touch!</li>
 </ul>
 <p>To do this anglr works with forms defined by <a href="https://github.com/hypertidy/silicate">silicate</a> and (after <a href="https://cran.r-project.org/package=rgl">rgl</a>) and provides <code><a href="reference/plot3d.html">plot3d()</a></code> methods for each of the models <code><a href="https://www.rdocumentation.org/packages/silicate/topics/SC">SC()</a></code>, <code><a href="https://www.rdocumentation.org/packages/silicate/topics/PATH">PATH()</a></code>, <code><a href="https://www.rdocumentation.org/packages/silicate/topics/ARC">ARC()</a></code> and <code><a href="reference/TRI.html">TRI()</a></code>. The anglr package adds two more <code><a href="reference/DEL.html">DEL()</a></code> (for high-quality triangulation) and <code><a href="reference/QUAD.html">QUAD()</a></code> (very WIP, for raster data).</p>
@@ -160,11 +159,7 @@
 <h2 class="hasAnchor">
 <a href="#grids" class="anchor"></a>Grids</h2>
 <p>Raster gridded data are decomposed to <code>QUAD</code> forms, essentially a 2D primitive with four corners rather than three. This works well in rgl and is super fast using the quadmesh package that can translate from the raster package.</p>
-<p>Texture mapping is possible with rgl, but it needs a local coordinate system mapped to the index space of a PNG image. It’s easy enough but requires a bit of awkward preparation, not yet simplified.</p>
-<p>Some different approaches:</p>
-<p><a href="https://rpubs.com/cyclemumner/frink-polyogn" class="uri">https://rpubs.com/cyclemumner/frink-polyogn</a></p>
-<p>Deprecated use of rangl here, but shows the general texture coordinate approach required:</p>
-<p><a href="https://gist.github.com/mdsumner/dc80283de50bb23ff7681b14768b9367" class="uri">https://gist.github.com/mdsumner/dc80283de50bb23ff7681b14768b9367</a></p>
+<p>Texture mapping is possible with rgl, and the <a href="https://CRAN.R-project.org/package=quadmesh">quadmesh package</a> makes it very easy to incorporate an elevation raster with a raster image in the <code>quadmesh()</code> function. There is some ongoing work to integrate anglr and quadmesh more cleanly.</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
