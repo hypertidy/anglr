@@ -62,26 +62,7 @@ shade3d.segment3d <- function(x, ...) {
 #' @name plot3d
 #' @export
 plot3d.QUAD <- function(x, ..., add = FALSE) {
-  scl <- function(x) (x - min(x, na.rm = TRUE))/diff(range(x, na.rm = TRUE))
-  ## etc blah
-  ob <- mkq_3d()
-  #exy <- get_edges(x)
-  #v <- tibble(x_ = exy[,1], y_ = exy[,2], z_ = if (is.null(x$vertex)) 0 else x$vertex$z_)
-  v <- get_vertex(x)
-  v[["z_"]] <- if (is.null(x$vertex$z_))  0 else x$vertex$z_
-  ob$vb <- t(cbind(as.matrix(v[, c("x_", "y_", "z_")]), 1))
-  qXv <- get_qXv(x)
-  ob$ib <- matrix(qXv$vertex_, nrow = 4)
-  cols <- viridis::viridis(min(c(1000, prod(unlist(x$object[c("nrows", "ncols")])))))
-  #qXv <- x$quad_link_vertex
-  if (!is.null(x$quad)) {
-    qXv$value <- x$quad$value[qXv$quad_]
-    
-    
-  } else {
-    qXv$value <- x$vertex$z_[qXv$vertex_]
-  }
-  ob$material$col <- cols[scl(qXv$value) * length(cols) + 1]
+  ob <- as.mesh3d(x)
   if (!add) {
     rgl::rgl.clear()
   }
@@ -149,35 +130,14 @@ plot3d.ARC <- function(x, ..., add = FALSE) {
 #' @name plot3d
 #' @export
 plot3d.TRI <- function(x, ..., add = FALSE) {
-  if (!"color_" %in% names(x$object)) {
-    x$object$color_ <- trimesh_cols(nrow(x$object))
-  }
-  haveZ <- "z_" %in% names(x$vertex)
-  if (haveZ) {
-    vb <- cbind(x$vertex$x_, x$vertex$y_, x$vertex$z_)
-  } else {
-    vb <- cbind(x$vertex$x_, x$vertex$y_, 0)
-  }
-  pindex <- x$triangle %>% #%>%  dplyr::inner_join(x$object_link_triangle,  "triangle_") %>% 
-  dplyr::inner_join(x$object[, c("object_", "color_")], "object_") 
-  if ("visible_" %in% names(pindex)) {
-  
-    pindex <- pindex %>% dplyr::filter(.data$visible_)
-    if (nrow(pindex) < 1) warning("all visible_ property on '$triangle' are set to 'FALSE', nothing to plot")
-  }
-  ##vindex <- dplyr::inner_join(x$triangle, x$vertex, "vertex_")
-vindex <- match(c(t(as.matrix(pindex[c(".vx0", ".vx1", ".vx2")]))), x$vertex$vertex_)
+
   #v_id <- lapply(split(vindex, vindex$arc_), function(x) as.vector(path2seg(x$vertex_)))
   if (!add) {
     rgl::rgl.clear()
   }
+  ob <- as.mesh3d(x)
   #vindex <- match(unlist(v_id), x$vertex$vertex_)
-  rgl::triangles3d(vb[vindex,], col = rep(pindex$color_, each = 3))
-  invisible(structure(list(vb = rbind(t(vb), 1), it = matrix(vindex, nrow = 3),
-                 primitivetype = "triangle", 
-                 material = list(col = rep(pindex$color_, each = 3)), 
-                 normals = NULL, texcoords = NULL), 
-            class = c("mesh3d", "shape3d")))
+  rgl::triangles3d(x$vb[ob$it,], col = ob$material$color)
 }
 
 

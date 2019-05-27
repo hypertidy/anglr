@@ -1,3 +1,10 @@
+# move to reproj method
+
+#' @importFrom reproj reproj
+#' @export reproj
+NULL
+
+
 
 reproject <- function(x, target = NULL, ..., source) {
    UseMethod("reproject")   
