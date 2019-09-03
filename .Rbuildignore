@@ -15,3 +15,4 @@
 ^inst/extdata/hobart5m.rds$
 ^inst/extdata/water_lake_superior_basin.gpkg$
 ^_pkgdown\.yml$
+^anglr\.Rproj$
