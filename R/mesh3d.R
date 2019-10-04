@@ -55,7 +55,7 @@ as.mesh3d.TRI <- function(x, ...) {
   
   structure(list(vb = rbind(t(vb), 1), it = matrix(vindex, nrow = 3),
                            primitivetype = "triangle", 
-                           material = list(col = rep(pindex$color_, each = 3)), 
+                           material = list(color = rep(pindex$color_, each = 3)), 
                            normals = NULL, texcoords = NULL), 
                       class = c("mesh3d", "shape3d"))
   
