@@ -3,6 +3,7 @@
 S3method(DEL,PATH)
 S3method(DEL,PATH0)
 S3method(DEL,SC)
+S3method(DEL,SC0)
 S3method(DEL,default)
 S3method(QUAD,BasicRaster)
 S3method(TRI,QUAD)
