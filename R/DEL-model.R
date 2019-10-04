@@ -139,7 +139,13 @@ DEL.SC <- function(x, ..., max_area = NULL)  {
 }
 
 
+#' @name DEL
+#' @export
+DEL.SC0 <- function(x, ..., max_area = NULL)  {
+  ## FIXME:build off SC0 not SC
+ DEL(SC(x), max_area = max_area, ...) 
 
+}
 ## DEL for a PATH is a copy of pfft_polys that returns a DEL, TRI, sc
 ## TRI for a PATH returns a TRI, sc (just decido triangles)
 
