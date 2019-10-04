@@ -4,6 +4,8 @@
 \alias{DEL}
 \alias{DEL.default}
 \alias{DEL.PATH0}
+\alias{DEL.TRI}
+\alias{DEL.TRI0}
 \alias{DEL.SC}
 \alias{DEL.SC0}
 \alias{DEL.PATH}
@@ -14,6 +16,10 @@ DEL(x, ..., max_area = NULL)
 \method{DEL}{default}(x, ..., max_area = NULL)
 
 \method{DEL}{PATH0}(x, ..., max_area = NULL)
+
+\method{DEL}{TRI}(x, ..., max_area = NULL)
+
+\method{DEL}{TRI0}(x, ..., max_area = NULL)
 
 \method{DEL}{SC}(x, ..., max_area = NULL)
 

@@ -54,6 +54,17 @@ DEL.PATH0 <- function(x, ..., max_area = NULL) {
 
 #' @name DEL
 #' @export
+DEL.TRI <- function(x, ..., max_area = NULL) {
+  DEL(SC(x), ..., max_area = max_area)
+}
+#' @name DEL
+#' @export 
+DEL.TRI0 <- function(x, ..., max_area = NULL) {
+  DEL(SC(x), ..., max_area = max_area)
+}
+
+#' @name DEL
+#' @export
 DEL.SC <- function(x, ..., max_area = NULL)  {
   ## find if any objects have < 3 edges
   edge_per_object_lt <- x$object["object_"] %>% 
