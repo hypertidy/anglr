@@ -1,18 +1,18 @@
 #' 3D object plot
 #'
-#' For SC edges are matched to their object/s. One object's properties is applied as colour. 
-#' If `color_` column is present on the data object table it is used. 
+#' For SC edges are matched to their object/s. One object's properties is applied as colour.
+#' If `color_` column is present on the data object table it is used.
 #' @param x silicate model, SC, TRI, ARC, or PATH
 #' @param ... passed to segments3d
 #' @param add add to plot or not
-#' 
+#'
 #' @return rgl shape3d types (note that "segment3d" is currently an imaginary shape3d type)
 #' @importFrom rgl plot3d
 #' @export plot3d
 #' @name plot3d
 #' @examples
 #' library(silicate)
-#' x <- SC(sf::read_sf(system.file("shape", "nc.shp", package = "sf")) %>% 
+#' x <- SC(sf::read_sf(system.file("shape", "nc.shp", package = "sf")) %>%
 #'    dplyr::mutate(color_ = rainbow(100)))
 #' plot3d(x); rgl::rglwidget()
 #' worldz <- QUAD(gebco1)
@@ -26,7 +26,7 @@ plot3d.SC <- function(x, ..., add = FALSE) {
   Z <- if("z_" %in% names(x$vertex)) x$vertex$z_ else 0
   vb <- cbind(x$vertex$x_, x$vertex$y_, Z)
 
-  pindex <- dplyr::inner_join(dplyr::inner_join(x$edge[c("edge_")], x$object_link_edge[c("edge_", "object_")], "edge_"), 
+  pindex <- dplyr::inner_join(dplyr::inner_join(x$edge[c("edge_")], x$object_link_edge[c("edge_", "object_")], "edge_"),
                               x$object[, c("object_", "color_")], "object_")
   ## one object wins
   pindex <- dplyr::distinct(pindex, .data$edge_, .keep_all = TRUE)
@@ -40,19 +40,19 @@ plot3d.SC <- function(x, ..., add = FALSE) {
   if ("col" %in% names(list(...))) {
     rgl::segments3d(vb[vindex,], ...)
    } else {
-     rgl::segments3d(vb[vindex,], 
+     rgl::segments3d(vb[vindex,],
                      col = rep(pindex$color_, each = 2), ...)
-     
+
     }
    #if (!is.null(getOption("rgl.useNULL")) && interactive() && runif(1, 0, 1) > 0.96) {
   #   message("rgl NULL device in use, do you need to run rgl::rglwidget()?")
   # }
   ## TODO need an rgl level classed object
   #invisible(list(v = vb, is = vindex))
-  invisible(structure(list(vb = rbind(t(vb), 0), 
+  invisible(structure(list(vb = rbind(t(vb), 0),
                            is = vindex,
-                 primitivetype = "segment", 
-                 material = list(col = pindex$color_)), 
+                 primitivetype = "segment",
+                 material = list(col = pindex$color_)),
             class = c("segment3d", "shape3d")))
 }
 
@@ -117,15 +117,15 @@ plot3d.ARC <- function(x, ..., add = FALSE) {
     rgl::rgl.clear()
   }
  vindex <- match(unlist(v_id), x$vertex$vertex_)
-  rgl::segments3d(vb[vindex,], 
+  rgl::segments3d(vb[vindex,],
                   col = rep(pindex$color_[match(x$arc_link_vertex$arc_, pindex$arc_)], each = 2))
   ## there's no shape3d for segments
-  invisible(structure(list(vb = rbind(t(vb), 0), 
+  invisible(structure(list(vb = rbind(t(vb), 0),
                            is = matrix(vindex, nrow = 2),
-                           primitivetype = "segment", 
-                           material = list(col = pindex$color_)), 
+                           primitivetype = "segment",
+                           material = list(col = pindex$color_)),
                       class = c("segment3d", "shape3d")))
-  
+
 }
 #' @name plot3d
 #' @export
@@ -137,7 +137,7 @@ plot3d.TRI <- function(x, ..., add = FALSE) {
   }
   ob <- as.mesh3d(x)
   #vindex <- match(unlist(v_id), x$vertex$vertex_)
-  rgl::triangles3d(x$vb[ob$it,], col = ob$material$color)
+  rgl::triangles3d(t(ob$vb[, ob$it]), col = ob$material$color)
 }
 
 
