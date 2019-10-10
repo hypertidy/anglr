@@ -74,9 +74,10 @@ QUAD_mega<- function(x, ...) {
 }
 
 mkq_3d <- function() {
-  structure(list(vb = NULL, ib = NULL, primitivetype = "quad",
+  ## FIXME: use qmesh3d()
+  structure(list(vb = NULL, ib = NULL, 
                  material = list(), normals = NULL, texcoords = NULL), .Names = c("vb",
-                                                                                  "ib", "primitivetype", "material", "normals", "texcoords"), class = c("mesh3d",
+                                                                                  "ib",  "material", "normals", "texcoords"), class = c("mesh3d",
                                                                                                                                                         "shape3d"))
   
 }

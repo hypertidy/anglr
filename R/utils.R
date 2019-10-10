@@ -79,9 +79,10 @@ path2seg <- function(x) {
 }
 
 th3d <- function() {
-  structure(list(vb = NULL, it = NULL, primitivetype = "triangle",
+  ## FIXME: use tmesh3d()
+  structure(list(vb = NULL, it = NULL, 
                  material = list(), normals = NULL, texcoords = NULL), .Names = c("vb",
-                                                                                  "it", "primitivetype", "material", "normals", "texcoords"), class = c("mesh3d",
+                                                                                  "it",  "material", "normals", "texcoords"), class = c("mesh3d",
                                                                                                                                                         "shape3d"))
 }
 trimesh_cols <- function(n) {

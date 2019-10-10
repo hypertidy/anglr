@@ -51,7 +51,7 @@ plot3d.SC <- function(x, ..., add = FALSE) {
   #invisible(list(v = vb, is = vindex))
   invisible(structure(list(vb = rbind(t(vb), 0),
                            is = vindex,
-                 primitivetype = "segment",
+                 
                  material = list(col = pindex$color_)),
             class = c("segment3d", "shape3d")))
 }
@@ -122,7 +122,7 @@ plot3d.ARC <- function(x, ..., add = FALSE) {
   ## there's no shape3d for segments
   invisible(structure(list(vb = rbind(t(vb), 0),
                            is = matrix(vindex, nrow = 2),
-                           primitivetype = "segment",
+                          
                            material = list(col = pindex$color_)),
                       class = c("segment3d", "shape3d")))
 

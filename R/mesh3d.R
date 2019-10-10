@@ -53,8 +53,9 @@ as.mesh3d.TRI <- function(x, ...) {
   ##vindex <- dplyr::inner_join(x$triangle, x$vertex, "vertex_")
   vindex <- match(c(t(as.matrix(pindex[c(".vx0", ".vx1", ".vx2")]))), x$vertex$vertex_)
 
+  ## FIXME: use tmesh3d()
   structure(list(vb = rbind(t(vb), 1), it = matrix(vindex, nrow = 3),
-                           primitivetype = "triangle", 
+                         
                            material = list(color = rep(pindex$color_, each = 3)), 
                            normals = NULL, texcoords = NULL), 
                       class = c("mesh3d", "shape3d"))

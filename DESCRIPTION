@@ -1,18 +1,18 @@
 Package: anglr
 Type: Package
 Title: Elevating Spatial Data with Topology
-Version: 0.4.8.9005
+Version: 0.4.8.9006
 Authors@R: c(person("Michael D.","Sumner", role = c("aut", "cre"), email ="mdsumner@gmail.com"), 
              person("Miles", "McBain", role = c("ctb")))
 Description: Tidy topological approaches to spatial data, illustrated with plotting using Open Graphics Library. 
 License: GPL-3
-Depends: R (>= 3.4.0),  silicate (>= 0.1.6.9001)
+Depends: R (>= 3.4.0),  silicate (>= 0.2.0)
 Imports: 
     dplyr,
-    gibble (>= 0.1.1.9001),
+    gibble (>= 0.2.0),
     methods,
     pfft,
-    reproj (>= 0.3.0.9001),
+    reproj (>= 0.4.0),
     raster,
     rgl,
     rlang,
