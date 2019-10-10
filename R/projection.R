@@ -1,5 +1,9 @@
 # move to reproj method
 
+#' Reproject
+#' 
+#' Reproject with reproj
+#' @name reproj
 #' @importFrom reproj reproj
 #' @export reproj
 NULL

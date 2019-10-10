@@ -1,3 +1,7 @@
+#' Mesh3d objects
+#' 
+#' Methods for the mesh3d type from package rgl
+#' 
 #' @importFrom rgl as.mesh3d
 #' @export
 #' @name mesh3d
