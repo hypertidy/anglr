@@ -1,23 +1,14 @@
-# move to reproj method
-
 #' Reproject
 #' 
 #' Reproject with reproj
 #' @name reproj
+#' @inheritParams reproj::reproj
 #' @importFrom reproj reproj
 #' @export reproj
-NULL
-
-
-
-reproject <- function(x, target = NULL, ..., source) {
-   UseMethod("reproject")   
-}
-
-reproject.sc <- function(x, target = NULL, ..., family = "laea", source = NULL) {
-  if (is.null(target)) {
-    target <- make_local(x, family = family)
-  }
+reproj.sc <- function(x, target = NULL, ..., source = NULL) {
+  # if (is.null(target)) {
+  #   target <- make_local(x, family = family)
+  # }
   if (is.null(source)) source <- get_proj(x)
 
   verts <- get_vertex(x)

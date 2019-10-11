@@ -3,8 +3,9 @@
 #' Methods for the mesh3d type from package rgl
 #' 
 #' @importFrom rgl as.mesh3d
+#' @inheritParams rgl::as.mesh3d
 #' @export
-#' @name mesh3d
+#' @name as.mesh3d
 #' @importFrom rgl as.mesh3d
 #' @export as.mesh3d
 as.mesh3d.QUAD <- function(x, ...) {
@@ -30,13 +31,12 @@ as.mesh3d.QUAD <- function(x, ...) {
   ob$material$color <- cols[scl(qXv$value) * length(cols) + 1]
   ob
 }
-#' @export
-#' @name mesh3d
+
+#' @name as.mesh3d
 as.mesh3d.default <- function(x, ...) {
   as.mesh3d(TRI(x, ...))
 }
-#' @export
-#' @name mesh3d
+#' @name as.mesh3d
 as.mesh3d.TRI <- function(x, ...) {
   if (!"color_" %in% names(x$object)) {
     x$object$color_ <- trimesh_cols(nrow(x$object))

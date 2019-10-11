@@ -2,7 +2,20 @@
 % Please edit documentation in R/projection.R
 \name{reproj}
 \alias{reproj}
+\alias{reproj.sc}
 \title{Reproject}
+\usage{
+\method{reproj}{sc}(x, target = NULL, ..., source = NULL)
+}
+\arguments{
+\item{x}{coordinates}
+
+\item{target}{target specification (PROJ.4 string or epsg code)}
+
+\item{...}{arguments passed to \code{\link[proj4:ptransform]{proj4::ptransform()}}}
+
+\item{source}{source specification (PROJ.4 string or epsg code)}
+}
 \description{
 Reproject with reproj
 }

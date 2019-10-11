@@ -20,14 +20,12 @@ test_that("SC0 round trip suite works", {
     anglr::DEL(SC(tri))
     plot(anglr::DEL(SC(tri)))
     
+    DEL(sc0)
+    plot(DEL(sc0))
+    
+    DEL(tri)
+    plot(DEL(tri))
   })
 })
 
 
-test_that("errors when SC0 round trip unsupported", {
-  ## these test had to be removed from silicate, because dep on anglr
-  expect_error(DEL(sc0))
-
-  expect_error(DEL(tri))
-  
-})
