@@ -55,7 +55,35 @@ plot3d.SC <- function(x, ..., add = FALSE) {
                  material = list(col = pindex$color_)),
             class = c("segment3d", "shape3d")))
 }
+#' @name plot3d
+plot3d.SC0 <- function(x, ..., add = FALSE) {
+  if (!"color_" %in% names(x$object)) {
+    x$object$color_ <- trimesh_cols(nrow(x$object))
+  }
+  vv <- silicate::sc_vertex(x)
+  vb <- as.matrix(vv[c("x_", "y_")])
+  if ("z_" %in%  names(vv)) vb <- cbind(vb, vv$z_) else cbind(vb, 0)
+  vb <- cbind(vb, 1)
+  lt <- silicate::sc_object(x)$topology_
+  pindex <- rep(x$object$color_, unlist(lapply(lt, nrow)))
+  vindex <- t(do.call(rbind, lt))
+  if (!add) {
+    rgl::rgl.clear()
+  }
+  if ("col" %in% names(list(...))) {
+    rgl::segments3d(vb[vindex,], ...)
+  } else {
+    rgl::segments3d(vb[vindex,],
+                    col = rep(pindex, each = 2), ...)
+    
+  }
 
+  invisible(structure(list(vb = rbind(t(vb), 0),
+                           is = vindex,
+                           
+                           material = list(col = pindex)),
+                      class = c("segment3d", "shape3d")))
+}
 shade3d.segment3d <- function(x, ...) {
   rgl::segments3d(t(x$vb[1:3,])[x$is, ], col = rep(x$material$col, each = 2), ...)
 }

@@ -3,6 +3,7 @@
 \name{plot3d}
 \alias{plot3d}
 \alias{plot3d.SC}
+\alias{plot3d.SC0}
 \alias{plot3d.QUAD}
 \alias{plot3d.PATH}
 \alias{plot3d.sf}
@@ -14,6 +15,8 @@
 \title{3D object plot}
 \usage{
 \method{plot3d}{SC}(x, ..., add = FALSE)
+
+\method{plot3d}{SC0}(x, ..., add = FALSE)
 
 \method{plot3d}{QUAD}(x, ..., add = FALSE)
 
