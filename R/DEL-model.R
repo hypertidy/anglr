@@ -172,7 +172,7 @@ DEL.PATH <- function(x, ..., max_area = NULL) {
   ## TRIANGULATE with PATH-identity  
   RTri <- do.call(edge_RTriangle, dots)
   ## object/path_link_triangle (path_triangle_map)
-  ptm <- pfft::path_triangle_map(x, RTri)
+  ptm <- path_triangle_map(x, RTri)
   #ptm$path_ <- as.integer(factor(ptm$path_))
   ## unique triangles
   triangle <- tibble::tibble(triangle_ = silicate::sc_uid(nrow(RTri$T)))
