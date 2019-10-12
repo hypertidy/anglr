@@ -20,8 +20,8 @@ extending models in the `silicate`` package:
 \section{I. Creation}{
 
 \tabular{ll}{
-\code{\link[silicate::SC]{SC}}, \code{\link[silicate::PATH]{PATH}}, \code{\link[silicate::TRI]{TRI}}, and
-\code{\link[silicate::ARC]{ARC}} silicate models are all supported, including the structural forms SC0, TRI0, PATH0 \cr
+\code{\link[silicate]{SC}}, \code{\link[silicate]{PATH}}, \code{\link[silicate]{TRI}}, and
+\code{\link[silicate]{ARC}} silicate models are all supported, including the structural forms SC0, TRI0, PATH0 \cr
 \code{Spatial} \tab most spatial types can be used directly \cr
 \code{\link{DEL}} \tab create a mostly-Delaunay shape-preserving constrained triangulation  \cr
 \code{\link{QUAD}} \tab create a (raster-like) quad mesh  \cr
