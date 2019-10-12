@@ -11,8 +11,9 @@ init:
 install:
   ps: Bootstrap
 
-cache:
-  - C:\RLibrary
+## no cache, kills curl
+#cache:
+#  - C:\RLibrary
 
 # Adapt as necessary starting from here
 

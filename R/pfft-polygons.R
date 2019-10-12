@@ -1,8 +1,3 @@
-## we need this else
-#Error in mutate_impl(.data, dots) :
-#Evaluation error: This function should not be called directly.
-#https://github.com/hypertidy/anglr/issues/64
-globalVariables("n")
 
 
 #' @noRd

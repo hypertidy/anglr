@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Elevating Spatial Data with Topology • anglr</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Elevating Spatial Data with Topology">
 <meta property="og:description" content="Tidy topological approaches to spatial data, illustrated with plotting using Open Graphics Library. ">
 <meta name="twitter:card" content="summary">
@@ -18,7 +19,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-article">
+    <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -30,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">anglr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9006</span>
       </span>
     </div>
 
@@ -38,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -58,12 +59,10 @@
 <!--/.navbar -->
 
       
-      </header><div class="row">
-  <div class="col-md-9 contents">
-    
 
-    
-    
+      </header><div class="row">
+  <div class="contents col-md-9">
+
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <div id="topological-forms-for-spatial-data" class="section level2">
@@ -79,17 +78,17 @@
 <li>raster grids</li>
 <li>many others are readily available, get in touch!</li>
 </ul>
-<p>To do this anglr works with forms defined by <a href="https://github.com/hypertidy/silicate">silicate</a> and (after <a href="https://cran.r-project.org/package=rgl">rgl</a>) and provides <code><a href="reference/plot3d.html">plot3d()</a></code> methods for each of the models <code><a href="https://www.rdocumentation.org/packages/silicate/topics/SC">SC()</a></code>, <code><a href="https://www.rdocumentation.org/packages/silicate/topics/PATH">PATH()</a></code>, <code><a href="https://www.rdocumentation.org/packages/silicate/topics/ARC">ARC()</a></code> and <code><a href="reference/TRI.html">TRI()</a></code>. The anglr package adds two more <code><a href="reference/DEL.html">DEL()</a></code> (for high-quality triangulation) and <code><a href="reference/QUAD.html">QUAD()</a></code> (very WIP, for raster data).</p>
+<p>To do this anglr works with forms defined by <a href="https://github.com/hypertidy/silicate">silicate</a> and (after <a href="https://cran.r-project.org/package=rgl">rgl</a>) and provides <code><a href="reference/plot3d.html">plot3d()</a></code> methods for each of the models <code><a href="https://rdrr.io/pkg/silicate/man/SC.html">SC()</a></code>, <code><a href="https://rdrr.io/pkg/silicate/man/PATH.html">PATH()</a></code>, <code><a href="https://rdrr.io/pkg/silicate/man/ARC.html">ARC()</a></code> and <code><a href="reference/TRI.html">TRI()</a></code>. The anglr package adds two more <code><a href="reference/DEL.html">DEL()</a></code> (for high-quality triangulation) and <code><a href="reference/QUAD.html">QUAD()</a></code> (very WIP, for raster data).</p>
 </div>
 <div id="usage" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h1></div>
 <p>The general approach is to re-model the data into mesh-form via one of the models, then <code><a href="reference/copy_down.html">copy_down()</a></code> attribute or raster data to a Z coordinate, and plot with <code><a href="reference/plot3d.html">plot3d()</a></code>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co">## PSEUDOCODE</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(anglr)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">model &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st_read">st_read</a></span>(<span class="st">"some/shapefile.shp"</span>)</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">araster &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/raster">raster</a></span>(<span class="st">"some/gridraster.tif"</span>)</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">mesh &lt;-<span class="st"> </span><span class="kw"><a href="reference/copy_down.html">copy_down</a></span>(silicate<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/silicate/topics/SC">SC</a></span>(model), araster)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(anglr)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">model &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/sf/man/st_read.html">st_read</a></span>(<span class="st">"some/shapefile.shp"</span>)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">araster &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/raster/man/raster.html">raster</a></span>(<span class="st">"some/gridraster.tif"</span>)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">mesh &lt;-<span class="st"> </span><span class="kw"><a href="reference/copy_down.html">copy_down</a></span>(silicate<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/silicate/man/SC.html">SC</a></span>(model), araster)</a>
 <a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw"><a href="reference/plot3d.html">plot3d</a></span>(mesh)</a></code></pre></div>
 <p>The <em>copy down</em> process will copy feature attributes (a constant measure) or raster attributes (a continuous measure) in the appropriate way. After copy the mesh will be unique in XYZ, whereas the usual starting point is uniqueness in XY.</p>
 <p>These <em>mesh</em> or <em>topological</em> forms can be used to merge disparate data into a single form, or to convert standard spatial objects to <code>rgl</code>-ready forms.</p>
@@ -98,15 +97,15 @@
 <a href="#demo-01---merge-vector-and-raster-data" class="anchor"></a>Demo 01 - merge vector and raster data</h2>
 <p>An <a href="https://hypertidy.github.io/anglr-demos/demo01.html">example of merging vector and raster</a>, with a continuous interpretation applied to the polygon mesh and underlying elevation.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">## a global DEM</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"gebco1"</span>, <span class="dt">package =</span> <span class="st">"anglr"</span>)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(sf)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"gebco1"</span>, <span class="dt">package =</span> <span class="st">"anglr"</span>)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(sf)</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">## North Carolina, the sf boilerplate polygon layer</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">nc &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st_read">read_sf</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"shape/nc.shp"</span>, <span class="dt">package=</span><span class="st">"sf"</span>))</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">nc &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/sf/man/st_read.html">read_sf</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"shape/nc.shp"</span>, <span class="dt">package=</span><span class="st">"sf"</span>))</a>
 <a class="sourceLine" id="cb2-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb2-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(raster)</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(anglr) </a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(silicate)</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(raster)</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(anglr) </a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(silicate)</a>
 <a class="sourceLine" id="cb2-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb2-12" data-line-number="12">p_mesh &lt;-<span class="st"> </span><span class="kw"><a href="reference/DEL.html">DEL</a></span>(nc, <span class="dt">max_area =</span> <span class="fl">0.002</span>)</a>
 <a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">## a relief map, composed of triangles grouped by polygon with ##  interpolated raster elevation </span></a>
@@ -114,13 +113,13 @@
 <a class="sourceLine" id="cb2-15" data-line-number="15"></a>
 <a class="sourceLine" id="cb2-16" data-line-number="16"></a>
 <a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">## plot the scene</span></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rgl)</a>
+<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(rgl)</a>
 <a class="sourceLine" id="cb2-19" data-line-number="19"></a>
-<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="kw"><a href="https://www.rdocumentation.org/packages/rgl/topics/scene">rgl.clear</a></span>()  <span class="co">## rerun the cycle from clear to widget in browser contexts </span></a>
+<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="kw"><a href="https://rdrr.io/pkg/rgl/man/scene.html">rgl.clear</a></span>()  <span class="co">## rerun the cycle from clear to widget in browser contexts </span></a>
 <a class="sourceLine" id="cb2-21" data-line-number="21"><span class="kw"><a href="reference/plot3d.html">plot3d</a></span>(p_mesh) </a>
-<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="kw"><a href="https://www.rdocumentation.org/packages/rgl/topics/bg">bg3d</a></span>(<span class="st">"black"</span>); <span class="kw"><a href="https://www.rdocumentation.org/packages/rgl/topics/material">material3d</a></span>(<span class="dt">specular =</span> <span class="st">"black"</span>)</a>
-<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="kw"><a href="https://www.rdocumentation.org/packages/rgl/topics/aspect3d">aspect3d</a></span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">.1</span>)</a>
-<a class="sourceLine" id="cb2-24" data-line-number="24"><span class="kw"><a href="https://www.rdocumentation.org/packages/rgl/topics/rglwidget">rglwidget</a></span>()  <span class="co">## not needed if you have a local device</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="kw"><a href="https://rdrr.io/pkg/rgl/man/bg.html">bg3d</a></span>(<span class="st">"black"</span>); <span class="kw"><a href="https://rdrr.io/pkg/rgl/man/material.html">material3d</a></span>(<span class="dt">specular =</span> <span class="st">"black"</span>)</a>
+<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="kw"><a href="https://rdrr.io/pkg/rgl/man/aspect3d.html">aspect3d</a></span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">.1</span>)</a>
+<a class="sourceLine" id="cb2-24" data-line-number="24"><span class="kw"><a href="https://rdrr.io/pkg/rgl/man/rglwidget.html">rglwidget</a></span>()  <span class="co">## not needed if you have a local device</span></a></code></pre></div>
 <p>Follow this link to see the result:</p>
 <p><a href="https://hypertidy.github.io/anglr-demos/demo01.html">Demo02</a></p>
 <p>Here the <code>z</code> argument to <code><a href="reference/copy_down.html">copy_down()</a></code> is a raster, and so the <code>z_</code> coordinate of the mesh is updated by extracting values from the raster using bilinear interpolation.</p>
@@ -135,11 +134,11 @@
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">## either form works</span></a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#c_mesh &lt;- copy_down(TRI(nc), z = p_mesh$object$BIR74)</span></a>
 <a class="sourceLine" id="cb3-4" data-line-number="4">c_mesh &lt;-<span class="st"> </span><span class="kw"><a href="reference/copy_down.html">copy_down</a></span>(<span class="kw"><a href="reference/TRI.html">TRI</a></span>(nc), <span class="dt">z =</span> <span class="st">"BIR74"</span>)</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/rgl/topics/scene">rgl.clear</a></span>()</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/pkg/rgl/man/scene.html">rgl.clear</a></span>()</a>
 <a class="sourceLine" id="cb3-6" data-line-number="6">a &lt;-<span class="st"> </span><span class="kw"><a href="reference/plot3d.html">plot3d</a></span>(c_mesh) </a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/rgl/topics/bg">bg3d</a></span>(<span class="st">"black"</span>); <span class="kw"><a href="https://www.rdocumentation.org/packages/rgl/topics/material">material3d</a></span>(<span class="dt">specular =</span> <span class="st">"black"</span>)</a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="kw"><a href="https://www.rdocumentation.org/packages/rgl/topics/aspect3d">aspect3d</a></span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">.2</span>)</a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="kw"><a href="https://www.rdocumentation.org/packages/rgl/topics/rglwidget">rglwidget</a></span>()  <span class="co">## not needed if you have a local device</span></a></code></pre></div>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="kw"><a href="https://rdrr.io/pkg/rgl/man/bg.html">bg3d</a></span>(<span class="st">"black"</span>); <span class="kw"><a href="https://rdrr.io/pkg/rgl/man/material.html">material3d</a></span>(<span class="dt">specular =</span> <span class="st">"black"</span>)</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="kw"><a href="https://rdrr.io/pkg/rgl/man/aspect3d.html">aspect3d</a></span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">.2</span>)</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="kw"><a href="https://rdrr.io/pkg/rgl/man/rglwidget.html">rglwidget</a></span>()  <span class="co">## not needed if you have a local device</span></a></code></pre></div>
 <p>Follow this link to see the result:</p>
 <p><a href="https://hypertidy.github.io/anglr-demos/demo02.html">Demo02</a></p>
 <p>In the silicate models, complex objects are decomposed to a set of related, linked tables. Object identity is maintained with attribute metadata and this is carried through to colour and other aesthetics.</p>
@@ -152,7 +151,7 @@
 <a href="#ongoing-design" class="anchor"></a>Ongoing design</h2>
 <p>The core work for translating spatial classes is done by the unspecialized ‘silicate::PATH’ function and its underlying decomposition generics. Ongoing work in the <a href="https://github.com/hypertidy/silicate">silicate</a> package will improve and support these types more fully.</p>
 <p>Planar polygons and lines are described by the same 1D primitives, and this is easy to do. Harder is to generate 2D primitives and for that we rely on <a href="https://www.cs.cmu.edu/~quake/triangle.html">Jonathan Richard Shewchuk’s Triangle</a>.</p>
-<p>Triangulation in DEL is with <code>RTriangle</code> package using “constrained mostly-Delaunay Triangulation” from the Triangle library, and TRI in silicate uses ear-clipping via Mapbox’s <code>earcut.hpp</code> (this is analogous to but faster and more robust than <code><a href="https://www.rdocumentation.org/packages/rgl/topics/triangulate">rgl::triangulate</a></code>). Independent work for mostly-Delaunay methods is in the <code>laridae</code> project.</p>
+<p>Triangulation in DEL is with <code>RTriangle</code> package using “constrained mostly-Delaunay Triangulation” from the Triangle library, and TRI in silicate uses ear-clipping via Mapbox’s <code>earcut.hpp</code> (this is analogous to but faster and more robust than <code><a href="https://rdrr.io/pkg/rgl/man/triangulate.html">rgl::triangulate</a></code>). Independent work for mostly-Delaunay methods is in the <code>laridae</code> project.</p>
 <p>With RTriangle we can set a max area for the triangles, so it can wrap around curves like globes and hills, and this can only be done by the addition of Steiner points. All of this takes us very far from the path-based types generally used by GIS-alikes.</p>
 </div>
 <div id="grids" class="section level2">
@@ -166,12 +165,12 @@
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>We must use a version of R that is 3.3.2 or later, and <code>anglr</code> can only be installed from Github, and that at least requires the package <code>devtools</code>.</p>
 <p>Also required are packages ‘rgl’ and ‘RTriangle’ and ‘sf’, so first make sure you can install and use these. On a fresh installation of R these package together require a lot of other contributed packages, and that can take some time.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"rgl"</span>)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"RTriangle"</span>)</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"sf"</span>)</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"rgl"</span>)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"RTriangle"</span>)</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"sf"</span>)</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"devtools"</span>)</a></code></pre></div>
 <p>With that out of the way, install from Github using devtools.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"hypertidy/anglr"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"hypertidy/anglr"</span>)</a></code></pre></div>
 <p>Feel free to contact me via the <a href="https://github.com/hypertidy/anglr/issues/">Issues</a> if you have problems, or these notes don’t make sense.</p>
 <div id="ubuntudebian" class="section level3">
 <h3 class="hasAnchor">
@@ -193,9 +192,9 @@
 <a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">## install R, if you need to</span></a>
 <a class="sourceLine" id="cb6-15" data-line-number="15"><span class="co">## apt install r-base r-base-dev </span></a></code></pre></div>
 <p>Then in R</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"dplyr"</span>, <span class="st">"proj4"</span>, <span class="st">"raster"</span>,  <span class="st">"rgl"</span>, <span class="st">"rlang"</span>, <span class="st">"RTriangle"</span>, <span class="st">"spbabel"</span>, <span class="st">"tibble"</span>, <span class="st">"viridis"</span>))</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"hypertidy/anglr"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"dplyr"</span>, <span class="st">"proj4"</span>, <span class="st">"raster"</span>,  <span class="st">"rgl"</span>, <span class="st">"rlang"</span>, <span class="st">"RTriangle"</span>, <span class="st">"spbabel"</span>, <span class="st">"tibble"</span>, <span class="st">"viridis"</span>))</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"hypertidy/anglr"</span>)</a></code></pre></div>
 </div>
 </div>
 <div id="get-involved" class="section level2">
@@ -210,6 +209,7 @@
 <p>Please note that this project is released with a <a href="CONDUCT.html">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</p>
 </div>
 </div>
+
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -227,7 +227,7 @@
 </ul>
 </div>
 
-      <div class="dev-status">
+  <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="lifecycle"></a></li>
@@ -240,7 +240,6 @@
 </ul>
 </div>
 </div>
-
 </div>
 
 
@@ -249,12 +248,14 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

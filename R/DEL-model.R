@@ -71,7 +71,7 @@ DEL.SC <- function(x, ..., max_area = NULL)  {
     dplyr::inner_join(x$object_link_edge, "object_") %>% 
     dplyr::inner_join(x$object_link_edge, "object_") %>% 
     
-    dplyr::group_by(.data$object_) %>% dplyr::tally(dplyr::n()) %>% dplyr::filter(n < 3)
+    dplyr::group_by(.data$object_) %>% dplyr::tally(dplyr::n()) %>% dplyr::filter(.data$n < 3)
   if (nrow(edge_per_object_lt) > 0) {
     message("dropping untriangulatable objects")
     ## need anti_join.sc
@@ -187,7 +187,7 @@ DEL.PATH <- function(x, ..., max_area = NULL) {
   path$path_ <- as.character(path$path_)
   ptm <- dplyr::inner_join(ptm, path[c("path_", "object_")], "path_")
   object_link_triangle <- ptm %>% dplyr::group_by(.data$object_, .data$triangle_) %>% 
-    dplyr::mutate(visible_ = !(dplyr::n() %% 2 == 0)) %>%  ## see globalVariables declaration for "n"
+    dplyr::mutate(visible_ = !(dplyr::n() %% 2 == 0)) %>%  
     dplyr::ungroup()  
   vertex <- tibble::tibble(x_ = RTri$P[,1], y_ = RTri$P[,2], 
                            vertex_ = silicate::sc_uid(nrow(RTri$P)))
