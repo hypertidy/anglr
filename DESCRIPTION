@@ -22,7 +22,8 @@ Imports:
     viridis,
     unjoin,
     magrittr,
-    tidyr
+    tidyr,
+    polyclip
 Suggests: 
     covr,
     ggplot2,
