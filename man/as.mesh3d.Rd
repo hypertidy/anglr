@@ -31,6 +31,7 @@ clear3d(); plot3d(x); view3d(phi = -10)
 
 # manual face colours (it's not guaranteed that triangle order is native 
 # within original objects)
+
 clear3d(); plot3d(as.mesh3d(x, material = list(color = rainbow(14))))
 
 mts <- list(color = c("black", "grey")[c(rep(1, 12), c(2, 2))])
@@ -44,5 +45,5 @@ x0 <- silicate::TRI0(sf)
 clear3d(); plot3d(x0); view3d(phi = -10)
 
 # (TRI0 - it *is* guaranteed that triangle order is native)
-clear3d(); plot3d(as.mesh3d(x0,  material = list(color = rainbow(33205))))
+clear3d(); plot3d(as.mesh3d(x0,  material = list(color = rainbow(14))))
 }

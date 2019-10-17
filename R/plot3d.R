@@ -7,7 +7,7 @@
 #' @param add add to plot or not
 #'
 #' @return rgl shape3d types (note that "segment3d" is currently an imaginary shape3d type)
-#' @importFrom rgl plot3d persp3d
+#' @importFrom rgl plot3d persp3d 
 #' @export plot3d
 #' @export persp3d
 #' @examples

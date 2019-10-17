@@ -19,7 +19,6 @@ TRI_add_shade <- function(x) {
 #' 
 #' Methods for the mesh3d type from package rgl
 #' 
-#' @importFrom rgl as.mesh3d
 #'
 #' @param x An object of class `TRI` or `TRI0`
 #' @param keep_all whether to keep non-visible triangles
@@ -29,7 +28,7 @@ TRI_add_shade <- function(x) {
 #' @name as.mesh3d
 #' @importFrom rgl as.mesh3d tmesh3d
 #' @export as.mesh3d
-
+#' @export
 #' @examples
 #' sf <- silicate::minimal_mesh
 #' #sf <- silicate::inlandwaters
@@ -39,6 +38,7 @@ TRI_add_shade <- function(x) {
 #'
 #' # manual face colours (it's not guaranteed that triangle order is native 
 #' # within original objects)
+#' 
 #' clear3d(); plot3d(as.mesh3d(x, material = list(color = rainbow(14))))
 #' 
 #' mts <- list(color = c("black", "grey")[c(rep(1, 12), c(2, 2))])
@@ -52,7 +52,7 @@ TRI_add_shade <- function(x) {
 #' clear3d(); plot3d(x0); view3d(phi = -10)
 #'
 #' # (TRI0 - it *is* guaranteed that triangle order is native)
-#' clear3d(); plot3d(as.mesh3d(x0,  material = list(color = rainbow(33205))))
+#' clear3d(); plot3d(as.mesh3d(x0,  material = list(color = rainbow(14))))
 as.mesh3d.TRI <- function(x, keep_all = TRUE, ..., meshColor = "faces") {
   x <- TRI_add_shade(x)  ## sets color_ if not present
   vb <- TRI_xyz(x)

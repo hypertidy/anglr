@@ -4,8 +4,7 @@
 \alias{auto_3d}
 \title{Auto aspect ratio}
 \usage{
-auto_3d(x = 1, y = 1, z = 1, keep_xy = TRUE, exag = TRUE,
-  verbose = TRUE)
+auto_3d(x = 1, y = 1, z = 1, keep_xy = TRUE, exag = TRUE, verbose = TRUE)
 }
 \arguments{
 \item{x}{exaggeration for x}
