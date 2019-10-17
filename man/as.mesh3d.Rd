@@ -2,29 +2,50 @@
 % Please edit documentation in R/mesh3d.R
 \name{as.mesh3d}
 \alias{as.mesh3d}
-\alias{as.mesh3d.QUAD}
-\alias{as.mesh3d.default}
 \alias{as.mesh3d.TRI}
+\alias{as.mesh3d.TRI0}
+\alias{as.mesh3d.QUAD}
 \title{Mesh3d objects}
 \usage{
+\method{as.mesh3d}{TRI}(x, keep_all = TRUE, ..., meshColor = "faces")
+
+\method{as.mesh3d}{TRI0}(x, ..., meshColor = "faces")
+
 \method{as.mesh3d}{QUAD}(x, ...)
-
-\method{as.mesh3d}{default}(x, ...)
-
-\method{as.mesh3d}{TRI}(x, ...)
 }
 \arguments{
-\item{x}{
-For the generic, \code{x} is the object to convert.
-For the default method, \code{x}, \code{y} and \code{z} are
-coordinates. Any reasonable way of defining the coordinates is
-acceptable. See the function \code{\link{xyz.coords}} for details.
-}
+\item{x}{An object of class \code{TRI} or \code{TRI0}}
 
-\item{...}{
-Material properties to pass to \code{\link{tmesh3d}} or \code{\link{qmesh3d}}.
-}
+\item{keep_all}{whether to keep non-visible triangles}
+
+\item{...}{arguments passed to \code{\link[rgl:tmesh3d]{rgl::tmesh3d()}}}
+
+\item{meshColor}{rule for material properties used for colours (see \link[rgl:tmesh3d]{rgl::tmesh3d})}
 }
 \description{
 Methods for the mesh3d type from package rgl
+}
+\examples{
+sf <- silicate::minimal_mesh
+#sf <- silicate::inlandwaters
+x <- silicate::TRI(sf)
+library(rgl)
+clear3d(); plot3d(x); view3d(phi = -10); rglwidget()
+
+# manual face colours (it's not guaranteed that triangle order is native 
+# within original objects)
+clear3d(); plot3d(as.mesh3d(x, material = list(color = rainbow(14))))
+
+mts <- list(color = c("black", "grey")[c(rep(1, 12), c(2, 2))])
+clear3d(); plot3d(as.mesh3d(x, material = mts))
+
+## smear by vertices meshColor
+mts1 <- list(color = c("black", "grey"))
+clear3d(); plot3d(as.mesh3d(x, material = mts1), meshColor = "vertices")
+
+x0 <- silicate::TRI0(sf)
+clear3d(); plot3d(x0); view3d(phi = -10); rglwidget()
+
+# (TRI0 - it *is* guaranteed that triangle order is native)
+clear3d(); plot3d(as.mesh3d(x0,  material = list(color = rainbow(33205))))
 }

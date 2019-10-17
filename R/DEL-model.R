@@ -1,17 +1,10 @@
-#' DEL Delaunay model
+#' DEL
 #'
-#' The Delaunary criterion forms the basis of this model, is its
-#' definining characteristic without being compulsory. From Wikipedia: 
-
-#' The "Delaunay triangulation (also known as a Delone triangulation) for a given
-#' set P of discrete points in a plane is a triangulation DT(P) such that no
-#' point in P is inside the circumcircle of any triangle in DT(P). Delaunay
-#' triangulations maximize the minimum angle of all the angles of the triangles
-#' in the triangulation; they tend to avoid sliver triangles. . . . The
-#' Delaunay triangulation corresponds to the dual graph of the Voronoi
-#' diagram of P" 
-#' \url{https://en.wikipedia.org/wiki/Delaunay_triangulation}. 
-
+#' This Delaunay-based triangulation model is analogous to the 'TRI' model
+#' in the silicate package and formally extends the class of that model. 
+#' A primitives-based shape-constrained triangulation. The Delaunay model is the 
+#' *mostly Delaunay* scheme usedby the provable-quality meshers. 
+#' 
 #' The Delaunay model is a constrained triangulation with a variety 
 #' of constraint and qualification types. The Delaunay model has the
 #' odd but defining characteristic of not being always consistent 
@@ -20,8 +13,21 @@
 #' Steiner vertex insertion, a limit on the maximum area of a triangle, 
 #' minimum triangle angle and strict adherence to the Delaunay criterion. 
 #' 
-#' The Delaunay model is the *mostly Delaunay* scheme used 
-#' by the provable-quality meshers. 
+#' The Delaunary criterion forms the basis of this model, and is its
+#' definining characteristic without being strictly adhered to. This is awkward
+#' to describe but is the key property. From Wikipedia: 
+#' The "Delaunay triangulation (also known as a Delone triangulation) for a given
+#' set P of discrete points in a plane is a triangulation DT(P) such that no
+#' point in P is inside the circumcircle of any triangle in DT(P). Delaunay
+#' triangulations maximize the minimum angle of all the angles of the triangles
+#' in the triangulation; they tend to avoid sliver triangles. . . . The
+#' Delaunay triangulation corresponds to the dual graph of the Voronoi
+#' diagram of P" 
+#' \url{https://en.wikipedia.org/wiki/Delaunay_triangulation}. 
+#' 
+#' This strict criterion is _relaxed_ in small measure, to ensure that all
+#' edge-inputs are preserved and to allow further constraints such as triangle size
+#' and internal angle to be specified. 
 #' @param x input model
 #' @param ... passed to the underlying Triangle library
 #' @param max_area the maximum area of a triangle

@@ -2,6 +2,12 @@
 % Please edit documentation in R/plot3d.R
 \name{plot3d}
 \alias{plot3d}
+\alias{plot3d.TRI}
+\alias{plot3d.TRI0}
+\alias{plot3d.sc}
+\alias{persp3d.TRI}
+\alias{persp3d}
+\alias{persp3d.TRI0}
 \alias{plot3d.SC}
 \alias{plot3d.SC0}
 \alias{plot3d.QUAD}
@@ -11,9 +17,18 @@
 \alias{plot3d.Spatial}
 \alias{plot3d.trip}
 \alias{plot3d.ARC}
-\alias{plot3d.TRI}
 \title{3D object plot}
 \usage{
+\method{plot3d}{TRI}(x, ...)
+
+\method{plot3d}{TRI0}(x, ...)
+
+\method{plot3d}{sc}(x, ...)
+
+\method{persp3d}{TRI}(x, ..., add = FALSE)
+
+\method{persp3d}{TRI0}(x, ..., add = FALSE)
+
 \method{plot3d}{SC}(x, ..., add = FALSE)
 
 \method{plot3d}{SC0}(x, ..., add = FALSE)
@@ -31,8 +46,6 @@
 \method{plot3d}{trip}(x, ..., add = FALSE)
 
 \method{plot3d}{ARC}(x, ..., add = FALSE)
-
-\method{plot3d}{TRI}(x, ..., add = FALSE)
 }
 \arguments{
 \item{x}{silicate model, SC, TRI, ARC, or PATH}

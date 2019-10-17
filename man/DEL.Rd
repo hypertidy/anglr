@@ -9,7 +9,7 @@
 \alias{DEL.SC}
 \alias{DEL.SC0}
 \alias{DEL.PATH}
-\title{DEL Delaunay model}
+\title{DEL}
 \usage{
 DEL(x, ..., max_area = NULL)
 
@@ -38,8 +38,23 @@ DEL(x, ..., max_area = NULL)
 DEL model
 }
 \description{
-The Delaunary criterion forms the basis of this model, is its
-definining characteristic without being compulsory. From Wikipedia:
+This Delaunay-based triangulation model is analogous to the 'TRI' model
+in the silicate package and formally extends the class of that model.
+A primitives-based shape-constrained triangulation. The Delaunay model is the
+\emph{mostly Delaunay} scheme usedby the provable-quality meshers.
+}
+\details{
+The Delaunay model is a constrained triangulation with a variety
+of constraint and qualification types. The Delaunay model has the
+odd but defining characteristic of not being always consistent
+with the Delaunay criterion. Edge inclusion is
+non-negotiable, but other constraints include (limit, or avoid)
+Steiner vertex insertion, a limit on the maximum area of a triangle,
+minimum triangle angle and strict adherence to the Delaunay criterion.
+
+The Delaunary criterion forms the basis of this model, and is its
+definining characteristic without being strictly adhered to. This is awkward
+to describe but is the key property. From Wikipedia:
 The "Delaunay triangulation (also known as a Delone triangulation) for a given
 set P of discrete points in a plane is a triangulation DT(P) such that no
 point in P is inside the circumcircle of any triangle in DT(P). Delaunay
@@ -48,17 +63,10 @@ in the triangulation; they tend to avoid sliver triangles. . . . The
 Delaunay triangulation corresponds to the dual graph of the Voronoi
 diagram of P"
 \url{https://en.wikipedia.org/wiki/Delaunay_triangulation}.
-The Delaunay model is a constrained triangulation with a variety
-of constraint and qualification types. The Delaunay model has the
-odd but defining characteristic of not being always consistent
-with the Delaunay criterion. Edge inclusion is
-non-negotiable, but other constraints include (limit, or avoid)
-Steiner vertex insertion, a limit on the maximum area of a triangle,
-minimum triangle angle and strict adherence to the Delaunay criterion.
-}
-\details{
-The Delaunay model is the \emph{mostly Delaunay} scheme used
-by the provable-quality meshers.
+
+This strict criterion is \emph{relaxed} in small measure, to ensure that all
+edge-inputs are preserved and to allow further constraints such as triangle size
+and internal angle to be specified.
 }
 \examples{
 plot3d(DEL(simpleworld))

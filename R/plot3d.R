@@ -7,9 +7,9 @@
 #' @param add add to plot or not
 #'
 #' @return rgl shape3d types (note that "segment3d" is currently an imaginary shape3d type)
-#' @importFrom rgl plot3d
+#' @importFrom rgl plot3d persp3d
 #' @export plot3d
-#' @name plot3d
+#' @export persp3d
 #' @examples
 #' library(silicate)
 #' x <- SC(sf::read_sf(system.file("shape", "nc.shp", package = "sf")) %>%
@@ -17,6 +17,31 @@
 #' plot3d(x); rgl::rglwidget()
 #' worldz <- QUAD(gebco1)
 #' @export
+#' @name plot3d
+plot3d.TRI <- function(x, ...) persp3d(x, ...)
+#' @export
+#' @name plot3d
+plot3d.TRI0 <- function(x, ...) persp3d(x, ...)
+#' @export
+#' @name plot3d
+plot3d.sc <- function(x, ...) {
+  ## try the universal way
+  plot3d(silicate::SC0(x), ...)
+}
+#' @name plot3d
+#' @aliases persp3d
+#' @export
+persp3d.TRI <- function(x, ..., add = FALSE) {
+  plot3d(as.mesh3d(x, ...), add = add, ...)
+}
+#' @name plot3d
+#' @aliases persp3d
+#' @export
+persp3d.TRI0 <- function(x, ..., add = FALSE) {
+  plot3d(as.mesh3d(x, ...), add = add, ...)
+}
+#' @export
+#' @name plot3d
 plot3d.SC <- function(x, ..., add = FALSE) {
   if (!"color_" %in% names(x$object)) {
     x$object$color_ <- trimesh_cols(nrow(x$object))
@@ -55,6 +80,7 @@ plot3d.SC <- function(x, ..., add = FALSE) {
                  material = list(col = pindex$color_)),
             class = c("segment3d", "shape3d")))
 }
+#' @export
 #' @name plot3d
 plot3d.SC0 <- function(x, ..., add = FALSE) {
   if (!"color_" %in% names(x$object)) {
@@ -84,11 +110,9 @@ plot3d.SC0 <- function(x, ..., add = FALSE) {
                            material = list(col = pindex)),
                       class = c("segment3d", "shape3d")))
 }
-shade3d.segment3d <- function(x, ...) {
-  rgl::segments3d(t(x$vb[1:3,])[x$is, ], col = rep(x$material$col, each = 2), ...)
-}
-#' @name plot3d
+
 #' @export
+#' @name plot3d
 plot3d.QUAD <- function(x, ..., add = FALSE) {
   ob <- as.mesh3d(x)
   if (!add) {
@@ -98,33 +122,31 @@ plot3d.QUAD <- function(x, ..., add = FALSE) {
   invisible(ob)
 }
 
-
-#' @name plot3d
 #' @export
+#' @name plot3d
 plot3d.PATH <- function(x, ..., add = FALSE) {
-  plot3d(silicate::SC(x), ..., add = add)
+  plot3d(silicate::SC0(x), ..., add = add)
 }
-#' @name plot3d
 #' @export
+#' @name plot3d
 plot3d.sf <- function(x, ..., add = FALSE) {
-  plot3d(silicate::SC(x), ..., add = add)
+  plot3d(silicate::SC0(x), ..., add = add)
 }
-#' @name plot3d
 #' @export
+#' @name plot3d
 plot3d.sfc <- function(x, ..., add = FALSE) {
-  plot3d(silicate::SC(x), ..., add = add)
+  plot3d(silicate::SC0(x), ..., add = add)
 }
-#' @name plot3d
 #' @export
+#' @name plot3d
 plot3d.Spatial <- function(x, ..., add = FALSE) {
-  plot3d(silicate::SC(x), ..., add = add)
+  plot3d(silicate::SC0(x), ..., add = add)
 }
-#' @name plot3d
 #' @export
+#' @name plot3d
 plot3d.trip <- function(x, ..., add = FALSE) {
-  plot3d(silicate::SC(x), ..., add = add)
+  plot3d(silicate::SC0(x), ..., add = add)
 }
-
 
 #' @name plot3d
 #' @export
@@ -154,18 +176,6 @@ plot3d.ARC <- function(x, ..., add = FALSE) {
                            material = list(col = pindex$color_)),
                       class = c("segment3d", "shape3d")))
 
-}
-#' @name plot3d
-#' @export
-plot3d.TRI <- function(x, ..., add = FALSE) {
-
-  #v_id <- lapply(split(vindex, vindex$arc_), function(x) as.vector(path2seg(x$vertex_)))
-  if (!add) {
-    rgl::rgl.clear()
-  }
-  ob <- as.mesh3d(x)
-  #vindex <- match(unlist(v_id), x$vertex$vertex_)
-  rgl::triangles3d(t(ob$vb[, ob$it]), col = ob$material$color)
 }
 
 
