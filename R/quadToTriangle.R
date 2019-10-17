@@ -4,9 +4,7 @@
 #' 
 #' @param x QUAD
 #' @param ... reserved
-#' @name TRI
-#' @export
-#' @export TRI
+#' @noRd
 #' @examples 
 #' library(anglr)
 #' library(raster)
@@ -19,8 +17,6 @@
 #' #mesh <- DEL(sc, max_area = .2)
 #' #mesh <- copy_down(mesh, r)
 #' #nrow(mesh$vertex)
-#' @importFrom silicate TRI sc_uid
-#' @export TRI
 TRI.QUAD <- function(x, ...) {
   out <- quadToTriangle(x)
   ## try expanding object to pairs of triangles

@@ -58,7 +58,7 @@ to expand out values, and nothing to stop the use of non numeric values being co
 library(raster)
 r <- raster(volcano)
 cl <- silicate::SC(rasterToContour(r))
-plot3d(copy_down(cl, r)); rgl::rglwidget()
+plot3d(copy_down(cl, r))
 ## looks funny?
-auto_3d(z = 15); rgl::rglwidget()
+auto_3d(z = 15)
 }

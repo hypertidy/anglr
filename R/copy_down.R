@@ -48,9 +48,9 @@
 #' library(raster)
 #' r <- raster(volcano)
 #' cl <- silicate::SC(rasterToContour(r))
-#' plot3d(copy_down(cl, r)); rgl::rglwidget()
+#' plot3d(copy_down(cl, r))
 #' ## looks funny?
-#' auto_3d(z = 15); rgl::rglwidget()
+#' auto_3d(z = 15)
 copy_down <- function(x, z = NULL, ..., .id = "z_") {
   stopifnot(is.character(.id))
 

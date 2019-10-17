@@ -4,14 +4,11 @@
 \alias{as.mesh3d}
 \alias{as.mesh3d.TRI}
 \alias{as.mesh3d.TRI0}
-\alias{as.mesh3d.QUAD}
 \title{Mesh3d objects}
 \usage{
 \method{as.mesh3d}{TRI}(x, keep_all = TRUE, ..., meshColor = "faces")
 
 \method{as.mesh3d}{TRI0}(x, ..., meshColor = "faces")
-
-\method{as.mesh3d}{QUAD}(x, ...)
 }
 \arguments{
 \item{x}{An object of class \code{TRI} or \code{TRI0}}
@@ -30,7 +27,7 @@ sf <- silicate::minimal_mesh
 #sf <- silicate::inlandwaters
 x <- silicate::TRI(sf)
 library(rgl)
-clear3d(); plot3d(x); view3d(phi = -10); rglwidget()
+clear3d(); plot3d(x); view3d(phi = -10)
 
 # manual face colours (it's not guaranteed that triangle order is native 
 # within original objects)
@@ -44,7 +41,7 @@ mts1 <- list(color = c("black", "grey"))
 clear3d(); plot3d(as.mesh3d(x, material = mts1), meshColor = "vertices")
 
 x0 <- silicate::TRI0(sf)
-clear3d(); plot3d(x0); view3d(phi = -10); rglwidget()
+clear3d(); plot3d(x0); view3d(phi = -10)
 
 # (TRI0 - it *is* guaranteed that triangle order is native)
 clear3d(); plot3d(as.mesh3d(x0,  material = list(color = rainbow(33205))))

@@ -24,7 +24,6 @@ extending models in the `silicate`` package:
 \code{\link[silicate]{ARC}} silicate models are all supported, including the structural forms SC0, TRI0, PATH0 \cr
 \code{Spatial} \tab most spatial types can be used directly \cr
 \code{\link{DEL}} \tab create a mostly-Delaunay shape-preserving constrained triangulation  \cr
-\code{\link{QUAD}} \tab create a (raster-like) quad mesh  \cr
 }
 }
 
@@ -34,7 +33,6 @@ extending models in the `silicate`` package:
 \code{\link{globe}} \tab convert X,Y planar or angular to 3D on the surface of a globe, based on the data in longitude-latitude form \cr
 \code{\link{plot3d.SC}} \tab plot 1D topology in 3D geometry space \cr
 \code{\link{plot3d.TRI}} \tab plot 2D topology in 3D geometry space (DEL or TRI) \cr
-\code{\link{plot3d.QUAD}} \tab plot quad-cell topology in 3D geometry space \cr
 }
 }
 

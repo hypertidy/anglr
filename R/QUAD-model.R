@@ -6,16 +6,15 @@
 #' @param ... ignored
 #'
 #' @return QUAD model
-#' @export
+#' @noRd
 #'
-#' @examples
-#' QUAD(raster::raster(volcano))
+# @examples
+# #QUAD(raster::raster(volcano))
 QUAD <- function(x, ...) {
   UseMethod("QUAD")
 }
 #' @name QUAD
 #' @importFrom raster xmin xmax ymin ymax
-#' @export
 QUAD.BasicRaster <- function(x, ...) {
   x <- x[[1]]  ## just the oneth raster for now
   pr4 <- get_proj(x)
@@ -73,14 +72,6 @@ QUAD_mega<- function(x, ...) {
   l
 }
 
-mkq_3d <- function() {
-  ## FIXME: use qmesh3d()
-  structure(list(vb = NULL, ib = NULL, 
-                 material = list(), normals = NULL, texcoords = NULL), .Names = c("vb",
-                                                                                  "ib",  "material", "normals", "texcoords"), class = c("mesh3d",
-                                                                                                                                                        "shape3d"))
-  
-}
 p_4 <- function(xp, nc) {
   (xp + c(0, 0, rep(nc, 2)))[c(1, 2, 4, 3)]
 }

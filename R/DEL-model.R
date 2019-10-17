@@ -36,7 +36,6 @@
 #'
 #' @examples
 #' plot3d(DEL(simpleworld))
-#' rgl::rglwidget()
 DEL <- function(x, ..., max_area = NULL) {
   UseMethod("DEL")
 }

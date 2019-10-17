@@ -34,7 +34,7 @@ latitude in degrees and elevation in metres.
 }
 \examples{
 topo <- copy_down(silicate::SC(simpleworld), gebco1)
-plot3d(topo);  rgl::rglwidget()
+plot3d(topo)
 
-auto_3d(z = 4); rgl::rglwidget()
+auto_3d(z = 4)
 }

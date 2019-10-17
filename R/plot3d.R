@@ -14,8 +14,7 @@
 #' library(silicate)
 #' x <- SC(sf::read_sf(system.file("shape", "nc.shp", package = "sf")) %>%
 #'    dplyr::mutate(color_ = rainbow(100)))
-#' plot3d(x); rgl::rglwidget()
-#' worldz <- QUAD(gebco1)
+#' plot3d(x)
 #' @export
 #' @name plot3d
 plot3d.TRI <- function(x, ...) persp3d(x, ...)
@@ -111,16 +110,6 @@ plot3d.SC0 <- function(x, ..., add = FALSE) {
                       class = c("segment3d", "shape3d")))
 }
 
-#' @export
-#' @name plot3d
-plot3d.QUAD <- function(x, ..., add = FALSE) {
-  ob <- as.mesh3d(x)
-  if (!add) {
-    rgl::rgl.clear()
-  }
-  rgl::shade3d(ob, ...)
-  invisible(ob)
-}
 
 #' @export
 #' @name plot3d

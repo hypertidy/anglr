@@ -1,10 +1,15 @@
 Package: anglr
 Type: Package
-Title: Elevating Spatial Data with Topology
-Version: 0.5.0
+Title: Mesh Topology for Spatial Data
+Version: 0.4.4
 Authors@R: c(person("Michael D.","Sumner", role = c("aut", "cre"), email ="mdsumner@gmail.com"), 
              person("Miles", "McBain", role = c("ctb")))
-Description: Tidy topological approaches to spatial data, illustrated with plotting using Open Graphics Library. 
+Description: Helpers for creating meshes from geographical spatial data and 
+ translating data formats into forms ready for mesh visualization with 'OpenGL' 
+ (the Open Graphics Library <https://en.wikipedia.org/wiki/OpenGL>) via the 'rgl'
+ package. This package extends the classes defined in the 'silicate' package 
+ adding high-quality triangulations suitable for surface representation and 
+ providing methods for 3D plots for a wide range of spatial data sources. 
 License: GPL-3
 Depends: R (>= 3.4.0),  silicate (>= 0.2.0)
 Imports: 

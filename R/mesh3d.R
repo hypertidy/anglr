@@ -35,7 +35,7 @@ TRI_add_shade <- function(x) {
 #' #sf <- silicate::inlandwaters
 #' x <- silicate::TRI(sf)
 #' library(rgl)
-#' clear3d(); plot3d(x); view3d(phi = -10); rglwidget()
+#' clear3d(); plot3d(x); view3d(phi = -10)
 #'
 #' # manual face colours (it's not guaranteed that triangle order is native 
 #' # within original objects)
@@ -49,7 +49,7 @@ TRI_add_shade <- function(x) {
 #' clear3d(); plot3d(as.mesh3d(x, material = mts1), meshColor = "vertices")
 #'
 #' x0 <- silicate::TRI0(sf)
-#' clear3d(); plot3d(x0); view3d(phi = -10); rglwidget()
+#' clear3d(); plot3d(x0); view3d(phi = -10)
 #'
 #' # (TRI0 - it *is* guaranteed that triangle order is native)
 #' clear3d(); plot3d(as.mesh3d(x0,  material = list(color = rainbow(33205))))
@@ -104,30 +104,23 @@ as.mesh3d.TRI0 <- function(x, ..., meshColor = "faces") {
   if (set_color) out$material$color <- object_colors
   out
 }
-#' @name as.mesh3d
-#' @export
+
 as.mesh3d.QUAD <- function(x, ...) {
   scl <- function(x) (x - min(x, na.rm = TRUE))/diff(range(x, na.rm = TRUE))
-  ## etc blah
-  ob <- mkq_3d()
-  #exy <- get_edges(x)
-  #v <- tibble(x_ = exy[,1], y_ = exy[,2], z_ = if (is.null(x$vertex)) 0 else x$vertex$z_)
+
   v <- get_vertex(x)
-  v[["z_"]] <- if (is.null(x$vertex$z_))  0 else x$vertex$z_
-  ob$vb <- t(cbind(as.matrix(v[, c("x_", "y_", "z_")]), 1))
   qXv <- get_qXv(x)
-  ob$ib <- matrix(qXv$vertex_, nrow = 4)
-  cols <- viridis::viridis(min(c(1000, prod(unlist(x$object[c("nrows", "ncols")])))))
-  #qXv <- x$quad_link_vertex
-  if (!is.null(x$quad)) {
-    qXv$value <- x$quad$value[qXv$quad_]
-    
-    
-  } else {
-    qXv$value <- x$vertex$z_[qXv$vertex_]
-  }
-  ob$material$color <- cols[scl(qXv$value) * length(cols) + 1]
-  ob
+  ib <- matrix(qXv$vertex_, nrow = 4)
+  
+  xx <- v$x_[ib]
+  yy <- v$y_[ib]
+  zz <- rep(x$quad$value, each = 4L)
+  vb <- rbind(xx, yy, zz, 1)
+  
+  cols <- viridis::viridis(84)
+
+  rgl::qmesh3d(vb, ib, material = list(color = cols[scl(x$quad$value) * length(cols) + 1]), meshColor = "faces")
+  
 }
 
 

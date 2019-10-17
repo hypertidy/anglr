@@ -1,5 +1,11 @@
 # anglr dev
 
+* Removed QUAD, hopefully temporarily. 
+
+* Support for rgl's `plot3d` and `as.mesh3d` is now greatly improved, and now
+ `tmesh3d()` and `qmesh3d()` are used rather than creating these types
+ manually. 
+
 * Now using reproj package instead of proj4 directly. 
 
 * New data sets, `cad_tas` and `cont_tas`. 

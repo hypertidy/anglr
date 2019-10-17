@@ -38,7 +38,6 @@ denorm_SEQ_addZ <- function(x, z, ..., .id = "z_") {
 ##' x <- denorm_PRIM_addZ(silicate::SC(fifty), z = fifty$height)
 ##' 
 ##' plot3d(x)
-##' rgl::rglwidget()
 denorm_PRIM_addZ <- function(x, z, ..., .id = "z_") {
   
   if (inherits(x, "SC")) {

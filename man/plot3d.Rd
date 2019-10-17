@@ -10,7 +10,6 @@
 \alias{persp3d.TRI0}
 \alias{plot3d.SC}
 \alias{plot3d.SC0}
-\alias{plot3d.QUAD}
 \alias{plot3d.PATH}
 \alias{plot3d.sf}
 \alias{plot3d.sfc}
@@ -32,8 +31,6 @@
 \method{plot3d}{SC}(x, ..., add = FALSE)
 
 \method{plot3d}{SC0}(x, ..., add = FALSE)
-
-\method{plot3d}{QUAD}(x, ..., add = FALSE)
 
 \method{plot3d}{PATH}(x, ..., add = FALSE)
 
@@ -65,6 +62,5 @@ If \code{color_} column is present on the data object table it is used.
 library(silicate)
 x <- SC(sf::read_sf(system.file("shape", "nc.shp", package = "sf")) \%>\%
    dplyr::mutate(color_ = rainbow(100)))
-plot3d(x); rgl::rglwidget()
-worldz <- QUAD(gebco1)
+plot3d(x)
 }

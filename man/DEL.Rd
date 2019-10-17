@@ -70,5 +70,4 @@ and internal angle to be specified.
 }
 \examples{
 plot3d(DEL(simpleworld))
-rgl::rglwidget()
 }

@@ -20,7 +20,6 @@
 #'    \code{\link[silicate]{ARC}} silicate models are all supported, including the structural forms SC0, TRI0, PATH0 \cr
 #'   \code{Spatial} \tab most spatial types can be used directly \cr
 #'   \code{\link{DEL}} \tab create a mostly-Delaunay shape-preserving constrained triangulation  \cr
-#'  \code{\link{QUAD}} \tab create a (raster-like) quad mesh  \cr
 #'  }
 #'
 #' @section II. Plotting:
@@ -28,7 +27,6 @@
 #'  \code{\link{globe}} \tab convert X,Y planar or angular to 3D on the surface of a globe, based on the data in longitude-latitude form \cr
 #'  \code{\link{plot3d.SC}} \tab plot 1D topology in 3D geometry space \cr
 #'  \code{\link{plot3d.TRI}} \tab plot 2D topology in 3D geometry space (DEL or TRI) \cr
-#'  \code{\link{plot3d.QUAD}} \tab plot quad-cell topology in 3D geometry space \cr
 #' }
 #'
 NULL
@@ -72,16 +70,5 @@ NULL
 #' laea <- "+proj=laea +lon_0=147 +lat_0=-42"
 #' longlat <- "+init=epsg:4326"
 #' x <- SC(simpleworld) %>% copy_down(gebco1 + 500)
-#' plot3d(x); rgl::aspect3d(1, 1, 0.07);rgl::rglwidget()
-#' 
-#' ## WARNING: SC doesn't have meta yet ...
-#' ## this is a lossless transformation of raster and vector to a projected
-#' ## 3D scene
-#' #x$vertex[c("x_", "y_")] <- reproj::reproj(as.matrix(x$vertex[c("x_", "y_")])[, 1:2, drop = FALSE], 
-#' #   target = laea, source = longlat)
-#' #if (requireNamespace("quadmesh", quietly = TRUE)) {
-#'  #qm <- quadmesh::quadmesh(raster::aggregate(gebco1, fact = 4)); 
-#'#  qm$vb[1:2, ] <- t(proj4::ptransform(t(qm$vb[1:2, ]) * pi/180, longlat, laea))[1:2, ]
-#' # plot3d(x); rgl::shade3d(qm, col = "white");  rgl::aspect3d(1, 1, 0.4); rgl::rglwidget()
-#' #}
+#' plot3d(x); rgl::aspect3d(1, 1, 0.07)
 NULL

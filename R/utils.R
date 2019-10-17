@@ -19,9 +19,9 @@
 #'
 #' @examples
 #' topo <- copy_down(silicate::SC(simpleworld), gebco1)
-#' plot3d(topo);  rgl::rglwidget()
+#' plot3d(topo)
 #' 
-#' auto_3d(z = 4); rgl::rglwidget()
+#' auto_3d(z = 4)
 auto_3d <- function(x = 1, y = 1, z = 1, keep_xy = TRUE, exag = TRUE, verbose = TRUE) {
   thr <- apply(matrix(rgl::par3d()$bbox, 2), 2, function(a) diff(a))
   dxy <- thr[2]/thr[1]
@@ -78,13 +78,6 @@ path2seg <- function(x) {
   head(suppressWarnings(matrix(x, nrow = length(x) + 1, ncol = 2, byrow = FALSE)), -2L)
 }
 
-th3d <- function() {
-  ## FIXME: use tmesh3d()
-  structure(list(vb = NULL, it = NULL, 
-                 material = list(), normals = NULL, texcoords = NULL), .Names = c("vb",
-                                                                                  "it",  "material", "normals", "texcoords"), class = c("mesh3d",
-                                                                                                                                                        "shape3d"))
-}
 trimesh_cols <- function(n) {
   viridis::viridis(n)
 }
