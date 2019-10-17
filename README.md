@@ -93,7 +93,7 @@ rglwidget()  ## not needed if you have a local device
 
 Follow this link to see the result:
 
-[Demo02](https://hypertidy.github.io/anglr-demos/demo01.html)
+[Demo01](https://hypertidy.github.io/anglr-demos/demo01.html)
 
 Here the `z` argument to `copy_down()` is a raster, and so the `z_`
 coordinate of the mesh is updated by extracting values from the raster
