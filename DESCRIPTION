@@ -15,33 +15,33 @@ Depends: R (>= 3.4.0),  silicate (>= 0.2.0)
 Imports: 
     dplyr,
     gibble (>= 0.2.0),
+    magrittr,
     methods,
-    reproj (>= 0.4.0),
+    polyclip,
     raster,
+    reproj (>= 0.4.0),
     rgl,
     rlang,
     RTriangle,
     sp,
-    spbabel (> 0.4.5),
+    spbabel (>= 0.5.0),
     tibble,
-    viridis,
-    unjoin,
-    magrittr,
     tidyr,
-    polyclip
+    unjoin,
+    viridis
 Suggests: 
     covr,
     ggplot2,
     ggpolypath,
     graticule,
+    knitr,
     purrr,
+    quadmesh,
+    rmarkdown,
     sf,
     sfdct,
     testthat,
-    trip,
-    knitr,
-    rmarkdown,
-    quadmesh
+    trip
 Roxygen: list(markdown = TRUE)
 SystemRequirements: PROJ.4
 Encoding: UTF-8
