@@ -19,8 +19,8 @@ The anglr package aims to provide direct access to the inherent
 properties of *shape* and the power of topological techniques.
 
 Topology is the relationships between shapes, what kinds of shapes they
-are, the pieces they are composed of and which pieces are neighbours and
-how they are connected.
+are, the pieces they are composed of, which pieces are neighbours, and
+how these are connected.
 
 ## Mesh power\!
 
@@ -68,22 +68,46 @@ with `as.mesh3d()`. The anglr package adds two more models to the
 silicate suite of SC, TRI, PATH, and ARC with `DEL()` (for high-quality
 triangulation) and `QUAD()` (very WIP, for raster data).
 
+These models have high-fidelity, they can represent many data structures
+in complete form and also extend them. The `rgl mesh3d` type is a
+plot-ready simplified form. For example, mesh3d cannot store
+hierarchical information like feature-identity, or further attributes -
+but can encode these as colour or other material properties. For general
+use we would work with the silicate models, but for quick and easy
+plotting we convert to mesh3d (either explicitly or implicitly).
+
 # Usage
 
-The general approach is to re-model the data into mesh-form via one of
-the models. If the model has a Z coordinate it will be preserved and
-used, otherwise a nominal value of 0 is used. Alternatively, we can
-`copy_down()` attribute or raster data to a Z coordinate.
+  - re-model to general form
+  - optionallly, copy down vertex attribute/s
+  - plot in 3D\!
+  - use the mesh …
 
-Finally, we plot the object in an interactive scene with `plot3d()`:
+The overall approach is to re-model the data into mesh-form, in a format
+defined by function `TRI()`, `DEL()`, `SC()`, `PATH()`, or `ARC()`
+(polygons only). If the model has a Z coordinate it will be preserved
+and used, otherwise a nominal value of 0 is used.
+
+We can `copy_down()` attribute or raster data to a Z coordinate for data
+sources that don’t already include co-incident elevation data.
+
+Then, we can plot the object in an interactive scene with `plot3d()`:
 
 ``` r
 ## PSEUDOCODE
 library(anglr)
-model <- sf::st_read("some/shapefile.shp")
+sfx <- sf::st_read("some/shapefile.shp")
 araster <- raster::raster("some/gridraster.tif")
-mesh <- copy_down(silicate::SC(model), araster)
+mesh <- as.mesh3d(copy_down(silicate::SC(sfx), araster))
 plot3d(mesh)
+```
+
+Alternatively, we can plot straight to 3D with implicit conversion.
+
+``` r
+library(anglr)
+sfxx <- sf::st_read("some/shapefile.shp")
+plot3d(sfxx)  ## implicit conversion occurs, i.e. as.mesh3d(TRI0(sfxx))
 ```
 
 The *copy down* process will copy feature attributes (a constant

@@ -74,12 +74,12 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#anglr" class="anchor"></a>anglr</h1></div>
 <p>The anglr package aims to provide direct access to the inherent properties of <em>shape</em> and the power of topological techniques.</p>
-<p>Topology is the relationships between shapes, what kinds of shapes they are, the pieces they are composed of and which pieces are neighbours and how they are connected.</p>
+<p>Topology is the relationships between shapes, what kinds of shapes they are, the pieces they are composed of, which pieces are neighbours, and how these are connected.</p>
 <div id="mesh-power" class="section level2">
 <h2 class="hasAnchor">
 <a href="#mesh-power" class="anchor"></a>Mesh power!</h2>
 <p>The key concept is that of a <strong>mesh</strong> - a set of <em>primitives</em> (topology) and <em>vertices</em> (geometry) stored in an efficient, indexed structure. We aren’t limited only to <a href="https://en.wikipedia.org/wiki/Polygon_mesh">polygonal meshes</a>, anglr treats linear features in the same way and considers points to be a kind of degenerate mesh form. This is the more general mathematical concept known as the <a href="https://en.wikipedia.org/wiki/Simplicial_complex">simplicial complex</a> and we use the <a href="https://github.com/hypertidy/silicate/">silicate</a> framework to build the converters and visualization tools provided by anglr.</p>
-<p>In general, mesh forms are richer and more capable than their spatial counterparts, we can represent a spatial data type completely and losslessly as a mesh, but the reverse is usually not possible without using expensive workarounds and throwing away topology.</p>
+<p>In general, mesh forms are richer and more capable than their spatial counterparts, we can represent a spatial data type completely and losslessly as a mesh, but the reverse is usually not possible without using expensive workarounds and throwing away the topology.</p>
 </div>
 <div id="topological-forms-for-spatial-data" class="section level2">
 <h2 class="hasAnchor">
@@ -93,49 +93,61 @@
 </ul>
 <p>Many others are readily available, and will be provided in turn - if you have something you want as a mesh please get in touch!</p>
 <p>To do this anglr works with forms defined by <a href="https://github.com/hypertidy/silicate">silicate</a> and (after <a href="https://cran.r-project.org/package=rgl">rgl</a>) provides <code><a href="reference/plot3d.html">plot3d()</a></code> methods for each type. We can call <code><a href="reference/plot3d.html">plot3d()</a></code> directly, or first convert with <code><a href="reference/as.mesh3d.html">as.mesh3d()</a></code>. The anglr package adds two more models to the silicate suite of SC, TRI, PATH, and ARC with <code><a href="reference/DEL.html">DEL()</a></code> (for high-quality triangulation) and <code>QUAD()</code> (very WIP, for raster data).</p>
+<p>These models have high-fidelity, they can represent many data structures in complete form and also extend them. The <code>rgl mesh3d</code> type is a plot-ready simplified form. For example, mesh3d cannot store hierarchical information like feature-identity, or further attributes - but can encode these as colour or other material properties. For general use we would work with the silicate models, but for quick and easy plotting we convert to mesh3d (either explicitly or implicitly).</p>
 </div>
 </div>
 <div id="usage" class="section level1">
 <h1 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h1>
-<p>The general approach is to re-model the data into mesh-form via one of the models. If the model has a Z coordinate it will be preserved and used, otherwise a nominal value of 0 is used. Alternatively, we can <code><a href="reference/copy_down.html">copy_down()</a></code> attribute or raster data to a Z coordinate.</p>
-<p>Finally, we plot the object in an interactive scene with <code><a href="reference/plot3d.html">plot3d()</a></code>:</p>
+<ul>
+<li>re-model to general form</li>
+<li>optionallly, copy down vertex attribute/s</li>
+<li>plot in 3D!</li>
+<li>use the mesh …</li>
+</ul>
+<p>The overall approach is to re-model the data into mesh-form, in a format defined by function <code><a href="https://rdrr.io/pkg/silicate/man/TRI.html">TRI()</a></code>, <code><a href="reference/DEL.html">DEL()</a></code>, <code><a href="https://rdrr.io/pkg/silicate/man/SC.html">SC()</a></code>, <code><a href="https://rdrr.io/pkg/silicate/man/PATH.html">PATH()</a></code>, or <code><a href="https://rdrr.io/pkg/silicate/man/ARC.html">ARC()</a></code> (polygons only). If the model has a Z coordinate it will be preserved and used, otherwise a nominal value of 0 is used.</p>
+<p>We can <code><a href="reference/copy_down.html">copy_down()</a></code> attribute or raster data to a Z coordinate for data sources that don’t already include co-incident elevation data.</p>
+<p>Then, we can plot the object in an interactive scene with <code><a href="reference/plot3d.html">plot3d()</a></code>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co">## PSEUDOCODE</span></a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(anglr)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">model &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/sf/man/st_read.html">st_read</a></span>(<span class="st">"some/shapefile.shp"</span>)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">sfx &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/sf/man/st_read.html">st_read</a></span>(<span class="st">"some/shapefile.shp"</span>)</a>
 <a class="sourceLine" id="cb1-4" data-line-number="4">araster &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/raster/man/raster.html">raster</a></span>(<span class="st">"some/gridraster.tif"</span>)</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">mesh &lt;-<span class="st"> </span><span class="kw"><a href="reference/copy_down.html">copy_down</a></span>(silicate<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/silicate/man/SC.html">SC</a></span>(model), araster)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">mesh &lt;-<span class="st"> </span><span class="kw"><a href="reference/as.mesh3d.html">as.mesh3d</a></span>(<span class="kw"><a href="reference/copy_down.html">copy_down</a></span>(silicate<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/silicate/man/SC.html">SC</a></span>(sfx), araster))</a>
 <a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw"><a href="reference/plot3d.html">plot3d</a></span>(mesh)</a></code></pre></div>
+<p>Alternatively, we can plot straight to 3D with implicit conversion.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(anglr)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">sfxx &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/sf/man/st_read.html">st_read</a></span>(<span class="st">"some/shapefile.shp"</span>)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="reference/plot3d.html">plot3d</a></span>(sfxx)  <span class="co">## implicit conversion occurs, i.e. as.mesh3d(TRI0(sfxx))</span></a></code></pre></div>
 <p>The <em>copy down</em> process will copy feature attributes (a constant measure) or raster attributes (a continuous measure) in the appropriate way. After copy the mesh will be unique in XYZ, whereas the usual starting point is uniqueness in XY.</p>
 <p>These <em>mesh</em> or <em>topological</em> forms can be used to merge disparate data into a single form, or to convert standard spatial objects to <code>rgl</code>-ready forms.</p>
 <div id="demo-01---merge-vector-and-raster-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#demo-01---merge-vector-and-raster-data" class="anchor"></a>Demo 01 - merge vector and raster data</h2>
 <p>An <a href="https://hypertidy.github.io/anglr-demos/demo01.html">example of merging vector and raster</a>, with a continuous interpretation applied to the polygon mesh and underlying elevation.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">## a global DEM</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"gebco1"</span>, <span class="dt">package =</span> <span class="st">"anglr"</span>)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(sf)</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">## North Carolina, the sf boilerplate polygon layer</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">nc &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/sf/man/st_read.html">read_sf</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"shape/nc.shp"</span>, <span class="dt">package=</span><span class="st">"sf"</span>))</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(raster)</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(anglr) </a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(silicate)</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">p_mesh &lt;-<span class="st"> </span><span class="kw"><a href="reference/DEL.html">DEL</a></span>(nc, <span class="dt">max_area =</span> <span class="fl">0.002</span>)</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">## a relief map, composed of triangles grouped by polygon with ##  interpolated raster elevation </span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">p_mesh &lt;-<span class="st"> </span><span class="kw"><a href="reference/copy_down.html">copy_down</a></span>(p_mesh, <span class="dt">z =</span> gebco1)</a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">## plot the scene</span></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(rgl)</a>
-<a class="sourceLine" id="cb2-19" data-line-number="19"></a>
-<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="kw"><a href="https://rdrr.io/pkg/rgl/man/scene.html">rgl.clear</a></span>()  <span class="co">## rerun the cycle from clear to widget in browser contexts </span></a>
-<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="kw"><a href="reference/plot3d.html">plot3d</a></span>(p_mesh) </a>
-<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="kw"><a href="https://rdrr.io/pkg/rgl/man/bg.html">bg3d</a></span>(<span class="st">"black"</span>); <span class="kw"><a href="https://rdrr.io/pkg/rgl/man/material.html">material3d</a></span>(<span class="dt">specular =</span> <span class="st">"black"</span>)</a>
-<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="kw"><a href="https://rdrr.io/pkg/rgl/man/aspect3d.html">aspect3d</a></span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">.1</span>)</a>
-<a class="sourceLine" id="cb2-24" data-line-number="24"><span class="kw"><a href="https://rdrr.io/pkg/rgl/man/rglwidget.html">rglwidget</a></span>()  <span class="co">## not needed if you have a local device</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co">## a global DEM</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"gebco1"</span>, <span class="dt">package =</span> <span class="st">"anglr"</span>)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(sf)</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">## North Carolina, the sf boilerplate polygon layer</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">nc &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/sf/man/st_read.html">read_sf</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"shape/nc.shp"</span>, <span class="dt">package=</span><span class="st">"sf"</span>))</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(raster)</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(anglr) </a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(silicate)</a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">p_mesh &lt;-<span class="st"> </span><span class="kw"><a href="reference/DEL.html">DEL</a></span>(nc, <span class="dt">max_area =</span> <span class="fl">0.002</span>)</a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">## a relief map, composed of triangles grouped by polygon with ##  interpolated raster elevation </span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14">p_mesh &lt;-<span class="st"> </span><span class="kw"><a href="reference/copy_down.html">copy_down</a></span>(p_mesh, <span class="dt">z =</span> gebco1)</a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">## plot the scene</span></a>
+<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(rgl)</a>
+<a class="sourceLine" id="cb3-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="kw"><a href="https://rdrr.io/pkg/rgl/man/scene.html">rgl.clear</a></span>()  <span class="co">## rerun the cycle from clear to widget in browser contexts </span></a>
+<a class="sourceLine" id="cb3-21" data-line-number="21"><span class="kw"><a href="reference/plot3d.html">plot3d</a></span>(p_mesh) </a>
+<a class="sourceLine" id="cb3-22" data-line-number="22"><span class="kw"><a href="https://rdrr.io/pkg/rgl/man/bg.html">bg3d</a></span>(<span class="st">"black"</span>); <span class="kw"><a href="https://rdrr.io/pkg/rgl/man/material.html">material3d</a></span>(<span class="dt">specular =</span> <span class="st">"black"</span>)</a>
+<a class="sourceLine" id="cb3-23" data-line-number="23"><span class="kw"><a href="https://rdrr.io/pkg/rgl/man/aspect3d.html">aspect3d</a></span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">.1</span>)</a>
+<a class="sourceLine" id="cb3-24" data-line-number="24"><span class="kw"><a href="https://rdrr.io/pkg/rgl/man/rglwidget.html">rglwidget</a></span>()  <span class="co">## not needed if you have a local device</span></a></code></pre></div>
 <p>Follow this link to see the result:</p>
 <p><a href="https://hypertidy.github.io/anglr-demos/demo01.html">Demo01</a></p>
 <p>Here the <code>z</code> argument to <code><a href="reference/copy_down.html">copy_down()</a></code> is a raster, and so the <code>z_</code> coordinate of the mesh is updated by extracting values from the raster using bilinear interpolation.</p>
@@ -146,15 +158,15 @@
 <p>An <a href="https://hypertidy.github.io/anglr-demos/demo02.html">example of elevating polygons with constant attribute values</a>, a discrete interpretation that requires separating the (until-now) continuous mesh of polygon features.</p>
 <p>With argument <code>z</code> set to a column in the layer or a specific vector of values this is used as a constant offset for the <code>z_</code> value, and the mesh is <em>separated by feature</em>.</p>
 <p>(The simpler TRI model is used here because we only need poor quality triangles for planar geometry. )</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">## either form works</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#c_mesh &lt;- copy_down(TRI(nc), z = p_mesh$object$BIR74)</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">c_mesh &lt;-<span class="st"> </span><span class="kw"><a href="reference/copy_down.html">copy_down</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/silicate/man/TRI.html">TRI</a></span>(nc), <span class="dt">z =</span> <span class="st">"BIR74"</span>)</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/pkg/rgl/man/scene.html">rgl.clear</a></span>()</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">a &lt;-<span class="st"> </span><span class="kw"><a href="reference/plot3d.html">plot3d</a></span>(c_mesh) </a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="kw"><a href="https://rdrr.io/pkg/rgl/man/bg.html">bg3d</a></span>(<span class="st">"black"</span>); <span class="kw"><a href="https://rdrr.io/pkg/rgl/man/material.html">material3d</a></span>(<span class="dt">specular =</span> <span class="st">"black"</span>)</a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="kw"><a href="https://rdrr.io/pkg/rgl/man/aspect3d.html">aspect3d</a></span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">.2</span>)</a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="kw"><a href="https://rdrr.io/pkg/rgl/man/rglwidget.html">rglwidget</a></span>()  <span class="co">## not needed if you have a local device</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">## either form works</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#c_mesh &lt;- copy_down(TRI(nc), z = p_mesh$object$BIR74)</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">c_mesh &lt;-<span class="st"> </span><span class="kw"><a href="reference/copy_down.html">copy_down</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/silicate/man/TRI.html">TRI</a></span>(nc), <span class="dt">z =</span> <span class="st">"BIR74"</span>)</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/pkg/rgl/man/scene.html">rgl.clear</a></span>()</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">a &lt;-<span class="st"> </span><span class="kw"><a href="reference/plot3d.html">plot3d</a></span>(c_mesh) </a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="kw"><a href="https://rdrr.io/pkg/rgl/man/bg.html">bg3d</a></span>(<span class="st">"black"</span>); <span class="kw"><a href="https://rdrr.io/pkg/rgl/man/material.html">material3d</a></span>(<span class="dt">specular =</span> <span class="st">"black"</span>)</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="kw"><a href="https://rdrr.io/pkg/rgl/man/aspect3d.html">aspect3d</a></span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">.2</span>)</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="kw"><a href="https://rdrr.io/pkg/rgl/man/rglwidget.html">rglwidget</a></span>()  <span class="co">## not needed if you have a local device</span></a></code></pre></div>
 <p>Follow this link to see the result:</p>
 <p><a href="https://hypertidy.github.io/anglr-demos/demo02.html">Demo02</a></p>
 <p>In the silicate models, complex objects are decomposed to a set of related, linked tables. Object identity is maintained with attribute metadata and this is carried through to colour and other aesthetics.</p>
@@ -181,36 +193,36 @@
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>We must use a version of R that is 3.3.2 or later, and <code>anglr</code> can only be installed from Github, and that at least requires the package <code>devtools</code>.</p>
 <p>Also required are packages ‘rgl’ and ‘RTriangle’ and ‘sf’, so first make sure you can install and use these. On a fresh installation of R these package together require a lot of other contributed packages, and that can take some time.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"rgl"</span>)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"RTriangle"</span>)</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"sf"</span>)</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"devtools"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"rgl"</span>)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"RTriangle"</span>)</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"sf"</span>)</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"devtools"</span>)</a></code></pre></div>
 <p>With that out of the way, install from Github using devtools.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"hypertidy/anglr"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"hypertidy/anglr"</span>)</a></code></pre></div>
 <p>Feel free to contact me via the <a href="https://github.com/hypertidy/anglr/issues/">Issues</a> if you have problems, or these notes don’t make sense.</p>
 <div id="ubuntudebian" class="section level3">
 <h3 class="hasAnchor">
 <a href="#ubuntudebian" class="anchor"></a>Ubuntu/Debian</h3>
 <p>On Linux you will need at least the following installed by an administrator, here tested on Ubuntu Xenial 16.04 (note the apt/sources.list is specific to version).</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co">## key for apt-get update, see http://cran.r-project.org/bin/linux/ubuntu/README</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="bu">echo</span> <span class="st">'deb https://cloud.r-project.org/bin/linux/ubuntu xenial/'</span> <span class="op">&gt;&gt;</span> /etc/apt/sources.list</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="ex">apt-key</span> adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">## up to date GDAL and PROJ.4 and GEOS</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">## https://launchpad.net/~ubuntugis/+archive/ubuntu/ubuntugis-unstable</span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="ex">add-apt-repository</span> ppa:ubuntugis/ubuntugis-unstable --yes</a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="ex">apt</span> update </a>
-<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="ex">apt</span> upgrade --assume-yes</a>
-<a class="sourceLine" id="cb6-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="co">## Install 3rd parties</span></a>
-<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="ex">apt</span> install libproj-dev libgdal-dev libgeos-dev  libssl-dev libgl1-mesa-dev libglu1-mesa-dev libudunits2-dev</a>
-<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">## install R, if you need to</span></a>
-<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="co">## apt install r-base r-base-dev </span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co">## key for apt-get update, see http://cran.r-project.org/bin/linux/ubuntu/README</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="bu">echo</span> <span class="st">'deb https://cloud.r-project.org/bin/linux/ubuntu xenial/'</span> <span class="op">&gt;&gt;</span> /etc/apt/sources.list</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="ex">apt-key</span> adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">## up to date GDAL and PROJ.4 and GEOS</span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">## https://launchpad.net/~ubuntugis/+archive/ubuntu/ubuntugis-unstable</span></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="ex">add-apt-repository</span> ppa:ubuntugis/ubuntugis-unstable --yes</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="ex">apt</span> update </a>
+<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="ex">apt</span> upgrade --assume-yes</a>
+<a class="sourceLine" id="cb7-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co">## Install 3rd parties</span></a>
+<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="ex">apt</span> install libproj-dev libgdal-dev libgeos-dev  libssl-dev libgl1-mesa-dev libglu1-mesa-dev libudunits2-dev</a>
+<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">## install R, if you need to</span></a>
+<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">## apt install r-base r-base-dev </span></a></code></pre></div>
 <p>Then in R</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"dplyr"</span>, <span class="st">"proj4"</span>, <span class="st">"raster"</span>,  <span class="st">"rgl"</span>, <span class="st">"rlang"</span>, <span class="st">"RTriangle"</span>, <span class="st">"spbabel"</span>, <span class="st">"tibble"</span>, <span class="st">"viridis"</span>))</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"hypertidy/anglr"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"dplyr"</span>, <span class="st">"proj4"</span>, <span class="st">"raster"</span>,  <span class="st">"rgl"</span>, <span class="st">"rlang"</span>, <span class="st">"RTriangle"</span>, <span class="st">"spbabel"</span>, <span class="st">"tibble"</span>, <span class="st">"viridis"</span>))</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"hypertidy/anglr"</span>)</a></code></pre></div>
 </div>
 </div>
 <div id="get-involved" class="section level2">
