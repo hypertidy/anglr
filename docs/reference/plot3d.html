@@ -70,7 +70,7 @@ If color_ column is present on the data object table it is used." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">anglr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9006</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.4</span>
       </span>
     </div>
 
@@ -114,13 +114,25 @@ If color_ column is present on the data object table it is used." />
 If <code>color_</code> column is present on the data object table it is used.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for SC</span>
+    <pre class="usage"><span class='co'># S3 method for TRI</span>
+<span class='fu'>plot3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for TRI0</span>
+<span class='fu'>plot3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for sc</span>
+<span class='fu'>plot3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for TRI</span>
+<span class='fu'>persp3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='co'># S3 method for TRI0</span>
+<span class='fu'>persp3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='co'># S3 method for SC</span>
 <span class='fu'>plot3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for SC0</span>
-<span class='fu'>plot3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='co'># S3 method for QUAD</span>
 <span class='fu'>plot3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for PATH</span>
@@ -139,9 +151,6 @@ If <code>color_</code> column is present on the data object table it is used.</p
 <span class='fu'>plot3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for ARC</span>
-<span class='fu'>plot3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='co'># S3 method for TRI</span>
 <span class='fu'>plot3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -169,8 +178,7 @@ If <code>color_</code> column is present on the data object table it is used.</p
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>silicate</span>)
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/silicate/man/SC.html'>SC</a></span>(<span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_read.html'>read_sf</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"shape"</span>, <span class='st'>"nc.shp"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"sf"</span>)) <span class='kw'>%&gt;%</span>
    <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>color_</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/palettes.html'>rainbow</a></span>(<span class='fl'>100</span>)))
-<span class='fu'>plot3d</span>(<span class='no'>x</span>); <span class='kw pkg'>rgl</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/rgl/man/rglwidget.html'>rglwidget</a></span>()
-<span class='no'>worldz</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='QUAD.html'>QUAD</a></span>(<span class='no'>gebco1</span>)</div></pre>
+<span class='fu'>plot3d</span>(<span class='no'>x</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

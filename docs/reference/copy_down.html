@@ -70,7 +70,7 @@ vertex level." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">anglr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9006</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.4</span>
       </span>
     </div>
 
@@ -169,12 +169,11 @@ there's not overlap ... WIP)</p>
 to expand out values, and nothing to stop the use of non numeric values being copied down. It's your model.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>raster</span>)
-<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span>(<span class='no'>volcano</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>raster</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: sp</span></div><div class='input'><span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span>(<span class='no'>volcano</span>)
 <span class='no'>cl</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/silicate/man/SC.html'>SC</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/raster/man/rasterToContour.html'>rasterToContour</a></span>(<span class='no'>r</span>))
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'>copy_down</span>(<span class='no'>cl</span>, <span class='no'>r</span>)); <span class='kw pkg'>rgl</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/rgl/man/rglwidget.html'>rglwidget</a></span>()
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'>copy_down</span>(<span class='no'>cl</span>, <span class='no'>r</span>))
 <span class='co'>## looks funny?</span>
-<span class='fu'><a href='auto_3d.html'>auto_3d</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>15</span>); <span class='kw pkg'>rgl</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/rgl/man/rglwidget.html'>rglwidget</a></span>()</div><div class='output co'>#&gt; [1] "original axis lengths x,y,z:  0.9836066, 0.9885057,90.0985107"
+<span class='fu'><a href='auto_3d.html'>auto_3d</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>15</span>)</div><div class='output co'>#&gt; [1] "original axis lengths x,y,z:  0.9836066, 0.9885057,90.0985107"
 #&gt; [1] "applying 'aspect3d(1.000, 1.000, 0.164)'"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

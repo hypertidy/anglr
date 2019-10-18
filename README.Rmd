@@ -33,7 +33,7 @@ Topology is the relationships between shapes, what kinds of shapes they are, the
 
 The key concept is that of a **mesh** - a set of *primitives* (topology) and *vertices* (geometry) stored in an efficient, indexed structure. We aren't limited only to [polygonal meshes](https://en.wikipedia.org/wiki/Polygon_mesh), anglr treats linear features in the same way and considers points to be a kind of degenerate mesh form. This is the more general mathematical concept known as the [simplicial complex](https://en.wikipedia.org/wiki/Simplicial_complex) and we use the [silicate](https://github.com/hypertidy/silicate/) framework to build the converters and visualization tools provided by anglr. 
 
-In general, mesh forms are richer and more capable than their spatial counterparts, we can represent a spatial data type completely and losslessly as a mesh, but the reverse is usually not possible. 
+In general, mesh forms are richer and more capable than their spatial counterparts, we can represent a spatial data type completely and losslessly as a mesh, but the reverse is usually not possible without using expensive workarounds and throwing away the topology. 
 
 ## Topological forms for spatial data
 

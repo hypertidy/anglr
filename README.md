@@ -37,7 +37,8 @@ anglr.
 
 In general, mesh forms are richer and more capable than their spatial
 counterparts, we can represent a spatial data type completely and
-losslessly as a mesh, but the reverse is usually not possible.
+losslessly as a mesh, but the reverse is usually not possible without
+using expensive workarounds and throwing away the topology.
 
 ## Topological forms for spatial data
 

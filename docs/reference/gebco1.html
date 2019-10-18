@@ -70,7 +70,7 @@ data is Gebco 2014, converted to a much reduced 1 degree resolution global map."
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">anglr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9006</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.4</span>
       </span>
     </div>
 
@@ -123,18 +123,7 @@ data is Gebco 2014, converted to a much reduced 1 degree resolution global map.<
 <span class='no'>laea</span> <span class='kw'>&lt;-</span> <span class='st'>"+proj=laea +lon_0=147 +lat_0=-42"</span>
 <span class='no'>longlat</span> <span class='kw'>&lt;-</span> <span class='st'>"+init=epsg:4326"</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/silicate/man/SC.html'>SC</a></span>(<span class='no'>simpleworld</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='copy_down.html'>copy_down</a></span>(<span class='no'>gebco1</span> + <span class='fl'>500</span>)
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>x</span>); <span class='kw pkg'>rgl</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/rgl/man/aspect3d.html'>aspect3d</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0.07</span>);<span class='kw pkg'>rgl</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/rgl/man/rglwidget.html'>rglwidget</a></span>()
-
-<span class='co'>## WARNING: SC doesn't have meta yet ...</span>
-<span class='co'>## this is a lossless transformation of raster and vector to a projected</span>
-<span class='co'>## 3D scene</span>
-<span class='co'>#x$vertex[c("x_", "y_")] &lt;- reproj::reproj(as.matrix(x$vertex[c("x_", "y_")])[, 1:2, drop = FALSE], </span>
-<span class='co'>#   target = laea, source = longlat)</span>
-<span class='co'>#if (requireNamespace("quadmesh", quietly = TRUE)) {</span>
- <span class='co'>#qm &lt;- quadmesh::quadmesh(raster::aggregate(gebco1, fact = 4)); </span>
-<span class='co'>#  qm$vb[1:2, ] &lt;- t(proj4::ptransform(t(qm$vb[1:2, ]) * pi/180, longlat, laea))[1:2, ]</span>
-<span class='co'># plot3d(x); rgl::shade3d(qm, col = "white");  rgl::aspect3d(1, 1, 0.4); rgl::rglwidget()</span>
-<span class='co'>#}</span></div></pre>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>x</span>); <span class='kw pkg'>rgl</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/rgl/man/aspect3d.html'>aspect3d</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0.07</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
