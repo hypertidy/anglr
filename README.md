@@ -13,31 +13,68 @@ Status](https://img.shields.io/codecov/c/github/hypertidy/anglr/master.svg)](htt
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+# anglr
+
+The anglr package aims to provide direct access to the inherent
+properties of *shape* and the power of topological techniques.
+
+Topology is the relationships between shapes, what kinds of shapes they
+are, the pieces they are composed of and which pieces are neighbours and
+how they are connected.
+
+## Mesh power\!
+
+The key concept is that of a **mesh** - a set of *primitives* (topology)
+and *vertices* (geometry) stored in an efficient, indexed structure. We
+aren’t limited only to [polygonal
+meshes](https://en.wikipedia.org/wiki/Polygon_mesh), anglr treats linear
+features in the same way and considers points to be a kind of degenerate
+mesh form. This is the more general mathematical concept known as the
+[simplicial complex](https://en.wikipedia.org/wiki/Simplicial_complex)
+and we use the [silicate](https://github.com/hypertidy/silicate/)
+framework to build the converters and visualization tools provided by
+anglr.
+
+In general, mesh forms are richer and more capable than their spatial
+counterparts, we can represent a spatial data type completely and
+losslessly as a mesh, but the reverse is usually not possible.
+
 ## Topological forms for spatial data
 
-The `anglr` package generalizes GIS in R with a flexible approach to
-spatial data, using *topological forms* that can be derived from a
-variety of data types:
+Spatial data (especially in a [GIS
+context](https://en.wikipedia.org/wiki/Geographic_information_system))
+typically are not delivered or used with topology in mind, precluding a
+huge range of useful techniques for analysis and visualization. When
+topology is invoked it is usually inaccessible and hidden from view,
+remote from users and only available via tortuous workarounds or
+prescriptive interfaces.
+
+The `anglr` package generalizes GIS and geo-spatial data types,
+providing meshes that can be generated from:
 
   - simple features or Spatial objects
-  - rgl 3D objects
   - trip objects (and general animal tracking data types)
-  - [silicate](https://github.com/hypertidy/silicate) forms
-  - raster grids
-  - many others are readily available, get in touch\!
+  - raster grids (WIP).
+
+Many others are readily available, and will be provided in turn - if you
+have something you want as a mesh please get in touch\!
 
 To do this anglr works with forms defined by
 [silicate](https://github.com/hypertidy/silicate) and (after
-[rgl](https://cran.r-project.org/package=rgl)) and provides `plot3d()`
-methods for each of the models `SC()`, `PATH()`, `ARC()` and `TRI()`.
-The anglr package adds two more `DEL()` (for high-quality triangulation)
-and `QUAD()` (very WIP, for raster data).
+[rgl](https://cran.r-project.org/package=rgl)) provides `plot3d()`
+methods for each type. We can call `plot3d()` directly, or first convert
+with `as.mesh3d()`. The anglr package adds two more models to the
+silicate suite of SC, TRI, PATH, and ARC with `DEL()` (for high-quality
+triangulation) and `QUAD()` (very WIP, for raster data).
 
 # Usage
 
 The general approach is to re-model the data into mesh-form via one of
-the models, then `copy_down()` attribute or raster data to a Z
-coordinate, and plot with `plot3d()`:
+the models. If the model has a Z coordinate it will be preserved and
+used, otherwise a nominal value of 0 is used. Alternatively, we can
+`copy_down()` attribute or raster data to a Z coordinate.
+
+Finally, we plot the object in an interactive scene with `plot3d()`:
 
 ``` r
 ## PSEUDOCODE
