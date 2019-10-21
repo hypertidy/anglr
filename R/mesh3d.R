@@ -59,7 +59,7 @@ as.mesh3d.TRI <- function(x, keep_all = TRUE, ..., meshColor = "faces") {
   
   ## primitives
   pindex <- x$triangle
-  
+  if (!is.null(pindex[["visible_"]])) pindex <- dplyr::filter(pindex, .data$visible_)
   material <- list(...)$material
   set_color <- is.null(material) && is.null(material$color)
   
