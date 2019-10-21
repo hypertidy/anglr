@@ -43,11 +43,17 @@ edge_RTriangle <- function(x, ...) {
   RTriangle::triangulate(ps, ...)
 }
 
+edge_RTriangle0 <- function(x, ...) {
+  ps <- RTriangle::pslg(P = as.matrix(x[["vertex"]][c("x_", "y_")]),
+                        S = as.matrix(silicate::sc_edge(x)[c(".vx0", ".vx1")]))
+  RTriangle::triangulate(ps, ...)
+}
+
 path_triangle_map <- function(x, RTri) {
   centroids <- matrix(unlist(lapply(split(RTri[["P"]][t(RTri[["T"]]), ], rep(seq(nrow(RTri$T)), each = 3)), .colMeans, 3, 2)),
                       ncol = 2, byrow = TRUE)
   ex <- extents(x)
-  gm <- x[["path"]]
+  gm <- sc_path(x) ## x[["path"]]
   ## map of which points to look up
   
   pipmap <- split(ex, ex$path_)[unique(ex$path_)] %>%
