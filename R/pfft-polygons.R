@@ -53,7 +53,7 @@ path_triangle_map <- function(x, RTri) {
   centroids <- matrix(unlist(lapply(split(RTri[["P"]][t(RTri[["T"]]), ], rep(seq(nrow(RTri$T)), each = 3)), .colMeans, 3, 2)),
                       ncol = 2, byrow = TRUE)
   ex <- extents(x)
-  gm <- sc_path(x) ## x[["path"]]
+  gm <- silicate::sc_path(x) ## x[["path"]]
   ## map of which points to look up
   
   pipmap <- split(ex, ex$path_)[unique(ex$path_)] %>%

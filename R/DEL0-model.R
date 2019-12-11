@@ -17,7 +17,7 @@ DEL0.PATH0 <- function(x, ..., max_area = NULL) {
   ptm$object_ <- omap$object_[match(ptm$path_, omap$path_)]
   ptm <- ptm %>% dplyr::group_by(.data$object_, .data$triangle_idx) %>% 
     dplyr::filter(!(dplyr::n() %% 2 == 0)) %>% dplyr::ungroup()
-  path <-  sc_path(x)
+  path <-  silicate::sc_path(x)
   vertex <- tibble::tibble(x_ = RTri$P[,1], y_ = RTri$P[,2]) 
 
   tridf <- setNames(as.data.frame(RTri$T), c(".vx0", ".vx1", ".vx2"))[ptm$triangle_idx, ]
