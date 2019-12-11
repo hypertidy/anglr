@@ -1,32 +1,5 @@
-#' Reproject
-#' 
-#' Reproject with reproj
-#' @name reproj
-#' @inheritParams reproj::reproj
-#' @importFrom reproj reproj
-#' @export reproj
-reproj.sc <- function(x, target = NULL, ..., source = NULL) {
-  # if (is.null(target)) {
-  #   target <- make_local(x, family = family)
-  # }
-  if (is.null(source)) source <- get_proj(x)
 
-  verts <- get_vertex(x)
-  verts$z_ <- if (is.null(x$vertex$z_)) 0 else x$vertex$z_
-  if (inherits(x, "QUAD") && is.null(x$vertex)) {
-    x$vertex <- verts
-    x$quad <- NULL
-  }
-  x$vertex[c("x_", "y_", "z_")] <- tibble::as_tibble(reproj::reproj(as.matrix(verts[c("x_", "y_", "z_")]), 
-                                               source = source, 
-                                               target = target))
-  meta <- get_meta(x)
-  meta["ctime"] <- Sys.time()
-  meta["proj"] <- target
-  x$meta <- rbind(meta, x$meta)
-  x
-                                                  
-}
+
 defaults <- function(x) {
   x[intersect(c("proj", "lon_0", "lat_0", "datum"), names(x))]
 }

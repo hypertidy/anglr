@@ -28,7 +28,8 @@
 #'  \code{\link{plot3d.SC}} \tab plot 1D topology in 3D geometry space \cr
 #'  \code{\link{plot3d.TRI}} \tab plot 2D topology in 3D geometry space (DEL or TRI) \cr
 #' }
-#'
+#' @importFrom reproj reproj
+#' @export reproj
 NULL
 
 
