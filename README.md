@@ -13,7 +13,7 @@ Status](https://img.shields.io/codecov/c/github/hypertidy/anglr/master.svg)](htt
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# anglr
+# anglr <img src="data-raw/anglr-logo.png" align="right"  height="384" />
 
 The anglr package aims to provide direct access to the inherent
 properties of *shape* and the power of topological techniques.
@@ -275,8 +275,7 @@ problems, or these notes don’t make sense.
 
 On Linux you will need at least the following installed by an
 administrator, here tested on Ubuntu Xenial 16.04 (note the
-apt/sources.list is specific to
-version).
+apt/sources.list is specific to version).
 
 ``` bash
 ## key for apt-get update, see http://cran.r-project.org/bin/linux/ubuntu/README
