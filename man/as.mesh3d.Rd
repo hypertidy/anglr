@@ -3,11 +3,14 @@
 \name{as.mesh3d}
 \alias{as.mesh3d}
 \alias{as.mesh3d.TRI}
+\alias{as.mesh3d.default}
 \alias{as.mesh3d.TRI0}
 \alias{as.mesh3d.matrix}
 \title{Mesh3d objects}
 \usage{
 \method{as.mesh3d}{TRI}(x, keep_all = TRUE, ..., meshColor = "faces")
+
+\method{as.mesh3d}{default}(x, ...)
 
 \method{as.mesh3d}{TRI0}(x, ..., meshColor = "faces")
 

@@ -81,7 +81,12 @@ as.mesh3d.TRI <- function(x, keep_all = TRUE, ..., meshColor = "faces") {
   if (set_color) out$material$color <- object_colors
   out
 }
-
+#' @name as.mesh3d
+#' @export
+as.mesh3d.default <- function(x,  ...) {
+  ## deal with sf, sp, PATH, PATH0
+  as.mesh3d(TRI0(x), ...)
+}
 #' @name as.mesh3d
 #' @export
 as.mesh3d.TRI0 <- function(x, ..., meshColor = "faces") {
@@ -131,7 +136,11 @@ as.mesh3d.matrix <- function(x,...) {
                material = list(color = cols[scales::rescale(v, to = c(1, 100))])
   )
 }
-
+#' @name
+#' @export
+as.mesh3d.BasicRaster <- function(x, ...) {
+  as.mesh3d(QUAD(x), ..)
+}
 #' @name
 #' @export
 as.mesh3d.QUAD <- function(x, ...) {
