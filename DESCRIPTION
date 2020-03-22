@@ -23,7 +23,9 @@ Imports:
     unjoin,
     magrittr,
     tidyr,
-    polyclip
+    polyclip,
+    gridBase,
+    scales
 Suggests: 
     covr,
     ggplot2,

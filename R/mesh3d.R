@@ -132,22 +132,20 @@ as.mesh3d.matrix <- function(x,...) {
   )
 }
 
-
+#' @name
+#' @export
 as.mesh3d.QUAD <- function(x, ...) {
   scl <- function(x) (x - min(x, na.rm = TRUE))/diff(range(x, na.rm = TRUE))
 
   v <- get_vertex(x)
-  qXv <- get_qXv(x)
-  ib <- matrix(qXv$vertex_, nrow = 4)
-
-  xx <- v$x_[ib]
-  yy <- v$y_[ib]
-  zz <- rep(x$quad$value, each = 4L)
-  vb <- rbind(xx, yy, zz, 1)
+  m <- matrix(x$quad$value, x$object$ncols)
+  zz <- vxy(m)
+  vb <- rbind(v$x_, v$y_, zz, 1)
 
   cols <- viridis::viridis(84)
-
-  rgl::qmesh3d(vb, ib, material = list(color = cols[scl(x$quad$value) * length(cols) + 1]), meshColor = "faces")
+  rgl::qmesh3d(vb, get_index(x),
+        material = list(color = cols[scl(x$quad$value) * length(cols) + 1]),
+         meshColor = "faces")
 
 }
 
