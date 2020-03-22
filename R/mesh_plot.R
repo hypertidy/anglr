@@ -63,9 +63,6 @@ vxy <- function(x, ...) {
 #' @name mesh_plot
 #' @export
 mesh_plot <- function(x, crs = NULL, col = NULL, add = FALSE, zlim = NULL, ..., coords = NULL) {
-  if ("colfun" %in% names(list(...))) {
-    warning("argument colfun is deprecated, please use 'col' as per base plot")
-  }
   UseMethod("mesh_plot")
 }
 #' @name mesh_plot
@@ -90,7 +87,15 @@ mesh_plot.mesh3d <-
     ## TODO: determine face or vertex colouring and
     ## expand to face (with a message that vertex not supported)
     ## if colours present, otherwise build colours from z
-    cols <- viridis::viridis(100)[scales::rescale(x$vb[3L, id[1L, ]], c(1, 100))]
+    if (is.null(col))  {
+      if (is.null(x$material$color)) {
+        cols <- viridis::viridis(100)[scales::rescale(x$vb[3L, id[1L, ]], c(1, 100))]
+      } else {
+        cols <- x$material$color
+      }
+    } else {
+      cols <- col
+    }
     xx <- list(x = xx, y = yy, id = ID, col = cols)
 
     ## if (isLL) 1/cos(mean(xx$y, na.rm = TRUE) * pi/180) else 1

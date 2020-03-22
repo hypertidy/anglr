@@ -139,6 +139,8 @@ as.mesh3d.matrix <- function(x,...) {
 #' @name
 #' @export
 as.mesh3d.BasicRaster <- function(x, ...) {
+  ## consider the case where x has 3 layers (xcrd, ycrd, zval) or we use
+  ## arguments of the generic as.mesh3d(x, y, z) with 3 (or 2) separate rasters
   as.mesh3d(QUAD(x), ..)
 }
 #' @name
@@ -151,10 +153,18 @@ as.mesh3d.QUAD <- function(x, ...) {
   zz <- vxy(m)
   vb <- rbind(v$x_, v$y_, zz, 1)
 
+  if ("material" %in% names(list(...))) {
+    material <- list(...)$material
+    dots <- list(...)
+    dots$material <- NULL
+  } else {
+    material <- list(color = cols[scl(x$quad$value) * length(cols) + 1])
+  }
+
   cols <- viridis::viridis(84)
-  rgl::qmesh3d(vb, get_index(x),
-        material = list(color = cols[scl(x$quad$value) * length(cols) + 1]),
-         meshColor = "faces")
+  do.call(rgl::qmesh3d, c(list(vertices = vb, indices = get_index(x),
+        material = material,
+         meshColor = "faces"), dots))
 
 }
 
