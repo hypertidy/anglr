@@ -1,7 +1,7 @@
 #' Tidy tables for topological spatial data structures.
 #'
 #' The 'anglr' package show-cases getting past limitations in spatial data by
-#' extending models in the `silicate`` package:  
+#' extending models in the `silicate`` package:
 #' \itemize{
 #'  \item coordinates beyond X and Y, or longitude and latitude
 #'  \item storing attributes on vertices, primitives, branches (parts), or objects
@@ -9,7 +9,7 @@
 #'  \item spatial data can be properly represented as a graph of spatial primitives
 #'  \item polygons as true surfaces, not just glorified lines with a path-filling rule
 #'  \item TBD higher dimensional primitives are possible
-#'  \item TBD n-dimensional rasters with curvilinear coordinates, and the discrete-continuous distinction 
+#'  \item TBD n-dimensional rasters with curvilinear coordinates, and the discrete-continuous distinction
 #' }
 #'
 #' @name anglr-package
@@ -28,43 +28,49 @@
 #'  \code{\link{plot3d.SC}} \tab plot 1D topology in 3D geometry space \cr
 #'  \code{\link{plot3d.TRI}} \tab plot 2D topology in 3D geometry space (DEL or TRI) \cr
 #' }
-#' @importFrom reproj reproj
-#' @export reproj
 NULL
 
+#' Coordinate reprojection
+#'
+#' The [reproj()] function is imported from the [reproj::reproj()] package
+#' and re-exported.
+#' @importFrom reproj reproj
+#' @export reproj
+#' @name reproj
+NULL
 
-#' sf data frame zoo. 
-#' 
-#' Each kind of geometry in an sf data frame, in a list. 
+#' sf data frame zoo.
+#'
+#' Each kind of geometry in an sf data frame, in a list.
 #' @name sf_data_zoo
-#' @docType data 
+#' @docType data
 NULL
 
 #' Cadastre and Contour
-#' 
-#' Sympatric cadastre layer and line contour layer. 
+#'
+#' Sympatric cadastre layer and line contour layer.
 #' @name cad_tas
 #' @aliases cont_tas
-#' @docType data 
+#' @docType data
 NULL
 
-#' simple world 
-#' 
+#' simple world
+#'
 #' A simple polygon map of world sovereign countries, a modified copy of
-#' the rnaturalearth counties110 (see data-raw/simpleworld.R for details). 
+#' the rnaturalearth counties110 (see data-raw/simpleworld.R for details).
 #' @name simpleworld
-#' @docType data 
+#' @docType data
 #' @examples
 #' DEL(simpleworld[1:10, ])
 NULL
 
 
 #' simple world elevation raster
-#' 
+#'
 #' A simple raster map of world topography, elevation relative to sea level in metres. Source
-#' data is Gebco 2014, converted to a much reduced 1 degree resolution global map.  
+#' data is Gebco 2014, converted to a much reduced 1 degree resolution global map.
 #' @name gebco1
-#' @docType data 
+#' @docType data
 #' @examples
 #' data("gebco1", package = "anglr")
 #' library(silicate)
