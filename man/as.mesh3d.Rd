@@ -4,11 +4,14 @@
 \alias{as.mesh3d}
 \alias{as.mesh3d.TRI}
 \alias{as.mesh3d.TRI0}
+\alias{as.mesh3d.matrix}
 \title{Mesh3d objects}
 \usage{
 \method{as.mesh3d}{TRI}(x, keep_all = TRUE, ..., meshColor = "faces")
 
 \method{as.mesh3d}{TRI0}(x, ..., meshColor = "faces")
+
+\method{as.mesh3d}{matrix}(x, ...)
 }
 \arguments{
 \item{x}{An object of class \code{TRI} or \code{TRI0}}
@@ -29,7 +32,7 @@ x <- silicate::TRI(sf)
 library(rgl)
 clear3d(); plot3d(x); view3d(phi = -10)
 
-# manual face colours (it's not guaranteed that triangle order is native 
+# manual face colours (it's not guaranteed that triangle order is native
 # within original objects)
 
 clear3d(); plot3d(as.mesh3d(x, material = list(color = rainbow(14))))
