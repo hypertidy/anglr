@@ -1,9 +1,10 @@
-TRI_xyz <- function(x) {
+TRI_xyz <- function(x, z) {
+  if (missing(z)) z <- 0
   haveZ <- "z_" %in% names(x$vertex)
   if (haveZ) {
     xyz <- as.matrix(x$vertex[c("x_", "y_", "z_")])
   } else {
-    xyz <- cbind(as.matrix(x$vertex[c("x_", "y_")]), 0)
+    xyz <- cbind(as.matrix(x$vertex[c("x_", "y_")]), z)
   }
   xyz
 }
@@ -15,16 +16,29 @@ TRI_add_shade <- function(x) {
 }
 
 
+## consider args: z (as in as.mesh3d.tri)
+##                triangles (can bust quads into tri)
+##                col  (interleave with material = list()?)
+##                normals, texcoords (but what for ...,
+##                -- we can add texture, smooth for addNormals()
+##  smooth - addNormals?
+##                texture = RGBraster
+
+
 #' Mesh3d objects
 #'
 #' Methods for the mesh3d type from package rgl
 #'
 #'
+#' The 'z' argument can be a constant value or a vector of values to be
+#' used for each vertex. Alternatively, it may be a spatial raster object
+#' from which 'z' values are derived. If not set, the vertex 'z_' value
+#' from TRI/TRI0 is used, otherwise z = 0' is assumed.
 #' @param x An object of class `TRI` or `TRI0`
-#' @param keep_all whether to keep non-visible triangles
+#' @param z numeric vector or raster object (see details)
 #' @param ... arguments passed to [rgl::tmesh3d()]
 #' @param meshColor rule for material properties used for colours (see [rgl::tmesh3d])
-#'
+#' @param keep_all whether to keep non-visible triangles
 #' @name as.mesh3d
 #' @importFrom rgl as.mesh3d tmesh3d
 #' @export as.mesh3d
@@ -53,9 +67,18 @@ TRI_add_shade <- function(x) {
 #'
 #' # (TRI0 - it *is* guaranteed that triangle order is native)
 #' clear3d(); plot3d(as.mesh3d(x0,  material = list(color = rainbow(14))))
-as.mesh3d.TRI <- function(x, keep_all = TRUE, ..., meshColor = "faces") {
+#'
+#' ## arbitrarily drape polygons over raster
+#' r <- raster::setExtent(raster::raster(volcano), raster::extent(-0.1, 1.1, -0.1, 1.1))
+#' clear3d();shade3d(as.mesh3d(DEL(silicate::minimal_mesh, max_area = 0.001), z =r))
+#' aspect3d(1, 1, 0.5)
+as.mesh3d.TRI <- function(x, z,  ..., meshColor = "faces", keep_all = TRUE) {
   x <- TRI_add_shade(x)  ## sets color_ if not present
-  vb <- TRI_xyz(x)
+  if (!missing(z) && inherits(z, "BasicRaster")) {
+    z <- raster::extract(z[[1]], cbind(x$vertex$x_, x$vertex$y_), method = "bilinear")
+  }
+
+  vb <- TRI_xyz(x, z)
 
   ## primitives
   pindex <- x$triangle
@@ -113,9 +136,9 @@ as.mesh3d.TRI0 <- function(x, ..., meshColor = "faces") {
 
 #' @name as.mesh3d
 #' @export
-as.mesh3d.matrix <- function(x,...) {
+as.mesh3d.matrix <- function(x, triangles = FALSE, ...) {
   ## from https://github.com/hypertidy/quadmesh/blob/80380db26153615c365dc67b64465448beab2832/R/exy_values.R#L51-L72
-  v <- vxy(x)
+  vals <- vxy(x)
   exy <- edges_xy(x)
 
   dm <- dim(x)
@@ -131,21 +154,31 @@ as.mesh3d.matrix <- function(x,...) {
   ## for a matrix, we are done
   ## for raster, we have to apply the extent transformation
   cols <- viridis::viridis(100)
-  rgl::qmesh3d(rbind(t(exy), v, 1),
+  ## deal with triangles = TRUE
+  if (!triangles) {
+  out <- rgl::qmesh3d(rbind(t(exy), vals, 1),
                ind1,
-               material = list(color = cols[scales::rescale(v, to = c(1, 100))])
+               material = list(color = cols[scales::rescale(vals, to = c(1, 100))])
   )
+  } else {
+    vals <- rep(vals, each = 2L)
+    out <- rgl::tmesh3d(rbind(t(exy), vals, 1),
+                 .quad2tri( ind1),
+                 material = list(color = cols[scales::rescale(vals, to = c(1, 100))])
+    )
+  }
+  out
 }
 #' @name
 #' @export
-as.mesh3d.BasicRaster <- function(x, ...) {
+as.mesh3d.BasicRaster <- function(x, triangles = FALSE, ...) {
   ## consider the case where x has 3 layers (xcrd, ycrd, zval) or we use
   ## arguments of the generic as.mesh3d(x, y, z) with 3 (or 2) separate rasters
-  as.mesh3d(QUAD(x), ..)
+  as.mesh3d(QUAD(x), triangles = triangles, ..)
 }
 #' @name
 #' @export
-as.mesh3d.QUAD <- function(x, ...) {
+as.mesh3d.QUAD <- function(x, triangles = FALSE, ...) {
   scl <- function(x) (x - min(x, na.rm = TRUE))/diff(range(x, na.rm = TRUE))
 
   v <- get_vertex(x)
@@ -153,19 +186,31 @@ as.mesh3d.QUAD <- function(x, ...) {
   zz <- vxy(m)
   vb <- rbind(v$x_, v$y_, zz, 1)
 
+  cols <- viridis::viridis(84)
   if ("material" %in% names(list(...))) {
     material <- list(...)$material
     dots <- list(...)
     dots$material <- NULL
   } else {
-    material <- list(color = cols[scl(x$quad$value) * length(cols) + 1])
+    vals <- x$quad$value
+    if (triangles) vals <- rep(vals, each = 2)
+    material <- list(color = cols[scl(vals) * length(cols) + 1])
+    dots <- NULL
   }
 
-  cols <- viridis::viridis(84)
-  do.call(rgl::qmesh3d, c(list(vertices = vb, indices = get_index(x),
+
+  ## deal with triangles = TRUE
+  if (!triangles) {
+  out <- do.call(rgl::qmesh3d, c(list(vertices = vb, indices = get_index(x),
         material = material,
          meshColor = "faces"), dots))
+  } else {
+    out <- do.call(rgl::tmesh3d, c(list(vertices = vb, indices = .tri2quads(get_index(x)),
+                                        material = material,
+                                        meshColor = "faces"), dots))
 
+  }
+  out
 }
 
 

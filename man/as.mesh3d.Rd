@@ -8,25 +8,33 @@
 \alias{as.mesh3d.matrix}
 \title{Mesh3d objects}
 \usage{
-\method{as.mesh3d}{TRI}(x, keep_all = TRUE, ..., meshColor = "faces")
+\method{as.mesh3d}{TRI}(x, z, ..., meshColor = "faces", keep_all = TRUE)
 
 \method{as.mesh3d}{default}(x, ...)
 
 \method{as.mesh3d}{TRI0}(x, ..., meshColor = "faces")
 
-\method{as.mesh3d}{matrix}(x, ...)
+\method{as.mesh3d}{matrix}(x, triangles = FALSE, ...)
 }
 \arguments{
 \item{x}{An object of class \code{TRI} or \code{TRI0}}
 
-\item{keep_all}{whether to keep non-visible triangles}
+\item{z}{numeric vector or raster object (see details)}
 
 \item{...}{arguments passed to \code{\link[rgl:tmesh3d]{rgl::tmesh3d()}}}
 
 \item{meshColor}{rule for material properties used for colours (see \link[rgl:tmesh3d]{rgl::tmesh3d})}
+
+\item{keep_all}{whether to keep non-visible triangles}
 }
 \description{
 Methods for the mesh3d type from package rgl
+}
+\details{
+The 'z' argument can be a constant value or a vector of values to be
+used for each vertex. Alternatively, it may be a spatial raster object
+from which 'z' values are derived. If not set, the vertex 'z_' value
+from TRI/TRI0 is used, otherwise z = 0' is assumed.
 }
 \examples{
 sf <- silicate::minimal_mesh
@@ -52,4 +60,9 @@ clear3d(); plot3d(x0); view3d(phi = -10)
 
 # (TRI0 - it *is* guaranteed that triangle order is native)
 clear3d(); plot3d(as.mesh3d(x0,  material = list(color = rainbow(14))))
+
+## arbitrarily drape polygons over raster
+r <- raster::setExtent(raster::raster(volcano), raster::extent(-0.1, 1.1, -0.1, 1.1))
+clear3d();shade3d(as.mesh3d(DEL(silicate::minimal_mesh, max_area = 0.001), z =r))
+aspect3d(1, 1, 0.5)
 }

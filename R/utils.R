@@ -85,3 +85,16 @@ path2seg <- function(x) {
 trimesh_cols <- function(n) {
   viridis::viridis(n)
 }
+
+## from quadmesh::triangulate_quads
+.quad2tri <- function (quad_index, clockwise = FALSE)
+{
+  if (clockwise) {
+    matrix(rbind(quad_index[c(1L, 2L, 4L), ], quad_index[c(2L,
+                                                           3L, 4L), ]), 3L)
+  }
+  else {
+    matrix(rbind(quad_index[c(1L, 4L, 2L), ], quad_index[c(4L,
+                                                           3L, 2L), ]), 3L)
+  }
+}
