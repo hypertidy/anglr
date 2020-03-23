@@ -73,7 +73,10 @@ find_geom_column <- function(x) {
 
 # is there a screen device
 screen_device <- function() {
-  sum(na.omit(capabilities()[c("X11", "aqua")])) > 0 || exists("windows")
+  caps <- capabilities()[c("X11", "aqua")]
+  ## can't use stats::na.omit() in .onLoad()
+  caps <- caps[!is.na(caps)]
+ length(caps) > 0 &&  (sum(caps) > 0 || exists("windows"))
 }
 
 #' @importFrom utils head

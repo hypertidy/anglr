@@ -174,7 +174,7 @@ as.mesh3d.matrix <- function(x, triangles = FALSE, ...) {
 as.mesh3d.BasicRaster <- function(x, triangles = FALSE, ...) {
   ## consider the case where x has 3 layers (xcrd, ycrd, zval) or we use
   ## arguments of the generic as.mesh3d(x, y, z) with 3 (or 2) separate rasters
-  as.mesh3d(QUAD(x), triangles = triangles, ..)
+  as.mesh3d(QUAD(x), triangles = triangles, ...)
 }
 #' @name
 #' @export
@@ -205,7 +205,7 @@ as.mesh3d.QUAD <- function(x, triangles = FALSE, ...) {
         material = material,
          meshColor = "faces"), dots))
   } else {
-    out <- do.call(rgl::tmesh3d, c(list(vertices = vb, indices = .tri2quads(get_index(x)),
+    out <- do.call(rgl::tmesh3d, c(list(vertices = vb, indices = .quad2tri(get_index(x)),
                                         material = material,
                                         meshColor = "faces"), dots))
 
