@@ -3,18 +3,31 @@
 \name{as.mesh3d}
 \alias{as.mesh3d}
 \alias{as.mesh3d.TRI}
-\alias{as.mesh3d.default}
 \alias{as.mesh3d.TRI0}
 \alias{as.mesh3d.matrix}
 \title{Mesh3d objects}
 \usage{
-\method{as.mesh3d}{TRI}(x, z, ..., meshColor = "faces", keep_all = TRUE)
-
-\method{as.mesh3d}{default}(x, ...)
+\method{as.mesh3d}{TRI}(
+  x,
+  z,
+  smooth = FALSE,
+  normals = NULL,
+  texcoords = NULL,
+  ...,
+  meshColor = "faces",
+  keep_all = TRUE
+)
 
 \method{as.mesh3d}{TRI0}(x, ..., meshColor = "faces")
 
-\method{as.mesh3d}{matrix}(x, triangles = FALSE, ...)
+\method{as.mesh3d}{matrix}(
+  x,
+  triangles = FALSE,
+  smooth = FALSE,
+  normals = NULL,
+  texcoords = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{An object of class \code{TRI} or \code{TRI0}}

@@ -72,7 +72,8 @@ TRI_add_shade <- function(x) {
 #' r <- raster::setExtent(raster::raster(volcano), raster::extent(-0.1, 1.1, -0.1, 1.1))
 #' clear3d();shade3d(as.mesh3d(DEL(silicate::minimal_mesh, max_area = 0.001), z =r))
 #' aspect3d(1, 1, 0.5)
-as.mesh3d.TRI <- function(x, z,  ..., meshColor = "faces", keep_all = TRUE) {
+as.mesh3d.TRI <- function(x, z,  smooth = FALSE, normals = NULL, texcoords = NULL, ...,
+                          meshColor = "faces", keep_all = TRUE) {
   x <- TRI_add_shade(x)  ## sets color_ if not present
   if (!missing(z) && inherits(z, "BasicRaster")) {
     z <- raster::extract(z[[1]], cbind(x$vertex$x_, x$vertex$y_), method = "bilinear")
@@ -99,17 +100,20 @@ as.mesh3d.TRI <- function(x, z,  ..., meshColor = "faces", keep_all = TRUE) {
   vindex <- match(c(t(as.matrix(pindex[c(".vx0", ".vx1", ".vx2")]))), x$vertex$vertex_)
 
   out <- tmesh3d(rbind(t(vb), h = 1),
-                 matrix(vindex, nrow = 3L), ..., meshColor = meshColor)
+                 matrix(vindex, nrow = 3L),
+                 normals = normals, texcoords = texcoords,
+                 ..., meshColor = meshColor)
+  if (smooth) {
+    out <- rgl::addNormals(out)
+  }
   ## override properties for color?
   if (set_color) out$material$color <- object_colors
   out
 }
-#' @name as.mesh3d
-#' @export
-as.mesh3d.default <- function(x,  ...) {
-  ## deal with sf, sp, PATH, PATH0
-  as.mesh3d(TRI0(x), ...)
-}
+# as.mesh3d.default <- function(x,  ...) {
+#   ## deal with sf, sp, PATH, PATH0
+#   as.mesh3d(TRI0(x), ...)
+# }
 #' @name as.mesh3d
 #' @export
 as.mesh3d.TRI0 <- function(x, ..., meshColor = "faces") {
@@ -136,7 +140,8 @@ as.mesh3d.TRI0 <- function(x, ..., meshColor = "faces") {
 
 #' @name as.mesh3d
 #' @export
-as.mesh3d.matrix <- function(x, triangles = FALSE, ...) {
+as.mesh3d.matrix <- function(x, triangles = FALSE,
+                             smooth = FALSE, normals = NULL, texcoords = NULL, ...) {
   ## from https://github.com/hypertidy/quadmesh/blob/80380db26153615c365dc67b64465448beab2832/R/exy_values.R#L51-L72
   vals <- vxy(x)
   exy <- edges_xy(x)
@@ -158,14 +163,19 @@ as.mesh3d.matrix <- function(x, triangles = FALSE, ...) {
   if (!triangles) {
   out <- rgl::qmesh3d(rbind(t(exy), vals, 1),
                ind1,
+               normals = normals, texcoords = texcoords,
                material = list(color = cols[scales::rescale(vals, to = c(1, 100))])
   )
   } else {
     vals <- rep(vals, each = 2L)
     out <- rgl::tmesh3d(rbind(t(exy), vals, 1),
                  .quad2tri( ind1),
+                 normals = normals, texcoords = texcoords,
                  material = list(color = cols[scales::rescale(vals, to = c(1, 100))])
     )
+  }
+  if (smooth) {
+    out <- rgl::addNormals(out)
   }
   out
 }
@@ -178,7 +188,9 @@ as.mesh3d.BasicRaster <- function(x, triangles = FALSE, ...) {
 }
 #' @name
 #' @export
-as.mesh3d.QUAD <- function(x, triangles = FALSE, ...) {
+as.mesh3d.QUAD <- function(x, triangles = FALSE,
+                           smooth = FALSE, normals = NULL, texcoords = NULL,
+                           ...) {
   scl <- function(x) (x - min(x, na.rm = TRUE))/diff(range(x, na.rm = TRUE))
 
   v <- get_vertex(x)
@@ -202,13 +214,17 @@ as.mesh3d.QUAD <- function(x, triangles = FALSE, ...) {
   ## deal with triangles = TRUE
   if (!triangles) {
   out <- do.call(rgl::qmesh3d, c(list(vertices = vb, indices = get_index(x),
+                                      normals = normals, texcoords = texcoords,
         material = material,
          meshColor = "faces"), dots))
   } else {
     out <- do.call(rgl::tmesh3d, c(list(vertices = vb, indices = .quad2tri(get_index(x)),
+                                        normals = normals, texcoords = texcoords,
                                         material = material,
                                         meshColor = "faces"), dots))
-
+  }
+  if (smooth) {
+    out <- rgl::addNormals(out)
   }
   out
 }
