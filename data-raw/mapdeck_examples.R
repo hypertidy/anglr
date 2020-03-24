@@ -26,12 +26,23 @@ poly_triangle_dense <- as.mesh3d(
   copy_down(anglr::DEL(poly, max_area =.005), quadmesh::etopo)
 )
 #rgl::clear3d();rgl::shade3d(poly_triangle_dense);rgl::aspect3d(1, 1, 0.3)
+
+dodeca <- rgl::scale3d(rgl::translate3d(rgl::dodecahedron3d(), 147, -42, 1),
+                     1, 1, 1e5)
+
+
 saveRDS(list(topo_quad = topo_quad,
              topo_triangle = topo_triangle,
              poly_triangle = poly_triangle,
-             poly_triangle_dense = poly_triangle_dense),
+             poly_triangle_dense = poly_triangle_dense,
+             dodeca_triangle = dodeca),
         file = "data-raw/mesh3d_examples.rds", compress = "xz")
 
 
+
+md <- readRDS("data-raw/mesh3d_examples.rds")
 library(mapdeck)
-mapdeck() %>% add_mesh(data = poly_triangle)
+ptd <- md$poly_triangle_dense
+ptd$vb[3, ] <- ptd$vb[3, ] * 95
+dodeca$vb[3, ]
+mapdeck() %>% add_mesh(data = dodeca)
