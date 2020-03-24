@@ -1,5 +1,8 @@
 # anglr dev
 
+* Now importing crsmeta, to get sf crs '$proj4string' or '$input'. If input is not a
+ proj4string then we'll burn. (Can do manual reprojection until PROJ is here).
+ 
 * Removed QUAD, hopefully temporarily. 
 
 * Support for rgl's `plot3d` and `as.mesh3d` is now greatly improved, and now
