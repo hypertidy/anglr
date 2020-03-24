@@ -57,13 +57,13 @@ saveRDS(list(topo_quad = topo_quad,
              poly_triangle_dense = poly_triangle_dense,
              poly_triangle_colours = poly_triangle_colours,
              dodeca_triangle = dodeca),
-        file = "data-raw/mesh3d_examples.rds", compress = "xz")
+        file = "data-raw/mapdeck_mesh3d_examples.rds", compress = "xz")
 
 
-
-md <- readRDS("data-raw/mesh3d_examples.rds")
-library(mapdeck)
-ptd <- md$poly_triangle_dense
-ptd$vb[3, ] <- ptd$vb[3, ] * 95
-dodeca$vb[3, ]
-mapdeck() %>% add_mesh(data = dodeca)
+#
+# md <- readRDS("data-raw/mapdeck_mesh3d_examples.rds")
+# library(mapdeck)
+# ptd <- md$poly_triangle_dense
+# ptd$vb[3, ] <- ptd$vb[3, ] * 95
+# dodeca$vb[3, ]
+# mapdeck() %>% add_mesh(data = dodeca)
