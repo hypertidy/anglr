@@ -20,7 +20,7 @@ topo_triangle <- as.mesh3d(raster::crop(quadmesh::etopo, raster::extent(100, 180
 #rgl::clear3d();rgl::shade3d(topo_triangle);rgl::aspect3d(1, 1, 0.01);  rgl::rglwidget()
 library(sf)
 poly <- st_transform(subset(silicate::inlandwaters, Province %in% c("Victoria", "South Australia")),
-                     4326) ## reproj via anglr doesn't work atm because WKT2
+                     "+proj=longlat") ## reproj via anglr doesn't work atm because WKT2
 poly_triangle <- as.mesh3d(silicate::TRI0(poly))
 poly_triangle_dense <- as.mesh3d(
   copy_down(anglr::DEL(poly, max_area =.005), quadmesh::etopo)
@@ -57,7 +57,7 @@ saveRDS(list(topo_quad = topo_quad,
              poly_triangle_dense = poly_triangle_dense,
              poly_triangle_colours = poly_triangle_colours,
              dodeca_triangle = dodeca),
-        file = "data-raw/mapdeck_mesh3d_examples.rds", compress = "xz")
+        file = "data-raw/mapdeck/mapdeck_mesh3d_examples.rds", compress = "xz")
 
 
 #
