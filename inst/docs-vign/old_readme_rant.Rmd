@@ -1,0 +1,79 @@
+the inherent properties of *shape* and the power of topological techniques. 
+
+Topology is the relationships between shapes, what kinds of shapes they are, the pieces they are composed of, which pieces are neighbours, and how these are connected. 
+
+## Mesh power!
+
+The key concept is that of a **mesh** - a set of *primitives* (topology) and *vertices* (geometry) stored in an efficient, indexed structure. We aren't limited only to [polygonal meshes](https://en.wikipedia.org/wiki/Polygon_mesh), anglr treats linear features in the same way and considers points to be a kind of degenerate mesh form. This is the more general mathematical concept known as the [simplicial complex](https://en.wikipedia.org/wiki/Simplicial_complex) and we use the [silicate](https://github.com/hypertidy/silicate/) framework to build the converters and visualization tools provided by anglr. 
+
+In general, mesh forms are richer and more capable than their spatial counterparts, we can represent a spatial data type completely and losslessly as a mesh, but the reverse is usually not possible without using expensive workarounds and throwing away the topology. 
+
+## Topological forms for spatial data
+
+Spatial data (especially in a [GIS context](https://en.wikipedia.org/wiki/Geographic_information_system)) typically are not delivered or used with topology in mind, precluding a huge range of useful techniques for analysis and visualization. When topology is invoked it is usually inaccessible and hidden from view, remote from users and only available via tortuous workarounds or prescriptive interfaces. 
+
+The `anglr` package generalizes GIS and geo-spatial data types, providing meshes that can be generated from:  
+
+* simple features or Spatial objects
+* trip objects (and general animal tracking data types)
+* raster grids (WIP). 
+
+Many others are readily available, and will be provided in turn - if you have something you want as a mesh please get in touch!
+
+To do this anglr works with forms defined by [silicate](https://github.com/hypertidy/silicate) and (after [rgl](https://cran.r-project.org/package=rgl)) provides `plot3d()` methods for each type. We can call `plot3d()` directly, or first convert with `as.mesh3d()`. The anglr package adds two  more models to the silicate suite of SC, TRI, PATH, and ARC with `DEL()` (for high-quality triangulation) and `QUAD()` (very WIP, for raster data). 
+
+These models have high-fidelity, they can represent many data structures in complete form and also extend them. The `rgl mesh3d` type is a plot-ready simplified form. For example, mesh3d cannot store hierarchical information like feature-identity, or further attributes - but can encode these as colour or other material properties. For general use we would work with the silicate models, but for quick and easy plotting we convert to mesh3d (either explicitly or implicitly). 
+
+# Usage
+
+* re-model to general form
+* optionallly, copy down vertex attribute/s 
+* plot in 3D!
+* use the mesh ...
+
+The overall approach is to re-model the data into mesh-form, in a format defined by function `TRI()`, `DEL()`, `SC()`, `PATH()`, or `ARC()` (polygons only). If the model has a Z coordinate it will be preserved and used, otherwise a nominal value of 0 is used. 
+
+We can `copy_down()` attribute or raster data to a Z coordinate for data sources that don't already include co-incident elevation data. 
+
+Then, we can plot the object in an interactive scene with `plot3d()`: 
+
+
+```{r usage, eval=FALSE}
+## PSEUDOCODE
+library(anglr)
+sfx <- sf::st_read("some/shapefile.shp")
+araster <- raster::raster("some/gridraster.tif")
+mesh <- as.mesh3d(copy_down(silicate::SC(sfx), araster))
+plot3d(mesh)
+```
+
+Alternatively, we can plot straight to 3D with implicit conversion. 
+
+```{r usage-plot, eval=FALSE}
+library(anglr)
+sfxx <- sf::st_read("some/shapefile.shp")
+plot3d(sfxx)  ## implicit conversion occurs, i.e. as.mesh3d(TRI0(sfxx))
+```
+
+The *copy down* process will copy feature attributes (a constant measure) or raster attributes (a continuous measure) in the appropriate way. After copy the mesh will be unique in XYZ, whereas the usual starting point is uniqueness in XY. 
+
+These *mesh* or *topological* forms can be used to merge disparate data into a single form, or to convert standard spatial objects to `rgl`-ready forms. 
+
+
+
+## Ongoing design
+
+The core work for translating spatial classes is done by the unspecialized 'silicate::PATH' function and its underlying decomposition generics. Ongoing work in the [silicate](https://github.com/hypertidy/silicate) package will improve and support these types more fully. 
+
+Planar polygons and lines are described by the same 1D primitives, and this is easy to do. Harder is to generate 2D primitives and for that we rely on [Jonathan Richard Shewchuk's Triangle](https://www.cs.cmu.edu/~quake/triangle.html). 
+
+Triangulation in DEL is with `RTriangle` package using "constrained mostly-Delaunay Triangulation" from the Triangle library, and TRI in silicate uses ear-clipping via Mapbox's `earcut.hpp` (this is analogous to but faster and more robust than `rgl::triangulate`).  Independent work for mostly-Delaunay methods is in the `laridae` project. 
+
+With RTriangle we can set a max area for the triangles, so it can wrap around curves like globes and hills, and this can only be done by the addition of Steiner points. All of this takes us very far 
+from the path-based types generally used by GIS-alikes. 
+
+## Grids
+
+Raster gridded data are decomposed to `QUAD` forms, essentially a 2D primitive with four corners rather than three. This works well in rgl and is super fast using the quadmesh package that can translate from the raster package. 
+
+Texture mapping is possible with rgl, and the [quadmesh package]( https://CRAN.R-project.org/package=quadmesh) makes it very easy to incorporate an elevation raster with a raster image in the `quadmesh()` function.  There is some ongoing work to integrate anglr and quadmesh more cleanly. 
