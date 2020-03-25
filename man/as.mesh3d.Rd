@@ -21,7 +21,17 @@
   meshColor = "faces"
 )
 
-\method{as.mesh3d}{TRI0}(x, ..., meshColor = "faces")
+\method{as.mesh3d}{TRI0}(
+  x,
+  z,
+  smooth = FALSE,
+  normals = NULL,
+  texcoords = NULL,
+  ...,
+  keep_all = TRUE,
+  image_texture = NULL,
+  meshColor = "faces"
+)
 
 \method{as.mesh3d}{matrix}(
   x,
@@ -90,19 +100,31 @@ sf <- silicate::minimal_mesh
 x <- silicate::TRI(sf)
 library(rgl)
 clear3d(); plot3d(x); view3d(phi = -10)
+## simple convention to carry feature colours
+sf$color_ <- c("firebrick", "dodgerblue")
+clear3d(); plot3d(silicate::TRI(sf)); view3d(phi = -10)
 
-# manual face colours (it's not guaranteed that triangle order is native
-# within original objects)
+# material properties for $material are collected in ...
+# and will override the 'color_' mech
+x$object$color_ <- "black"
+clear3d(); plot3d(as.mesh3d(x, color = rainbow(14)))
 
-clear3d(); plot3d(as.mesh3d(x, material = list(color = rainbow(14))))
-
-mts <- list(color = c("black", "grey")[c(rep(1, 12), c(2, 2))])
-clear3d(); plot3d(as.mesh3d(x, material = mts))
+## we cannot assume TRI triangles relate to features simply
+##  but sometimes it does  (always does for TRI0)
+cols <- c("black", "grey")[c(rep(1, 12), c(2, 2))]
+clear3d(); plot3d(as.mesh3d(x, color = cols))
 
 ## smear by vertices meshColor
-mts1 <- list(color = c("black", "grey"))
-clear3d(); plot3d(as.mesh3d(x, material = mts1), meshColor = "vertices")
+cols <- c("black", "grey")
+clear3d(); plot3d(as.mesh3d(x, color = cols), meshColor = "vertices")
 
+## other material properties
+clear3d(); plot3d(as.mesh3d(x, color = cols, specular = "black"), meshColor = "vertices")
+clear3d(); plot3d(as.mesh3d(x, color = cols, front = "lines", lwd = 5), meshColor = "vertices")
+clear3d(); plot3d(as.mesh3d(x, color = viridis::viridis(20), alpha = 0.3), meshColor = "faces")
+clear3d(); plot3d(as.mesh3d(x, color = viridis::viridis(5), alpha = 0.3), meshColor = "vertices")
+
+# TRI0 - index is stored structurally, not relations
 x0 <- silicate::TRI0(sf)
 clear3d(); plot3d(x0); view3d(phi = -10)
 

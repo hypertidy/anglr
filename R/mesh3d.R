@@ -14,8 +14,90 @@ TRI_add_shade <- function(x) {
   }
   x
 }
+TRI_primitives_index <- function(x, keep_all = FALSE) {
+  if (inherits(x, "TRI")) {
+    pindex <- x$triangle
+    if (!keep_all && !is.null(pindex[["visible_"]])) {
+      pindex <- dplyr::filter(pindex, .data$visible_)
+    }
+    index <- matrix(match(c(t(as.matrix(pindex[c(".vx0", ".vx1", ".vx2")]))), x$vertex$vertex_),
+                    nrow = 3L)
+  }
+  if (inherits(x, "TRI0")) {
+    index <- t(do.call(rbind, lapply(x$object$topology_, function(ix) as.matrix(ix[c(".vx0", ".vx1", ".vx2")]))))
+  }
+  index
+}
+
+# internal function shared by as.mesh3d.TRI and as.mesh3d.TRI0
+as.mesh3d_internal <- function(x, z,  smooth = FALSE, normals = NULL, texcoords = NULL, ...,
+                               keep_all = TRUE,
+                               image_texture = NULL, meshColor = "faces") {
+  material <- list(...)  ## note that rgl has material <- .getMaterialArgs(...)
+  x <- TRI_add_shade(x)  ## sets color_ if not present
+
+  if (is.null(material$color) &&
+      is.null(image_texture)) {
+    if (inherits(x, "TRI")) {
+      material$color  <- x$object$color_[match(x$triangle$object_, x$object$object_)]
+    }
+    if (inherits(x, "TRI0")) {
+      ## we need the number of rows of each nested index df
+      ## but below we smash that when getting vindex
+      material$color <- rep(x$object$color_, unlist(lapply(x$object$topology_, function(ix) dim(ix)[1L])))
+    }
+  }
 
 
+  if (!missing(z) && inherits(z, "BasicRaster")) {
+    if (!is.finite(crsmeta::crs_proj(z))) {
+      z <- raster::extract(z[[1]], cbind(x$vertex$x_, x$vertex$y_), method = "bilinear")
+    }  else {
+      z <- raster::extract(z[[1]], reproj::reproj(cbind(x$vertex$x_, x$vertex$y_), crsmeta::crs_proj(z),
+                                                  source = crsmeta::crs_proj(x))[, 1:2, drop = FALSE], method = "bilinear")
+    }
+  }
+
+  ## FIXME: check for sanity in visible triangles
+
+  ## the geometry
+  vb <- TRI_xyz(x, z)
+  ## the topology
+  vindex <- TRI_primitives_index(x, keep_all = keep_all)
+
+  ## use the geometry to remap the texture if needed
+  if (!is.null(image_texture)) {
+    if (!is.null(texcoords)) {
+      warning("must supply only one of 'texcoords' or 'image_texture' argument, 'image_texture' will be ignore")
+    }
+    texcoords <- .texture_map(image_texture,
+                              crsmeta::crs_proj(x),
+                              exy = vb[, 1:2, drop = FALSE])
+    if (is.null(material$texture)) {
+      material$texture <- tempfile(fileext = ".png")
+
+    }
+    if (!grepl("png$", material$texture)) {
+      warning(sprintf("'texture = %s' does not look like a good PNG filename",
+                      material$texture))
+    }
+    message(sprintf("writing texture image to %s", material$texture))
+    png::writePNG(raster::as.array(image_texture) / 255, material$texture)
+  }
+
+  ## NOTE: no partial naming allowed ($col for example cause heisenbugs so it's not negotiable)
+  if (is.null(material$color))   material$color <- "#FFFFFF00"  ## not black, else texture is invisible
+
+  out <- tmesh3d(rbind(t(vb), h = 1),
+                 vindex,
+                 normals = normals, texcoords = texcoords,
+                 material= material, meshColor = meshColor)
+  if (smooth) {
+    out <- rgl::addNormals(out)
+  }
+
+  out
+}
 ## consider args: z (as in as.mesh3d.tri)
 ##                triangles (can bust quads into tri)
 ##                col  (interleave with material = list()?)
@@ -55,19 +137,31 @@ TRI_add_shade <- function(x) {
 #' x <- silicate::TRI(sf)
 #' library(rgl)
 #' clear3d(); plot3d(x); view3d(phi = -10)
+#' ## simple convention to carry feature colours
+#' sf$color_ <- c("firebrick", "dodgerblue")
+#' clear3d(); plot3d(silicate::TRI(sf)); view3d(phi = -10)
 #'
-#' # manual face colours (it's not guaranteed that triangle order is native
-#' # within original objects)
+#' # material properties for $material are collected in ...
+#' # and will override the 'color_' mech
+#' x$object$color_ <- "black"
+#' clear3d(); plot3d(as.mesh3d(x, color = rainbow(14)))
 #'
-#' clear3d(); plot3d(as.mesh3d(x, material = list(color = rainbow(14))))
-#'
-#' mts <- list(color = c("black", "grey")[c(rep(1, 12), c(2, 2))])
-#' clear3d(); plot3d(as.mesh3d(x, material = mts))
+#' ## we cannot assume TRI triangles relate to features simply
+#' ##  but sometimes it does  (always does for TRI0)
+#' cols <- c("black", "grey")[c(rep(1, 12), c(2, 2))]
+#' clear3d(); plot3d(as.mesh3d(x, color = cols))
 #'
 #' ## smear by vertices meshColor
-#' mts1 <- list(color = c("black", "grey"))
-#' clear3d(); plot3d(as.mesh3d(x, material = mts1), meshColor = "vertices")
+#' cols <- c("black", "grey")
+#' clear3d(); plot3d(as.mesh3d(x, color = cols), meshColor = "vertices")
 #'
+#' ## other material properties
+#' clear3d(); plot3d(as.mesh3d(x, color = cols, specular = "black"), meshColor = "vertices")
+#' clear3d(); plot3d(as.mesh3d(x, color = cols, front = "lines", lwd = 5), meshColor = "vertices")
+#' clear3d(); plot3d(as.mesh3d(x, color = viridis::viridis(20), alpha = 0.3), meshColor = "faces")
+#' clear3d(); plot3d(as.mesh3d(x, color = viridis::viridis(5), alpha = 0.3), meshColor = "vertices")
+#'
+#' # TRI0 - index is stored structurally, not relations
 #' x0 <- silicate::TRI0(sf)
 #' clear3d(); plot3d(x0); view3d(phi = -10)
 #'
@@ -88,99 +182,20 @@ TRI_add_shade <- function(x) {
 #' rgl::wire3d(as.mesh3d(r1))
 #'
 as.mesh3d.TRI <- function(x, z,  smooth = FALSE, normals = NULL, texcoords = NULL, ...,
-                          keep_all = TRUE,
-                          image_texture = NULL, meshColor = "faces") {
-  material <- list(...)
-  x <- TRI_add_shade(x)  ## sets color_ if not present
-  if (!missing(z) && inherits(z, "BasicRaster")) {
-    if (!is.finite(crsmeta::crs_proj(z))) {
-      z <- raster::extract(z[[1]], cbind(x$vertex$x_, x$vertex$y_), method = "bilinear")
-    }  else {
-        z <- raster::extract(z[[1]], reproj::reproj(cbind(x$vertex$x_, x$vertex$y_), crsmeta::crs_proj(z),
-                                                source = crsmeta::crs_proj(x))[, 1:2, drop = FALSE], method = "bilinear")
-    }
-  }
-
-  vb <- TRI_xyz(x, z)
-
-  ## primitives
-  pindex <- x$triangle
-  if (!is.null(pindex[["visible_"]])) pindex <- dplyr::filter(pindex, .data$visible_)
-  material <- list(...)$material
-  set_color <- is.null(material) && is.null(material$color) && is.null(image_texture)
-
-  if (set_color) {
-    meshColor <- "faces"
-
-    object_colors <- x$object$color_[match(pindex$object_, x$object$object_)]
-    if (!keep_all && "visible_" %in% names(pindex)) {
-      pindex <- pindex[pindex$visible_, ]
-      if (nrow(pindex) < 1) stop("all 'visible_' property on '$triangle' are set to 'FALSE', nothing to plot\n try 'keep_all = TRUE'")
-    }
-  }
-
-  vindex <- match(c(t(as.matrix(pindex[c(".vx0", ".vx1", ".vx2")]))), x$vertex$vertex_)
-
-  if (!is.null(image_texture)) {
-    if (!is.null(texcoords)) {
-      warning("must supply only one of 'texcoords' or 'image_texture' argument, 'image_texture' will be ignore")
-    }
-
-    texcoords <- .texture_map(image_texture,
-                              crsmeta::crs_proj(x),
-                              exy = vb[, 1:2, drop = FALSE])
-
-    if (is.null(material$texture)) {
-      material$texture <- tempfile(fileext = ".png")
-
-    }
-    if (!grepl("png$", material$texture)) {
-      warning(sprintf("'texture = %s' does not look like a good PNG filename",
-                      material$texture))
-    }
-    message(sprintf("writing texture image to %s", material$texture))
-    png::writePNG(raster::as.array(image_texture) / 255, material$texture)
-  }
-
-  ## NOTE: no partial naming allowed ($col for example cause heisenbugs so it's not negotiable)
-  if (is.null(material$color))   material$color <- "#FFFFFF00"  ## not black, else texture is invisible
-
-  out <- tmesh3d(rbind(t(vb), h = 1),
-                 matrix(vindex, nrow = 3L),
-                 normals = normals, texcoords = texcoords,
-                 material= material, meshColor = meshColor)
-  if (smooth) {
-    out <- rgl::addNormals(out)
-  }
-  ## override properties for color?
-  if (set_color) out$material$color <- object_colors
-  out
+                               keep_all = TRUE,
+                               image_texture = NULL, meshColor = "faces") {
+  as.mesh3d_internal(x, z = z, smooth = smooth, normals = normals, texcoords = texcoords, ...,
+                               keep_all = keep_all, image_texture = image_texture,
+                     meshColor = meshColor)
 }
-# as.mesh3d.default <- function(x,  ...) {
-#   ## deal with sf, sp, PATH, PATH0
-#   as.mesh3d(TRI0(x), ...)
-# }
 #' @name as.mesh3d
 #' @export
-as.mesh3d.TRI0 <- function(x, ..., meshColor = "faces") {
-  x <- TRI_add_shade(x)  ## sets color_ if not present
-
-  vb <- TRI_xyz(x)
-
-  material <- list(...)$material
-  set_color <- is.null(material) && is.null(material$color)
-
-  if (set_color) {
-    meshColor <- "faces"
-    object_colors <- rep(x$object$color_, unlist(lapply(x$object$topology_, function(ix) dim(ix)[1L])))
-  }
-
-  out <- tmesh3d(rbind(t(vb), h = 1),
-                 t(do.call(rbind, lapply(x$object$topology_, function(ix) as.matrix(ix[c(".vx0", ".vx1", ".vx2")])))),
-                 ..., meshColor = meshColor)
-  ## override properties for color?
-  if (set_color) out$material$color <- object_colors
-  out
+as.mesh3d.TRI0 <- function(x, z,  smooth = FALSE, normals = NULL, texcoords = NULL, ...,
+                          keep_all = TRUE,
+                          image_texture = NULL, meshColor = "faces") {
+  as.mesh3d_internal(x, z = z, smooth = smooth, normals = normals, texcoords = texcoords, ...,
+                     keep_all = keep_all, image_texture = image_texture,
+                     meshColor = meshColor)
 }
 
 
@@ -207,17 +222,17 @@ as.mesh3d.matrix <- function(x, triangles = FALSE,
   cols <- viridis::viridis(100)
   ## deal with triangles = TRUE
   if (!triangles) {
-  out <- rgl::qmesh3d(rbind(t(exy), vals, 1),
-               ind1,
-               normals = normals, texcoords = texcoords,
-               material = list(color = cols[scales::rescale(vals, to = c(1, 100))])
-  )
+    out <- rgl::qmesh3d(rbind(t(exy), vals, 1),
+                        ind1,
+                        normals = normals, texcoords = texcoords,
+                        material = list(color = cols[scales::rescale(vals, to = c(1, 100))])
+    )
   } else {
     vals <- rep(vals, each = 2L)
     out <- rgl::tmesh3d(rbind(t(exy), vals, 1),
-                 .quad2tri( ind1),
-                 normals = normals, texcoords = texcoords,
-                 material = list(color = cols[scales::rescale(vals, to = c(1, 100))])
+                        .quad2tri( ind1),
+                        normals = normals, texcoords = texcoords,
+                        material = list(color = cols[scales::rescale(vals, to = c(1, 100))])
     )
   }
   if (smooth) {
@@ -259,10 +274,10 @@ as.mesh3d.QUAD <- function(x, triangles = FALSE,
 
   ## deal with triangles = TRUE
   if (!triangles) {
-  out <- do.call(rgl::qmesh3d, c(list(vertices = vb, indices = get_index(x),
-                                      normals = normals, texcoords = texcoords,
-        material = material,
-         meshColor = "faces"), dots))
+    out <- do.call(rgl::qmesh3d, c(list(vertices = vb, indices = get_index(x),
+                                        normals = normals, texcoords = texcoords,
+                                        material = material,
+                                        meshColor = "faces"), dots))
   } else {
     out <- do.call(rgl::tmesh3d, c(list(vertices = vb, indices = .quad2tri(get_index(x)),
                                         normals = normals, texcoords = texcoords,
