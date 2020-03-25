@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>DEL — DEL • anglr</title>
+<title>Plot a mesh — mesh_plot • anglr</title>
 
 
 <!-- jquery -->
@@ -35,11 +35,8 @@
 
 
 
-<meta property="og:title" content="DEL — DEL" />
-<meta property="og:description" content="This Delaunay-based triangulation model is analogous to the 'TRI' model
-in the silicate package and formally extends the class of that model.
-A primitives-based shape-constrained triangulation. The Delaunay model is the
-mostly Delaunay scheme used by the provable-quality meshers." />
+<meta property="og:title" content="Plot a mesh — mesh_plot" />
+<meta property="og:description" content="The input is treated as a mesh and plotted vectorized form using 'grid'." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -106,87 +103,98 @@ mostly Delaunay scheme used by the provable-quality meshers." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>DEL</h1>
+    <h1>Plot a mesh</h1>
     
-    <div class="hidden name"><code>DEL.Rd</code></div>
+    <div class="hidden name"><code>mesh_plot.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This Delaunay-based triangulation model is analogous to the 'TRI' model
-in the silicate package and formally extends the class of that model.
-A primitives-based shape-constrained triangulation. The Delaunay model is the
-<em>mostly Delaunay</em> scheme used by the provable-quality meshers.</p>
+    <p>The input is treated as a mesh and plotted vectorized form using 'grid'.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>DEL</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>mesh_plot</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>crs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>zlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>coords</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)
+
+<span class='co'># S3 method for mesh3d</span>
+<span class='fu'>mesh_plot</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>crs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>zlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>coords</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>DEL</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='co'># S3 method for PATH0</span>
-<span class='fu'>DEL</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='co'># S3 method for TRI</span>
-<span class='fu'>DEL</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='co'># S3 method for TRI0</span>
-<span class='fu'>DEL</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='co'># S3 method for SC</span>
-<span class='fu'>DEL</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='co'># S3 method for SC0</span>
-<span class='fu'>DEL</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='co'># S3 method for PATH</span>
-<span class='fu'>DEL</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+<span class='fu'>mesh_plot</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>crs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>zlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>coords</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>input model</p></td>
+      <td><p>object to convert to mesh and plot</p></td>
+    </tr>
+    <tr>
+      <th>crs</th>
+      <td><p>target map projection</p></td>
+    </tr>
+    <tr>
+      <th>col</th>
+      <td><p>colours to use, defaults to that used by <code><a href='https://rdrr.io/r/graphics/image.html'>graphics::image()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>add</th>
+      <td><p>add to existing plot or start a new one</p></td>
+    </tr>
+    <tr>
+      <th>zlim</th>
+      <td><p>absolute range of data to use for colour scaling (if <code>NULL</code> the data range is used)</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>passed to the underlying Triangle library</p></td>
+      <td><p>passed through to <code>base::plot</code></p></td>
     </tr>
     <tr>
-      <th>max_area</th>
-      <td><p>the maximum area of a triangle</p></td>
+      <th>coords</th>
+      <td><p>optional input raster of coordinates of each cell, see details</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>DEL model</p>
+    <p>nothing, used for the side-effect of creating or adding to a plot</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The Delaunay model is a constrained triangulation with a variety
-of constraint and qualification types. The Delaunay model has the
-odd but defining characteristic of not being always consistent
-with the Delaunay criterion. Edge inclusion is
-non-negotiable, but other constraints include (limit, or avoid)
-Steiner vertex insertion, a limit on the maximum area of a triangle,
-minimum triangle angle and strict adherence to the Delaunay criterion.</p>
-<p>The Delaunary criterion forms the basis of this model, and is its
-definining characteristic without being strictly adhered to. This is awkward
-to describe but is the key property. From Wikipedia:
-The "Delaunay triangulation (also known as a Delone triangulation) for a given
-set P of discrete points in a plane is a triangulation DT(P) such that no
-point in P is inside the circumcircle of any triangle in DT(P). Delaunay
-triangulations maximize the minimum angle of all the angles of the triangles
-in the triangulation; they tend to avoid sliver triangles. . . . The
-Delaunay triangulation corresponds to the dual graph of the Voronoi
-diagram of P"
-<a href='https://en.wikipedia.org/wiki/Delaunay_triangulation'>https://en.wikipedia.org/wiki/Delaunay_triangulation</a>.</p>
-<p>This strict criterion is <em>relaxed</em> in small measure, to ensure that all
-edge-inputs are preserved and to allow further constraints such as triangle size
-and internal angle to be specified.</p>
+    <p>The mesh may be reprojected prior to plotting using the 'crs' argument to
+define the target map projection in 'PROJ string' format. (There is no
+"reproject" function for quadmesh, this is performed directly on the x-y
+coordinates of the 'quadmesh' output). The 'col' argument are mapped to the input pplied
+object data as in 'image', and applied relative to 'zlim' if su.</p>
+<p>If <code>coords</code> is supplied, it is currently assumed to be a 2-layer <code>RasterBrick</code> with
+longitude and latitude as the <em>cell values</em>. These are used to geographically locate
+the resulting mesh, and will be transformed to the <code>crs</code> if that is supplied. This is
+modelled on the approach to curvilinear grid data used in the <code>angstroms</code> package. There
+the function <code>angstroms::romsmap()</code> and `angstroms::romscoords()`` are used to separate the complicated
+grid geometry from the grid data itself. A small fudge is applied to extend the coordinates
+by 1 cell to avoid losing any data due to the half cell outer margin (get in touch if this causes problems!).</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'>DEL</span>(<span class='no'>simpleworld</span>))</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -194,7 +202,6 @@ and internal angle to be specified.</p>
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
       <li><a href="#details">Details</a></li>
-      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

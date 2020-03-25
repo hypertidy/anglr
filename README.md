@@ -13,7 +13,7 @@ Status](https://img.shields.io/codecov/c/github/hypertidy/anglr/master.svg)](htt
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# anglr <img src="data-raw/anglr-logo.png" align="right"  height="384" />
+# anglr <img src="data-raw/anglr-logo.png" align="right"  height="192" />
 
 The anglr package aims to provide direct access to the inherent
 properties of *shape* and the power of topological techniques.
