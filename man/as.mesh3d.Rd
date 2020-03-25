@@ -113,8 +113,13 @@ clear3d(); plot3d(as.mesh3d(x0,  material = list(color = rainbow(14))))
 r <- raster::setExtent(raster::raster(volcano), raster::extent(-0.1, 1.1, -0.1, 1.1))
 clear3d();shade3d(as.mesh3d(DEL(silicate::minimal_mesh, max_area = 0.001), z =r))
 aspect3d(1, 1, 0.5)
+
+library(rgl)
 r1 <- raster::setExtent(raster::raster(volcano), raster::extent(silicate::inlandwaters))
-clear3d();shade3d(as.mesh3d(DEL(silicate::inlandwaters, max_area = 0.001), z =r1))
-aspect3d(1, 1, 0.5)
+clear3d();shade3d(as.mesh3d(DEL(silicate::inlandwaters, max_area = 4e8), z =r1))
+aspect3d(1, 1, .2)
+
+## fake news
+rgl::wire3d(as.mesh3d(r1))
 
 }

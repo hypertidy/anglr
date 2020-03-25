@@ -77,12 +77,15 @@ TRI_add_shade <- function(x) {
 #' ## arbitrarily drape polygons over raster
 #' r <- raster::setExtent(raster::raster(volcano), raster::extent(-0.1, 1.1, -0.1, 1.1))
 #' clear3d();shade3d(as.mesh3d(DEL(silicate::minimal_mesh, max_area = 0.001), z =r))
-#'
-#'
-#'   aspect3d(1, 1, 0.5)
-#' r1 <- raster::setExtent(raster::raster(volcano), raster::extent(silicate::inlandwaters))
-#' clear3d();shade3d(as.mesh3d(DEL(silicate::inlandwaters, max_area = 0.001), z =r1))
 #' aspect3d(1, 1, 0.5)
+#'
+#' library(rgl)
+#' r1 <- raster::setExtent(raster::raster(volcano), raster::extent(silicate::inlandwaters))
+#' clear3d();shade3d(as.mesh3d(DEL(silicate::inlandwaters, max_area = 4e8), z =r1))
+#' aspect3d(1, 1, .2)
+#'
+#' ## fake news
+#' rgl::wire3d(as.mesh3d(r1))
 #'
 as.mesh3d.TRI <- function(x, z,  smooth = FALSE, normals = NULL, texcoords = NULL, ...,
                           keep_all = TRUE,
@@ -91,7 +94,7 @@ as.mesh3d.TRI <- function(x, z,  smooth = FALSE, normals = NULL, texcoords = NUL
   x <- TRI_add_shade(x)  ## sets color_ if not present
   if (!missing(z) && inherits(z, "BasicRaster")) {
     if (!is.finite(crsmeta::crs_proj(z))) {
-      z <- raster::extract(z[[1]], cbind(x$vertex$x_, x$vertex$y_))
+      z <- raster::extract(z[[1]], cbind(x$vertex$x_, x$vertex$y_), method = "bilinear")
     }  else {
         z <- raster::extract(z[[1]], reproj::reproj(cbind(x$vertex$x_, x$vertex$y_), crsmeta::crs_proj(z),
                                                 source = crsmeta::crs_proj(x))[, 1:2, drop = FALSE], method = "bilinear")
