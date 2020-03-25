@@ -18,12 +18,16 @@
 DEL0 <- function(x, ..., max_area = NULL) {
   UseMethod("DEL0")
 }
-
+#' @name DEL0
+#' @export
 DEL0.default <- function(x, ..., max_area = NULL) {
   DEL0(silicate::PATH0(x), ..., max_area)
 }
-# works DEL0(silicate::PATH0(silicate::minimal_mesh))
+
+#' @name DEL0
+#' @export
 DEL0.PATH0 <- function(x, ..., max_area = NULL) {
+  .check_area(x$vertex$x_, x$vertex$y_, max_area)
   dots <- list(...)
   dots[["a"]] <- max_area
   dots[["x"]] <- x

@@ -2,9 +2,15 @@
 % Please edit documentation in R/DEL0-model.R
 \name{DEL0}
 \alias{DEL0}
+\alias{DEL0.default}
+\alias{DEL0.PATH0}
 \title{DEL0}
 \usage{
 DEL0(x, ..., max_area = NULL)
+
+\method{DEL0}{default}(x, ..., max_area = NULL)
+
+\method{DEL0}{PATH0}(x, ..., max_area = NULL)
 }
 \arguments{
 \item{x}{object of class \link{PATH0} or understood by \code{\link[=PATH0]{PATH0()}}}

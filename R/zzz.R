@@ -7,6 +7,10 @@
   if (is.null(op)) {
     options(anglr.max.triangles = 1e8)
   }
+  msg <- sprintf("This is an early developmental version of anglr (%s),\n still in an experimental state with changes pending.",
+                 packageVersion("anglr"))
+  packageStartupMessage(msg)
+
   invisible()
 }
 
