@@ -34,11 +34,18 @@ TRI_add_shade <- function(x) {
 #' used for each vertex. Alternatively, it may be a spatial raster object
 #' from which 'z' values are derived. If not set, the vertex 'z_' value
 #' from TRI/TRI0 is used, otherwise z = 0' is assumed.
+#'
 #' @param x An object of class `TRI` or `TRI0`
 #' @param z numeric vector or raster object (see details)
+#' @inheritParams rgl::as.mesh3d.tri
 #' @param ... arguments collected and passed to [rgl::tmesh3d()] as the `material` argument
+#' @param image_texture an rgb object to texture the surface
+#' @param meshColor how should colours be interpreted? 'vertices' or 'faces', for more
+#' details see [rgl::tmesh3d].
 #' @param keep_all whether to keep non-visible triangles
+#' @param triangles for quad input types, the quads may optionally be split into triangles
 #' @name as.mesh3d
+#' @return a [mesh3d object](rgl::mesh3d)
 #' @importFrom rgl as.mesh3d tmesh3d
 #' @export as.mesh3d
 #' @export
@@ -70,15 +77,25 @@ TRI_add_shade <- function(x) {
 #' ## arbitrarily drape polygons over raster
 #' r <- raster::setExtent(raster::raster(volcano), raster::extent(-0.1, 1.1, -0.1, 1.1))
 #' clear3d();shade3d(as.mesh3d(DEL(silicate::minimal_mesh, max_area = 0.001), z =r))
+#'
+#'
+#'   aspect3d(1, 1, 0.5)
+#' r1 <- raster::setExtent(raster::raster(volcano), raster::extent(silicate::inlandwaters))
+#' clear3d();shade3d(as.mesh3d(DEL(silicate::inlandwaters, max_area = 0.001), z =r1))
 #' aspect3d(1, 1, 0.5)
+#'
 as.mesh3d.TRI <- function(x, z,  smooth = FALSE, normals = NULL, texcoords = NULL, ...,
                           keep_all = TRUE,
                           image_texture = NULL, meshColor = "faces") {
   material <- list(...)
   x <- TRI_add_shade(x)  ## sets color_ if not present
   if (!missing(z) && inherits(z, "BasicRaster")) {
-    z <- raster::extract(z[[1]], reproj::reproj(cbind(x$vertex$x_, x$vertex$y_), crsmeta::crs_proj(z),
+    if (!is.finite(crsmeta::crs_proj(z))) {
+      z <- raster::extract(z[[1]], cbind(x$vertex$x_, x$vertex$y_))
+    }  else {
+        z <- raster::extract(z[[1]], reproj::reproj(cbind(x$vertex$x_, x$vertex$y_), crsmeta::crs_proj(z),
                                                 source = crsmeta::crs_proj(x))[, 1:2, drop = FALSE], method = "bilinear")
+    }
   }
 
   vb <- TRI_xyz(x, z)
@@ -205,14 +222,14 @@ as.mesh3d.matrix <- function(x, triangles = FALSE,
   }
   out
 }
-#' @name
+#' @name as.mesh3d
 #' @export
 as.mesh3d.BasicRaster <- function(x, triangles = FALSE, ...) {
   ## consider the case where x has 3 layers (xcrd, ycrd, zval) or we use
   ## arguments of the generic as.mesh3d(x, y, z) with 3 (or 2) separate rasters
   as.mesh3d(QUAD(x), triangles = triangles, ...)
 }
-#' @name
+#' @name as.mesh3d
 #' @export
 as.mesh3d.QUAD <- function(x, triangles = FALSE,
                            smooth = FALSE, normals = NULL, texcoords = NULL,

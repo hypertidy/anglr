@@ -8,7 +8,7 @@ Description: Tidy topological approaches to spatial data, illustrated with plott
 License: GPL-3
 Depends: R (>= 3.4.0)
 Imports: 
-    silicate (> 0.3.0),
+    silicate (>= 0.3.0.9001),
     dplyr,
     gibble (>= 0.2.0),
     methods,
@@ -27,7 +27,8 @@ Imports:
     polyclip,
     gridBase,
     scales,
-    crsmeta (>= 0.2.0.9001)
+    crsmeta (>= 0.2.0.9001),
+    png
 Suggests: 
     covr,
     ggplot2,

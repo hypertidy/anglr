@@ -39,6 +39,23 @@ auto_3d <- function(x = 1, y = 1, z = 1, keep_xy = TRUE, exag = TRUE, verbose = 
   rgl::aspect3d(asp[1], asp[2], asp[3])
 }
 
+.check_area <- function(x_, y_, max_area) {
+  if (!is.null(max_area)) {
+    check_x <- diff(range(x_, na.rm = TRUE))/sqrt(max_area)
+    check_y <- diff(range(y_, na.rm = TRUE))/sqrt(max_area)
+
+    max_triangles <- getOption("anglr.max.triangles")
+    if ((check_x * check_y) > max_triangles && interactive()) {
+      yes <- utils::askYesNo(sprintf("'max_area = %s' implies ~%i triangles, are you sure?",
+                                     format(max_area), as.integer((check_x * check_y))))
+      if (!yes) {
+        stop("'getOption(\"anglr.max.triangles\")' exceeded, to avoid this check set a higher limit")
+      }
+
+    }
+  }
+  TRUE
+}
 
 widg <- function() {
   rgl::rglwidget()

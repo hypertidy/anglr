@@ -71,6 +71,13 @@ DEL.TRI0 <- function(x, ..., max_area = NULL) {
 #' @name DEL
 #' @export
 DEL.SC <- function(x, ..., max_area = NULL)  {
+  .check_area(x$vertex$x_, x$vertex$y_, max_area)
+
+  if (!is.null(max_area)) {
+    check_x <- diff(range(x$vertex$x_, na.rm = TRUE))/sqrt(max_area)
+    check_y <- diff(range(x$vertex$y_, na.rm = TRUE))/sqrt(max_area)
+    browser()
+  }
   ## find if any objects have < 3 edges
   edge_per_object_lt <- x$object["object_"] %>%
     dplyr::inner_join(x$object_link_edge, "object_") %>%
@@ -169,7 +176,7 @@ DEL.SC0 <- function(x, ..., max_area = NULL)  {
 #' @export
 #' @importFrom tibble tibble
 DEL.PATH <- function(x, ..., max_area = NULL) {
-
+  .check_area(x$vertex$x_, x$vertex$y_, max_area)
   dots <- list(...)
   dots[["a"]] <- max_area
   dots[["x"]] <- x

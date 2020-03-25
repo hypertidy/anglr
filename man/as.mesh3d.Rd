@@ -5,6 +5,8 @@
 \alias{as.mesh3d.TRI}
 \alias{as.mesh3d.TRI0}
 \alias{as.mesh3d.matrix}
+\alias{as.mesh3d.BasicRaster}
+\alias{as.mesh3d.QUAD}
 \title{Mesh3d objects}
 \usage{
 \method{as.mesh3d}{TRI}(
@@ -29,15 +31,49 @@
   texcoords = NULL,
   ...
 )
+
+\method{as.mesh3d}{BasicRaster}(x, triangles = FALSE, ...)
+
+\method{as.mesh3d}{QUAD}(
+  x,
+  triangles = FALSE,
+  smooth = FALSE,
+  normals = NULL,
+  texcoords = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{An object of class \code{TRI} or \code{TRI0}}
 
 \item{z}{numeric vector or raster object (see details)}
 
+\item{smooth}{
+Whether to average normals at vertices for
+a smooth appearance.
+}
+
+\item{normals}{
+User-specified normals at each vertex.  Requires \code{smooth = FALSE}.
+}
+
+\item{texcoords}{
+Texture coordinates at each vertex.
+}
+
 \item{...}{arguments collected and passed to \code{\link[rgl:tmesh3d]{rgl::tmesh3d()}} as the \code{material} argument}
 
 \item{keep_all}{whether to keep non-visible triangles}
+
+\item{image_texture}{an rgb object to texture the surface}
+
+\item{meshColor}{how should colours be interpreted? 'vertices' or 'faces', for more
+details see \link[rgl:tmesh3d]{rgl::tmesh3d}.}
+
+\item{triangles}{for quad input types, the quads may optionally be split into triangles}
+}
+\value{
+a \href{rgl::mesh3d}{mesh3d object}
 }
 \description{
 Methods for the mesh3d type from package rgl
@@ -77,4 +113,8 @@ clear3d(); plot3d(as.mesh3d(x0,  material = list(color = rainbow(14))))
 r <- raster::setExtent(raster::raster(volcano), raster::extent(-0.1, 1.1, -0.1, 1.1))
 clear3d();shade3d(as.mesh3d(DEL(silicate::minimal_mesh, max_area = 0.001), z =r))
 aspect3d(1, 1, 0.5)
+r1 <- raster::setExtent(raster::raster(volcano), raster::extent(silicate::inlandwaters))
+clear3d();shade3d(as.mesh3d(DEL(silicate::inlandwaters, max_area = 0.001), z =r1))
+aspect3d(1, 1, 0.5)
+
 }
