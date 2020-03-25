@@ -129,7 +129,7 @@ x0 <- silicate::TRI0(sf)
 clear3d(); plot3d(x0); view3d(phi = -10)
 
 # (TRI0 - it *is* guaranteed that triangle order is native)
-clear3d(); plot3d(as.mesh3d(x0,  material = list(color = rainbow(14))))
+clear3d(); plot3d(as.mesh3d(x0,  color = rainbow(14)))
 
 ## arbitrarily drape polygons over raster
 r <- raster::setExtent(raster::raster(volcano), raster::extent(-0.1, 1.1, -0.1, 1.1))

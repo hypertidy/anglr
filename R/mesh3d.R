@@ -34,6 +34,11 @@ as.mesh3d_internal <- function(x, z,  smooth = FALSE, normals = NULL, texcoords 
                                keep_all = TRUE,
                                image_texture = NULL, meshColor = "faces") {
   material <- list(...)  ## note that rgl has material <- .getMaterialArgs(...)
+  ## for now we just warn if old-stlye material = list() was used
+  if ("material" %in% names(material)) {
+    warning("do not pass in 'material = list(<of properties>)' to as.mesh3d
+             pass in 'rgl::material3d' arguments directly as part of '...'")
+  }
   x <- TRI_add_shade(x)  ## sets color_ if not present
 
   if (is.null(material$color) &&
@@ -98,13 +103,6 @@ as.mesh3d_internal <- function(x, z,  smooth = FALSE, normals = NULL, texcoords 
 
   out
 }
-## consider args: z (as in as.mesh3d.tri)
-##                triangles (can bust quads into tri)
-##                col  (interleave with material = list()?)
-##                normals, texcoords (but what for ...,
-##                -- we can add texture, smooth for addNormals()
-##  smooth - addNormals?
-##                texture = RGBraster
 
 
 #' Mesh3d objects
@@ -166,7 +164,7 @@ as.mesh3d_internal <- function(x, z,  smooth = FALSE, normals = NULL, texcoords 
 #' clear3d(); plot3d(x0); view3d(phi = -10)
 #'
 #' # (TRI0 - it *is* guaranteed that triangle order is native)
-#' clear3d(); plot3d(as.mesh3d(x0,  material = list(color = rainbow(14))))
+#' clear3d(); plot3d(as.mesh3d(x0,  color = rainbow(14)))
 #'
 #' ## arbitrarily drape polygons over raster
 #' r <- raster::setExtent(raster::raster(volcano), raster::extent(-0.1, 1.1, -0.1, 1.1))
