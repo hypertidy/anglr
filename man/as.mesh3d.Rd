@@ -116,7 +116,7 @@ aspect3d(1, 1, 0.5)
 
 library(rgl)
 r1 <- raster::setExtent(raster::raster(volcano), raster::extent(silicate::inlandwaters))
-clear3d();shade3d(as.mesh3d(DEL(silicate::inlandwaters, max_area = 4e8), z =r1))
+clear3d();shade3d(as.mesh3d(DEL(silicate::inlandwaters, max_area = 1e9), z =r1))
 aspect3d(1, 1, .2)
 
 ## fake news
