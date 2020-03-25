@@ -1,5 +1,7 @@
 # anglr dev
 
+* Added experimental DEL0() model. 
+
 * Now importing crsmeta, to get sf crs '$proj4string' or '$input'. If input is not a
  proj4string then we'll burn. (Can do manual reprojection until PROJ is here).
  
