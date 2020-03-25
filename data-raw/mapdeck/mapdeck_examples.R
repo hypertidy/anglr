@@ -29,23 +29,27 @@ poly_triangle_dense <- as.mesh3d(
 
 dodeca <- rgl::scale3d(rgl::translate3d(rgl::dodecahedron3d(), 147, -42, 1),
                      1, 1, 1e5)
-
-
-## polygons + elevation + colours
-z <- quadmesh::etopo
-library(sf)
-library(anglr)
 x <- silicate::inlandwaters %>%
   dplyr::filter(Province %in%
                   c("Victoria", "South Australia", "New South Wales"))
 ## we need longlat
 x <- sf::st_transform(x, "+proj=longlat")
+
+
+## polygons + elevation + colours
+x
+z <- quadmesh::etopo
+library(sf)
+library(anglr)
 ## put colours on these polygons
 x$color_ <- c("firebrick", "dodgerblue", "darkorange1")
-poly_triangle_colours <- as.mesh3d(copy_down(anglr::DEL(x, max_area = 1e9), z))
+poly_triangle_colours <- as.mesh3d(copy_down(
+                  anglr::DEL(x, max_area = 1e9), z))
+plot3d(poly_triangle_colours);
+
+
 library(mapdeck)
 mapdeck() %>% add_mesh(data = poly_triangle_colours)
-
 ## we preserve the colours
 rgl::clear3d(); plot3d(poly_triangle_colours); rgl::aspect3d(1, 1, 0.1)
 mesh_plot(poly_triangle_colours)

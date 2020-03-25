@@ -14,8 +14,9 @@
   normals = NULL,
   texcoords = NULL,
   ...,
-  meshColor = "faces",
-  keep_all = TRUE
+  keep_all = TRUE,
+  image_texture = NULL,
+  meshColor = "faces"
 )
 
 \method{as.mesh3d}{TRI0}(x, ..., meshColor = "faces")
@@ -34,9 +35,7 @@
 
 \item{z}{numeric vector or raster object (see details)}
 
-\item{...}{arguments passed to \code{\link[rgl:tmesh3d]{rgl::tmesh3d()}}}
-
-\item{meshColor}{rule for material properties used for colours (see \link[rgl:tmesh3d]{rgl::tmesh3d})}
+\item{...}{arguments collected and passed to \code{\link[rgl:tmesh3d]{rgl::tmesh3d()}} as the \code{material} argument}
 
 \item{keep_all}{whether to keep non-visible triangles}
 }

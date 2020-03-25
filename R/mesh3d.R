@@ -36,8 +36,7 @@ TRI_add_shade <- function(x) {
 #' from TRI/TRI0 is used, otherwise z = 0' is assumed.
 #' @param x An object of class `TRI` or `TRI0`
 #' @param z numeric vector or raster object (see details)
-#' @param ... arguments passed to [rgl::tmesh3d()]
-#' @param meshColor rule for material properties used for colours (see [rgl::tmesh3d])
+#' @param ... arguments collected and passed to [rgl::tmesh3d()] as the `material` argument
 #' @param keep_all whether to keep non-visible triangles
 #' @name as.mesh3d
 #' @importFrom rgl as.mesh3d tmesh3d
@@ -73,10 +72,13 @@ TRI_add_shade <- function(x) {
 #' clear3d();shade3d(as.mesh3d(DEL(silicate::minimal_mesh, max_area = 0.001), z =r))
 #' aspect3d(1, 1, 0.5)
 as.mesh3d.TRI <- function(x, z,  smooth = FALSE, normals = NULL, texcoords = NULL, ...,
-                          meshColor = "faces", keep_all = TRUE) {
+                          keep_all = TRUE,
+                          image_texture = NULL, meshColor = "faces") {
+  material <- list(...)
   x <- TRI_add_shade(x)  ## sets color_ if not present
   if (!missing(z) && inherits(z, "BasicRaster")) {
-    z <- raster::extract(z[[1]], cbind(x$vertex$x_, x$vertex$y_), method = "bilinear")
+    z <- raster::extract(z[[1]], reproj::reproj(cbind(x$vertex$x_, x$vertex$y_), crsmeta::crs_proj(z),
+                                                source = crsmeta::crs_proj(x))[, 1:2, drop = FALSE], method = "bilinear")
   }
 
   vb <- TRI_xyz(x, z)
@@ -85,7 +87,7 @@ as.mesh3d.TRI <- function(x, z,  smooth = FALSE, normals = NULL, texcoords = NUL
   pindex <- x$triangle
   if (!is.null(pindex[["visible_"]])) pindex <- dplyr::filter(pindex, .data$visible_)
   material <- list(...)$material
-  set_color <- is.null(material) && is.null(material$color)
+  set_color <- is.null(material) && is.null(material$color) && is.null(image_texture)
 
   if (set_color) {
     meshColor <- "faces"
@@ -99,10 +101,34 @@ as.mesh3d.TRI <- function(x, z,  smooth = FALSE, normals = NULL, texcoords = NUL
 
   vindex <- match(c(t(as.matrix(pindex[c(".vx0", ".vx1", ".vx2")]))), x$vertex$vertex_)
 
+  if (!is.null(image_texture)) {
+    if (!is.null(texcoords)) {
+      warning("must supply only one of 'texcoords' or 'image_texture' argument, 'image_texture' will be ignore")
+    }
+
+    texcoords <- .texture_map(image_texture,
+                              crsmeta::crs_proj(x),
+                              exy = vb[, 1:2, drop = FALSE])
+
+    if (is.null(material$texture)) {
+      material$texture <- tempfile(fileext = ".png")
+
+    }
+    if (!grepl("png$", material$texture)) {
+      warning(sprintf("'texture = %s' does not look like a good PNG filename",
+                      material$texture))
+    }
+    message(sprintf("writing texture image to %s", material$texture))
+    png::writePNG(raster::as.array(image_texture) / 255, material$texture)
+  }
+
+  ## NOTE: no partial naming allowed ($col for example cause heisenbugs so it's not negotiable)
+  if (is.null(material$color))   material$color <- "#FFFFFF00"  ## not black, else texture is invisible
+
   out <- tmesh3d(rbind(t(vb), h = 1),
                  matrix(vindex, nrow = 3L),
                  normals = normals, texcoords = texcoords,
-                 ..., meshColor = meshColor)
+                 material= material, meshColor = meshColor)
   if (smooth) {
     out <- rgl::addNormals(out)
   }
