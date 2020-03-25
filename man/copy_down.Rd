@@ -45,6 +45,12 @@ interpolation using \code{raster::extract(raster, vertex, method = "bilinear")}.
 are transformed into the space used by the raster if possible. (WIP ... Otherwise a warning is issued if
 there's not overlap ... WIP)
 
+Beware, the CRS (coordinate reference system) space is fraught at the moment,
+proj4strings are out of favour, '+init=epsg:4326' doesn't work but 'EPSG:4326' does
+and sf will only give '$proj4string' \emph{dynamically}, but it might
+be copied in the '$input' element, so the crs input lookup tries all these things
+(One day soon we'll just \emph{a crs} and let PROJ sort it out, but for now
+we have to send all these messages around, it'll calm down in a few years (2024-ish)).
 If z is a character value, that column is taken from the object table.
 
 The \code{.id} argument must be character and exist as a column name in the object table.

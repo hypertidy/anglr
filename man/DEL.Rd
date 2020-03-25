@@ -41,7 +41,7 @@ DEL model
 This Delaunay-based triangulation model is analogous to the 'TRI' model
 in the silicate package and formally extends the class of that model.
 A primitives-based shape-constrained triangulation. The Delaunay model is the
-\emph{mostly Delaunay} scheme usedby the provable-quality meshers.
+\emph{mostly Delaunay} scheme used by the provable-quality meshers.
 }
 \details{
 The Delaunay model is a constrained triangulation with a variety

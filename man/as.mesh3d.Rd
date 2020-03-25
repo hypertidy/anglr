@@ -4,23 +4,85 @@
 \alias{as.mesh3d}
 \alias{as.mesh3d.TRI}
 \alias{as.mesh3d.TRI0}
+\alias{as.mesh3d.matrix}
+\alias{as.mesh3d.BasicRaster}
+\alias{as.mesh3d.QUAD}
 \title{Mesh3d objects}
 \usage{
-\method{as.mesh3d}{TRI}(x, keep_all = TRUE, ..., meshColor = "faces")
+\method{as.mesh3d}{TRI}(
+  x,
+  z,
+  smooth = FALSE,
+  normals = NULL,
+  texcoords = NULL,
+  ...,
+  keep_all = TRUE,
+  image_texture = NULL,
+  meshColor = "faces"
+)
 
 \method{as.mesh3d}{TRI0}(x, ..., meshColor = "faces")
+
+\method{as.mesh3d}{matrix}(
+  x,
+  triangles = FALSE,
+  smooth = FALSE,
+  normals = NULL,
+  texcoords = NULL,
+  ...
+)
+
+\method{as.mesh3d}{BasicRaster}(x, triangles = FALSE, ...)
+
+\method{as.mesh3d}{QUAD}(
+  x,
+  triangles = FALSE,
+  smooth = FALSE,
+  normals = NULL,
+  texcoords = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{An object of class \code{TRI} or \code{TRI0}}
 
+\item{z}{numeric vector or raster object (see details)}
+
+\item{smooth}{
+Whether to average normals at vertices for
+a smooth appearance.
+}
+
+\item{normals}{
+User-specified normals at each vertex.  Requires \code{smooth = FALSE}.
+}
+
+\item{texcoords}{
+Texture coordinates at each vertex.
+}
+
+\item{...}{arguments collected and passed to \code{\link[rgl:tmesh3d]{rgl::tmesh3d()}} as the \code{material} argument}
+
 \item{keep_all}{whether to keep non-visible triangles}
 
-\item{...}{arguments passed to \code{\link[rgl:tmesh3d]{rgl::tmesh3d()}}}
+\item{image_texture}{an rgb object to texture the surface}
 
-\item{meshColor}{rule for material properties used for colours (see \link[rgl:tmesh3d]{rgl::tmesh3d})}
+\item{meshColor}{how should colours be interpreted? 'vertices' or 'faces', for more
+details see \link[rgl:tmesh3d]{rgl::tmesh3d}.}
+
+\item{triangles}{for quad input types, the quads may optionally be split into triangles}
+}
+\value{
+a \href{rgl::mesh3d}{mesh3d object}
 }
 \description{
 Methods for the mesh3d type from package rgl
+}
+\details{
+The 'z' argument can be a constant value or a vector of values to be
+used for each vertex. Alternatively, it may be a spatial raster object
+from which 'z' values are derived. If not set, the vertex 'z_' value
+from TRI/TRI0 is used, otherwise z = 0' is assumed.
 }
 \examples{
 sf <- silicate::minimal_mesh
@@ -29,7 +91,7 @@ x <- silicate::TRI(sf)
 library(rgl)
 clear3d(); plot3d(x); view3d(phi = -10)
 
-# manual face colours (it's not guaranteed that triangle order is native 
+# manual face colours (it's not guaranteed that triangle order is native
 # within original objects)
 
 clear3d(); plot3d(as.mesh3d(x, material = list(color = rainbow(14))))
@@ -46,4 +108,18 @@ clear3d(); plot3d(x0); view3d(phi = -10)
 
 # (TRI0 - it *is* guaranteed that triangle order is native)
 clear3d(); plot3d(as.mesh3d(x0,  material = list(color = rainbow(14))))
+
+## arbitrarily drape polygons over raster
+r <- raster::setExtent(raster::raster(volcano), raster::extent(-0.1, 1.1, -0.1, 1.1))
+clear3d();shade3d(as.mesh3d(DEL(silicate::minimal_mesh, max_area = 0.001), z =r))
+aspect3d(1, 1, 0.5)
+
+library(rgl)
+r1 <- raster::setExtent(raster::raster(volcano), raster::extent(silicate::inlandwaters))
+clear3d();shade3d(as.mesh3d(DEL(silicate::inlandwaters, max_area = 1e9), z =r1))
+aspect3d(1, 1, .2)
+
+## fake news
+rgl::wire3d(as.mesh3d(r1))
+
 }

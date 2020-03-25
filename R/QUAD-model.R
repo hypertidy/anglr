@@ -1,5 +1,5 @@
 #' QUAD model
-#' 
+#'
 #' The QUAD model
 #'
 #' @param x raster alike
@@ -45,7 +45,7 @@ get_index <- function(x, ...) {
   ind0 <- as.vector(ind) +
     rep(seq(0, length = nrow(x), by = ncol(x) + 1), each = 4 * ncol(x))
   matrix(ind0, nrow = 4L)
-  
+
 }
 get_qXv <- function(x, ...) {
   ind1 <- get_index(x)

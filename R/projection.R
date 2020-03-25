@@ -11,7 +11,7 @@ tokenize <- function(x) {
   }
   m <- matrix(unlist(l), 2)
   setNames(as.list(m[2, ]), m[1, ])
-  
+
 }
 make_local <- function(x, family = "laea") {
   UseMethod("make_local")
@@ -22,7 +22,7 @@ make_local.QUAD <- function(x, family = "laea", ...) {
 #    xy <- as.matrix(x$vertex[c("x_", "y_")])
     lon <- unlist(x$object[c("xmn", "xmx")])
     lat <- unlist(x$object[c("ymn", "ymx")])
-    
+
     #if ("z_" %in% names(x$vertex)) Z <- x$vertex[["z_"]] else 0
     lon <- round(mean(lon), digits = 4)
     lat <- round(mean(lat), digits = 4)
@@ -51,23 +51,18 @@ make_local.sc <- function(x, family = "laea", ...) {
   }
   target
 }
-get_proj <- function(x, ...) UseMethod("get_proj")
+get_proj <- function(x, ...) {
+  UseMethod("get_proj")
+}
+
 get_proj.default <- function(x, ...) {
-  mt <- try(x[["meta"]], silent = TRUE)
-  if (inherits(mt, "data.frame")) return(mt[["proj"]])
-  op <- options(warn = -1)
-  on.exit(op)
-  rp <- try(raster::projection(x), silent = TRUE)
-  if (inherits(rp, "try-error")) rp < - NA
-  as.character(rp)
-}
-get_proj.sf <- function(x, ...) {
-  attr(x[[attr(x, "sf_column")]], "crs")[["proj4string"]]
-}
-get_proj.sfc <- function(x, ...) {
-  attr(x, "crs")[["proj4string"]]
-}
-## should be a sc method, but silicate needs meta everywhere
-get_proj.PATH <- function(x, ...) {
-  x$meta$proj
+  x_na <- NA_character_
+  proj <- crsmeta::crs_proj(x)
+  if (is.na(proj) || is.null(proj) || nchar(proj) < 1) {
+    proj <- crsmeta::crs_input(x)
+  }
+  if (is.na(proj) || is.null(proj) || nchar(proj) < 1) {
+   return(x_na)
+  }
+  proj
 }

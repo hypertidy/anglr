@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>DEL — DEL • anglr</title>
+<title>DEL0 — DEL0 • anglr</title>
 
 
 <!-- jquery -->
@@ -35,11 +35,8 @@
 
 
 
-<meta property="og:title" content="DEL — DEL" />
-<meta property="og:description" content="This Delaunay-based triangulation model is analogous to the 'TRI' model
-in the silicate package and formally extends the class of that model.
-A primitives-based shape-constrained triangulation. The Delaunay model is the
-mostly Delaunay scheme used by the provable-quality meshers." />
+<meta property="og:title" content="DEL0 — DEL0" />
+<meta property="og:description" content="Structural form of Delaunay constrained triangulation" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -106,51 +103,27 @@ mostly Delaunay scheme used by the provable-quality meshers." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>DEL</h1>
+    <h1>DEL0</h1>
     
-    <div class="hidden name"><code>DEL.Rd</code></div>
+    <div class="hidden name"><code>DEL0.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This Delaunay-based triangulation model is analogous to the 'TRI' model
-in the silicate package and formally extends the class of that model.
-A primitives-based shape-constrained triangulation. The Delaunay model is the
-<em>mostly Delaunay</em> scheme used by the provable-quality meshers.</p>
+    <p>Structural form of Delaunay constrained triangulation</p>
     </div>
 
-    <pre class="usage"><span class='fu'>DEL</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='co'># S3 method for default</span>
-<span class='fu'>DEL</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='co'># S3 method for PATH0</span>
-<span class='fu'>DEL</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='co'># S3 method for TRI</span>
-<span class='fu'>DEL</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='co'># S3 method for TRI0</span>
-<span class='fu'>DEL</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='co'># S3 method for SC</span>
-<span class='fu'>DEL</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='co'># S3 method for SC0</span>
-<span class='fu'>DEL</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='co'># S3 method for PATH</span>
-<span class='fu'>DEL</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>DEL0</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>input model</p></td>
+      <td><p>object of class PATH0 or understood by <code>PATH0()</code></p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>passed to the underlying Triangle library</p></td>
+      <td><p>ignored</p></td>
     </tr>
     <tr>
       <th>max_area</th>
@@ -160,33 +133,13 @@ A primitives-based shape-constrained triangulation. The Delaunay model is the
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>DEL model</p>
+    <p>DEL0 class</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The Delaunay model is a constrained triangulation with a variety
-of constraint and qualification types. The Delaunay model has the
-odd but defining characteristic of not being always consistent
-with the Delaunay criterion. Edge inclusion is
-non-negotiable, but other constraints include (limit, or avoid)
-Steiner vertex insertion, a limit on the maximum area of a triangle,
-minimum triangle angle and strict adherence to the Delaunay criterion.</p>
-<p>The Delaunary criterion forms the basis of this model, and is its
-definining characteristic without being strictly adhered to. This is awkward
-to describe but is the key property. From Wikipedia:
-The "Delaunay triangulation (also known as a Delone triangulation) for a given
-set P of discrete points in a plane is a triangulation DT(P) such that no
-point in P is inside the circumcircle of any triangle in DT(P). Delaunay
-triangulations maximize the minimum angle of all the angles of the triangles
-in the triangulation; they tend to avoid sliver triangles. . . . The
-Delaunay triangulation corresponds to the dual graph of the Voronoi
-diagram of P"
-<a href='https://en.wikipedia.org/wiki/Delaunay_triangulation'>https://en.wikipedia.org/wiki/Delaunay_triangulation</a>.</p>
-<p>This strict criterion is <em>relaxed</em> in small measure, to ensure that all
-edge-inputs are preserved and to allow further constraints such as triangle size
-and internal angle to be specified.</p>
+    <p>More compact form of <code><a href='DEL.html'>DEL()</a></code> model.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'>DEL</span>(<span class='no'>simpleworld</span>))</div></pre>
+    <pre class="examples"><div class='input'><span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>DEL0</span>(<span class='no'>cad_tas</span>)</div><div class='output co'>#&gt; <span class='error'>Error in UseMethod("DEL0"): no applicable method for 'DEL0' applied to an object of class "c('sf', 'tbl_df', 'tbl', 'data.frame')"</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>a</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot(a): object 'a' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

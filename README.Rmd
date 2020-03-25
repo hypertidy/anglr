@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 rgl::par3d(windowRect = c(100, 100, 512 + 100, 512 +100))
 ```
 
-# anglr
+# anglr  <img src="data-raw/anglr-logo.png" align="right"  height="192" />
 
 The anglr package aims to provide direct access to the inherent properties of *shape* and the power of topological techniques. 
 

@@ -1,17 +1,17 @@
 #' Auto aspect ratio
 #'
-#' Automatically modify the aspect ratio of a scene to 
+#' Automatically modify the aspect ratio of a scene to
 #' rescale drastically different data ranges into something more
-#' pleasing. 
-#' 
+#' pleasing.
+#'
 #' This is typically used to rescale data in different units, for example longitude and
-#' latitude in degrees and elevation in metres. 
+#' latitude in degrees and elevation in metres.
 #'
 #' @param x exaggeration for x
 #' @param y exaggeration for y
 #' @param z exaggeration for z
 #' @param keep_xy should xy be forced to maintain their current aspect ratio
-#' @param exag should the x, y, z factors be applied, set to `FALSE` to ignore 
+#' @param exag should the x, y, z factors be applied, set to `FALSE` to ignore
 #' @param verbose keep shush
 #'
 #' @return the output of `rgl::par3d` invisibly
@@ -20,7 +20,7 @@
 #' @examples
 #' topo <- copy_down(silicate::SC(simpleworld), gebco1)
 #' plot3d(topo)
-#' 
+#'
 #' auto_3d(z = 4)
 auto_3d <- function(x = 1, y = 1, z = 1, keep_xy = TRUE, exag = TRUE, verbose = TRUE) {
   thr <- apply(matrix(rgl::par3d()$bbox, 2), 2, function(a) diff(a))
@@ -39,6 +39,23 @@ auto_3d <- function(x = 1, y = 1, z = 1, keep_xy = TRUE, exag = TRUE, verbose = 
   rgl::aspect3d(asp[1], asp[2], asp[3])
 }
 
+.check_area <- function(x_, y_, max_area) {
+  if (!is.null(max_area)) {
+    check_x <- diff(range(x_, na.rm = TRUE))/sqrt(max_area)
+    check_y <- diff(range(y_, na.rm = TRUE))/sqrt(max_area)
+
+    max_triangles <- getOption("anglr.max.triangles")
+    if ((check_x * check_y) > max_triangles && interactive()) {
+      yes <- utils::askYesNo(sprintf("'max_area = %s' implies ~%i triangles, are you sure?",
+                                     format(max_area), as.integer((check_x * check_y))))
+      if (!yes) {
+        stop("'getOption(\"anglr.max.triangles\")' exceeded, to avoid this check set a higher limit")
+      }
+
+    }
+  }
+  TRUE
+}
 
 widg <- function() {
   rgl::rglwidget()
@@ -54,12 +71,12 @@ check_is_geom_column <- function(x, ...) {
 find_geom_column <- function(x) {
   purrr::map(maybe_geom_column(x), check_is_geom_column)
 }
-# 
+#
 #     i <- which(lgl)
 #   nms <- names(x)
 #   if (length(i) > 1) {
-#     message(sprintf("found these geom columns %s using %s", 
-#                     paste(nms[i], collapse = ", "), 
+#     message(sprintf("found these geom columns %s using %s",
+#                     paste(nms[i], collapse = ", "),
 #                     nms[i[1]]))
 #     i <- i[1]
 #   }
@@ -71,6 +88,13 @@ find_geom_column <- function(x) {
 #   NULL
 # }
 
+# is there a screen device
+screen_device <- function() {
+  caps <- capabilities()[c("X11", "aqua")]
+  ## can't use stats::na.omit() in .onLoad()
+  caps <- caps[!is.na(caps)]
+ length(caps) > 0 &&  (sum(caps) > 0 || exists("windows"))
+}
 
 #' @importFrom utils head
 path2seg <- function(x) {
@@ -80,4 +104,17 @@ path2seg <- function(x) {
 
 trimesh_cols <- function(n) {
   viridis::viridis(n)
+}
+
+## from quadmesh::triangulate_quads
+.quad2tri <- function (quad_index, clockwise = FALSE)
+{
+  if (clockwise) {
+    matrix(rbind(quad_index[c(1L, 2L, 4L), ], quad_index[c(2L,
+                                                           3L, 4L), ]), 3L)
+  }
+  else {
+    matrix(rbind(quad_index[c(1L, 4L, 2L), ], quad_index[c(4L,
+                                                           3L, 2L), ]), 3L)
+  }
 }
