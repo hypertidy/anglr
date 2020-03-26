@@ -31,7 +31,17 @@ plot3d.sc <- function(x, ...) {
 #' @aliases persp3d
 #' @export
 persp3d.TRI <- function(x, ..., add = FALSE) {
-  plot3d(as.mesh3d(x, ...), add = add, ...)
+  args <- list(...)
+  if (inherits(args$col, "BasicRaster")) {
+    args$image_texture <- args$col
+    args$col <- NULL
+
+  } else {
+    texture <- NULL
+  }
+  args$x <- x
+
+  plot3d(do.call(as.mesh3d, args), add = add)
 }
 #' @name plot3d
 #' @aliases persp3d

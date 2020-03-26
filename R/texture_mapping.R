@@ -29,7 +29,12 @@
   if (!raster::nlayers(img) %in% c(3, 4)) {
     stop(errmsg)
   }
-  verts <- reproj::reproj(exy, target = crsmeta::crs_proj(img),
+ target_proj <- crsmeta::crs_proj(img)
+  if (!is.na(target_proj)) {
+    verts <- reproj::reproj(exy, target = target_proj,
                           source  = source)[,1:2, drop = FALSE]
+  } else {
+    verts <- exy
+  }
   .texture_coordinates(img, vertices = verts)
 }
