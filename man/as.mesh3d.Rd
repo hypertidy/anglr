@@ -39,10 +39,23 @@
   smooth = FALSE,
   normals = NULL,
   texcoords = NULL,
-  ...
+  ...,
+  keep_all = TRUE,
+  image_texture = NULL,
+  meshColor = "faces"
 )
 
-\method{as.mesh3d}{BasicRaster}(x, triangles = FALSE, ...)
+\method{as.mesh3d}{BasicRaster}(
+  x,
+  triangles = FALSE,
+  smooth = FALSE,
+  normals = NULL,
+  texcoords = NULL,
+  ...,
+  keep_all = TRUE,
+  image_texture = NULL,
+  meshColor = "faces"
+)
 
 \method{as.mesh3d}{QUAD}(
   x,
@@ -50,7 +63,10 @@
   smooth = FALSE,
   normals = NULL,
   texcoords = NULL,
-  ...
+  ...,
+  keep_all = TRUE,
+  image_texture = NULL,
+  meshColor = "faces"
 )
 }
 \arguments{

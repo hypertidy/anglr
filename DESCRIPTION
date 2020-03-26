@@ -29,7 +29,8 @@ Imports:
     scales,
     crsmeta (>= 0.2.0.9001),
     png,
-    utils
+    utils,
+    palr
 Suggests: 
     covr,
     ggplot2,

@@ -91,7 +91,7 @@ as.mesh3d_internal <- function(x, z,  smooth = FALSE, normals = NULL, texcoords 
   }
 
   ## NOTE: no partial naming allowed ($col for example cause heisenbugs so it's not negotiable)
-  if (is.null(material$color))   material$color <- "#FFFFFF00"  ## not black, else texture is invisible
+  if (is.null(material$color))   material$color <- "#FFFFFFFF"  ## not black, else texture is invisible
 
   out <- tmesh3d(rbind(t(vb), h = 1),
                  vindex,
@@ -197,10 +197,44 @@ as.mesh3d.TRI0 <- function(x, z,  smooth = FALSE, normals = NULL, texcoords = NU
 }
 
 
+quad_common <- function(vb, index, normals, texcoords, material, meshColor, triangles, smooth) {
+  ## deal with triangles = TRUE
+  if (!triangles) {
+    out <- do.call(rgl::qmesh3d, list(vertices = vb, indices = index,
+                                        normals = normals, texcoords = texcoords,
+                                        material = material,
+                                        meshColor = "faces"))
+  } else {
+    out <- do.call(rgl::tmesh3d, list(vertices = vb, indices = .quad2tri(index),
+                                        normals = normals, texcoords = texcoords,
+                                        material = material,
+                                        meshColor = "faces"))
+  }
+  if (smooth) {
+    out <- rgl::addNormals(out)
+  }
+  out
+}
+
 #' @name as.mesh3d
 #' @export
-as.mesh3d.matrix <- function(x, triangles = FALSE,
-                             smooth = FALSE, normals = NULL, texcoords = NULL, ...) {
+as.mesh3d.matrix <-function(x, triangles = FALSE,
+                            smooth = FALSE, normals = NULL, texcoords = NULL,
+                            ..., keep_all = TRUE, image_texture = NULL, meshColor = "faces") {
+
+  material <- list(...)  ## note that rgl has material <- .getMaterialArgs(...)
+  ## for now we just warn if old-stlye material = list() was used
+  if ("material" %in% names(material)) {
+    warning("do not pass in 'material = list(<of properties>)' to as.mesh3d
+             pass in 'rgl::material3d' arguments directly as part of '...'")
+  }
+
+  if (is.null(material$color) &&
+      is.null(image_texture)) {
+    material$color <-  palr::image_pal(x)
+
+  }
+
   ## from https://github.com/hypertidy/quadmesh/blob/80380db26153615c365dc67b64465448beab2832/R/exy_values.R#L51-L72
   vals <- vxy(x)
   exy <- edges_xy(x)
@@ -214,33 +248,37 @@ as.mesh3d.matrix <- function(x, triangles = FALSE,
   ind <- matrix(c(rbind(aa, aa[2:1, ])) + c(0, 0, nc1, nc1), 4)
   ind0 <- as.integer(as.vector(ind) +
                        rep(seq(0, length = nr, by = nc1), each = 4 * nc))
+
+  vb <- rbind(t(exy), vals, 1)
   ind1 <- matrix(ind0, nrow = 4)
-  ## for a matrix, we are done
-  ## for raster, we have to apply the extent transformation
-  cols <- viridis::viridis(100)
-  ## deal with triangles = TRUE
-  if (!triangles) {
-    out <- rgl::qmesh3d(rbind(t(exy), vals, 1),
-                        ind1,
-                        normals = normals, texcoords = texcoords,
-                        material = list(color = cols[scales::rescale(vals, to = c(1, 100))])
-    )
-  } else {
-    vals <- rep(vals, each = 2L)
-    out <- rgl::tmesh3d(rbind(t(exy), vals, 1),
-                        .quad2tri( ind1),
-                        normals = normals, texcoords = texcoords,
-                        material = list(color = cols[scales::rescale(vals, to = c(1, 100))])
-    )
+
+  ## use the geometry to remap the texture if needed
+  if (!is.null(image_texture)) {
+    if (!is.null(texcoords)) {
+      warning("must supply only one of 'texcoords' or 'image_texture' argument, 'image_texture' will be ignore")
+    }
+    texcoords <- .texture_map(image_texture,
+                              crsmeta::crs_proj(x),
+                              exy = vb[, 1:2, drop = FALSE])
+    if (is.null(material$texture)) {
+      material$texture <- tempfile(fileext = ".png")
+      material$color <- "#FFFFFFFF"
+    }
+    if (!grepl("png$", material$texture)) {
+      warning(sprintf("'texture = %s' does not look like a good PNG filename",
+                      material$texture))
+    }
+    message(sprintf("writing texture image to %s", material$texture))
+    png::writePNG(raster::as.array(image_texture) / 255, material$texture)
   }
-  if (smooth) {
-    out <- rgl::addNormals(out)
-  }
-  out
+  quad_common(vb, ind1, normals, texcoords, material, meshColor, triangles, smooth)
+
 }
 #' @name as.mesh3d
 #' @export
-as.mesh3d.BasicRaster <- function(x, triangles = FALSE, ...) {
+as.mesh3d.BasicRaster <- function(x, triangles = FALSE,
+                                  smooth = FALSE, normals = NULL, texcoords = NULL,
+                                  ..., keep_all = TRUE, image_texture = NULL, meshColor = "faces") {
   ## consider the case where x has 3 layers (xcrd, ycrd, zval) or we use
   ## arguments of the generic as.mesh3d(x, y, z) with 3 (or 2) separate rasters
   as.mesh3d(QUAD(x), triangles = triangles, ...)
@@ -249,43 +287,52 @@ as.mesh3d.BasicRaster <- function(x, triangles = FALSE, ...) {
 #' @export
 as.mesh3d.QUAD <- function(x, triangles = FALSE,
                            smooth = FALSE, normals = NULL, texcoords = NULL,
-                           ...) {
-  scl <- function(x) (x - min(x, na.rm = TRUE))/diff(range(x, na.rm = TRUE))
+                           ..., keep_all = TRUE, image_texture = NULL, meshColor = "faces") {
+
+  material <- list(...)  ## note that rgl has material <- .getMaterialArgs(...)
+  ## for now we just warn if old-stlye material = list() was used
+  if ("material" %in% names(material)) {
+    warning("do not pass in 'material = list(<of properties>)' to as.mesh3d
+             pass in 'rgl::material3d' arguments directly as part of '...'")
+  }
+  ## expensive, equivalent to TRI_add_shade
+  if (is.null(x$quad$color_)) {
+    x$quad$color_ <- palr::image_pal(x$quad$value)
+  }
+  if (is.null(material$color) &&
+      is.null(image_texture)) {
+    material$color <- x$quad$color_
+
+  }
 
   v <- get_vertex(x)
   m <- matrix(x$quad$value, x$object$ncols)
   zz <- vxy(m)
   vb <- rbind(v$x_, v$y_, zz, 1)
 
-  cols <- viridis::viridis(84)
-  if ("material" %in% names(list(...))) {
-    material <- list(...)$material
-    dots <- list(...)
-    dots$material <- NULL
-  } else {
-    vals <- x$quad$value
-    if (triangles) vals <- rep(vals, each = 2)
-    material <- list(color = cols[scl(vals) * length(cols) + 1])
-    dots <- NULL
+
+  ## use the geometry to remap the texture if needed
+  if (!is.null(image_texture)) {
+    if (!is.null(texcoords)) {
+      warning("must supply only one of 'texcoords' or 'image_texture' argument, 'image_texture' will be ignore")
+    }
+    texcoords <- .texture_map(image_texture,
+                              crsmeta::crs_proj(x),
+                              exy = t(vb[1:2, , drop = FALSE]))
+
+    if (is.null(material$texture)) {
+      material$texture <- tempfile(fileext = ".png")
+      material$color <- "#FFFFFFFF"
+    }
+    if (!grepl("png$", material$texture)) {
+      warning(sprintf("'texture = %s' does not look like a good PNG filename",
+                      material$texture))
+    }
+    message(sprintf("writing texture image to %s", material$texture))
+    png::writePNG(raster::as.array(image_texture) / 255, material$texture)
   }
 
-
-  ## deal with triangles = TRUE
-  if (!triangles) {
-    out <- do.call(rgl::qmesh3d, c(list(vertices = vb, indices = get_index(x),
-                                        normals = normals, texcoords = texcoords,
-                                        material = material,
-                                        meshColor = "faces"), dots))
-  } else {
-    out <- do.call(rgl::tmesh3d, c(list(vertices = vb, indices = .quad2tri(get_index(x)),
-                                        normals = normals, texcoords = texcoords,
-                                        material = material,
-                                        meshColor = "faces"), dots))
-  }
-  if (smooth) {
-    out <- rgl::addNormals(out)
-  }
-  out
+ quad_common(vb, get_index(x), normals, texcoords, material, meshColor,  triangles, smooth)
 }
 
 
