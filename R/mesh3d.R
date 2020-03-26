@@ -171,6 +171,7 @@ as.mesh3d_internal <- function(x, z,  smooth = FALSE, normals = NULL, texcoords 
 #' clear3d();shade3d(as.mesh3d(DEL(silicate::minimal_mesh, max_area = 0.001), z =r))
 #' aspect3d(1, 1, 0.5)
 #'
+#' \donttest{
 #' library(rgl)
 #' r1 <- raster::setExtent(raster::raster(volcano), raster::extent(silicate::inlandwaters))
 #' clear3d();shade3d(as.mesh3d(DEL(silicate::inlandwaters, max_area = 1e9), z =r1))
@@ -178,7 +179,7 @@ as.mesh3d_internal <- function(x, z,  smooth = FALSE, normals = NULL, texcoords 
 #'
 #' ## fake news
 #' rgl::wire3d(as.mesh3d(r1))
-#'
+#' }
 as.mesh3d.TRI <- function(x, z,  smooth = FALSE, normals = NULL, texcoords = NULL, ...,
                                keep_all = TRUE,
                                image_texture = NULL, meshColor = "faces") {
