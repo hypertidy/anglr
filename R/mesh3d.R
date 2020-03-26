@@ -297,7 +297,7 @@ as.mesh3d.QUAD <- function(x, triangles = FALSE,
              pass in 'rgl::material3d' arguments directly as part of '...'")
   }
   ## expensive, equivalent to TRI_add_shade
-  if (is.null(x$quad$color_)) {
+  if (!"color_" %in% names(x$quad)) {
     x$quad$color_ <- palr::image_pal(x$quad$value)
   }
   if (is.null(material$color) &&

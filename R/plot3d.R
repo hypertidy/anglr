@@ -171,7 +171,21 @@ plot3d.ARC <- function(x, ..., add = FALSE) {
 
 }
 
-
+#' @export
+#' @name plot3d
+plot3d.QUAD <- function(x, ...) {
+  plot3d(as.mesh3d(x), ...)
+}
+#' @export
+#' @name plot3d
+plot3d.matrix <- function(x, ...) {
+  plot3d(as.mesh3d(x), ...)
+}
+#' @export
+#' @name plot3d
+plot3d.BasicRaster <- function(x, ...) {
+  plot3d(as.mesh3d(x), ...)
+}
 
 
 
