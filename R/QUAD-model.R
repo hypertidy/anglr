@@ -2,19 +2,36 @@
 #'
 #' The QUAD model
 #'
-#' @param x raster alike
+#' This is lazy, object table only stores the raster extent.
+#'
+#' The 'color_' idiom works, but must be put on the '$quad' table.
+#' Very WIP.
+#' @param x raster alike, or a matrix
 #' @param ... ignored
 #'
 #' @return QUAD model
-#' @noRd
+#' @export
 #'
-# @examples
-# #QUAD(raster::raster(volcano))
+#'  @examples
+#' qq <-  QUAD(raster::raster(volcano))
+#' mesh_plot(qq)
+#' qq$quad$color_ <- rep(c("black", "white"), length.out = nrow(qq$quad))
+#' mesh_plot(qq)
+#' qq$quad$color_ <- palr::image_pal(qq$quad$value, col = grey.colors(10))
+#' mesh_plot(qq)
 QUAD <- function(x, ...) {
   UseMethod("QUAD")
 }
 #' @name QUAD
-#' @noRd
+#' @export
+QUAD.matrix <- function(x, ...) {
+  r <- raster::setExtent(raster::raster(t(x)[ncol(x):1, ]),
+                         raster::extent(0, nrow(x), 0, ncol(x)))
+
+  QUAD(r, ...)
+}
+#' @name QUAD
+#' @export
 #' @importFrom raster xmin xmax ymin ymax
 QUAD.BasicRaster <- function(x, ...) {
   x <- x[[1]]  ## just the oneth raster for now

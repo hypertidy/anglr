@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">anglr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9020</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9100</span>
       </span>
     </div>
 
@@ -112,7 +112,13 @@
     <p>Structural form of Delaunay constrained triangulation</p>
     </div>
 
-    <pre class="usage"><span class='fu'>DEL0</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>DEL0</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='co'># S3 method for default</span>
+<span class='fu'>DEL0</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='co'># S3 method for PATH0</span>
+<span class='fu'>DEL0</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -139,7 +145,49 @@
     <p>More compact form of <code><a href='DEL.html'>DEL()</a></code> model.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>DEL0</span>(<span class='no'>cad_tas</span>)</div><div class='output co'>#&gt; <span class='error'>Error in UseMethod("DEL0"): no applicable method for 'DEL0' applied to an object of class "c('sf', 'tbl_df', 'tbl', 'data.frame')"</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>a</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot(a): object 'a' not found</span></div></pre>
+    <pre class="examples"><div class='input'><span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>DEL0</span>(<span class='no'>cad_tas</span>)</div><div class='output co'>#&gt; <span class='message'>New names:</span>
+#&gt; <span class='message'>* `711` -&gt; `711...44`</span>
+#&gt; <span class='message'>* `712` -&gt; `712...45`</span>
+#&gt; <span class='message'>* `713` -&gt; `713...46`</span>
+#&gt; <span class='message'>* `911` -&gt; `911...64`</span>
+#&gt; <span class='message'>* `912` -&gt; `912...65`</span>
+#&gt; <span class='message'>* ...</span></div><div class='output co'>#&gt; <span class='message'>New names:</span>
+#&gt; <span class='message'>* `711` -&gt; `711...38`</span>
+#&gt; <span class='message'>* `712` -&gt; `712...39`</span>
+#&gt; <span class='message'>* `911` -&gt; `911...56`</span>
+#&gt; <span class='message'>* `912` -&gt; `912...57`</span>
+#&gt; <span class='message'>* `913` -&gt; `913...58`</span>
+#&gt; <span class='message'>* ...</span></div><div class='output co'>#&gt; <span class='message'>New names:</span>
+#&gt; <span class='message'>* `711` -&gt; `711...44`</span>
+#&gt; <span class='message'>* `712` -&gt; `712...45`</span>
+#&gt; <span class='message'>* `713` -&gt; `713...46`</span>
+#&gt; <span class='message'>* `911` -&gt; `911...64`</span>
+#&gt; <span class='message'>* `912` -&gt; `912...65`</span>
+#&gt; <span class='message'>* ...</span></div><div class='output co'>#&gt; <span class='message'>New names:</span>
+#&gt; <span class='message'>* `711` -&gt; `711...44`</span>
+#&gt; <span class='message'>* `712` -&gt; `712...45`</span>
+#&gt; <span class='message'>* `713` -&gt; `713...46`</span>
+#&gt; <span class='message'>* `911` -&gt; `911...64`</span>
+#&gt; <span class='message'>* `912` -&gt; `912...65`</span>
+#&gt; <span class='message'>* ...</span></div><div class='output co'>#&gt; <span class='message'>New names:</span>
+#&gt; <span class='message'>* `711` -&gt; `711...44`</span>
+#&gt; <span class='message'>* `712` -&gt; `712...45`</span>
+#&gt; <span class='message'>* `713` -&gt; `713...46`</span>
+#&gt; <span class='message'>* `911` -&gt; `911...64`</span>
+#&gt; <span class='message'>* `912` -&gt; `912...65`</span>
+#&gt; <span class='message'>* ...</span></div><div class='output co'>#&gt; <span class='message'>New names:</span>
+#&gt; <span class='message'>* `711` -&gt; `711...44`</span>
+#&gt; <span class='message'>* `712` -&gt; `712...45`</span>
+#&gt; <span class='message'>* `713` -&gt; `713...46`</span>
+#&gt; <span class='message'>* `911` -&gt; `911...64`</span>
+#&gt; <span class='message'>* `912` -&gt; `912...65`</span>
+#&gt; <span class='message'>* ...</span></div><div class='output co'>#&gt; <span class='message'>New names:</span>
+#&gt; <span class='message'>* `711` -&gt; `711...44`</span>
+#&gt; <span class='message'>* `712` -&gt; `712...45`</span>
+#&gt; <span class='message'>* `713` -&gt; `713...46`</span>
+#&gt; <span class='message'>* `911` -&gt; `911...64`</span>
+#&gt; <span class='message'>* `912` -&gt; `912...65`</span>
+#&gt; <span class='message'>* ...</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>a</span>)</div><div class='img'><img src='DEL0-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

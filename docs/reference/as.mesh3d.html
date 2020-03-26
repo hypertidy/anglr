@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">anglr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9020</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9100</span>
       </span>
     </div>
 
@@ -126,7 +126,17 @@
 )
 
 <span class='co'># S3 method for TRI0</span>
-<span class='fu'>as.mesh3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>meshColor</span> <span class='kw'>=</span> <span class='st'>"faces"</span>)
+<span class='fu'>as.mesh3d</span>(
+  <span class='no'>x</span>,
+  <span class='no'>z</span>,
+  <span class='kw'>smooth</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>normals</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>texcoords</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>keep_all</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>image_texture</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>meshColor</span> <span class='kw'>=</span> <span class='st'>"faces"</span>
+)
 
 <span class='co'># S3 method for matrix</span>
 <span class='fu'>as.mesh3d</span>(
@@ -135,11 +145,24 @@
   <span class='kw'>smooth</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>normals</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>texcoords</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
+  <span class='no'>...</span>,
+  <span class='kw'>keep_all</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>image_texture</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>meshColor</span> <span class='kw'>=</span> <span class='st'>"faces"</span>
 )
 
 <span class='co'># S3 method for BasicRaster</span>
-<span class='fu'>as.mesh3d</span>(<span class='no'>x</span>, <span class='kw'>triangles</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>as.mesh3d</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>triangles</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>smooth</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>normals</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>texcoords</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>keep_all</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>image_texture</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>meshColor</span> <span class='kw'>=</span> <span class='st'>"faces"</span>
+)
 
 <span class='co'># S3 method for QUAD</span>
 <span class='fu'>as.mesh3d</span>(
@@ -148,7 +171,10 @@
   <span class='kw'>smooth</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>normals</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>texcoords</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
+  <span class='no'>...</span>,
+  <span class='kw'>keep_all</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>image_texture</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>meshColor</span> <span class='kw'>=</span> <span class='st'>"faces"</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -213,24 +239,36 @@ from TRI/TRI0 is used, otherwise z = 0' is assumed.</p>
 <span class='co'>#sf &lt;- silicate::inlandwaters</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/silicate/man/TRI.html'>TRI</a></span>(<span class='no'>sf</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rgl</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: package 'rgl' was built under R version 3.6.3</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>(); <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>x</span>); <span class='fu'><a href='https://rdrr.io/pkg/rgl/man/viewpoint.html'>view3d</a></span>(<span class='kw'>phi</span> <span class='kw'>=</span> -<span class='fl'>10</span>)
+<span class='co'>## simple convention to carry feature colours</span>
+<span class='no'>sf</span>$<span class='no'>color_</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"firebrick"</span>, <span class='st'>"dodgerblue"</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>(); <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/silicate/man/TRI.html'>TRI</a></span>(<span class='no'>sf</span>)); <span class='fu'><a href='https://rdrr.io/pkg/rgl/man/viewpoint.html'>view3d</a></span>(<span class='kw'>phi</span> <span class='kw'>=</span> -<span class='fl'>10</span>)
 
-<span class='co'># manual face colours (it's not guaranteed that triangle order is native</span>
-<span class='co'># within original objects)</span>
+<span class='co'># material properties for $material are collected in ...</span>
+<span class='co'># and will override the 'color_' mech</span>
+<span class='no'>x</span>$<span class='no'>object</span>$<span class='no'>color_</span> <span class='kw'>&lt;-</span> <span class='st'>"black"</span>
+<span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>(); <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'>as.mesh3d</span>(<span class='no'>x</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/palettes.html'>rainbow</a></span>(<span class='fl'>14</span>)))
 
-<span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>(); <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'>as.mesh3d</span>(<span class='no'>x</span>, <span class='kw'>material</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/palettes.html'>rainbow</a></span>(<span class='fl'>14</span>))))
-
-<span class='no'>mts</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"black"</span>, <span class='st'>"grey"</span>)[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>12</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>2</span>))])
-<span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>(); <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'>as.mesh3d</span>(<span class='no'>x</span>, <span class='kw'>material</span> <span class='kw'>=</span> <span class='no'>mts</span>))
+<span class='co'>## we cannot assume TRI triangles relate to features simply</span>
+<span class='co'>##  but sometimes it does  (always does for TRI0)</span>
+<span class='no'>cols</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"black"</span>, <span class='st'>"grey"</span>)[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>12</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>2</span>))]
+<span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>(); <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'>as.mesh3d</span>(<span class='no'>x</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>cols</span>))
 
 <span class='co'>## smear by vertices meshColor</span>
-<span class='no'>mts1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"black"</span>, <span class='st'>"grey"</span>))
-<span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>(); <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'>as.mesh3d</span>(<span class='no'>x</span>, <span class='kw'>material</span> <span class='kw'>=</span> <span class='no'>mts1</span>), <span class='kw'>meshColor</span> <span class='kw'>=</span> <span class='st'>"vertices"</span>)
+<span class='no'>cols</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"black"</span>, <span class='st'>"grey"</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>(); <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'>as.mesh3d</span>(<span class='no'>x</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>cols</span>), <span class='kw'>meshColor</span> <span class='kw'>=</span> <span class='st'>"vertices"</span>)
 
+<span class='co'>## other material properties</span>
+<span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>(); <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'>as.mesh3d</span>(<span class='no'>x</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>cols</span>, <span class='kw'>specular</span> <span class='kw'>=</span> <span class='st'>"black"</span>), <span class='kw'>meshColor</span> <span class='kw'>=</span> <span class='st'>"vertices"</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>(); <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'>as.mesh3d</span>(<span class='no'>x</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>cols</span>, <span class='kw'>front</span> <span class='kw'>=</span> <span class='st'>"lines"</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>5</span>), <span class='kw'>meshColor</span> <span class='kw'>=</span> <span class='st'>"vertices"</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>(); <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'>as.mesh3d</span>(<span class='no'>x</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/viridis/man/reexports.html'>viridis</a></span>(<span class='fl'>20</span>), <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.3</span>), <span class='kw'>meshColor</span> <span class='kw'>=</span> <span class='st'>"faces"</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>(); <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'>as.mesh3d</span>(<span class='no'>x</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/viridis/man/reexports.html'>viridis</a></span>(<span class='fl'>5</span>), <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.3</span>), <span class='kw'>meshColor</span> <span class='kw'>=</span> <span class='st'>"vertices"</span>)
+
+<span class='co'># TRI0 - index is stored structurally, not relations</span>
 <span class='no'>x0</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/silicate/man/TRI0.html'>TRI0</a></span>(<span class='no'>sf</span>)
 <span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>(); <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>x0</span>); <span class='fu'><a href='https://rdrr.io/pkg/rgl/man/viewpoint.html'>view3d</a></span>(<span class='kw'>phi</span> <span class='kw'>=</span> -<span class='fl'>10</span>)
 
 <span class='co'># (TRI0 - it *is* guaranteed that triangle order is native)</span>
-<span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>(); <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'>as.mesh3d</span>(<span class='no'>x0</span>,  <span class='kw'>material</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/palettes.html'>rainbow</a></span>(<span class='fl'>14</span>))))
+<span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>(); <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'>as.mesh3d</span>(<span class='no'>x0</span>,  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/palettes.html'>rainbow</a></span>(<span class='fl'>14</span>)))
 
 <span class='co'>## arbitrarily drape polygons over raster</span>
 <span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/setExtent.html'>setExtent</a></span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span>(<span class='no'>volcano</span>), <span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>1.1</span>, -<span class='fl'>0.1</span>, <span class='fl'>1.1</span>))
@@ -242,7 +280,8 @@ from TRI/TRI0 is used, otherwise z = 0' is assumed.</p>
 <span class='fu'><a href='https://rdrr.io/pkg/rgl/man/aspect3d.html'>aspect3d</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>.2</span>)
 
 <span class='co'>## fake news</span>
-<span class='kw pkg'>rgl</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/rgl/man/mesh3d.html'>wire3d</a></span>(<span class='fu'>as.mesh3d</span>(<span class='no'>r1</span>))</div></pre>
+<span class='kw pkg'>rgl</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/rgl/man/mesh3d.html'>wire3d</a></span>(<span class='fu'>as.mesh3d</span>(<span class='no'>r1</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: Unknown or uninitialised column: 'color_'.</span></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

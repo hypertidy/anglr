@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">anglr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9006</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9100</span>
       </span>
     </div>
 
@@ -114,6 +114,9 @@
 
     <pre class="usage"><span class='fu'>QUAD</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
+<span class='co'># S3 method for matrix</span>
+<span class='fu'>QUAD</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
 <span class='co'># S3 method for BasicRaster</span>
 <span class='fu'>QUAD</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
 
@@ -122,7 +125,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>raster alike</p></td>
+      <td><p>raster alike, or a matrix</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -133,18 +136,19 @@
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>QUAD model</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>QUAD</span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span>(<span class='no'>volcano</span>))</div><div class='output co'>#&gt; class       : QUAD
-#&gt; type        : [Unknown]
-#&gt; crs         : NA</div></pre>
+    <p>This is lazy, object table only stores the raster extent.</p>
+<p>The 'color_' idiom works, but must be put on the '$quad' table.
+Very WIP.</p>
+
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#examples">Examples</a></li>
+      <li><a href="#details">Details</a></li>
     </ul>
 
   </div>
