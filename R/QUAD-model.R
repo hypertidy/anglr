@@ -12,7 +12,7 @@
 #' @return QUAD model
 #' @export
 #'
-#'  @examples
+#' @examples
 #' qq <-  QUAD(raster::raster(volcano))
 #' mesh_plot(qq)
 #' qq$quad$color_ <- rep(c("black", "white"), length.out = nrow(qq$quad))

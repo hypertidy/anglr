@@ -7,7 +7,7 @@
 #' @param add add to plot or not
 #'
 #' @return rgl shape3d types (note that "segment3d" is currently an imaginary shape3d type)
-#' @importFrom rgl plot3d persp3d 
+#' @importFrom rgl plot3d persp3d
 #' @export plot3d
 #' @export persp3d
 #' @examples
@@ -75,7 +75,7 @@ plot3d.SC <- function(x, ..., add = FALSE) {
   #invisible(list(v = vb, is = vindex))
   invisible(structure(list(vb = rbind(t(vb), 0),
                            is = vindex,
-                 
+
                  material = list(col = pindex$color_)),
             class = c("segment3d", "shape3d")))
 }
@@ -87,11 +87,15 @@ plot3d.SC0 <- function(x, ..., add = FALSE) {
   }
   vv <- silicate::sc_vertex(x)
   vb <- as.matrix(vv[c("x_", "y_")])
-  if ("z_" %in%  names(vv)) vb <- cbind(vb, vv$z_) else cbind(vb, 0)
-  vb <- cbind(vb, 1)
+  if ("z_" %in%  names(vv)) {
+    vb <- cbind(vb, z = vv$z_)
+    } else {
+      vb <- cbind(vb, z = 0)
+    }
+  vb <- cbind(vb, h = 1)
   lt <- silicate::sc_object(x)$topology_
   pindex <- rep(x$object$color_, unlist(lapply(lt, nrow)))
-  vindex <- t(do.call(rbind, lt))
+  vindex <- t(do.call(rbind, lapply(lt, function(adf) adf[c(".vx0", ".vx1")])))
   if (!add) {
     rgl::rgl.clear()
   }
@@ -100,12 +104,12 @@ plot3d.SC0 <- function(x, ..., add = FALSE) {
   } else {
     rgl::segments3d(vb[vindex,],
                     col = rep(pindex, each = 2), ...)
-    
+
   }
 
   invisible(structure(list(vb = rbind(t(vb), 0),
                            is = vindex,
-                           
+
                            material = list(col = pindex)),
                       class = c("segment3d", "shape3d")))
 }
@@ -161,7 +165,7 @@ plot3d.ARC <- function(x, ..., add = FALSE) {
   ## there's no shape3d for segments
   invisible(structure(list(vb = rbind(t(vb), 0),
                            is = matrix(vindex, nrow = 2),
-                          
+
                            material = list(col = pindex$color_)),
                       class = c("segment3d", "shape3d")))
 

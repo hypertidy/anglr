@@ -29,3 +29,11 @@ This is lazy, object table only stores the raster extent.
 The 'color_' idiom works, but must be put on the '$quad' table.
 Very WIP.
 }
+\examples{
+qq <-  QUAD(raster::raster(volcano))
+mesh_plot(qq)
+qq$quad$color_ <- rep(c("black", "white"), length.out = nrow(qq$quad))
+mesh_plot(qq)
+qq$quad$color_ <- palr::image_pal(qq$quad$value, col = grey.colors(10))
+mesh_plot(qq)
+}
