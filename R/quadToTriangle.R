@@ -7,6 +7,7 @@
 #' @export
 #' @importFrom silicate TRI
 #' @export TRI
+#' @name TRI
 #' @examples
 #' library(anglr)
 #' library(raster)
