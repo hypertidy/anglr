@@ -10,11 +10,11 @@ addons:
     sources:
       - sourceline: 'ppa:ubuntugis/ubuntugis-unstable'
     packages:
-      - libv8-dev 
-      - libudunits2-dev 
-      - libproj-dev 
-      - libgeos-dev 
-      - libgdal-dev 
+      - libv8-dev
+      - libudunits2-dev
+      - libproj-dev
+      - libgeos-dev
+      - libgdal-dev
       - netcdf-bin
 
 
@@ -26,13 +26,13 @@ matrix:
           env:
            - BUILD_NAME=trusty_release
            - DETAILS="release build"
-        - os: osx
-          r: release
-          before_install: ''
-          disable_homebrew: true
-          env:
-           - BUILD_NAME=osx_release
-           - DETAILS="release build"
+        # - os: osx
+        #   r: release
+        #   before_install: ''
+        #   disable_homebrew: true
+        #   env:
+        #    - BUILD_NAME=osx_release
+        #    - DETAILS="release build"
 
 
 
