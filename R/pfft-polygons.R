@@ -15,7 +15,7 @@ extents.SC <- function(x) {
   x1 <- x[["edge"]] %>%
     dplyr::inner_join(x[["vertex"]], c(".vx1" = "vertex_"))  %>%
     dplyr::transmute(x1 = .data$x_, y1 = .data$y_, edge_ = .data$edge_)
-  
+
   edges <- dplyr::bind_cols(x0, x1)
   tibble::tibble(xmn = pmin(edges$x0, edges$x1), xmx = pmax(edges$x0, edges$x1),
                  ymn = pmin(edges$y0, edges$y1), ymx = pmax(edges$y0, edges$y1))
@@ -30,7 +30,7 @@ extents.PATH <- function(x) {
     dplyr::inner_join(x[["path_link_vertex"]], "path_") %>%
     dplyr::inner_join(x[["vertex"]], "vertex_") %>%
     dplyr::group_by(.data$path_) %>%
-    dplyr::summarize(xmn = min(.data$x_), xmx = max(.data$x_), 
+    dplyr::summarize(xmn = min(.data$x_), xmx = max(.data$x_),
                      ymn = min(.data$y_), ymx = max(.data$y_))
 }
 
@@ -55,7 +55,7 @@ path_triangle_map <- function(x, RTri) {
   ex <- extents(x)
   gm <- silicate::sc_path(x) ## x[["path"]]
   ## map of which points to look up
-  
+
   pipmap <- split(ex, ex$path_)[unique(ex$path_)] %>%
     purrr::map(~ (centroids[,1] >= .x[["xmn"]] &
                     centroids[,1] <= .x[["xmx"]] &
@@ -81,43 +81,4 @@ path_triangle_map <- function(x, RTri) {
   ix <- lapply(pip, which)
   tibble::tibble(path_ = rep(names(ix), lengths(ix)),
                  triangle_idx = unlist(ix))
-}
-
-
-#' @noRd
-#' @param x PATH
-pfft_polys <- function(x, max_area = NULL,  ...) {
-  dots <- list(...)
-  dots[["a"]] <- max_area
-  dots[["x"]] <- x
-
-  RTri <- do.call(edge_RTriangle, dots)
-  ptm <- path_triangle_map(x, RTri)
-  #vertex <- x$v  ## for fun aRt
-  vertex <- tibble::tibble(x_ = RTri$P[,1], y_ = RTri$P[,2], vertex_ = silicate::sc_uid(nrow(RTri$P)))
-  ## unique triangles
-  triangle <- tibble::tibble(triangle_ = silicate::sc_uid(nrow(RTri$T)))
-  ## all triangle instances
-  ptm[["triangle_"]] <- triangle[["triangle_"]][ptm[["triangle_idx"]]]
-  ptm[["triangle_idx"]] <- NULL
-  ## any triangle that occurs an even number of times in a path per object is part of a hole
-
-  ptm <- dplyr::inner_join(ptm, x[["path"]][c("path_", "object_")], "path_")
-  
- 
-  ptm <- ptm %>% dplyr::group_by(.data$object_, .data$triangle_) %>% 
-    dplyr::mutate(n = dplyr::n()) %>%  ## see globalVariables declaration for "n"
-    dplyr::ungroup()  #%>% 
-  
-  tt <- dplyr::select(ptm, .data$object_, .data$triangle_) %>% 
-    dplyr::anti_join(ptm %>% dplyr::filter(.data$n %% 2 == 0) %>% 
-                       dplyr::select(.data$object_, .data$triangle_), c("object_", "triangle_"))
-  tXv <- tibble::tibble(vertex_ = vertex[["vertex_"]][t(RTri$T)], 
-                        triangle_ = rep(triangle[["triangle_"]], each = 3))
-  
-  
-  outlist <- list(o = x$o, t = tt, tXv = tXv, v = vertex, 
-                  meta = x$meta)
-  class(outlist) <- "trimesh"
-  outlist
 }

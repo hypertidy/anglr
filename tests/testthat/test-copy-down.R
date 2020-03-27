@@ -18,5 +18,12 @@ test_that("copy down works", {
     x4 <- copy_down(tri, "value")
     expect_true(all(x4$vertex$z_ == 2.5))
 
+    path <- PATH(minimal_mesh)
+    copy_down(path, raster::raster(volcano))
+
+    expect_equal(copy_down(path, "a")$vertex$z_,
+                 c(rep(1, 12), rep(2, 4)))
+
   })
+
 })
