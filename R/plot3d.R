@@ -1,5 +1,15 @@
 #' 3D object plot
 #'
+#' This is the workhorse function for anglr, the idea is that just
+#' about anything can be plotted in a 3D scene, polygons, lines, rasters,
+#' matrix. These objects from sp, sf, raster, trip, and silicate should all
+#' work.
+#'
+#' If the scene looks funny the aspect ratio might be poor, we've decided
+#' not to automatically update this with normal plots, but running `auto_3d()`
+#' will attempt to set a reasonable aspect ratio. It can also be used to set exaggerations
+#' in different axes.
+#'
 #' For SC edges are matched to their object/s. One object's properties is applied as colour.
 #' If `color_` column is present on the data object table it is used.
 #' @param x silicate model, SC, TRI, ARC, or PATH
