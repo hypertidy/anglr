@@ -73,7 +73,19 @@ test_that("as.mesh3d on quads is working", {
   expect_true(is.null(as.mesh3d(m, smooth  = FALSE)$normals))
   expect_true(all(as.mesh3d(m, smooth  = TRUE)$normals < 1.1))
 
-})
+  rr <- raster::raster(scales::rescale(volcano, 0, 255))
+  expect_silent(as.mesh3d(rr))
+  expect_silent(as.mesh3d(rr, image_texture = raster::brick(rr, rr, rr)))
+library(raster)
+  sc <- silicate::TRI0(spex::spex(rr))
+  expect_message(as.mesh3d(sc, z = rr * 2, image_texture = raster::brick(rr, rr, rr)),
+                 "writing texture image to")
+
+  expect_message(as.mesh3d(sc, z = rr, image_texture = raster::brick(rr, rr, rr)))
+
+  expect_silent(xxx <- as.mesh3d(sc, z = c(20, 22)))
+  expect_equal(xxx$vb[3, ], c(20, 22, 20, 22))
+    })
 
 
 
