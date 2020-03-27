@@ -30,7 +30,8 @@ Imports:
     crsmeta (>= 0.2.0.9001),
     png,
     utils,
-    palr
+    palr,
+    spex
 Suggests: 
     covr,
     ggplot2,

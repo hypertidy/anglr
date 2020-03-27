@@ -1,7 +1,7 @@
 context("as.mesh3d")
 
 
-test_that("as.mesh3d is working", {
+test_that("as.mesh3d on trianges is working", {
   ## first object has a hole in it
   mintri <- DEL(silicate::minimal_mesh)
   mintri0 <- silicate::TRI0(silicate::minimal_mesh)
@@ -12,8 +12,8 @@ test_that("as.mesh3d is working", {
   expect_equal(dimhole <- dim(hole$it), c(3L, 14))
   expect_named(tri0, c("vb", "it", "material", "normals",
                        "texcoords", "meshColor"))
- expect_equal(dim(tri0$vb), c(4L, 14L))
-  expect_equal(dim(tri0$vb), c(3L, 14L))
+
+  expect_equal(dim(tri0$vb), c(4L, 14L))
 
   tri_waters <- DEL(silicate::inlandwaters[c(3, 4, 6), ])
   expect_equal(dim(tri_waters$triangle),
@@ -29,6 +29,51 @@ test_that("as.mesh3d is working", {
   r <- palr::image_raster(volcano)
   tri_mesh <- as.mesh3d(tri_waters, image_texture = r)
   ## todo test file path, clean up file, png sanity, range of texcoords, color of material (not black) etc
-  plot(tri_mesh)
+  mesh_plot(tri_mesh)
+  plot3d(tri_mesh)
+
+  ##  a warning this is not how to do it
+  expect_warning(as.mesh3d(mintri0, material = list(color = "red")))
+
+  expect_silent(as.mesh3d(mintri0, color = "red"))
+
+  expect_warning(xx <- as.mesh3d(mintri0, image_texture = r,
+                           texcoords = matrix(runif(prod(dim(tri0$it)), 4))))
+
+  expect_warning(xx1 <- as.mesh3d(mintri0, image_texture = r,
+                                 texcoords = matrix(runif(prod(dim(tri0$it)), 4))))
+
+  expect_warning(xx2 <- as.mesh3d(mintri0, image_texture = r, texture = tempfile(),
+                                 texcoords = matrix(runif(prod(dim(tri0$it)), 4))),
+                 "good PNG filename")
+
+  ## cleanup
+  file.remove(xx1$material$texture)
+  file.remove(xx2$material$texture)
+  file.remove(tri_mesh$material$texture)
+
+  expect_equal(as.mesh3d(mintri0, smooth = TRUE)$normals,
+               matrix(c(0, 0, 1, 1), nrow  = 4L, ncol = 14L))
+
+  ## copy down z
+  expect_silent(dem <- as.mesh3d(mintri0, raster::raster(volcano)))
+  expect_true(max(dem$vb, na.rm = TRUE) > 160)  ## 161.2 on 2020-03-27
+
+
+  ## dunno what they are ../
+  expect_warning(dem <- as.mesh3d(silicate::TRI0(cad_tas), z = quadmesh::etopo))
 })
+
+
+test_that("as.mesh3d on quads is working", {
+  qd <- as.mesh3d(volcano)
+  expect_named(qd[1:2], c("vb", "ib"))
+  expect_named(as.mesh3d(volcano, triangles = TRUE)[1:2], c("vb", "it"))
+  m <- matrix(c(2, 4, 5, 1,  3, 10, 9, 8, 7, 6, 12, 11), 3)
+  expect_true(is.null(as.mesh3d(m, smooth  = FALSE)$normals))
+  expect_true(all(as.mesh3d(m, smooth  = TRUE)$normals < 1.1))
+
+})
+
+
 
