@@ -10,9 +10,9 @@ test_that("as.mesh3d is working", {
   tri0 <- as.mesh3d(mintri0)
   expect_equal(dimfill <- dim(fill$it), c(3L, 20))
   expect_equal(dimhole <- dim(hole$it), c(3L, 14))
-  expect_names(tri0, c("vb", "it", "material", "normals",
+  expect_named(tri0, c("vb", "it", "material", "normals",
                        "texcoords", "meshColor"))
-                                                                      xpect_equal(dim(tri0$vb), c(4L, 14L))
+ expect_equal(dim(tri0$vb), c(4L, 14L))
   expect_equal(dim(tri0$vb), c(3L, 14L))
 
   tri_waters <- DEL(silicate::inlandwaters[c(3, 4, 6), ])
