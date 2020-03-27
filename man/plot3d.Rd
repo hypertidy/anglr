@@ -27,13 +27,13 @@
 \alias{plot3d.ARC}
 \title{3D object plot}
 \usage{
-\method{persp3d}{TRI}(x, ..., add = FALSE)
+\method{persp3d}{TRI}(x, ...)
 
 \method{persp3d}{TRI0}(x, ..., add = FALSE)
 
 \method{persp3d}{DEL}(x, ..., add = FALSE)
 
-\method{persp3d}{DEL0}(x, ..., add = FALSE)
+\method{persp3d}{DEL0}(x, ...)
 
 \method{persp3d}{QUAD}(x, ..., add = FALSE)
 

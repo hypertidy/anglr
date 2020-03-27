@@ -1,11 +1,11 @@
 #' TRI model extensions
 #'
-#' TRI model from silicate is extended by methods for QUAD. 
-#' 
+#' TRI model from silicate is extended by methods for QUAD.
+#'
 #' @param x QUAD
 #' @param ... reserved
 #' @noRd
-#' @examples 
+#' @examples
 #' library(anglr)
 #' library(raster)
 #' v <- volcano[1:10, 1:6]
@@ -19,12 +19,17 @@
 #' #nrow(mesh$vertex)
 TRI.QUAD <- function(x, ...) {
   out <- quadToTriangle(x)
+  ## explode the objects
+  out$object <- dplyr::slice(out$object, rep(1L, nrow(out$triangle)/2))
+  out$object$object_ <- as.character(seq_len(nrow(out$object)))
+  out$object$color_ <- palr::image_pal(x$quad$value)
+  out$triangle$object_ <- as.character(rep(out$object$object_, each = 2L))
   ## try expanding object to pairs of triangles
-  f <- factor(x$quad$value)
-  
-  out$object <- tibble::tibble(object_ = silicate::sc_uid(nlevels(f)), 
-                               value = levels(f))
-  out$triangle$object_ <- out$object$object_[as.integer(out$triangle$object_)]
+  #f <- factor(x$quad$value)
+
+ # out$object <- tibble::tibble(object_ = silicate::sc_uid(nlevels(f)),
+  #                             value = levels(f))
+  #out$triangle$object_ <- out$object$object_[as.integer(out$triangle$object_)]
   #out$object_link_triangle$object_ <- rep(out$object$object_[f], each = 2)
 #  out$
   out
@@ -38,7 +43,8 @@ quadToTriangle <- function(x) {
   if (is.null(x$vertex)) {
    v$z_ <- 0
   } else {
-    v$z_ <- x$vertex$z_
+            ## this originally from quadmesh
+    v$z_ <- vxy(matrix(x$vertex$z_, x$object$nrows[1]))
   }
   v$vertex_ <- seq(nrow(v))
   meta <- x$meta
@@ -56,8 +62,8 @@ tXv[c(".vx0", ".vx1", ".vx2")] <- as.data.frame(matrix(as.integer(tXv_long$verte
     tXv$.vx1 <- uid[tXv$.vx1]
     tXv$.vx2 <- uid[tXv$.vx2]
     tXv$object_ <- "1"  ## no link table any more
-  x <- list(object = tibble::tibble(object_ = "1"),  
-            triangle = tXv, 
+  x <- list(object = tibble::tibble(object_ = "1"),
+            triangle = tXv,
             vertex = v, meta = meta)
   class(x) <- c("TRI", "sc")
   x
