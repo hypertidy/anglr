@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">anglr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9100</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9200</span>
       </span>
     </div>
 
@@ -142,6 +142,11 @@
 <p>The 'color_' idiom works, but must be put on the '$quad' table.
 Very WIP.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>qq</span> <span class='kw'>&lt;-</span>  <span class='fu'>QUAD</span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span>(<span class='no'>volcano</span>))
+<span class='fu'><a href='mesh_plot.html'>mesh_plot</a></span>(<span class='no'>qq</span>)</div><div class='img'><img src='QUAD-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>qq</span>$<span class='no'>quad</span>$<span class='no'>color_</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"black"</span>, <span class='st'>"white"</span>), <span class='kw'>length.out</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>qq</span>$<span class='no'>quad</span>))
+<span class='fu'><a href='mesh_plot.html'>mesh_plot</a></span>(<span class='no'>qq</span>)</div><div class='img'><img src='QUAD-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>qq</span>$<span class='no'>quad</span>$<span class='no'>color_</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>palr</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/palr/man/image_pal.html'>image_pal</a></span>(<span class='no'>qq</span>$<span class='no'>quad</span>$<span class='no'>value</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/gray.colors.html'>grey.colors</a></span>(<span class='fl'>10</span>))
+<span class='fu'><a href='mesh_plot.html'>mesh_plot</a></span>(<span class='no'>qq</span>)</div><div class='img'><img src='QUAD-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -149,6 +154,7 @@ Very WIP.</p>
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
       <li><a href="#details">Details</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

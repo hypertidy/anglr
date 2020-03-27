@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">anglr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9100</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9200</span>
       </span>
     </div>
 
@@ -233,6 +233,16 @@ details see <a href='https://rdrr.io/pkg/rgl/man/mesh3d.html'>rgl::tmesh3d</a>.<
 used for each vertex. Alternatively, it may be a spatial raster object
 from which 'z' values are derived. If not set, the vertex 'z_' value
 from TRI/TRI0 is used, otherwise z = 0' is assumed.</p>
+    <h2 class="hasAnchor" id="textures"><a class="anchor" href="#textures"></a>Textures</h2>
+
+    
+
+
+<p>Please see the documentation for rgl textures in <code><a href='https://cran.rstudio.com/web/packages/rgl/vignettes/rgl.html'>vignette("rgl", package = "rgl")</a></code>.
+The most important detail is that the <code>$material$color</code> property of a <code>mesh3d</code> not
+be set to "black" ("#000000" or equivalent), or it will not be visible at all.
+The only way to add a texture in mesh3d is as a PNG file on-disk, so anglr
+functions take an in-memory object and create the file if needed.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>sf</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/silicate/man/minimal_mesh.html'>minimal_mesh</a></span>
@@ -275,13 +285,14 @@ from TRI/TRI0 is used, otherwise z = 0' is assumed.</p>
 <span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>();<span class='fu'><a href='https://rdrr.io/pkg/rgl/man/mesh3d.html'>shade3d</a></span>(<span class='fu'>as.mesh3d</span>(<span class='fu'><a href='DEL.html'>DEL</a></span>(<span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/silicate/man/minimal_mesh.html'>minimal_mesh</a></span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='fl'>0.001</span>), <span class='kw'>z</span> <span class='kw'>=</span><span class='no'>r</span>))
 <span class='fu'><a href='https://rdrr.io/pkg/rgl/man/aspect3d.html'>aspect3d</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0.5</span>)
 
+<span class='co'># \donttest{</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rgl</span>)
 <span class='no'>r1</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/setExtent.html'>setExtent</a></span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span>(<span class='no'>volcano</span>), <span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span>(<span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/silicate/man/inlandwaters.html'>inlandwaters</a></span>))</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: sf</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>();<span class='fu'><a href='https://rdrr.io/pkg/rgl/man/mesh3d.html'>shade3d</a></span>(<span class='fu'>as.mesh3d</span>(<span class='fu'><a href='DEL.html'>DEL</a></span>(<span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/silicate/man/inlandwaters.html'>inlandwaters</a></span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='fl'>1e9</span>), <span class='kw'>z</span> <span class='kw'>=</span><span class='no'>r1</span>))
 <span class='fu'><a href='https://rdrr.io/pkg/rgl/man/aspect3d.html'>aspect3d</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>.2</span>)
 
 <span class='co'>## fake news</span>
-<span class='kw pkg'>rgl</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/rgl/man/mesh3d.html'>wire3d</a></span>(<span class='fu'>as.mesh3d</span>(<span class='no'>r1</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: Unknown or uninitialised column: 'color_'.</span></div><div class='input'>
-</div></pre>
+<span class='kw pkg'>rgl</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/rgl/man/mesh3d.html'>wire3d</a></span>(<span class='fu'>as.mesh3d</span>(<span class='no'>r1</span>))
+<span class='co'># }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -289,6 +300,7 @@ from TRI/TRI0 is used, otherwise z = 0' is assumed.</p>
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
       <li><a href="#details">Details</a></li>
+      <li><a href="#textures">Textures</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

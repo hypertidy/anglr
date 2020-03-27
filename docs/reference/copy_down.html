@@ -70,7 +70,7 @@ vertex level." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">anglr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9100</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9200</span>
       </span>
     </div>
 
@@ -119,7 +119,13 @@ vertex level.</p>
 <span class='co'># S3 method for SC</span>
 <span class='fu'>copy_down</span>(<span class='no'>x</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='kw'>.id</span> <span class='kw'>=</span> <span class='st'>"z_"</span>)
 
+<span class='co'># S3 method for SC0</span>
+<span class='fu'>copy_down</span>(<span class='no'>x</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='kw'>.id</span> <span class='kw'>=</span> <span class='st'>"z_"</span>)
+
 <span class='co'># S3 method for TRI</span>
+<span class='fu'>copy_down</span>(<span class='no'>x</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='kw'>.id</span> <span class='kw'>=</span> <span class='st'>"z_"</span>)
+
+<span class='co'># S3 method for TRI0</span>
 <span class='fu'>copy_down</span>(<span class='no'>x</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='kw'>.id</span> <span class='kw'>=</span> <span class='st'>"z_"</span>)
 
 <span class='co'># S3 method for PATH</span>
@@ -179,8 +185,7 @@ to expand out values, and nothing to stop the use of non numeric values being co
 <span class='no'>cl</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/silicate/man/SC.html'>SC</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/raster/man/rasterToContour.html'>rasterToContour</a></span>(<span class='no'>r</span>))
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'>copy_down</span>(<span class='no'>cl</span>, <span class='no'>r</span>))
 <span class='co'>## looks funny?</span>
-<span class='fu'><a href='auto_3d.html'>auto_3d</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>15</span>)</div><div class='output co'>#&gt; [1] "original axis lengths x,y,z:  0.9836066, 0.9885057,90.0985107"
-#&gt; [1] "applying 'aspect3d(1.000, 1.000, 0.164)'"</div></pre>
+<span class='fu'><a href='auto_3d.html'>auto_3d</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>15</span>)</div><div class='output co'>#&gt; <span class='message'>original axis lengths x,y,z:  0.9836066, 0.9885057,90.0985107</span></div><div class='output co'>#&gt; <span class='message'>applying 'aspect3d(1.000, 1.000, 0.164)'</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

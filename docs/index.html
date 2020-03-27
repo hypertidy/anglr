@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">anglr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9100</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9200</span>
       </span>
     </div>
 
@@ -80,8 +80,8 @@
 <li><p>Use <code>shade3d()</code> or <code><a href="reference/plot3d.html">plot3d()</a></code> or <code>wire3d()</code> from the rgl package to plot any <code>mesh3d</code> object created. (<code><a href="reference/plot3d.html">plot3d()</a></code> also calls the converters for non-mesh types, so we can quickly get a 3D scene from any spatial data)</p></li>
 <li><p>Use <code><a href="reference/copy_down.html">copy_down()</a></code> to merge raster values onto vector meshes (WIP, this part is in flux after refactoring as.mesh3d …).</p></li>
 <li><p>For developers: delve into the technical details, all code is as modular as possible and relies on basic workhorse packages that do one simple task …</p></li>
+<li><p>Key working examples are in <code><a href="reference/as.mesh3d.html">?anglr::as.mesh3d</a></code>, see <a href="https://hypertidy.github.io/anglr/reference/as.mesh3d.html">online doc</a>.</p></li>
 </ul>
-<p>WIP: there are some examples linked below in this readme, but more up to date working examples are in <code><a href="reference/as.mesh3d.html">?anglr::as.mesh3d</a></code>.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -170,7 +170,7 @@
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a></span>
 <span id="cb6-2"><a href="#cb6-2"></a><span class="co">## either form works</span></span>
 <span id="cb6-3"><a href="#cb6-3"></a><span class="co">#c_mesh &lt;- copy_down(TRI(nc), z = p_mesh$object$BIR74)</span></span>
-<span id="cb6-4"><a href="#cb6-4"></a>c_mesh &lt;-<span class="st"> </span><span class="kw"><a href="reference/copy_down.html">copy_down</a></span>(<span class="kw">TRI</span>(nc), <span class="dt">z =</span> <span class="st">"BIR74"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4"></a>c_mesh &lt;-<span class="st"> </span><span class="kw"><a href="reference/copy_down.html">copy_down</a></span>(<span class="kw"><a href="reference/TRI.html">TRI</a></span>(nc), <span class="dt">z =</span> <span class="st">"BIR74"</span>)</span>
 <span id="cb6-5"><a href="#cb6-5"></a><span class="kw">rgl.clear</span>()</span>
 <span id="cb6-6"><a href="#cb6-6"></a>a &lt;-<span class="st"> </span><span class="kw"><a href="reference/plot3d.html">plot3d</a></span>(c_mesh) </span>
 <span id="cb6-7"><a href="#cb6-7"></a><span class="kw">bg3d</span>(<span class="st">"black"</span>); <span class="kw">material3d</span>(<span class="dt">specular =</span> <span class="st">"black"</span>)</span>

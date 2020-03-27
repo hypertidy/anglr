@@ -70,7 +70,7 @@ If color_ column is present on the data object table it is used." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">anglr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9100</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9200</span>
       </span>
     </div>
 
@@ -115,19 +115,49 @@ If <code>color_</code> column is present on the data object table it is used.</p
     </div>
 
     <pre class="usage"><span class='co'># S3 method for TRI</span>
+<span class='fu'>persp3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for TRI0</span>
+<span class='fu'>persp3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='co'># S3 method for DEL</span>
+<span class='fu'>persp3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='co'># S3 method for DEL0</span>
+<span class='fu'>persp3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for QUAD</span>
+<span class='fu'>persp3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='co'># S3 method for QUAD</span>
+<span class='fu'>persp3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='co'># S3 method for matrix</span>
+<span class='fu'>persp3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='co'># S3 method for TRI</span>
 <span class='fu'>plot3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for TRI0</span>
+<span class='fu'>plot3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for DEL</span>
+<span class='fu'>plot3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for DEL0</span>
+<span class='fu'>plot3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for QUAD</span>
+<span class='fu'>plot3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for matrix</span>
+<span class='fu'>plot3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for BasicRaster</span>
 <span class='fu'>plot3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for sc</span>
 <span class='fu'>plot3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for TRI</span>
-<span class='fu'>persp3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='co'># S3 method for TRI0</span>
-<span class='fu'>persp3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for SC</span>
 <span class='fu'>plot3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
@@ -162,7 +192,7 @@ If <code>color_</code> column is present on the data object table it is used.</p
     </tr>
     <tr>
       <th>...</th>
-      <td><p>passed to segments3d</p></td>
+      <td><p>passed to material properties</p></td>
     </tr>
     <tr>
       <th>add</th>
@@ -177,13 +207,8 @@ If <code>color_</code> column is present on the data object table it is used.</p
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>silicate</span>)
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/silicate/man/SC.html'>SC</a></span>(<span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_read.html'>read_sf</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"shape"</span>, <span class='st'>"nc.shp"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"sf"</span>)) <span class='kw'>%&gt;%</span>
-   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>color_</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/palettes.html'>rainbow</a></span>(<span class='fl'>100</span>)))</div><div class='output co'>#&gt; <span class='message'>New names:</span>
-#&gt; <span class='message'>* `111` -&gt; `111...11`</span>
-#&gt; <span class='message'>* `112` -&gt; `112...12`</span>
-#&gt; <span class='message'>* `113` -&gt; `113...13`</span>
-#&gt; <span class='message'>* `114` -&gt; `114...14`</span>
-#&gt; <span class='message'>* `115` -&gt; `115...15`</span>
-#&gt; <span class='message'>* ...</span></div><div class='input'><span class='fu'>plot3d</span>(<span class='no'>x</span>)</div></pre>
+   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>color_</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/palettes.html'>rainbow</a></span>(<span class='fl'>100</span>)))
+<span class='fu'>plot3d</span>(<span class='no'>x</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

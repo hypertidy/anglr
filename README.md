@@ -47,8 +47,8 @@ The anglr package aims to provide direct access to generic 3D tools.
     modular as possible and relies on basic workhorse packages that do
     one simple task …
 
-WIP: there are some examples linked below in this readme, but more up to
-date working examples are in `?anglr::as.mesh3d`.
+  - Key working examples are in `?anglr::as.mesh3d`, see [online
+    doc](https://hypertidy.github.io/anglr/reference/as.mesh3d.html).
 
 ## Installation
 

@@ -71,7 +71,7 @@ pleasing." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">anglr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9100</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9200</span>
       </span>
     </div>
 
@@ -156,16 +156,10 @@ pleasing.</p>
 latitude in degrees and elevation in metres.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>topo</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='copy_down.html'>copy_down</a></span>(<span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/silicate/man/SC.html'>SC</a></span>(<span class='no'>simpleworld</span>), <span class='no'>gebco1</span>)</div><div class='output co'>#&gt; <span class='message'>New names:</span>
-#&gt; <span class='message'>* `111` -&gt; `111...11`</span>
-#&gt; <span class='message'>* `112` -&gt; `112...12`</span>
-#&gt; <span class='message'>* `113` -&gt; `113...13`</span>
-#&gt; <span class='message'>* `114` -&gt; `114...14`</span>
-#&gt; <span class='message'>* `115` -&gt; `115...15`</span>
-#&gt; <span class='message'>* ...</span></div><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>topo</span>)
+    <pre class="examples"><div class='input'><span class='no'>topo</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='copy_down.html'>copy_down</a></span>(<span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/silicate/man/SC.html'>SC</a></span>(<span class='no'>simpleworld</span>), <span class='no'>gebco1</span>)
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>topo</span>)
 
-<span class='fu'>auto_3d</span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; [1] "original axis lengths x,y,z:  360.0000, 173.6451,7885.7891"
-#&gt; [1] "applying 'aspect3d(1.0000, 1.0000, 0.0881)'"</div></pre>
+<span class='fu'>auto_3d</span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; <span class='message'>original axis lengths x,y,z:  360.0000, 173.6451,7885.7891</span></div><div class='output co'>#&gt; <span class='message'>applying 'aspect3d(1.0000, 1.0000, 0.0881)'</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
