@@ -95,7 +95,6 @@ copy_downRaster<- function(x, z = NULL, ..., .id = "z_") {
 }
 
 
-
 #' @name copy_down
 #' @export
 #' @importFrom dplyr inner_join
@@ -106,7 +105,12 @@ copy_down.SC <- function(x, z = NULL, ..., .id = "z_") {
   }
   denorm_PRIM_addZ(x, z = z, ..., .id = .id)
 }
-
+#' @name copy_down
+#' @export
+copy_down.SC0 <- function(x, z = NULL, ..., .id = "z_") {
+  ## FIXME: obvsly inefficient, should work the other way
+ copy_down(SC(x), z  = z, ..., .id = .id)
+}
 #' @name copy_down
 #' @export
 copy_down.TRI <- function(x, z = NULL, ..., .id = "z_") {
@@ -116,6 +120,12 @@ copy_down.TRI <- function(x, z = NULL, ..., .id = "z_") {
   }
 
   denorm_PRIM_addZ(x, z = z, ..., .id = .id)
+}
+#' @name copy_down
+#' @export
+copy_down.TRI0 <- function(x, z = NULL, ..., .id = "z_") {
+  ## FIXME: obvsly inefficient, should work the other way
+  copy_down(silicate::TRI(x), z  = z, ..., .id = .id)
 }
 #' @name copy_down
 #' @export

@@ -1,4 +1,6 @@
 library(silicate)
+
+path <- PATH(minimal_mesh)
 test_that("copy down works", {
   expect_message({
 
@@ -18,12 +20,27 @@ test_that("copy down works", {
     x4 <- copy_down(tri, "value")
     expect_true(all(x4$vertex$z_ == 2.5))
 
-    path <- PATH(minimal_mesh)
-    copy_down(path, raster::raster(volcano))
+
+    rz <- raster::raster(volcano)
+    copy_down(path, rz)
 
     expect_equal(copy_down(path, "a")$vertex$z_,
                  c(rep(1, 12), rep(2, 4)))
 
   })
+
+  expect_silent(copy_down(SC(path), rz))
+  expect_silent(copy_down(SC0(path), rz))
+
+  expect_silent(copy_down(TRI(path), rz))
+  expect_silent(copy_down(TRI0(path), rz))
+
+
+  expect_silent(copy_down(SC(path), "a"))
+  expect_silent(copy_down(SC0(path), "a"))
+
+  expect_silent(copy_down(TRI(path), "a"))
+  expect_silent(copy_down(TRI0(path), "a"))
+
 
 })

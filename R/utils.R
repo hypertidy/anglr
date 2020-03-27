@@ -33,8 +33,8 @@ auto_3d <- function(x = 1, y = 1, z = 1, keep_xy = TRUE, exag = TRUE, verbose = 
   #}
   if (verbose) {
     psp <- format(asp, digits = 3)
-    print(sprintf("original axis lengths x,y,z: %s", paste(format(thr), collapse = ",", sep = "")))
-    print(sprintf("applying 'aspect3d(%s, %s, %s)'", psp[1], psp[2], psp[3]))
+    message(sprintf("original axis lengths x,y,z: %s", paste(format(thr), collapse = ",", sep = "")))
+    message(sprintf("applying 'aspect3d(%s, %s, %s)'", psp[1], psp[2], psp[3]))
   }
   rgl::aspect3d(asp[1], asp[2], asp[3])
 }
@@ -57,36 +57,7 @@ auto_3d <- function(x = 1, y = 1, z = 1, keep_xy = TRUE, exag = TRUE, verbose = 
   TRUE
 }
 
-widg <- function() {
-  rgl::rglwidget()
-}
-maybe_geom_column <- function(x, ...) {
-  names(x)[purrr::map_lgl(x, ~ inherits(.x, "list"))]
-}
 
-check_is_geom_column <- function(x, ...) {
-  any(class(x[[1]]) == "sfg")
-}
-
-find_geom_column <- function(x) {
-  purrr::map(maybe_geom_column(x), check_is_geom_column)
-}
-#
-#     i <- which(lgl)
-#   nms <- names(x)
-#   if (length(i) > 1) {
-#     message(sprintf("found these geom columns %s using %s",
-#                     paste(nms[i], collapse = ", "),
-#                     nms[i[1]]))
-#     i <- i[1]
-#   }
-#   if (length(i) == 1) {
-#     nm <- nms[i]
-#     return(x[[nm]])
-#   }
-#   message("no geom column found")
-#   NULL
-# }
 
 # is there a screen device
 screen_device <- function() {

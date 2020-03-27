@@ -4,8 +4,9 @@
 extents <- function(x) {
   UseMethod("extents")
 }
-extents.default <- function(x) extents(silicate::PATH(x))
-
+extents.default <- function(x) {
+  extents(silicate::PATH(x))
+}
 #' @importFrom rlang .data
 #' @importFrom dplyr %>%
 extents.SC <- function(x) {

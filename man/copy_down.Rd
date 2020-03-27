@@ -3,7 +3,9 @@
 \name{copy_down}
 \alias{copy_down}
 \alias{copy_down.SC}
+\alias{copy_down.SC0}
 \alias{copy_down.TRI}
+\alias{copy_down.TRI0}
 \alias{copy_down.PATH}
 \alias{copy_down.ARC}
 \alias{copy_down.QUAD}
@@ -13,7 +15,11 @@ copy_down(x, z = NULL, ..., .id = "z_")
 
 \method{copy_down}{SC}(x, z = NULL, ..., .id = "z_")
 
+\method{copy_down}{SC0}(x, z = NULL, ..., .id = "z_")
+
 \method{copy_down}{TRI}(x, z = NULL, ..., .id = "z_")
+
+\method{copy_down}{TRI0}(x, z = NULL, ..., .id = "z_")
 
 \method{copy_down}{PATH}(x, z = NULL, ..., .id = "z_")
 
