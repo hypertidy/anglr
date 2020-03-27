@@ -110,6 +110,16 @@ used for each vertex. Alternatively, it may be a spatial raster object
 from which 'z' values are derived. If not set, the vertex 'z_' value
 from TRI/TRI0 is used, otherwise z = 0' is assumed.
 }
+\section{Textures}{
+
+
+Please see the documentation for rgl textures in \code{vignette("rgl", package = "rgl")}.
+The most important detail is that the \verb{$material$color} property of a \code{mesh3d} not
+be set to "black" ("#000000" or equivalent), or it will not be visible at all.
+The only way to add a texture in mesh3d is as a PNG file on-disk, so anglr
+functions take an in-memory object and create the file if needed.
+}
+
 \examples{
 sf <- silicate::minimal_mesh
 #sf <- silicate::inlandwaters

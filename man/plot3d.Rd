@@ -18,6 +18,7 @@
 \alias{plot3d.ARC}
 \alias{plot3d.QUAD}
 \alias{plot3d.matrix}
+\alias{plot3d.BasicRaster}
 \title{3D object plot}
 \usage{
 \method{plot3d}{TRI}(x, ...)
@@ -49,6 +50,8 @@
 \method{plot3d}{QUAD}(x, ...)
 
 \method{plot3d}{matrix}(x, ...)
+
+\method{plot3d}{BasicRaster}(x, ...)
 }
 \arguments{
 \item{x}{silicate model, SC, TRI, ARC, or PATH}

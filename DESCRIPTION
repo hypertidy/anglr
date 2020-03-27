@@ -39,7 +39,7 @@ Suggests:
     purrr,
     sf,
     sfdct,
-    testthat,
+    testthat (>= 2.1.0),
     trip,
     knitr,
     rmarkdown,

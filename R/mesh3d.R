@@ -115,6 +115,13 @@ as.mesh3d_internal <- function(x, z,  smooth = FALSE, normals = NULL, texcoords 
 #' from which 'z' values are derived. If not set, the vertex 'z_' value
 #' from TRI/TRI0 is used, otherwise z = 0' is assumed.
 #'
+#' @section Textures:
+#'
+#' Please see the documentation for rgl textures in `vignette("rgl", package = "rgl")`.
+#' The most important detail is that the `$material$color` property of a `mesh3d` not
+#' be set to "black" ("#000000" or equivalent), or it will not be visible at all.
+#' The only way to add a texture in mesh3d is as a PNG file on-disk, so anglr
+#' functions take an in-memory object and create the file if needed.
 #' @param x An object of class `TRI` or `TRI0`
 #' @param z numeric vector or raster object (see details)
 #' @inheritParams rgl::as.mesh3d.tri
