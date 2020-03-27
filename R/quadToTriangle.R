@@ -4,7 +4,9 @@
 #'
 #' @param x QUAD
 #' @param ... reserved
-#' @noRd
+#' @export
+#' @importFrom silicate TRI
+#' @export TRI
 #' @examples
 #' library(anglr)
 #' library(raster)
@@ -40,13 +42,12 @@ TRI.QUAD <- function(x, ...) {
 quadToTriangle <- function(x) {
   exy <- get_edges(x)
   v <- tibble(x_ = exy[,1], y_ = exy[,2])
-  if (is.null(x$vertex)) {
-   v$z_ <- 0
-  } else {
             ## this originally from quadmesh
-    v$z_ <- vxy(matrix(x$vertex$z_, x$object$nrows[1]))
-  }
+    v$z_ <- vxy(matrix(x$quad$value, x$object$ncols[1]))
+
   v$vertex_ <- seq(nrow(v))
+
+
   meta <- x$meta
   qXv <- get_qXv(x)
   n4 <- nrow(qXv) / 4L
