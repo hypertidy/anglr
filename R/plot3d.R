@@ -3,7 +3,7 @@
 #' For SC edges are matched to their object/s. One object's properties is applied as colour.
 #' If `color_` column is present on the data object table it is used.
 #' @param x silicate model, SC, TRI, ARC, or PATH
-#' @param ... passed to segments3d
+#' @param ... passed to material properties
 #' @param add add to plot or not
 #'
 #' @return rgl shape3d types (note that "segment3d" is currently an imaginary shape3d type)
@@ -17,38 +17,51 @@
 #' plot3d(x)
 #' @export
 #' @name plot3d
-plot3d.TRI <- function(x, ...) persp3d(x, ...)
+plot3d.TRI <- function(x, ...) {
+  persp3d(x, ...)
+}
 #' @export
 #' @name plot3d
-plot3d.TRI0 <- function(x, ...) persp3d(x, ...)
+plot3d.TRI0 <- function(x, ...) {
+  persp3d(x, ...)
+}
+#' @export
+#' @name plot3d
+plot3d.DEL <- function(x, ...) {
+  persp3d(x, ...)
+}
+#' @export
+#' @name plot3d
+plot3d.DEL0 <- function(x, ...) {
+  persp3d(x, ...)
+}
+#' @export
+#' @name plot3d
+plot3d.QUAD <- function(x, ...) {
+  persp3d(x, ...)
+}
+
+#' @export
+#' @name plot3d
+plot3d.matrix <- function(x, ...) {
+  persp3d(x, ...)
+}
+#' @export
+#' @name plot3d
+plot3d.BasicRaster <- function(x, ...) {
+  persp3d(x, ...)
+}
+
+## linear types:
+
+
 #' @export
 #' @name plot3d
 plot3d.sc <- function(x, ...) {
   ## try the universal way
   plot3d(silicate::SC0(x), ...)
 }
-#' @name plot3d
-#' @aliases persp3d
-#' @export
-persp3d.TRI <- function(x, ..., add = FALSE) {
-  args <- list(...)
-  if (inherits(args$col, "BasicRaster")) {
-    args$image_texture <- args$col
-    args$col <- NULL
 
-  } else {
-    texture <- NULL
-  }
-  args$x <- x
-
-  plot3d(do.call(as.mesh3d, args), add = add)
-}
-#' @name plot3d
-#' @aliases persp3d
-#' @export
-persp3d.TRI0 <- function(x, ..., add = FALSE) {
-  plot3d(as.mesh3d(x, ...), add = add, ...)
-}
 #' @export
 #' @name plot3d
 plot3d.SC <- function(x, ..., add = FALSE) {
@@ -181,21 +194,7 @@ plot3d.ARC <- function(x, ..., add = FALSE) {
 
 }
 
-#' @export
-#' @name plot3d
-plot3d.QUAD <- function(x, ...) {
-  plot3d(as.mesh3d(x), ...)
-}
-#' @export
-#' @name plot3d
-plot3d.matrix <- function(x, ...) {
-  plot3d(as.mesh3d(x), ...)
-}
-#' @export
-#' @name plot3d
-plot3d.BasicRaster <- function(x, ...) {
-  plot3d(as.mesh3d(x), ...)
-}
+
 
 
 
