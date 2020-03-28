@@ -7,6 +7,7 @@
 \alias{as.mesh3d.matrix}
 \alias{as.mesh3d.BasicRaster}
 \alias{as.mesh3d.QUAD}
+\alias{as.mesh3d.triangulation}
 \title{Mesh3d objects}
 \usage{
 \method{as.mesh3d}{TRI}(
@@ -68,6 +69,8 @@
   image_texture = NULL,
   meshColor = "faces"
 )
+
+\method{as.mesh3d}{triangulation}(x, ...)
 }
 \arguments{
 \item{x}{An object of class \code{TRI} or \code{TRI0}}
@@ -105,6 +108,11 @@ a \href{rgl::mesh3d}{mesh3d object}
 Methods for the mesh3d type from package rgl
 }
 \details{
+The anglr package adds methods for the \code{\link[rgl:as.mesh3d]{rgl::as.mesh3d()}} generic for
+sf, sp, raster, RTriangle, silicate, and for a matrix. This function
+is the rgl counterpart to \code{\link[rgl:plot3d]{rgl::plot3d()}}, \code{\link[rgl:wire3d]{rgl::wire3d()}}, \code{\link[rgl:persp3d]{rgl::persp3d()}} and
+\code{\link[rgl:dot3d]{rgl::dot3d()}}.
+
 The 'z' argument can be a constant value or a vector of values to be
 used for each vertex. Alternatively, it may be a spatial raster object
 from which 'z' values are derived. If not set, the vertex 'z_' value
@@ -171,4 +179,7 @@ aspect3d(1, 1, .2)
 ## fake news
 rgl::wire3d(as.mesh3d(r1))
 }
+}
+\seealso{
+dot3d wire3d persp3d plot3d
 }

@@ -110,6 +110,12 @@ as.mesh3d_internal <- function(x, z,  smooth = FALSE, normals = NULL, texcoords 
 #' Methods for the mesh3d type from package rgl
 #'
 #'
+#' The anglr package adds methods for the [rgl::as.mesh3d()] generic for
+#' sf, sp, raster, RTriangle, silicate, and for a matrix. This function
+#' is the rgl counterpart to [rgl::plot3d()], [rgl::wire3d()], [rgl::persp3d()] and
+#' [rgl::dot3d()].
+#'
+#'
 #' The 'z' argument can be a constant value or a vector of values to be
 #' used for each vertex. Alternatively, it may be a spatial raster object
 #' from which 'z' values are derived. If not set, the vertex 'z_' value
@@ -136,6 +142,7 @@ as.mesh3d_internal <- function(x, z,  smooth = FALSE, normals = NULL, texcoords 
 #' @importFrom rgl as.mesh3d tmesh3d
 #' @export as.mesh3d
 #' @export
+#' @seealso dot3d wire3d persp3d plot3d
 #' @examples
 #' sf <- silicate::minimal_mesh
 #' #sf <- silicate::inlandwaters
@@ -342,7 +349,22 @@ as.mesh3d.QUAD <- function(x, triangles = FALSE,
 
  quad_common(vb, get_index(x), normals, texcoords, material, meshColor,  triangles, smooth)
 }
-
+#' @name as.mesh3d
+#' @export
+as.mesh3d.triangulation <- function(x, ...) {
+  if (dim(x$T)[1L] < 1L) {
+    stop("nothing to create a mesh from, no triangles in `x$T`")
+  }
+  z <- 0
+  if (dim(x$PA)[2L] > 0) {
+    z <- x$PA[,1L, drop = FALSE]
+    if (dim(x$PA)[2L] > 1L) {
+      message("'PA' array has more than one column, using the first as 'Z' coordinate")
+    }
+  }
+  rgl::tmesh3d(t(cbind(x$P, z = z, h = 1)),
+               t(x$T))
+}
 
 
 

@@ -33,13 +33,16 @@ dot3d(cad_tas)
 dot3d(volcano, size = 10)
 auto_3d(z = 14)
 
+
+rgl::clear3d()
 ## from ?persp
-y <- x <- seq(-10, 10, length= 30)
+y <- x <- seq(-10, 10, length= 80)
 z <- outer(x, y,
      function(x, y) {
         r <- sqrt(x^2+y^2); 10 * sin(r)/r
         })
 dot3d(z)
+auto_3d()
 dot3d(raster::raster(volcano), size = 10)
 auto_3d(z = 14)
 dot3d(silicate::SC(cad_tas))
