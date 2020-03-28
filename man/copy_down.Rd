@@ -2,6 +2,7 @@
 % Please edit documentation in R/copy_down.R
 \name{copy_down}
 \alias{copy_down}
+\alias{copy_down.mesh3d}
 \alias{copy_down.SC}
 \alias{copy_down.SC0}
 \alias{copy_down.TRI}
@@ -12,6 +13,8 @@
 \title{Copy down values to vertices}
 \usage{
 copy_down(x, z = NULL, ..., .id = "z_")
+
+\method{copy_down}{mesh3d}(x, z = NULL, ..., .id = "z_")
 
 \method{copy_down}{SC}(x, z = NULL, ..., .id = "z_")
 

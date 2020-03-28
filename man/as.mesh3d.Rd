@@ -4,10 +4,11 @@
 \alias{as.mesh3d}
 \alias{as.mesh3d.TRI}
 \alias{as.mesh3d.TRI0}
-\alias{as.mesh3d.matrix}
 \alias{as.mesh3d.BasicRaster}
 \alias{as.mesh3d.QUAD}
 \alias{as.mesh3d.triangulation}
+\alias{as.mesh3d.sf}
+\alias{as.mesh3d.matrix}
 \title{Mesh3d objects}
 \usage{
 \method{as.mesh3d}{TRI}(
@@ -25,18 +26,6 @@
 \method{as.mesh3d}{TRI0}(
   x,
   z,
-  smooth = FALSE,
-  normals = NULL,
-  texcoords = NULL,
-  ...,
-  keep_all = TRUE,
-  image_texture = NULL,
-  meshColor = "faces"
-)
-
-\method{as.mesh3d}{matrix}(
-  x,
-  triangles = FALSE,
   smooth = FALSE,
   normals = NULL,
   texcoords = NULL,
@@ -71,6 +60,30 @@
 )
 
 \method{as.mesh3d}{triangulation}(x, ...)
+
+\method{as.mesh3d}{sf}(
+  x,
+  triangles = FALSE,
+  smooth = FALSE,
+  normals = NULL,
+  texcoords = NULL,
+  ...,
+  keep_all = TRUE,
+  image_texture = NULL,
+  meshColor = "faces"
+)
+
+\method{as.mesh3d}{matrix}(
+  x,
+  triangles = FALSE,
+  smooth = FALSE,
+  normals = NULL,
+  texcoords = NULL,
+  ...,
+  keep_all = TRUE,
+  image_texture = NULL,
+  meshColor = "faces"
+)
 }
 \arguments{
 \item{x}{An object of class \code{TRI} or \code{TRI0}}

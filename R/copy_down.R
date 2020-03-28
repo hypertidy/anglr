@@ -94,6 +94,26 @@ copy_downRaster<- function(x, z = NULL, ..., .id = "z_") {
   x
 }
 
+#' @name copy_down
+#' @export
+copy_down.mesh3d <- function(x, z = NULL, ..., .id = "z_") {
+  z <- find_z(x, z)
+  if (inherits(z, "BasicRaster")) {
+    zz <- raster::extract(z, t(x$vb[1:2, ]), method = "bilinear")
+    if (mean(is.na(zz)) > 0.8) {
+      prop <- "most"
+      if (all(is.na(zz))) {
+        prop <- "ALL"
+      }
+      warning(sprintf("%s of the z values extracted are NA, perhaps the raster is \nin a different projection to the mesh? \n (very likely that visualization will not work)", prop))
+    }
+    x$vb[3, ] <- zz
+    return(x)
+    #return(copy_downRaster(x, z = z, ..., .id = .id) )
+  }
+  stop("breaking the mesh is not yet possible with mesh3d")
+  denorm_PRIM_addZ(x, z = z, ..., .id = .id)
+}
 
 #' @name copy_down
 #' @export

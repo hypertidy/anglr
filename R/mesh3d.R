@@ -105,6 +105,27 @@ as.mesh3d_internal <- function(x, z,  smooth = FALSE, normals = NULL, texcoords 
 }
 
 
+
+
+quad_common <- function(vb, index, normals, texcoords, material, meshColor, triangles, smooth) {
+  ## deal with triangles = TRUE
+  if (!triangles) {
+    out <- do.call(rgl::qmesh3d, list(vertices = vb, indices = index,
+                                      normals = normals, texcoords = texcoords,
+                                      material = material,
+                                      meshColor = "faces"))
+  } else {
+    out <- do.call(rgl::tmesh3d, list(vertices = vb, indices = .quad2tri(index),
+                                      normals = normals, texcoords = texcoords,
+                                      material = material,
+                                      meshColor = "faces"))
+  }
+  if (smooth) {
+    out <- rgl::addNormals(out)
+  }
+  out
+}
+
 #' Mesh3d objects
 #'
 #' Methods for the mesh3d type from package rgl
@@ -211,84 +232,6 @@ as.mesh3d.TRI0 <- function(x, z,  smooth = FALSE, normals = NULL, texcoords = NU
                      meshColor = meshColor)
 }
 
-
-quad_common <- function(vb, index, normals, texcoords, material, meshColor, triangles, smooth) {
-  ## deal with triangles = TRUE
-  if (!triangles) {
-    out <- do.call(rgl::qmesh3d, list(vertices = vb, indices = index,
-                                        normals = normals, texcoords = texcoords,
-                                        material = material,
-                                        meshColor = "faces"))
-  } else {
-    out <- do.call(rgl::tmesh3d, list(vertices = vb, indices = .quad2tri(index),
-                                        normals = normals, texcoords = texcoords,
-                                        material = material,
-                                        meshColor = "faces"))
-  }
-  if (smooth) {
-    out <- rgl::addNormals(out)
-  }
-  out
-}
-
-#' @name as.mesh3d
-#' @export
-as.mesh3d.matrix <-function(x, triangles = FALSE,
-                            smooth = FALSE, normals = NULL, texcoords = NULL,
-                            ..., keep_all = TRUE, image_texture = NULL, meshColor = "faces") {
-
-  material <- list(...)  ## note that rgl has material <- .getMaterialArgs(...)
-  ## for now we just warn if old-stlye material = list() was used
-  if ("material" %in% names(material)) {
-    warning("do not pass in 'material = list(<of properties>)' to as.mesh3d
-             pass in 'rgl::material3d' arguments directly as part of '...'")
-  }
-
-  if (is.null(material$color) &&
-      is.null(image_texture)) {
-    material$color <-  palr::image_pal(x)
-
-  }
-
-  ## from https://github.com/hypertidy/quadmesh/blob/80380db26153615c365dc67b64465448beab2832/R/exy_values.R#L51-L72
-  vals <- vxy(x)
-  exy <- edges_xy(x)
-
-  dm <- dim(x)
-  ## this was developed against raster, so nc is nr ;)
-  nc <- dm[1L]
-  nr <- dm[2L]
-  nc1 <- nc + 1
-  aa <- t(prs(seq_len(nc1)))
-  ind <- matrix(c(rbind(aa, aa[2:1, ])) + c(0, 0, nc1, nc1), 4)
-  ind0 <- as.integer(as.vector(ind) +
-                       rep(seq(0, length = nr, by = nc1), each = 4 * nc))
-
-  vb <- rbind(t(exy), vals, 1)
-  ind1 <- matrix(ind0, nrow = 4)
-
-  ## use the geometry to remap the texture if needed
-  if (!is.null(image_texture)) {
-    if (!is.null(texcoords)) {
-      warning("must supply only one of 'texcoords' or 'image_texture' argument, 'image_texture' will be ignore")
-    }
-    texcoords <- .texture_map(image_texture,
-                              crsmeta::crs_proj(x),
-                              exy = vb[, 1:2, drop = FALSE])
-    if (is.null(material$texture)) {
-      material$texture <- tempfile(fileext = ".png")
-      material$color <- "#FFFFFFFF"
-    }
-    if (!grepl("png$", material$texture)) {
-      warning(sprintf("'texture = %s' does not look like a good PNG filename",
-                      material$texture))
-    }
-    message(sprintf("writing texture image to %s", material$texture))
-    png::writePNG(raster::as.array(image_texture) / 255, material$texture)
-  }
-  quad_common(vb, ind1, normals, texcoords, material, meshColor, triangles, smooth)
-
-}
 #' @name as.mesh3d
 #' @export
 as.mesh3d.BasicRaster <- function(x, triangles = FALSE,
@@ -367,4 +310,72 @@ as.mesh3d.triangulation <- function(x, ...) {
 }
 
 
+#' @name as.mesh3d
+#' @export
+as.mesh3d.sf <-function(x, triangles = FALSE,
+                            smooth = FALSE, normals = NULL, texcoords = NULL,
+                            ..., keep_all = TRUE, image_texture = NULL, meshColor = "faces") {
 
+  ## TRI or DEL or SC?
+  as.mesh3d(DEL0(x), ...)
+}
+
+
+#' @name as.mesh3d
+#' @export
+as.mesh3d.matrix <-function(x, triangles = FALSE,
+                            smooth = FALSE, normals = NULL, texcoords = NULL,
+                            ..., keep_all = TRUE, image_texture = NULL, meshColor = "faces") {
+
+  material <- list(...)  ## note that rgl has material <- .getMaterialArgs(...)
+  ## for now we just warn if old-stlye material = list() was used
+  if ("material" %in% names(material)) {
+    warning("do not pass in 'material = list(<of properties>)' to as.mesh3d
+             pass in 'rgl::material3d' arguments directly as part of '...'")
+  }
+
+  if (is.null(material$color) &&
+      is.null(image_texture)) {
+    material$color <-  palr::image_pal(x)
+
+  }
+
+  ## from https://github.com/hypertidy/quadmesh/blob/80380db26153615c365dc67b64465448beab2832/R/exy_values.R#L51-L72
+  vals <- vxy(x)
+  exy <- edges_xy(x)
+
+  dm <- dim(x)
+  ## this was developed against raster, so nc is nr ;)
+  nc <- dm[1L]
+  nr <- dm[2L]
+  nc1 <- nc + 1
+  aa <- t(prs(seq_len(nc1)))
+  ind <- matrix(c(rbind(aa, aa[2:1, ])) + c(0, 0, nc1, nc1), 4)
+  ind0 <- as.integer(as.vector(ind) +
+                       rep(seq(0, length = nr, by = nc1), each = 4 * nc))
+
+  vb <- rbind(t(exy), vals, 1)
+  ind1 <- matrix(ind0, nrow = 4)
+
+  ## use the geometry to remap the texture if needed
+  if (!is.null(image_texture)) {
+    if (!is.null(texcoords)) {
+      warning("must supply only one of 'texcoords' or 'image_texture' argument, 'image_texture' will be ignore")
+    }
+    texcoords <- .texture_map(image_texture,
+                              crsmeta::crs_proj(x),
+                              exy = vb[, 1:2, drop = FALSE])
+    if (is.null(material$texture)) {
+      material$texture <- tempfile(fileext = ".png")
+      material$color <- "#FFFFFFFF"
+    }
+    if (!grepl("png$", material$texture)) {
+      warning(sprintf("'texture = %s' does not look like a good PNG filename",
+                      material$texture))
+    }
+    message(sprintf("writing texture image to %s", material$texture))
+    png::writePNG(raster::as.array(image_texture) / 255, material$texture)
+  }
+  quad_common(vb, ind1, normals, texcoords, material, meshColor, triangles, smooth)
+
+}
