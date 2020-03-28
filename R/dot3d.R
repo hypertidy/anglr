@@ -29,26 +29,36 @@ dot3d.sf <- function(x, ...) {
 #'         })
 #' dot3d(z)
 #' auto_3d()
+#' dot3d(raster::raster(volcano), size = 10)
+#' auto_3d(z = 14)
+#'
+#'dot3d(silicate::SC(cad_tas))
+#' auto_3d(z = 14)
 dot3d.matrix <- function(x, ...) {
   dot3d(as.mesh3d(x), ...)
 }
 
 #' @name dot3d
 #' @export
-#' @examples
-#' dot3d(raster::raster(volcano), size = 10)
-#' auto_3d(z = 14)
 dot3d.BasicRaster <- function(x, ...) {
   dot3d(as.mesh3d(x), ...)
 }
 
 #' @name dot3d
 #' @export
-#' @examples
-#' dot3d(silicate::SC(cad_tas))
-#' auto_3d(z = 14)
 dot3d.sc <- function(x, ...) {
   dot3d(as.mesh3d(x), ...)
 }
 
+#' @name dot3d
+#' @export
+dot3d.SC <- function(x, ...) {
+  dot3d(as.mesh3d(x), ...)
+}
+
+#' @name dot3d
+#' @export
+dot3d.SC0 <- function(x, ...) {
+  dot3d(as.mesh3d(x), ...)
+}
 

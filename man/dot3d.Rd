@@ -6,6 +6,8 @@
 \alias{dot3d.matrix}
 \alias{dot3d.BasicRaster}
 \alias{dot3d.sc}
+\alias{dot3d.SC}
+\alias{dot3d.SC0}
 \title{Draw points in 3d}
 \usage{
 \method{dot3d}{sf}(x, ...)
@@ -15,6 +17,10 @@
 \method{dot3d}{BasicRaster}(x, ...)
 
 \method{dot3d}{sc}(x, ...)
+
+\method{dot3d}{SC}(x, ...)
+
+\method{dot3d}{SC0}(x, ...)
 }
 \arguments{
 \item{x}{sc, sp, sf, raster, trip, or any other model understood by anglr/silicate}
@@ -45,6 +51,7 @@ dot3d(z)
 auto_3d()
 dot3d(raster::raster(volcano), size = 10)
 auto_3d(z = 14)
+
 dot3d(silicate::SC(cad_tas))
 auto_3d(z = 14)
 }
