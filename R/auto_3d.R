@@ -15,6 +15,7 @@
 #' @param verbose keep shush
 #'
 #' @return the output of `rgl::par3d` invisibly
+#' @aliases iso_3d
 #' @export
 #'
 #' @examples
@@ -22,8 +23,14 @@
 #' plot3d(topo)
 #'
 #' auto_3d(z = 4)
+#' plot3d(volcano)
+#' auto_3d(z = 0.1)
+#' auto_3d(x = 5)
+#' auto_3d(y  = 10)
+#' auto_3d(0.2, 1, keep_xy = FALSE)
 auto_3d <- function(x = 1, y = 1, z = 1, keep_xy = TRUE, exag = TRUE, verbose = TRUE) {
   thr <- apply(matrix(rgl::par3d()$bbox, 2), 2, function(a) diff(a))
+  zz <- !is.finite(thr)
   if (any(zz)) thr[zz] <- mean(thr[!zz])
   dxy <- thr[2]/thr[1]
   asp <- 1/(thr/min(thr))

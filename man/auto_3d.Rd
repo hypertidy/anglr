@@ -2,6 +2,7 @@
 % Please edit documentation in R/auto_3d.R
 \name{auto_3d}
 \alias{auto_3d}
+\alias{iso_3d}
 \title{Auto aspect ratio}
 \usage{
 auto_3d(x = 1, y = 1, z = 1, keep_xy = TRUE, exag = TRUE, verbose = TRUE)
@@ -36,4 +37,9 @@ topo <- copy_down(silicate::SC(simpleworld), gebco1)
 plot3d(topo)
 
 auto_3d(z = 4)
+plot3d(volcano)
+auto_3d(z = 0.1)
+auto_3d(x = 5)
+auto_3d(y  = 10)
+auto_3d(0.2, 1, keep_xy = FALSE)
 }

@@ -2,13 +2,34 @@
 % Please edit documentation in R/DEL0-model.R
 \name{DEL0}
 \alias{DEL0}
+\alias{DEL0.DEL}
 \alias{DEL0.default}
+\alias{DEL0.SC}
+\alias{DEL0.SC0}
+\alias{DEL0.TRI}
+\alias{DEL0.TRI0}
+\alias{DEL0.ARC}
+\alias{DEL0.PATH}
 \alias{DEL0.PATH0}
 \title{DEL0}
 \usage{
 DEL0(x, ..., max_area = NULL)
 
+\method{DEL0}{DEL}(x, ..., max_area = NULL)
+
 \method{DEL0}{default}(x, ..., max_area = NULL)
+
+\method{DEL0}{SC}(x, ..., max_area = NULL)
+
+\method{DEL0}{SC0}(x, ..., max_area = NULL)
+
+\method{DEL0}{TRI}(x, ..., max_area = NULL)
+
+\method{DEL0}{TRI0}(x, ..., max_area = NULL)
+
+\method{DEL0}{ARC}(x, ..., max_area = NULL)
+
+\method{DEL0}{PATH}(x, ..., max_area = NULL)
 
 \method{DEL0}{PATH0}(x, ..., max_area = NULL)
 }

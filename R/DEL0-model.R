@@ -20,10 +20,68 @@ DEL0 <- function(x, ..., max_area = NULL) {
 }
 #' @name DEL0
 #' @export
+DEL0.DEL <- function(x, ..., max_area = NULL) {
+  ## must redo this stuff to use DEL0 as the basis
+  if (!is.null(max_area)) {
+    warning("'max_area' ignored, cannot currently re-mesh a DEL or DEL0")
+  }
+  object <- silicate::sc_object(x)
+  triangle <- x$triangle
+  if ("visible_" %in% names(triangle)) {
+    ## because DEL(SC()) doesn't have visible_
+    triangle <- dplyr::filter(triangle, .data$visible_)
+  }
+  topol <- matrix(match(as.matrix(triangle[c(".vx0", ".vx1", ".vx2")]),
+                        x$vertex$vertex_), ncol = 3L)
+  colnames(topol) <- c(".vx0", ".vx1", ".vx2")
+  object$topology_ <- split(tibble::as_tibble(topol), triangle$object_)[unique(triangle$object_)]
+  object$object_ <- NULL
+  meta <- x$meta
+  row <- x$meta[1, ]
+  row$ctime <- Sys.time()
+  meta <- rbind(row, meta)
+  structure(list(object = object,
+                 vertex = x$vertex,
+                 meta = meta), class = c("DEL0", "TRI0", "sc"))
+
+}
+#' @name DEL0
+#' @export
 DEL0.default <- function(x, ..., max_area = NULL) {
   DEL0(silicate::PATH0(x), ..., max_area)
 }
 
+#' @name DEL0
+#' @export
+DEL0.SC <- function(x, ..., max_area = NULL) {
+  DEL0(DEL(x, max_area = max_area), ...)
+}
+#' @name DEL0
+#' @export
+DEL0.SC0 <- function(x, ..., max_area = NULL) {
+  DEL0(DEL(x, max_area = max_area), ...)
+}
+
+#' @name DEL0
+#' @export
+DEL0.TRI <- function(x, ..., max_area = NULL) {
+  DEL0(DEL(x, max_area = max_area), ...)
+}
+#' @name DEL0
+#' @export
+DEL0.TRI0 <- function(x, ..., max_area = NULL) {
+  DEL0(TRI(x, max_area = max_area), ...)
+}
+#' @name DEL0
+#' @export
+DEL0.ARC <- function(x, ..., max_area = NULL) {
+  DEL0(DEL(x, max_area = max_area), ...)
+}
+#' @name DEL0
+#' @export
+DEL0.PATH <- function(x, ..., max_area = NULL) {
+  DEL(PATH0(x), max_area = NULL)
+}
 #' @name DEL0
 #' @export
 DEL0.PATH0 <- function(x, ..., max_area = NULL) {
