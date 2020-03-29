@@ -10,6 +10,8 @@
 \alias{persp3d.DEL0}
 \alias{persp3d.QUAD}
 \alias{persp3d.matrix}
+\alias{persp3d.sf}
+\alias{persp3d.Spatial}
 \alias{plot3d.TRI}
 \alias{plot3d.TRI0}
 \alias{plot3d.DEL}
@@ -56,6 +58,10 @@
 \method{persp3d}{QUAD}(x, ..., add = FALSE)
 
 \method{persp3d}{matrix}(x, ..., add = FALSE)
+
+\method{persp3d}{sf}(x, ..., add = FALSE)
+
+\method{persp3d}{Spatial}(x, ..., add = FALSE)
 
 \method{plot3d}{TRI}(x, ...)
 
@@ -163,7 +169,7 @@ wire3d(volcano)
 dot3d(volcano)
 
 plot3d(cad_tas)
-perspd3d(cad_tas)
+persp3d(cad_tas)
 wire3d(cad_tas)
 dot3d(cad_tas)
 

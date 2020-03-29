@@ -132,15 +132,9 @@ quad_common <- function(vb, index, normals, texcoords, material, meshColor, tria
 #'
 #'
 #' The anglr package adds methods for the [rgl::as.mesh3d()] generic for
-#' sf, sp, raster, RTriangle, silicate, and for a matrix. This function
-#' is the rgl counterpart to [rgl::plot3d()], [rgl::wire3d()], [rgl::persp3d()] and
+#' sf, sp, raster, RTriangle, silicate, and for a matrix. The `mesh3d` format
+#' is the rgl workhorse behind [rgl::plot3d()], [rgl::wire3d()], [rgl::persp3d()] and
 #' [rgl::dot3d()].
-#'
-#'
-#' The 'z' argument can be a constant value or a vector of values to be
-#' used for each vertex. Alternatively, it may be a spatial raster object
-#' from which 'z' values are derived. If not set, the vertex 'z_' value
-#' from TRI/TRI0 is used, otherwise z = 0' is assumed.
 #'
 #' The conversion function `as.mesh3d()` consolidates code from quadmesh and
 #' angstroms packages where the basic facilities were developed. The function
@@ -151,8 +145,15 @@ quad_common <- function(vb, index, normals, texcoords, material, meshColor, tria
 #' a raster RGB object onto the surface. Map projections are automatically
 #' resolved to the coordinate system of the `x` argument (as much as possible,
 #' there are lingering issues with the ongoing changes to crs in PROJ library,
-#' and the reproj and proj4 packages which attempt to smoooth over the changes
+#' and the reproj and proj4 packages which attempt to smooth over the changes
 #' in Spatial and sf and raster objects.)
+#'
+#' @section Elevation values with `z`:
+#'
+#' The 'z' argument can be a constant value or a vector of values to be
+#' used for each vertex. Alternatively, it may be a spatial raster object
+#' from which 'z' values are derived. If not set, the vertex 'z_' value
+#' from TRI/TRI0 is used, otherwise z = 0' is assumed.
 #'
 #' @section Textures:
 #'
@@ -161,7 +162,7 @@ quad_common <- function(vb, index, normals, texcoords, material, meshColor, tria
 #' be set to "black" ("#000000" or equivalent), or it will not be visible at all.
 #' The only way to add a texture in mesh3d is as a PNG file on-disk, so anglr
 #' functions take an in-memory object and create the file if needed.
-#' @param x An object of class `TRI` or `TRI0`
+#' @param x a surface-alike, a matrix, or spatial object from raster, sp, sf, trip, or silicate
 #' @param z numeric vector or raster object (see details)
 #' @inheritParams rgl::as.mesh3d.tri
 #' @param ... arguments collected and passed to [rgl::tmesh3d()] as the `material` argument
@@ -201,10 +202,14 @@ quad_common <- function(vb, index, normals, texcoords, material, meshColor, tria
 #' clear3d(); plot3d(as.mesh3d(x, color = cols), meshColor = "vertices")
 #'
 #' ## other material properties
-#' clear3d(); plot3d(as.mesh3d(x, color = cols, specular = "black"), meshColor = "vertices")
-#' clear3d(); plot3d(as.mesh3d(x, color = cols, front = "lines", lwd = 5), meshColor = "vertices")
-#' clear3d(); plot3d(as.mesh3d(x, color = viridis::viridis(20), alpha = 0.3), meshColor = "faces")
-#' clear3d(); plot3d(as.mesh3d(x, color = viridis::viridis(5), alpha = 0.3), meshColor = "vertices")
+#' clear3d()
+#' plot3d(as.mesh3d(x, color = cols, specular = "black"), meshColor = "vertices")
+#' clear3d()
+#' plot3d(as.mesh3d(x, color = cols, front = "lines", lwd = 5), meshColor = "vertices")
+#' clear3d()
+#' plot3d(as.mesh3d(x, color = viridis::viridis(20), alpha = 0.3), meshColor = "faces")
+#' clear3d()
+#' plot3d(as.mesh3d(x, color = viridis::viridis(5), alpha = 0.3), meshColor = "vertices")
 #'
 #' # TRI0 - index is stored structurally, not relations
 #' x0 <- silicate::TRI0(sf)

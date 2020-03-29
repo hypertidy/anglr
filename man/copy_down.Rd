@@ -31,7 +31,7 @@ copy_down(x, z = NULL, ..., .id = "z_")
 \method{copy_down}{QUAD}(x, z = NULL, ..., .id = "z_")
 }
 \arguments{
-\item{x}{a silicate model}
+\item{x}{a mesh3d or a silicate object}
 
 \item{z}{object specifying values to copy down, a vector of values, a column name, a raster (see details)}
 

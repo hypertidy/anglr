@@ -26,7 +26,7 @@
 \item{x}{sc, sp, sf, raster, trip, or any other model understood by anglr/silicate}
 
 \item{...}{
-  Arguments passed on to \code{\link[rgl:dot3d]{rgl::dot3d}}
+  Arguments passed on to \code{\link[rgl:as.mesh3d]{rgl::as.mesh3d}}
   \describe{
     \item{\code{}}{}
   }}

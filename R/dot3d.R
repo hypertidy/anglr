@@ -3,7 +3,7 @@
 #' Draw points with rgl from any mesh-alike object.
 #' @name dot3d
 #' @param x sc, sp, sf, raster, trip, or any other model understood by anglr/silicate
-#' @inheritDotParams rgl::dot3d
+#' @inheritDotParams rgl::as.mesh3d
 #' @importFrom rgl dot3d
 #' @export dot3d
 #' @export

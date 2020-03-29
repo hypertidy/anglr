@@ -217,7 +217,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>An object of class <code>TRI</code> or <code>TRI0</code></p></td>
+      <td><p>a surface-alike, a matrix, or spatial object from raster, sp, sf, trip, or silicate</p></td>
     </tr>
     <tr>
       <th>z</th>
@@ -265,13 +265,9 @@ details see <a href='https://rdrr.io/pkg/rgl/man/mesh3d.html'>rgl::tmesh3d</a>.<
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The anglr package adds methods for the <code><a href='https://rdrr.io/pkg/rgl/man/as.mesh3d.default.html'>rgl::as.mesh3d()</a></code> generic for
-sf, sp, raster, RTriangle, silicate, and for a matrix. This function
-is the rgl counterpart to <code><a href='https://rdrr.io/pkg/rgl/man/plot3d.html'>rgl::plot3d()</a></code>, <code><a href='https://rdrr.io/pkg/rgl/man/mesh3d.html'>rgl::wire3d()</a></code>, <code><a href='https://rdrr.io/pkg/rgl/man/persp3d.html'>rgl::persp3d()</a></code> and
+sf, sp, raster, RTriangle, silicate, and for a matrix. The <code>mesh3d</code> format
+is the rgl workhorse behind <code><a href='https://rdrr.io/pkg/rgl/man/plot3d.html'>rgl::plot3d()</a></code>, <code><a href='https://rdrr.io/pkg/rgl/man/mesh3d.html'>rgl::wire3d()</a></code>, <code><a href='https://rdrr.io/pkg/rgl/man/persp3d.html'>rgl::persp3d()</a></code> and
 <code><a href='https://rdrr.io/pkg/rgl/man/mesh3d.html'>rgl::dot3d()</a></code>.</p>
-<p>The 'z' argument can be a constant value or a vector of values to be
-used for each vertex. Alternatively, it may be a spatial raster object
-from which 'z' values are derived. If not set, the vertex 'z_' value
-from TRI/TRI0 is used, otherwise z = 0' is assumed.</p>
 <p>The conversion function <code>as.mesh3d()</code> consolidates code from quadmesh and
 angstroms packages where the basic facilities were developed. The function
 <code>as.mesh3d()</code> is imported from rgl and re-exported, and understands all of
@@ -281,8 +277,17 @@ values from a raster, and an <code>image_texture</code> argument to drape an ima
 a raster RGB object onto the surface. Map projections are automatically
 resolved to the coordinate system of the <code>x</code> argument (as much as possible,
 there are lingering issues with the ongoing changes to crs in PROJ library,
-and the reproj and proj4 packages which attempt to smoooth over the changes
+and the reproj and proj4 packages which attempt to smooth over the changes
 in Spatial and sf and raster objects.)</p>
+    <h2 class="hasAnchor" id="elevation-values-with-z"><a class="anchor" href="#elevation-values-with-z"></a>Elevation values with <code>z</code></h2>
+
+    
+
+
+<p>The 'z' argument can be a constant value or a vector of values to be
+used for each vertex. Alternatively, it may be a spatial raster object
+from which 'z' values are derived. If not set, the vertex 'z_' value
+from TRI/TRI0 is used, otherwise z = 0' is assumed.</p>
     <h2 class="hasAnchor" id="textures"><a class="anchor" href="#textures"></a>Textures</h2>
 
     
@@ -321,10 +326,14 @@ functions take an in-memory object and create the file if needed.</p>
 <span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>(); <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'>as.mesh3d</span>(<span class='no'>x</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>cols</span>), <span class='kw'>meshColor</span> <span class='kw'>=</span> <span class='st'>"vertices"</span>)
 
 <span class='co'>## other material properties</span>
-<span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>(); <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'>as.mesh3d</span>(<span class='no'>x</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>cols</span>, <span class='kw'>specular</span> <span class='kw'>=</span> <span class='st'>"black"</span>), <span class='kw'>meshColor</span> <span class='kw'>=</span> <span class='st'>"vertices"</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>(); <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'>as.mesh3d</span>(<span class='no'>x</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>cols</span>, <span class='kw'>front</span> <span class='kw'>=</span> <span class='st'>"lines"</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>5</span>), <span class='kw'>meshColor</span> <span class='kw'>=</span> <span class='st'>"vertices"</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>(); <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'>as.mesh3d</span>(<span class='no'>x</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/viridis/man/reexports.html'>viridis</a></span>(<span class='fl'>20</span>), <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.3</span>), <span class='kw'>meshColor</span> <span class='kw'>=</span> <span class='st'>"faces"</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>(); <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'>as.mesh3d</span>(<span class='no'>x</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/viridis/man/reexports.html'>viridis</a></span>(<span class='fl'>5</span>), <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.3</span>), <span class='kw'>meshColor</span> <span class='kw'>=</span> <span class='st'>"vertices"</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>()
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'>as.mesh3d</span>(<span class='no'>x</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>cols</span>, <span class='kw'>specular</span> <span class='kw'>=</span> <span class='st'>"black"</span>), <span class='kw'>meshColor</span> <span class='kw'>=</span> <span class='st'>"vertices"</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>()
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'>as.mesh3d</span>(<span class='no'>x</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>cols</span>, <span class='kw'>front</span> <span class='kw'>=</span> <span class='st'>"lines"</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>5</span>), <span class='kw'>meshColor</span> <span class='kw'>=</span> <span class='st'>"vertices"</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>()
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'>as.mesh3d</span>(<span class='no'>x</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/viridis/man/reexports.html'>viridis</a></span>(<span class='fl'>20</span>), <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.3</span>), <span class='kw'>meshColor</span> <span class='kw'>=</span> <span class='st'>"faces"</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>()
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'>as.mesh3d</span>(<span class='no'>x</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/viridis/man/reexports.html'>viridis</a></span>(<span class='fl'>5</span>), <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.3</span>), <span class='kw'>meshColor</span> <span class='kw'>=</span> <span class='st'>"vertices"</span>)
 
 <span class='co'># TRI0 - index is stored structurally, not relations</span>
 <span class='no'>x0</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/silicate/man/TRI0.html'>TRI0</a></span>(<span class='no'>sf</span>)

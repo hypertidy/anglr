@@ -43,7 +43,7 @@
 #' dot3d(volcano)
 #'
 #' plot3d(cad_tas)
-#' perspd3d(cad_tas)
+#' persp3d(cad_tas)
 #' wire3d(cad_tas)
 #' dot3d(cad_tas)
 #'

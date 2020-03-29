@@ -102,7 +102,7 @@
 \method{as.mesh3d}{sc}(x, ...)
 }
 \arguments{
-\item{x}{An object of class \code{TRI} or \code{TRI0}}
+\item{x}{a surface-alike, a matrix, or spatial object from raster, sp, sf, trip, or silicate}
 
 \item{z}{numeric vector or raster object (see details)}
 
@@ -138,14 +138,9 @@ Methods for the mesh3d type from package rgl
 }
 \details{
 The anglr package adds methods for the \code{\link[rgl:as.mesh3d]{rgl::as.mesh3d()}} generic for
-sf, sp, raster, RTriangle, silicate, and for a matrix. This function
-is the rgl counterpart to \code{\link[rgl:plot3d]{rgl::plot3d()}}, \code{\link[rgl:wire3d]{rgl::wire3d()}}, \code{\link[rgl:persp3d]{rgl::persp3d()}} and
+sf, sp, raster, RTriangle, silicate, and for a matrix. The \code{mesh3d} format
+is the rgl workhorse behind \code{\link[rgl:plot3d]{rgl::plot3d()}}, \code{\link[rgl:wire3d]{rgl::wire3d()}}, \code{\link[rgl:persp3d]{rgl::persp3d()}} and
 \code{\link[rgl:dot3d]{rgl::dot3d()}}.
-
-The 'z' argument can be a constant value or a vector of values to be
-used for each vertex. Alternatively, it may be a spatial raster object
-from which 'z' values are derived. If not set, the vertex 'z_' value
-from TRI/TRI0 is used, otherwise z = 0' is assumed.
 
 The conversion function \code{as.mesh3d()} consolidates code from quadmesh and
 angstroms packages where the basic facilities were developed. The function
@@ -156,9 +151,18 @@ values from a raster, and an \code{image_texture} argument to drape an image fro
 a raster RGB object onto the surface. Map projections are automatically
 resolved to the coordinate system of the \code{x} argument (as much as possible,
 there are lingering issues with the ongoing changes to crs in PROJ library,
-and the reproj and proj4 packages which attempt to smoooth over the changes
+and the reproj and proj4 packages which attempt to smooth over the changes
 in Spatial and sf and raster objects.)
 }
+\section{Elevation values with \code{z}}{
+
+
+The 'z' argument can be a constant value or a vector of values to be
+used for each vertex. Alternatively, it may be a spatial raster object
+from which 'z' values are derived. If not set, the vertex 'z_' value
+from TRI/TRI0 is used, otherwise z = 0' is assumed.
+}
+
 \section{Textures}{
 
 
@@ -194,10 +198,14 @@ cols <- c("black", "grey")
 clear3d(); plot3d(as.mesh3d(x, color = cols), meshColor = "vertices")
 
 ## other material properties
-clear3d(); plot3d(as.mesh3d(x, color = cols, specular = "black"), meshColor = "vertices")
-clear3d(); plot3d(as.mesh3d(x, color = cols, front = "lines", lwd = 5), meshColor = "vertices")
-clear3d(); plot3d(as.mesh3d(x, color = viridis::viridis(20), alpha = 0.3), meshColor = "faces")
-clear3d(); plot3d(as.mesh3d(x, color = viridis::viridis(5), alpha = 0.3), meshColor = "vertices")
+clear3d()
+plot3d(as.mesh3d(x, color = cols, specular = "black"), meshColor = "vertices")
+clear3d()
+plot3d(as.mesh3d(x, color = cols, front = "lines", lwd = 5), meshColor = "vertices")
+clear3d()
+plot3d(as.mesh3d(x, color = viridis::viridis(20), alpha = 0.3), meshColor = "faces")
+clear3d()
+plot3d(as.mesh3d(x, color = viridis::viridis(5), alpha = 0.3), meshColor = "vertices")
 
 # TRI0 - index is stored structurally, not relations
 x0 <- silicate::TRI0(sf)

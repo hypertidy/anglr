@@ -143,6 +143,12 @@ These objects from sp, sf, raster, trip, and silicate should all work.</p>
 <span class='co'># S3 method for matrix</span>
 <span class='fu'>persp3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
+<span class='co'># S3 method for sf</span>
+<span class='fu'>persp3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='co'># S3 method for Spatial</span>
+<span class='fu'>persp3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
 <span class='co'># S3 method for TRI</span>
 <span class='fu'>plot3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
@@ -282,7 +288,8 @@ is used.</p>
 <span class='fu'><a href='dot3d.html'>dot3d</a></span>(<span class='no'>volcano</span>)
 
 <span class='fu'>plot3d</span>(<span class='no'>cad_tas</span>)
-<span class='fu'>perspd3d</span>(<span class='no'>cad_tas</span>)</div><div class='output co'>#&gt; <span class='error'>Error in perspd3d(cad_tas): could not find function "perspd3d"</span></div><div class='input'><span class='fu'>wire3d</span>(<span class='no'>cad_tas</span>)
+<span class='fu'>persp3d</span>(<span class='no'>cad_tas</span>)
+<span class='fu'>wire3d</span>(<span class='no'>cad_tas</span>)
 <span class='fu'><a href='dot3d.html'>dot3d</a></span>(<span class='no'>cad_tas</span>)
 
 <span class='co'>## add Z elevation to an sf polygon in a mesh</span>

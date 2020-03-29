@@ -42,7 +42,7 @@
 #'
 #' No checking is done on the type of the result, and so there's nothing to stop the use of the recyling rule
 #' to expand out values, and nothing to stop the use of non numeric values being copied down. It's your model.
-#' @param x a silicate model
+#' @param x a mesh3d or a silicate object
 #' @param z object specifying values to copy down, a vector of values, a column name, a raster (see details)
 #' @param ... currently ignored
 #' @param .id character value, the name of the resulting column in the vertices, default is "z_"
