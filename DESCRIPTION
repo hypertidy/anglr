@@ -27,7 +27,7 @@ Imports:
     polyclip,
     gridBase,
     scales,
-    crsmeta (>= 0.2.0.9001),
+    crsmeta (>= 0.3.0),
     png,
     utils,
     palr,
@@ -51,4 +51,4 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.0
 VignetteBuilder: knitr
-Remotes: hypertidy/reproj, hypertidy/silicate, hypertidy/crsmeta
+Remotes: hypertidy/reproj, hypertidy/silicate
