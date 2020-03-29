@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Convert map coordinates to Geocentric (XYZ) coordinates. — globe • anglr</title>
+<title>Draw points in 3d — dot3d • anglr</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Convert map coordinates to Geocentric (XYZ) coordinates. — globe" />
-<meta property="og:description" content="Convert map coordinates to Geocentric (XYZ) coordinates." />
+<meta property="og:title" content="Draw points in 3d — dot3d" />
+<meta property="og:description" content="Draw points with rgl from any mesh-alike object." />
 
 
 
@@ -106,47 +106,67 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Convert map coordinates to Geocentric (XYZ) coordinates.</h1>
+    <h1>Draw points in 3d</h1>
     
-    <div class="hidden name"><code>globe.Rd</code></div>
+    <div class="hidden name"><code>dot3d.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Convert map coordinates to Geocentric (XYZ) coordinates.</p>
+    <p>Draw points with rgl from any mesh-alike object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>globe</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='co'># S3 method for sf</span>
+<span class='fu'>dot3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
-<span class='co'># S3 method for default</span>
-<span class='fu'>globe</span>(<span class='no'>x</span>, <span class='kw'>gproj</span> <span class='kw'>=</span> <span class='st'>"+proj=geocent +ellps=WGS84"</span>, <span class='no'>...</span>)</pre>
+<span class='co'># S3 method for matrix</span>
+<span class='fu'>dot3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for BasicRaster</span>
+<span class='fu'>dot3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for sc</span>
+<span class='fu'>dot3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for SC</span>
+<span class='fu'>dot3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for SC0</span>
+<span class='fu'>dot3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>list of tibbles, in silicate form</p></td>
+      <td><p>sc, sp, sf, raster, trip, or any other model understood by anglr/silicate</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>arguments to methods (none used)</p></td>
-    </tr>
-    <tr>
-      <th>gproj</th>
-      <td><p>Geocentric PROJ.4 string, defaults to WGS84</p></td>
+      <td><p>Arguments passed on to <code><a href='https://rdrr.io/pkg/rgl/man/mesh3d.html'>rgl::dot3d</a></code></p><dl'>
+    <dt><code></code></dt><dd><p></p></dd>
+  
+</dl></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>anglr object with vertices table modified</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>simpleworld</span>)
-<span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'>globe</span>(<span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/silicate/man/PATH.html'>PATH</a></span>(<span class='fu'>as</span>(<span class='no'>simpleworld</span>, <span class='st'>"SpatialLinesDataFrame"</span>)))
-<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()) {
- <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>g</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>3</span>)
- }</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>dot3d</span>(<span class='no'>cad_tas</span>)
+<span class='fu'>dot3d</span>(<span class='no'>volcano</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+<span class='fu'><a href='auto_3d.html'>auto_3d</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>14</span>)</div><div class='output co'>#&gt; <span class='message'>original axis lengths x,y,z:  524709.81,5250543.00,    193.75</span></div><div class='output co'>#&gt; <span class='message'>applying 'aspect3d( 1,  1, 14)'</span></div><div class='input'>
+
+<span class='kw pkg'>rgl</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>()
+<span class='co'>## from ?persp</span>
+<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(-<span class='fl'>10</span>, <span class='fl'>10</span>, <span class='kw'>length</span><span class='kw'>=</span> <span class='fl'>80</span>)
+<span class='no'>z</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/outer.html'>outer</a></span>(<span class='no'>x</span>, <span class='no'>y</span>,
+     <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>y</span>) {
+        <span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span>(<span class='no'>x</span>^<span class='fl'>2</span>+<span class='no'>y</span>^<span class='fl'>2</span>); <span class='fl'>10</span> * <span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>sin</a></span>(<span class='no'>r</span>)/<span class='no'>r</span>
+        })
+<span class='fu'>dot3d</span>(<span class='no'>z</span>)
+<span class='fu'><a href='auto_3d.html'>auto_3d</a></span>()</div><div class='output co'>#&gt; <span class='message'>original axis lengths x,y,z: 80.00000,80.00000,12.10155</span></div><div class='output co'>#&gt; <span class='message'>applying 'aspect3d(1, 1, 1)'</span></div><div class='input'><span class='fu'>dot3d</span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span>(<span class='no'>volcano</span>), <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+<span class='fu'><a href='auto_3d.html'>auto_3d</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>14</span>)</div><div class='output co'>#&gt; <span class='message'>original axis lengths x,y,z:  80.0000, 80.0000,195.9049</span></div><div class='output co'>#&gt; <span class='message'>applying 'aspect3d(1.00, 1.00, 5.72)'</span></div><div class='input'>
+<span class='fu'>dot3d</span>(<span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/silicate/man/SC.html'>SC</a></span>(<span class='no'>cad_tas</span>))
+<span class='fu'><a href='auto_3d.html'>auto_3d</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>14</span>)</div><div class='output co'>#&gt; <span class='message'>original axis lengths x,y,z:  524529.8125,5250453.0000,    195.9049</span></div><div class='output co'>#&gt; <span class='message'>applying 'aspect3d( 1,  1, 14)'</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

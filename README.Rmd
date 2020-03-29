@@ -27,7 +27,7 @@ rgl::par3d(windowRect = c(100, 100, 512 + 100, 512 +100))
 
 The anglr package aims to provide direct access to generic 3D tools. 
 
-... geospatial is cool ... 3D is cool ... putting them together is a *challenge*  ...
+... geospatial is cool ... 3D is cool ... putting them together is  *challenging*  ...
 
 * Convert geospatial objects to 3D with `as.mesh3d()` - works for matrix, raster, sf-polygons, sp-polygons, silicate-triangles
 
@@ -41,13 +41,25 @@ The anglr package aims to provide direct access to generic 3D tools.
 
 * Use `shade3d()` or `plot3d()` or `wire3d()` from the rgl package to plot any `mesh3d` object created. (`plot3d()` also calls the converters for non-mesh types, so we can quickly get a 3D scene from any spatial data)
 
+
+## Why anglr, isn't this all done?
+
+The rgl package has long supported powerful interactive 3D visualizations for points, lines, and surfaces. Surfaces can be of any form, triangles or quad primitives wrapped around a bunny, a globe, or platonic shapes such as cubes and octahedrons. There is support for *textures*, which is essentially imagery draped onto a surface at native resolution - there is no loss of image quality at all. 
+
+But, rgl is hard to use, and there are very few helpers for converting existing formats into the right form. There are some, for example `as.mesh3d()` methods for commonly used triangulation packages. It also was harder to use in the past, but recently has been improved a great deal for taking generic data and converting it. 
+
+There has been no support in rgl for *geo-spatial* data structures, such as spatial rasters, polygons and lines that are common in GIS workflows. The anglr package aims to fill this gap, and gives total
+control over conversion of spatial and other data into mesh forms - even if visualization is not the end goal.
+
+There *are* packages that convert matrices and imagery to compelling animated 3D scenes, but these are targetted at presentation rather than generality and development. The scenes are specifically honed to look flashy as an animated GIF, and adding general extra data to a given scene requires a lot of workarounds. There are also no well-known packages that use the rgl mesh3d format, most famous examples use `rgl::surface3d()` which is limited to the model that provides for an input matrix and overlaid colours or textures. These cannot be wrapped arbitrarily around curves in any 3D coordinate system. 
+
+# Key development topics
+
 * Use `copy_down()` to merge raster values onto vector meshes (WIP, this part is in flux after refactoring as.mesh3d ...). 
 
 * For developers: delve into the technical details, all code is as modular as possible and relies on basic workhorse packages that do one simple task ...
 
 * Key working examples are in `?anglr::as.mesh3d`, see [online doc](https://hypertidy.github.io/anglr/reference/as.mesh3d.html). 
-
-
 
 
 ## Installation
