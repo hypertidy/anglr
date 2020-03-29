@@ -142,6 +142,18 @@ quad_common <- function(vb, index, normals, texcoords, material, meshColor, tria
 #' from which 'z' values are derived. If not set, the vertex 'z_' value
 #' from TRI/TRI0 is used, otherwise z = 0' is assumed.
 #'
+#' The conversion function `as.mesh3d()` consolidates code from quadmesh and
+#' angstroms packages where the basic facilities were developed. The function
+#' `as.mesh3d()` is imported from rgl and re-exported, and understands all of
+#' the surface types from sf, sp, raster, and silicate, and can accept a raw
+#' matrix as input. It can also include a `z` argument to extract elevation
+#' values from a raster, and an `image_texture` argument to drape an image from
+#' a raster RGB object onto the surface. Map projections are automatically
+#' resolved to the coordinate system of the `x` argument (as much as possible,
+#' there are lingering issues with the ongoing changes to crs in PROJ library,
+#' and the reproj and proj4 packages which attempt to smoooth over the changes
+#' in Spatial and sf and raster objects.)
+#'
 #' @section Textures:
 #'
 #' Please see the documentation for rgl textures in `vignette("rgl", package = "rgl")`.
@@ -319,7 +331,15 @@ as.mesh3d.sf <-function(x, triangles = FALSE,
   ## TRI or DEL or SC?
   as.mesh3d(DEL0(x), ...)
 }
+#' @name as.mesh3d
+#' @export
+as.mesh3d.Spatial <-function(x, triangles = FALSE,
+                        smooth = FALSE, normals = NULL, texcoords = NULL,
+                        ..., keep_all = TRUE, image_texture = NULL, meshColor = "faces") {
 
+  ## TRI or DEL or SC?
+  as.mesh3d(DEL0(x), ...)
+}
 
 #' @name as.mesh3d
 #' @export

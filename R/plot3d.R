@@ -1,22 +1,33 @@
 #' 3D object plot
 #'
-#' This is the workhorse function for anglr, the idea is that just
-#' about anything can be plotted in a 3D scene, polygons, lines, rasters,
-#' matrix. These objects from sp, sf, raster, trip, and silicate should all
-#' work.
+#' This is the workhorse function for anglr, the idea is that just about
+#' anything can be plotted in a 3D scene, polygons, lines, rasters, matrix.
+#' These objects from sp, sf, raster, trip, and silicate should all work.
 #'
-#' If the scene looks funny the aspect ratio might be poor, we've decided
-#' not to automatically update this with normal plots, but running `auto_3d()`
-#' will attempt to set a reasonable aspect ratio. It can also be used to set exaggerations
-#' in different axes.
+#' The function [plot3d()] the full suite of mesh and linear type plotting
+#' functions from [rgl::plot3d()]. This main function includes a broader family
+#' of [dot3d()], [wire3d()], and [persp3d()] and each works with matrix, raster,
+#' sf, sp, trip, RTriangle, and silicate models. Each of the mesh-surface forms
+#' rely on [as.mesh3d()] conversion behind the scenes, whereas [plot3d()] for
+#' the linear types (sf, sp, trip, and from silicate SC, SC0, PATH, PATH0, and
+#' ARC0) all are plotted using rgl segments without going through a triangulated
+#' surface form. This reflects their underlying topology when it comes to 3D
+#' visualization and analysis.
 #'
-#' For SC edges are matched to their object/s. One object's properties is applied as colour.
-#' If `color_` column is present on the data object table it is used.
+#' If the scene looks funny the aspect ratio might be poor, we've decided not to
+#' automatically update this with normal plots, but running `auto_3d()` will
+#' attempt to set a reasonable aspect ratio. It can also be used to set
+#' exaggerations in different axes.
+#'
+#' For SC edges are matched to their object/s. One object's properties is
+#' applied as colour. If `color_` column is present on the data object table it
+#' is used.
 #' @param x silicate model, SC, TRI, ARC, or PATH
 #' @param ... passed to material properties
 #' @param add add to plot or not
 #'
-#' @return rgl shape3d types (note that "segment3d" is currently an imaginary shape3d type)
+#' @return rgl shape3d types (note that "segment3d" is currently an imaginary
+#'   shape3d type)
 #' @importFrom rgl plot3d persp3d
 #' @export plot3d
 #' @export persp3d

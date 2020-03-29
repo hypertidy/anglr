@@ -20,6 +20,11 @@ The anglr package aims to provide direct access to generic 3D tools.
 … geospatial is cool … 3D is cool … putting them together is
 *challenging* …
 
+The anglr package provides a full suite of mesh-creation and 3D plotting
+functions, extending the [rgl package](https://CRAN.r-project.org/)
+functions `as.mesh3d()`, `plot3d()`, `persp3d()`, `wire3d()`, and
+`dot3d()`.
+
   - Convert geospatial objects to 3D with `as.mesh3d()` - works for
     matrix, raster, sf-polygons, sp-polygons, silicate-triangles
 

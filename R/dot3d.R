@@ -30,7 +30,11 @@
 dot3d.sf <- function(x, ...) {
   dot3d(as.mesh3d(silicate::TRI0(x)), ...)
 }
-
+#' @name plot3d
+#' @export
+dot3d.Spatial <- function(x, ...) {
+  dot3d(as.mesh3d(silicate::TRI0(x)), ...)
+}
 #' @name dot3d
 #' @export
 dot3d.matrix <- function(x, ...) {

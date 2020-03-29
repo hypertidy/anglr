@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">anglr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9200</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9400</span>
       </span>
     </div>
 
@@ -71,13 +71,14 @@
 </h1></div>
 <p>The anglr package aims to provide direct access to generic 3D tools.</p>
 <p>… geospatial is cool … 3D is cool … putting them together is <em>challenging</em> …</p>
+<p>The anglr package provides a full suite of mesh-creation and 3D plotting functions, extending the <a href="https://CRAN.r-project.org/">rgl package</a> functions <code><a href="reference/as.mesh3d.html">as.mesh3d()</a></code>, <code><a href="reference/plot3d.html">plot3d()</a></code>, <code><a href="reference/plot3d.html">persp3d()</a></code>, <code><a href="reference/plot3d.html">wire3d()</a></code>, and <code><a href="reference/dot3d.html">dot3d()</a></code>.</p>
 <ul>
 <li><p>Convert geospatial objects to 3D with <code><a href="reference/as.mesh3d.html">as.mesh3d()</a></code> - works for matrix, raster, sf-polygons, sp-polygons, silicate-triangles</p></li>
 <li><p>Plot geospatial objects with <code><a href="reference/plot3d.html">plot3d()</a></code> - works for matrix, raster, sf (any type), sp, trip, silicate</p></li>
 <li><p>Merge raster and vector with <code>as.mesh3d</code> - elevate polygons or lines with a raster dem</p></li>
 <li><p>Drape imagery onto raster or polygon surfaces with <code>as.mesh3d</code> - <code>image_texture</code> argument</p></li>
 <li><p>Create any mesh above and reproject to any projection, including geocentric</p></li>
-<li><p>Use <code>shade3d()</code> or <code><a href="reference/plot3d.html">plot3d()</a></code> or <code>wire3d()</code> from the rgl package to plot any <code>mesh3d</code> object created. (<code><a href="reference/plot3d.html">plot3d()</a></code> also calls the converters for non-mesh types, so we can quickly get a 3D scene from any spatial data)</p></li>
+<li><p>Use <code>shade3d()</code> or <code><a href="reference/plot3d.html">plot3d()</a></code> or <code><a href="reference/plot3d.html">wire3d()</a></code> from the rgl package to plot any <code>mesh3d</code> object created. (<code><a href="reference/plot3d.html">plot3d()</a></code> also calls the converters for non-mesh types, so we can quickly get a 3D scene from any spatial data)</p></li>
 </ul>
 <div id="why-anglr-isnt-this-all-done" class="section level2">
 <h2 class="hasAnchor">

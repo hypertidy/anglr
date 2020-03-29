@@ -8,6 +8,7 @@
 \alias{as.mesh3d.QUAD}
 \alias{as.mesh3d.triangulation}
 \alias{as.mesh3d.sf}
+\alias{as.mesh3d.Spatial}
 \alias{as.mesh3d.matrix}
 \alias{as.mesh3d.sc}
 \title{Mesh3d objects}
@@ -63,6 +64,18 @@
 \method{as.mesh3d}{triangulation}(x, ...)
 
 \method{as.mesh3d}{sf}(
+  x,
+  triangles = FALSE,
+  smooth = FALSE,
+  normals = NULL,
+  texcoords = NULL,
+  ...,
+  keep_all = TRUE,
+  image_texture = NULL,
+  meshColor = "faces"
+)
+
+\method{as.mesh3d}{Spatial}(
   x,
   triangles = FALSE,
   smooth = FALSE,
@@ -133,6 +146,18 @@ The 'z' argument can be a constant value or a vector of values to be
 used for each vertex. Alternatively, it may be a spatial raster object
 from which 'z' values are derived. If not set, the vertex 'z_' value
 from TRI/TRI0 is used, otherwise z = 0' is assumed.
+
+The conversion function \code{as.mesh3d()} consolidates code from quadmesh and
+angstroms packages where the basic facilities were developed. The function
+\code{as.mesh3d()} is imported from rgl and re-exported, and understands all of
+the surface types from sf, sp, raster, and silicate, and can accept a raw
+matrix as input. It can also include a \code{z} argument to extract elevation
+values from a raster, and an \code{image_texture} argument to drape an image from
+a raster RGB object onto the surface. Map projections are automatically
+resolved to the coordinate system of the \code{x} argument (as much as possible,
+there are lingering issues with the ongoing changes to crs in PROJ library,
+and the reproj and proj4 packages which attempt to smoooth over the changes
+in Spatial and sf and raster objects.)
 }
 \section{Textures}{
 
