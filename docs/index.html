@@ -71,7 +71,11 @@
 </h1></div>
 <p>The anglr package aims to provide direct access to generic 3D tools.</p>
 <p>… geospatial is cool … 3D is cool … putting them together is <em>challenging</em> …</p>
-<p>The anglr package provides a full suite of mesh-creation and 3D plotting functions, extending the <a href="https://CRAN.r-project.org/">rgl package</a> functions <code><a href="reference/as.mesh3d.html">as.mesh3d()</a></code>, <code><a href="reference/plot3d.html">plot3d()</a></code>, <code><a href="reference/plot3d.html">persp3d()</a></code>, <code><a href="reference/plot3d.html">wire3d()</a></code>, and <code><a href="reference/dot3d.html">dot3d()</a></code>.</p>
+<p>The anglr package provides a full suite of mesh-creation and 3D plotting functions, extending the <a href="https://CRAN.r-project.org/package=rgl">rgl package</a> functions <code><a href="reference/as.mesh3d.html">as.mesh3d()</a></code>, <code><a href="reference/plot3d.html">plot3d()</a></code>, <code><a href="reference/plot3d.html">persp3d()</a></code>, <code><a href="reference/plot3d.html">wire3d()</a></code>, and <code><a href="reference/dot3d.html">dot3d()</a></code>.</p>
+<p>Key working examples are in <code><a href="reference/as.mesh3d.html">?anglr::as.mesh3d</a></code>, and <code>?anglr::as.plo3d</code> see <a href="https://hypertidy.github.io/anglr/reference/as.mesh3d.html">anglr::as.mesh3d</a> and <a href="https://hypertidy.github.io/anglr/reference/plot3d.html">anglr::plot3d</a>.</p>
+<div id="features" class="section level2">
+<h2 class="hasAnchor">
+<a href="#features" class="anchor"></a>Features</h2>
 <ul>
 <li><p>Convert geospatial objects to 3D with <code><a href="reference/as.mesh3d.html">as.mesh3d()</a></code> - works for matrix, raster, sf-polygons, sp-polygons, silicate-triangles</p></li>
 <li><p>Plot geospatial objects with <code><a href="reference/plot3d.html">plot3d()</a></code> - works for matrix, raster, sf (any type), sp, trip, silicate</p></li>
@@ -80,6 +84,7 @@
 <li><p>Create any mesh above and reproject to any projection, including geocentric</p></li>
 <li><p>Use <code>shade3d()</code> or <code><a href="reference/plot3d.html">plot3d()</a></code> or <code><a href="reference/plot3d.html">wire3d()</a></code> from the rgl package to plot any <code>mesh3d</code> object created. (<code><a href="reference/plot3d.html">plot3d()</a></code> also calls the converters for non-mesh types, so we can quickly get a 3D scene from any spatial data)</p></li>
 </ul>
+</div>
 <div id="why-anglr-isnt-this-all-done" class="section level2">
 <h2 class="hasAnchor">
 <a href="#why-anglr-isnt-this-all-done" class="anchor"></a>Why anglr, isn’t this all done?</h2>
@@ -95,7 +100,6 @@
 <ul>
 <li><p>Use <code><a href="reference/copy_down.html">copy_down()</a></code> to merge raster values onto vector meshes (WIP, this part is in flux after refactoring as.mesh3d …).</p></li>
 <li><p>For developers: delve into the technical details, all code is as modular as possible and relies on basic workhorse packages that do one simple task …</p></li>
-<li><p>Key working examples are in <code><a href="reference/as.mesh3d.html">?anglr::as.mesh3d</a></code>, see <a href="https://hypertidy.github.io/anglr/reference/as.mesh3d.html">online doc</a>.</p></li>
 </ul>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">

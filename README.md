@@ -21,9 +21,17 @@ The anglr package aims to provide direct access to generic 3D tools.
 *challenging* …
 
 The anglr package provides a full suite of mesh-creation and 3D plotting
-functions, extending the [rgl package](https://CRAN.r-project.org/)
-functions `as.mesh3d()`, `plot3d()`, `persp3d()`, `wire3d()`, and
-`dot3d()`.
+functions, extending the [rgl
+package](https://CRAN.r-project.org/package=rgl) functions
+`as.mesh3d()`, `plot3d()`, `persp3d()`, `wire3d()`, and `dot3d()`.
+
+Key working examples are in `?anglr::as.mesh3d`, and `?anglr::as.plo3d`
+see
+[anglr::as.mesh3d](https://hypertidy.github.io/anglr/reference/as.mesh3d.html)
+and
+[anglr::plot3d](https://hypertidy.github.io/anglr/reference/plot3d.html).
+
+## Features
 
   - Convert geospatial objects to 3D with `as.mesh3d()` - works for
     matrix, raster, sf-polygons, sp-polygons, silicate-triangles
@@ -84,9 +92,6 @@ arbitrarily around curves in any 3D coordinate system.
   - For developers: delve into the technical details, all code is as
     modular as possible and relies on basic workhorse packages that do
     one simple task …
-
-  - Key working examples are in `?anglr::as.mesh3d`, see [online
-    doc](https://hypertidy.github.io/anglr/reference/as.mesh3d.html).
 
 ## Installation
 

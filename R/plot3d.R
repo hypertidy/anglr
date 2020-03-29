@@ -36,6 +36,19 @@
 #' x <- SC(sf::read_sf(system.file("shape", "nc.shp", package = "sf")) %>%
 #'    dplyr::mutate(color_ = rainbow(100)))
 #' plot3d(x)
+#'
+#' ## plot3d anything
+#' plot3d(volcano)
+#' wire3d(volcano)
+#' dot3d(volcano)
+#'
+#' plot3d(cad_tas)
+#' perspd3d(cad_tas)
+#' wire3d(cad_tas)
+#' dot3d(cad_tas)
+#'
+#' ## add Z elevation to an sf polygon in a mesh
+#' plot3d(copy_down(as.mesh3d(silicate::minimal_mesh), raster::raster(volcano)))
 #' @export
 #' @name plot3d
 plot3d.TRI <- function(x, ...) {

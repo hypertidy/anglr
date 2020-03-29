@@ -274,7 +274,19 @@ is used.</p>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>silicate</span>)
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/silicate/man/SC.html'>SC</a></span>(<span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_read.html'>read_sf</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"shape"</span>, <span class='st'>"nc.shp"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"sf"</span>)) <span class='kw'>%&gt;%</span>
    <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>color_</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/palettes.html'>rainbow</a></span>(<span class='fl'>100</span>)))
-<span class='fu'>plot3d</span>(<span class='no'>x</span>)</div></pre>
+<span class='fu'>plot3d</span>(<span class='no'>x</span>)
+
+<span class='co'>## plot3d anything</span>
+<span class='fu'>plot3d</span>(<span class='no'>volcano</span>)
+<span class='fu'>wire3d</span>(<span class='no'>volcano</span>)
+<span class='fu'><a href='dot3d.html'>dot3d</a></span>(<span class='no'>volcano</span>)
+
+<span class='fu'>plot3d</span>(<span class='no'>cad_tas</span>)
+<span class='fu'>perspd3d</span>(<span class='no'>cad_tas</span>)</div><div class='output co'>#&gt; <span class='error'>Error in perspd3d(cad_tas): could not find function "perspd3d"</span></div><div class='input'><span class='fu'>wire3d</span>(<span class='no'>cad_tas</span>)
+<span class='fu'><a href='dot3d.html'>dot3d</a></span>(<span class='no'>cad_tas</span>)
+
+<span class='co'>## add Z elevation to an sf polygon in a mesh</span>
+<span class='fu'>plot3d</span>(<span class='fu'><a href='copy_down.html'>copy_down</a></span>(<span class='fu'><a href='as.mesh3d.html'>as.mesh3d</a></span>(<span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/silicate/man/minimal_mesh.html'>minimal_mesh</a></span>), <span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span>(<span class='no'>volcano</span>)))</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
