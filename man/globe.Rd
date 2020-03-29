@@ -7,7 +7,7 @@
 \usage{
 globe(x, ...)
 
-\method{globe}{default}(x, gproj = "+proj=geocent +ellps=WGS84", ...)
+\method{globe}{default}(x, gproj = "+proj=geocent +datum=WGS84", ...)
 }
 \arguments{
 \item{x}{list of tibbles, in silicate form}

@@ -14,6 +14,6 @@ test_that("holey polygons and non-holy polygons", {
   expect_true(!is.na(silicate::PATH(a)$meta$proj))
   expect_true(!is.na(b$meta$proj))
   expect_silent(  plot(b))
-    expect_silent(globe(b))
+    expect_warning(globe(b), "towgs84 element removed")
 
 })
