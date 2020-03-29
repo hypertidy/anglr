@@ -92,7 +92,7 @@ DEL0.PATH0 <- function(x, ..., max_area = NULL) {
 
   ## TRIANGULATE with PATH-identity
   RTri <- do.call(edge_RTriangle0, dots)
-  ## object/path_link_triangle (path_triangle_map)
+ # x## object/path_link_triangle (path_triangle_map)
   ptm <- path_triangle_map(x, RTri)
   omap <- dplyr::bind_rows(x$object$path_)%>% dplyr::distinct(.data$object_, .data$path_)
   ptm$object_ <- omap$object_[match(ptm$path_, omap$path_)]

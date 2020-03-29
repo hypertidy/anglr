@@ -379,3 +379,14 @@ as.mesh3d.matrix <-function(x, triangles = FALSE,
   quad_common(vb, ind1, normals, texcoords, material, meshColor, triangles, smooth)
 
 }
+
+#' @name as.mesh3d
+#' @export
+as.mesh3d.sc <- function(x, ...) {
+  ## fallback for anything that can be triangulated
+  tst <- try(DEL0(x), silent = TRUE)
+  if (inherits(tst, "try-error")) {
+    stop("not able to generate a surface from 'x'")
+  }
+  as.mesh3d(tst, ...)
+}

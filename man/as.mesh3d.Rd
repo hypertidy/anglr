@@ -9,6 +9,7 @@
 \alias{as.mesh3d.triangulation}
 \alias{as.mesh3d.sf}
 \alias{as.mesh3d.matrix}
+\alias{as.mesh3d.sc}
 \title{Mesh3d objects}
 \usage{
 \method{as.mesh3d}{TRI}(
@@ -84,6 +85,8 @@
   image_texture = NULL,
   meshColor = "faces"
 )
+
+\method{as.mesh3d}{sc}(x, ...)
 }
 \arguments{
 \item{x}{An object of class \code{TRI} or \code{TRI0}}
