@@ -51,7 +51,8 @@ dot3d(z)
 auto_3d()
 dot3d(raster::raster(volcano), size = 10)
 auto_3d(z = 14)
-
+\donttest{
 dot3d(silicate::SC(cad_tas))
 auto_3d(z = 14)
+}
 }

@@ -12,7 +12,7 @@ Imports:
     dplyr,
     gibble (>= 0.2.0),
     methods,
-    reproj (>= 0.4.1.9001),
+    reproj (>= 0.4.1.9002),
     raster,
     rgl,
     rlang,

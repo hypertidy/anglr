@@ -168,11 +168,12 @@ plot3d(volcano)
 wire3d(volcano)
 dot3d(volcano)
 
+\donttest{
 plot3d(cad_tas)
 persp3d(cad_tas)
 wire3d(cad_tas)
 dot3d(cad_tas)
-
+}
 ## add Z elevation to an sf polygon in a mesh
 plot3d(copy_down(as.mesh3d(silicate::minimal_mesh), raster::raster(volcano)))
 }

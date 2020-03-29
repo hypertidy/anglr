@@ -13,8 +13,10 @@
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' a <- DEL0(cad_tas)
 #' plot(a)
+#' }
 DEL0 <- function(x, ..., max_area = NULL) {
   UseMethod("DEL0")
 }
