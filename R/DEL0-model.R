@@ -80,7 +80,7 @@ DEL0.ARC <- function(x, ..., max_area = NULL) {
 #' @name DEL0
 #' @export
 DEL0.PATH <- function(x, ..., max_area = NULL) {
-  DEL(PATH0(x), max_area = NULL)
+  DEL(silicate::PATH0(x), max_area = NULL)
 }
 #' @name DEL0
 #' @export
