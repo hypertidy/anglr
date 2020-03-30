@@ -74,7 +74,7 @@ These objects from sp, sf, raster, trip, and silicate should all work." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">anglr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9400</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9500</span>
       </span>
     </div>
 
@@ -287,11 +287,12 @@ is used.</p>
 <span class='fu'>wire3d</span>(<span class='no'>volcano</span>)
 <span class='fu'><a href='dot3d.html'>dot3d</a></span>(<span class='no'>volcano</span>)
 
+<span class='co'># \donttest{</span>
 <span class='fu'>plot3d</span>(<span class='no'>cad_tas</span>)
 <span class='fu'>persp3d</span>(<span class='no'>cad_tas</span>)
 <span class='fu'>wire3d</span>(<span class='no'>cad_tas</span>)
 <span class='fu'><a href='dot3d.html'>dot3d</a></span>(<span class='no'>cad_tas</span>)
-
+<span class='co'># }</span>
 <span class='co'>## add Z elevation to an sf polygon in a mesh</span>
 <span class='fu'>plot3d</span>(<span class='fu'><a href='copy_down.html'>copy_down</a></span>(<span class='fu'><a href='as.mesh3d.html'>as.mesh3d</a></span>(<span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/silicate/man/minimal_mesh.html'>minimal_mesh</a></span>), <span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span>(<span class='no'>volcano</span>)))</div></pre>
   </div>
