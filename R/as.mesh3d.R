@@ -1,5 +1,4 @@
 
-
 #' Convert to mesh object
 #'
 #' @description

@@ -72,7 +72,7 @@
 <p>The anglr package aims to provide direct access to generic 3D tools.</p>
 <p>… geospatial is cool … 3D is cool … putting them together is <em>challenging</em> …</p>
 <p>The anglr package provides a full suite of mesh-creation and 3D plotting functions, extending the <a href="https://CRAN.r-project.org/package=rgl">rgl package</a> functions <code><a href="reference/as.mesh3d.html">as.mesh3d()</a></code>, <code><a href="reference/plot3d.html">plot3d()</a></code>, <code><a href="reference/plot3d.html">persp3d()</a></code>, <code><a href="reference/plot3d.html">wire3d()</a></code>, and <code><a href="reference/dot3d.html">dot3d()</a></code>.</p>
-<p>Key working examples are in <code><a href="reference/as.mesh3d.html">?anglr::as.mesh3d</a></code>, and <code>?anglr::as.plo3d</code> see <a href="https://hypertidy.github.io/anglr/reference/as.mesh3d.html">anglr::as.mesh3d</a> and <a href="https://hypertidy.github.io/anglr/reference/plot3d.html">anglr::plot3d</a>.</p>
+<p>Key working examples are in <a href="https://hypertidy.github.io/anglr/reference/as.mesh3d.html">?anglr::as.mesh3d</a> and <a href="https://hypertidy.github.io/anglr/reference/plot3d.html">?anglr::as.plo3d</a>.</p>
 <div id="features" class="section level2">
 <h2 class="hasAnchor">
 <a href="#features" class="anchor"></a>Features</h2>
@@ -90,17 +90,9 @@
 <a href="#why-anglr-isnt-this-all-done" class="anchor"></a>Why anglr, isn’t this all done?</h2>
 <p>The rgl package has long supported powerful interactive 3D visualizations for points, lines, and surfaces. Surfaces can be of any form, triangles or quad primitives wrapped around a bunny, a globe, or platonic shapes such as cubes and octahedrons. There is support for <em>textures</em>, which is essentially imagery draped onto a surface at native resolution - there is no loss of image quality at all.</p>
 <p>But, rgl is hard to use, and there are very few helpers for converting existing formats into the right form. There are some, for example <code><a href="reference/as.mesh3d.html">as.mesh3d()</a></code> methods for commonly used triangulation packages. It also was harder to use in the past, but recently has been improved a great deal for taking generic data and converting it.</p>
-<p>There has been no support in rgl for <em>geo-spatial</em> data structures, such as spatial rasters, polygons and lines that are common in GIS workflows. The anglr package aims to fill this gap, and gives total control over conversion of spatial and other data into mesh forms - even if visualization is not the end goal.</p>
-<p>There <em>are</em> packages that convert matrices and imagery to compelling animated 3D scenes, but these are targetted at presentation rather than generality and development. The scenes are specifically honed to look flashy as an animated GIF, and adding general extra data to a given scene requires a lot of workarounds. There are also no well-known packages that use the rgl mesh3d format, most famous examples use <code><a href="https://rdrr.io/pkg/rgl/man/surface3d.html">rgl::surface3d()</a></code> which is limited to the model that provides for an input matrix and overlaid colours or textures. These cannot be wrapped arbitrarily around curves in any 3D coordinate system.</p>
+<p>There has been little support in rgl for <em>geo-spatial</em> data structures, such as spatial rasters, polygons and lines that are common in GIS workflows. The anglr package aims to fill this gap, and gives total control over conversion of spatial and other data into mesh forms - even if visualization is not the end goal.</p>
+<p>There <em>are</em> packages that convert matrices and imagery to compelling animated 3D scenes, but these are targetted at presentation rather than generality and development. The scenes are targetted towards presentation, and adding general extra data to a given scene requires a lot of workarounds. There are also only few well-known packages that use the rgl mesh3d format (Rvcg, …). Many examples use <code><a href="https://rdrr.io/pkg/rgl/man/surface3d.html">rgl::surface3d()</a></code> which is limited to the model that provides for an input matrix and overlaid colours or textures. These cannot be wrapped arbitrarily around curves in any 3D coordinate system.</p>
 </div>
-</div>
-<div id="key-development-topics" class="section level1">
-<h1 class="hasAnchor">
-<a href="#key-development-topics" class="anchor"></a>Key development topics</h1>
-<ul>
-<li><p>Use <code><a href="reference/copy_down.html">copy_down()</a></code> to merge raster values onto vector meshes (WIP, this part is in flux after refactoring as.mesh3d …).</p></li>
-<li><p>For developers: delve into the technical details, all code is as modular as possible and relies on basic workhorse packages that do one simple task …</p></li>
-</ul>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -147,10 +139,10 @@ devtools::install_github("hypertidy/anglr")</pre></div>
 <div id="examples" class="section level2">
 <h2 class="hasAnchor">
 <a href="#examples" class="anchor"></a>Examples</h2>
-</div>
-<div id="demo-01---merge-vector-and-raster-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#demo-01---merge-vector-and-raster-data" class="anchor"></a>Demo 01 - merge vector and raster data</h2>
+<p>These examples are a bit out of date, anglr visualization works best interactively and with your own data, but these demo pages give a flavour for what is possible.</p>
+<div id="demo-01---merge-vector-and-raster-data" class="section level3">
+<h3 class="hasAnchor">
+<a href="#demo-01---merge-vector-and-raster-data" class="anchor"></a>Demo 01 - merge vector and raster data</h3>
 <p>An <a href="https://hypertidy.github.io/anglr-demos/demo01.html">example of merging vector and raster</a>, with a continuous interpretation applied to the polygon mesh and underlying elevation.</p>
 <div class="sourceCode" id="cb5"><pre class="r">## a global DEM
 data("gebco1", package = "anglr")
@@ -161,9 +153,9 @@ nc </pre></div>
 <p><a href="https://hypertidy.github.io/anglr-demos/demo01.html">Demo01</a></p>
 <p>Here the <code>z</code> argument to <code><a href="reference/copy_down.html">copy_down()</a></code> is a raster, and so the <code>z_</code> coordinate of the mesh is updated by extracting values from the raster using bilinear interpolation.</p>
 </div>
-<div id="demo-02---copy-discrete-values-to-polygon-elevation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#demo-02---copy-discrete-values-to-polygon-elevation" class="anchor"></a>Demo 02 - copy discrete values to polygon elevation</h2>
+<div id="demo-02---copy-discrete-values-to-polygon-elevation" class="section level3">
+<h3 class="hasAnchor">
+<a href="#demo-02---copy-discrete-values-to-polygon-elevation" class="anchor"></a>Demo 02 - copy discrete values to polygon elevation</h3>
 <p>An <a href="https://hypertidy.github.io/anglr-demos/demo02.html">example of elevating polygons with constant attribute values</a>, a discrete interpretation that requires separating the (until-now) continuous mesh of polygon features.</p>
 <p>With argument <code>z</code> set to a column in the layer or a specific vector of values this is used as a constant offset for the <code>z_</code> value, and the mesh is <em>separated by feature</em>.</p>
 <p>(The simpler TRI model is used here because we only need poor quality triangles for planar geometry. )</p>
@@ -178,6 +170,7 @@ nc </pre></div>
 <p><a href="http://rpubs.com/cyclemumner/367010" class="uri">http://rpubs.com/cyclemumner/367010</a></p>
 <hr>
 <p>Please note that this project is released with a <a href="CONDUCT.html">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</p>
+</div>
 </div>
 </div>
 

@@ -25,11 +25,10 @@ functions, extending the [rgl
 package](https://CRAN.r-project.org/package=rgl) functions
 `as.mesh3d()`, `plot3d()`, `persp3d()`, `wire3d()`, and `dot3d()`.
 
-Key working examples are in `?anglr::as.mesh3d`, and `?anglr::as.plo3d`
-see
-[anglr::as.mesh3d](https://hypertidy.github.io/anglr/reference/as.mesh3d.html)
+Key working examples are in
+[?anglr::as.mesh3d](https://hypertidy.github.io/anglr/reference/as.mesh3d.html)
 and
-[anglr::plot3d](https://hypertidy.github.io/anglr/reference/plot3d.html).
+[?anglr::as.plo3d](https://hypertidy.github.io/anglr/reference/plot3d.html).
 
 ## Features
 
@@ -68,30 +67,21 @@ existing formats into the right form. There are some, for example
 was harder to use in the past, but recently has been improved a great
 deal for taking generic data and converting it.
 
-There has been no support in rgl for *geo-spatial* data structures, such
-as spatial rasters, polygons and lines that are common in GIS workflows.
-The anglr package aims to fill this gap, and gives total control over
-conversion of spatial and other data into mesh forms - even if
-visualization is not the end goal.
+There has been little support in rgl for *geo-spatial* data structures,
+such as spatial rasters, polygons and lines that are common in GIS
+workflows. The anglr package aims to fill this gap, and gives total
+control over conversion of spatial and other data into mesh forms - even
+if visualization is not the end goal.
 
 There *are* packages that convert matrices and imagery to compelling
 animated 3D scenes, but these are targetted at presentation rather than
-generality and development. The scenes are specifically honed to look
-flashy as an animated GIF, and adding general extra data to a given
-scene requires a lot of workarounds. There are also no well-known
-packages that use the rgl mesh3d format, most famous examples use
-`rgl::surface3d()` which is limited to the model that provides for an
-input matrix and overlaid colours or textures. These cannot be wrapped
-arbitrarily around curves in any 3D coordinate system.
-
-# Key development topics
-
-  - Use `copy_down()` to merge raster values onto vector meshes (WIP,
-    this part is in flux after refactoring as.mesh3d …).
-
-  - For developers: delve into the technical details, all code is as
-    modular as possible and relies on basic workhorse packages that do
-    one simple task …
+generality and development. The scenes are targetted towards
+presentation, and adding general extra data to a given scene requires a
+lot of workarounds. There are also only few well-known packages that use
+the rgl mesh3d format (Rvcg, …). Many examples use `rgl::surface3d()`
+which is limited to the model that provides for an input matrix and
+overlaid colours or textures. These cannot be wrapped arbitrarily around
+curves in any 3D coordinate system.
 
 ## Installation
 
@@ -162,7 +152,11 @@ the issues tab to make suggestions or report bugs.
 
 ## Examples
 
-## Demo 01 - merge vector and raster data
+These examples are a bit out of date, anglr visualization works best
+interactively and with your own data, but these demo pages give a
+flavour for what is possible.
+
+### Demo 01 - merge vector and raster data
 
 An [example of merging vector and
 raster](https://hypertidy.github.io/anglr-demos/demo01.html), with a
@@ -204,7 +198,7 @@ Here the `z` argument to `copy_down()` is a raster, and so the `z_`
 coordinate of the mesh is updated by extracting values from the raster
 using bilinear interpolation.
 
-## Demo 02 - copy discrete values to polygon elevation
+### Demo 02 - copy discrete values to polygon elevation
 
 An [example of elevating polygons with constant attribute
 values](https://hypertidy.github.io/anglr-demos/demo02.html), a discrete

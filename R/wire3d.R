@@ -41,12 +41,6 @@ wire3d.QUAD <- function(x, ..., add = FALSE) {
 #' @name plot3d
 #' @aliases wire3d
 #' @export
-wire3d.QUAD <- function(x, ..., add = FALSE) {
-  wire3d(as.mesh3d(x, ...), add = add)
-}
-#' @name plot3d
-#' @aliases wire3d
-#' @export
 wire3d.matrix <- function(x, ..., add = FALSE) {
   wire3d(as.mesh3d(x, ...), add = add)
 }

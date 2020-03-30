@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Draw points in 3d — dot3d • anglr</title>
+<title>Draw a mesh as points in 3D — dot3d • anglr</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,10 @@
 
 
 
-<meta property="og:title" content="Draw points in 3d — dot3d" />
-<meta property="og:description" content="Draw points with rgl from any mesh-alike object." />
+<meta property="og:title" content="Draw a mesh as points in 3D — dot3d" />
+<meta property="og:description" content="Draw points with rgl from any shape3d classed object. Produces
+a 3D scatterplot like that produced by rgl::plot3d(), but from a mesh-alike
+object." />
 
 
 
@@ -106,13 +108,15 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Draw points in 3d</h1>
+    <h1>Draw a mesh as points in 3D</h1>
     
     <div class="hidden name"><code>dot3d.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Draw points with rgl from any mesh-alike object.</p>
+    <p>Draw points with rgl from any <a href='https://rdrr.io/pkg/rgl/man/mesh3d.html'>shape3d</a> classed object. Produces
+a 3D scatterplot like that produced by <code><a href='https://rdrr.io/pkg/rgl/man/plot3d.html'>rgl::plot3d()</a></code>, but from a mesh-alike
+object.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for sf</span>
@@ -149,6 +153,21 @@
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The class <a href='https://rdrr.io/pkg/rgl/man/mesh3d.html'>mesh3d</a> extends 'shape3d' and allows methods to plot
+non-surface properties. Note that <code>dot3d()</code> will always add to an existing
+scene.</p>
+<p>It is not currently <em>technically defined or clear</em> how colour properties are
+mapped to dots by default ... there is a problem of what property to use from
+features that share the same vertex, and we have put that aside and erred on
+the side of inaccuracy in favour of getting a pretty plot (hopefully).
+(Properties that come later - lower rows - win, I think.</p>
+<p>(For some reason <code>size</code> is not vectorized like <code>col</code> is, but this is not
+explored in detail from an anglr view).</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>as.mesh3d persp3d wire3d plot3d</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>dot3d</span>(<span class='no'>cad_tas</span>)

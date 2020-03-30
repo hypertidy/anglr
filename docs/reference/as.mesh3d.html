@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Mesh3d objects — as.mesh3d • anglr</title>
+<title>Convert to mesh object — as.mesh3d • anglr</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,19 @@
 
 
 
-<meta property="og:title" content="Mesh3d objects — as.mesh3d" />
-<meta property="og:description" content="Methods for the mesh3d type from package rgl" />
+<meta property="og:title" content="Convert to mesh object — as.mesh3d" />
+<meta property="og:description" content="The as.mesh3d() generic function converts various objects to
+mesh3d objects. Methods are added to support a variety of
+spatial formats, which will include triangles or quads according to their
+inherent form. For quad-types the argument triangles can be specified to
+generate triangles from quads. The majority of conversions are done by model
+functions in the silicate package, and anglr adds models DEL(), DEL0(),
+and QUAD().
+The mesh3d format is the rgl workhorse behind
+plot3d(), wire3d(), persp3d()
+and dot3d().'
+A method for a numeric matrix is included, as are methods for sf, sp, raster,
+RTriangle, and silicate types. and for a matrix." />
 
 
 
@@ -106,13 +117,24 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Mesh3d objects</h1>
+    <h1>Convert to mesh object</h1>
     
     <div class="hidden name"><code>as.mesh3d.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Methods for the mesh3d type from package rgl</p>
+    <p>The <code>as.mesh3d()</code> generic function converts various objects to
+<a href='https://rdrr.io/pkg/rgl/man/mesh3d.html'>mesh3d</a> objects. Methods are added to support a variety of
+spatial formats, which will include triangles or quads according to their
+inherent form. For quad-types the argument <code>triangles</code> can be specified to
+generate triangles from quads. The majority of conversions are done by model
+functions in the silicate package, and anglr adds models <code><a href='DEL.html'>DEL()</a></code>, <code><a href='DEL0.html'>DEL0()</a></code>,
+and <code><a href='QUAD.html'>QUAD()</a></code>.</p>
+<p>The <a href='https://rdrr.io/pkg/rgl/man/mesh3d.html'>mesh3d</a> format is the rgl workhorse behind
+<a href='https://rdrr.io/pkg/rgl/man/plot3d.html'>plot3d()</a>, <a href='https://rdrr.io/pkg/rgl/man/mesh3d.html'>wire3d()</a>, <a href='https://rdrr.io/pkg/rgl/man/persp3d.html'>persp3d()</a>
+and <a href='https://rdrr.io/pkg/rgl/man/mesh3d.html'>dot3d()</a>.'</p>
+<p>A method for a numeric matrix is included, as are methods for sf, sp, raster,
+RTriangle, and silicate types. and for a matrix.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for TRI</span>
@@ -264,40 +286,62 @@ details see <a href='https://rdrr.io/pkg/rgl/man/mesh3d.html'>rgl::tmesh3d</a>.<
     <p>a <a href='rgl::mesh3d'>mesh3d object</a></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The anglr package adds methods for the <code><a href='https://rdrr.io/pkg/rgl/man/as.mesh3d.default.html'>rgl::as.mesh3d()</a></code> generic for
-sf, sp, raster, RTriangle, silicate, and for a matrix. The <code>mesh3d</code> format
-is the rgl workhorse behind <code><a href='https://rdrr.io/pkg/rgl/man/plot3d.html'>rgl::plot3d()</a></code>, <code><a href='https://rdrr.io/pkg/rgl/man/mesh3d.html'>rgl::wire3d()</a></code>, <code><a href='https://rdrr.io/pkg/rgl/man/persp3d.html'>rgl::persp3d()</a></code> and
-<code><a href='https://rdrr.io/pkg/rgl/man/mesh3d.html'>rgl::dot3d()</a></code>.</p>
-<p>The conversion function <code>as.mesh3d()</code> consolidates code from quadmesh and
-angstroms packages where the basic facilities were developed. The function
-<code>as.mesh3d()</code> is imported from rgl and re-exported, and understands all of
-the surface types from sf, sp, raster, and silicate, and can accept a raw
-matrix as input. It can also include a <code>z</code> argument to extract elevation
-values from a raster, and an <code>image_texture</code> argument to drape an image from
-a raster RGB object onto the surface. Map projections are automatically
-resolved to the coordinate system of the <code>x</code> argument (as much as possible,
-there are lingering issues with the ongoing changes to crs in PROJ library,
-and the reproj and proj4 packages which attempt to smooth over the changes
-in Spatial and sf and raster objects.)</p>
+    <p>When converting a matrix to mesh3d it is considered to be quad-based (area
+interpretation) within <code>xmin = 0, xmax = nrow(x), ymin = 0, ymax = ncol(x)</code>.
+Note that this differs from the <code>[0, 1, 0, 1]</code> interpretation of <code><a href='https://rdrr.io/r/graphics/image.html'>image()</a></code>,
+but shares its orientation. Raster-types from the raster package are
+interpreted in the <code>t(ranspose), y-flip</code> orientation used by
+<code><a href='https://rdrr.io/r/graphics/plot.html'>plot(raster::raster(matrix))</a></code>.</p>
+<p>The conversion function <code>anglr::as.mesh3d()</code> consolidates code from quadmesh
+and angstroms packages where the basic facilities were developed. The
+function <a href='https://rdrr.io/pkg/rgl/man/as.mesh3d.default.html'>as.mesh3d()</a> is imported from rgl and re-exported,
+and understands all of the surface types from sf, sp, raster, and silicate,
+and can accept a raw matrix as input. It can also include a <code>z</code> argument to
+extract elevation values from a raster, and an <code>image_texture</code> argument to
+drape an image from a raster RGB object onto the surface. Map projections are
+automatically resolved to the coordinate system of the <code>x</code> argument (as much
+as possible, there are lingering issues with the ongoing changes to crs in
+PROJ library, and the reproj and proj4 packages which attempt to smooth over
+the changes in Spatial and sf and raster objects.)</p>
+    <h2 class="hasAnchor" id="implicit-versus-explicit-topology"><a class="anchor" href="#implicit-versus-explicit-topology"></a>Implicit versus explicit topology</h2>
+
+    
+
+
+<p>We support conversion to mesh for strictly linear types such as sf 'POLYGON',
+'MULTIPOLYGON', 'MULTILINESTRING', 'LINESTRING' and their sp counterparts
+'SpatialPolygons' and 'SpatialLines'. Even polygons are only <em>implicit
+surfaces</em> and so conversion and plotting functions try to reflect this
+inherent nature as much as possible. A mesh is inherently a surface, and so
+the method for polygons or lines will first call a surface-generating
+function, <code><a href='https://rdrr.io/pkg/silicate/man/TRI0.html'>silicate::TRI0()</a></code> or <code><a href='DEL0.html'>DEL0()</a></code> in order to created the required
+primitives, while <a href='plot3d.html'>plot3d()</a> will not do this. The key goal is
+<em>flexibility</em>, and so we can call a meshing function
+as.mesh3d() (does conversion) or
+<a href='plot3d.html'>persp3d()</a> (a plot function, but requires conversion to
+surface) and they will choose an interpretation. An non-formal guideline is
+to use the cheapest method possible, i.e. <code><a href='https://rdrr.io/pkg/silicate/man/TRI0.html'>silicate::TRI0()</a></code>.</p>
+<p>Much of the above is open for discussion, so please get in touch! Use the
+<a href='https://github.com/hypertidy/anglr/'>issues tab</a> or <a href='https://twitter.com/mdsumner'>ping me on twitter</a> to clarify or discuss anything.</p>
     <h2 class="hasAnchor" id="elevation-values-with-z"><a class="anchor" href="#elevation-values-with-z"></a>Elevation values with <code>z</code></h2>
 
     
 
 
-<p>The 'z' argument can be a constant value or a vector of values to be
-used for each vertex. Alternatively, it may be a spatial raster object
-from which 'z' values are derived. If not set, the vertex 'z_' value
-from TRI/TRI0 is used, otherwise z = 0' is assumed.</p>
+<p>The 'z' argument can be a constant value or a vector of values to be used for
+each vertex. Alternatively, it may be a spatial raster object from which 'z'
+values are derived. If not set, the vertex 'z_' value from TRI/TRI0 is used,
+otherwise z = 0' is assumed.</p>
     <h2 class="hasAnchor" id="textures"><a class="anchor" href="#textures"></a>Textures</h2>
 
     
 
 
-<p>Please see the documentation for rgl textures in <code><a href='https://cran.rstudio.com/web/packages/rgl/vignettes/rgl.html'>vignette("rgl", package = "rgl")</a></code>.
-The most important detail is that the <code>$material$color</code> property of a <code>mesh3d</code> not
-be set to "black" ("#000000" or equivalent), or it will not be visible at all.
-The only way to add a texture in mesh3d is as a PNG file on-disk, so anglr
-functions take an in-memory object and create the file if needed.</p>
+<p>Please see the documentation for rgl textures in <code><a href='https://cran.rstudio.com/web/packages/rgl/vignettes/rgl.html'>vignette("rgl", package = "rgl")</a></code>. The most important detail is that the <code>$material$color</code> property of
+a <code>mesh3d</code> not be set to "black" ("#000000" or equivalent), or it will not be
+visible at all. The only way to add a texture in mesh3d is as a PNG file
+on-disk, so anglr functions take an in-memory object and create the file if
+needed.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>dot3d wire3d persp3d plot3d</p></div>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>DEL — DEL • anglr</title>
+<title>Convert object to a constrained-Delaunay triangulation — DEL • anglr</title>
 
 
 <!-- jquery -->
@@ -39,11 +39,11 @@
 
 
 
-<meta property="og:title" content="DEL — DEL" />
-<meta property="og:description" content="This Delaunay-based triangulation model is analogous to the 'TRI' model
-in the silicate package and formally extends the class of that model.
-A primitives-based shape-constrained triangulation. The Delaunay model is the
-mostly Delaunay scheme used by the provable-quality meshers." />
+<meta property="og:title" content="Convert object to a constrained-Delaunay triangulation — DEL" />
+<meta property="og:description" content="This relational-form Delaunay-based triangulation model is analogous to the
+'TRI' model in the silicate package and formally extends the class of that
+model. A primitives-based shape-constrained triangulation. The Delaunay model
+is the mostly Delaunay scheme used by the provable-quality meshers." />
 
 
 
@@ -109,16 +109,16 @@ mostly Delaunay scheme used by the provable-quality meshers." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>DEL</h1>
+    <h1>Convert object to a constrained-Delaunay triangulation</h1>
     
     <div class="hidden name"><code>DEL.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This Delaunay-based triangulation model is analogous to the 'TRI' model
-in the silicate package and formally extends the class of that model.
-A primitives-based shape-constrained triangulation. The Delaunay model is the
-<em>mostly Delaunay</em> scheme used by the provable-quality meshers.</p>
+    <p>This <em>relational-form</em> Delaunay-based triangulation model is analogous to the
+'TRI' model in the silicate package and formally extends the class of that
+model. A primitives-based shape-constrained triangulation. The Delaunay model
+is the <em>mostly Delaunay</em> scheme used by the provable-quality meshers.</p>
     </div>
 
     <pre class="usage"><span class='fu'>DEL</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
@@ -166,27 +166,34 @@ A primitives-based shape-constrained triangulation. The Delaunay model is the
     <p>DEL model</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The Delaunay model is a constrained triangulation with a variety
-of constraint and qualification types. The Delaunay model has the
-odd but defining characteristic of not being always consistent
-with the Delaunay criterion. Edge inclusion is
-non-negotiable, but other constraints include (limit, or avoid)
-Steiner vertex insertion, a limit on the maximum area of a triangle,
-minimum triangle angle and strict adherence to the Delaunay criterion.</p>
-<p>The Delaunary criterion forms the basis of this model, and is its
-definining characteristic without being strictly adhered to. This is awkward
-to describe but is the key property. From Wikipedia:
-The "Delaunay triangulation (also known as a Delone triangulation) for a given
-set P of discrete points in a plane is a triangulation DT(P) such that no
-point in P is inside the circumcircle of any triangle in DT(P). Delaunay
-triangulations maximize the minimum angle of all the angles of the triangles
-in the triangulation; they tend to avoid sliver triangles. . . . The
-Delaunay triangulation corresponds to the dual graph of the Voronoi
-diagram of P"
+    <p>Compare <code>DEL()</code> to its <em>structural-form</em> counterpart <code><a href='DEL0.html'>DEL0()</a></code>. <code>DEL()</code>
+records a <code>visible</code> property on the triangle table, and this is queried by
+other functions for the status of triangles that belonged to a hole within a
+surface. These triangle are obviously useful, so they are kept but default to
+<code>visible = FALSE</code> and so are not plotted.</p>
+<p>The Delaunay model is a constrained triangulation with a variety of
+constraint and qualification types. The Delaunay model has the odd but
+defining characteristic of not being always consistent with the Delaunay
+criterion. Edge inclusion is non-negotiable, but other constraints include
+(limit, or avoid) Steiner vertex insertion, a limit on the maximum area of a
+triangle, minimum triangle angle and strict adherence to the Delaunay
+criterion.</p>
+<p>The Delaunay criterion forms the basis of this model, and is its defining
+characteristic without being strictly adhered to. This is awkward to describe
+but is the key property. From Wikipedia: The "Delaunay triangulation (also
+known as a Delone triangulation) for a given set P of discrete points in a
+plane is a triangulation DT(P) such that no point in P is inside the
+circumcircle of any triangle in DT(P). Delaunay triangulations maximize the
+minimum angle of all the angles of the triangles in the triangulation; they
+tend to avoid sliver triangles. . . . The Delaunay triangulation corresponds
+to the dual graph of the Voronoi diagram of P"
 <a href='https://en.wikipedia.org/wiki/Delaunay_triangulation'>https://en.wikipedia.org/wiki/Delaunay_triangulation</a>.</p>
 <p>This strict criterion is <em>relaxed</em> in small measure, to ensure that all
-edge-inputs are preserved and to allow further constraints such as triangle size
-and internal angle to be specified.</p>
+edge-inputs are preserved and to allow further constraints such as triangle
+size and internal angle to be specified.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>DEL0</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'>DEL</span>(<span class='no'>simpleworld</span>))</div></pre>
