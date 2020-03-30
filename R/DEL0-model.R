@@ -33,9 +33,9 @@ DEL0.DEL <- function(x, ..., max_area = NULL) {
   }
   object <- silicate::sc_object(x)
   triangle <- x$triangle
-  if ("visible_" %in% names(triangle)) {
-    ## because DEL(SC()) doesn't have visible_
-    triangle <- dplyr::filter(triangle, .data$visible_)
+  if ("visible" %in% names(triangle)) {
+    ## because DEL(SC()) doesn't have visible
+    triangle <- dplyr::filter(triangle, .data$visible)
   }
   topol <- matrix(match(as.matrix(triangle[c(".vx0", ".vx1", ".vx2")]),
                         x$vertex$vertex_), ncol = 3L)

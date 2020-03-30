@@ -201,7 +201,7 @@ DEL.PATH <- function(x, ..., max_area = NULL) {
   path$path_ <- as.character(path$path_)
   ptm <- dplyr::inner_join(ptm, path[c("path_", "object_")], "path_")
   object_link_triangle <- ptm %>% dplyr::group_by(.data$object_, .data$triangle_) %>%
-    dplyr::mutate(visible_ = !(dplyr::n() %% 2 == 0)) %>%
+    dplyr::mutate(visible = !(dplyr::n() %% 2 == 0)) %>%
     dplyr::ungroup()
   vertex <- tibble::tibble(x_ = RTri$P[,1], y_ = RTri$P[,2],
                            vertex_ = silicate::sc_uid(nrow(RTri$P)))
@@ -209,7 +209,7 @@ DEL.PATH <- function(x, ..., max_area = NULL) {
   triangle <- dplyr::mutate(triangle, .vx0 = vertex$vertex_[RTri$T[,1]],
                             .vx1 = vertex$vertex_[RTri$T[,2]],
                             .vx2 = vertex$vertex_[RTri$T[,3]])
-  triangle <- object_link_triangle[c("triangle_", "object_", "visible_")] %>% dplyr::inner_join(triangle, "triangle_")
+  triangle <- object_link_triangle[c("triangle_", "object_", "visible")] %>% dplyr::inner_join(triangle, "triangle_")
   triangle$triangle_ <- NULL
 #  tXv <- tibble::tibble(vertex_ = vertex[["vertex_"]][t(RTri$T)],
 #                        triangle_ = rep(triangle[["triangle_"]], each = 3))

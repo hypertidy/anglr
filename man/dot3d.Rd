@@ -3,6 +3,7 @@
 \name{dot3d}
 \alias{dot3d}
 \alias{dot3d.sf}
+\alias{dot3d.Spatial}
 \alias{dot3d.matrix}
 \alias{dot3d.BasicRaster}
 \alias{dot3d.sc}
@@ -11,6 +12,8 @@
 \title{Draw a mesh as points in 3D}
 \usage{
 \method{dot3d}{sf}(x, ...)
+
+\method{dot3d}{Spatial}(x, ...)
 
 \method{dot3d}{matrix}(x, ...)
 
@@ -25,11 +28,7 @@
 \arguments{
 \item{x}{sc, sp, sf, raster, trip, or any other model understood by anglr/silicate}
 
-\item{...}{
-  Arguments passed on to \code{\link[rgl:as.mesh3d]{rgl::as.mesh3d}}
-  \describe{
-    \item{\code{}}{}
-  }}
+\item{...}{pass \link[rgl:material3d]{material3d properties} to rgl}
 }
 \description{
 Draw points with rgl from any \link[rgl:dot3d]{shape3d} classed object. Produces

@@ -8,7 +8,7 @@ test_that("as.mesh3d on trianges is working", {
   fill <- as.mesh3d(mintri, keep_all = TRUE)
   hole <- as.mesh3d(mintri, keep_all = FALSE)
   tri0 <- as.mesh3d(mintri0)
-  expect_equal(dimfill <- dim(fill$it), c(3L, 20))
+  expect_equal(dimfill <- dim(fill$it), c(3L, 14))
   expect_equal(dimhole <- dim(hole$it), c(3L, 14))
   expect_named(tri0, c("vb", "it", "material", "normals",
                        "texcoords", "meshColor"))
@@ -20,7 +20,7 @@ test_that("as.mesh3d on trianges is working", {
                c(41835L, 5L))
   tri_mesh <- as.mesh3d(tri_waters)
   expect_equal(c(dim(tri_mesh$vb), dim(tri_mesh$it)),
-               c(4L, 23608L, 3L, 41835L))
+               c(4L, 23608L, 3L, 25811L))
 
   tri_waters$vertex <-   tri_waters$vertex %>%
     dplyr::mutate(x_ = scales::rescale(x_, c(0, ncol(volcano))),

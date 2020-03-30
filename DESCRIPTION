@@ -7,9 +7,8 @@ Authors@R: c(person("Michael D.","Sumner", role = c("aut", "cre"), email ="mdsum
 Description: Tidy topological approaches to spatial data, illustrated with plotting using Open Graphics Library. 
 License: GPL-3
 Depends: R (>= 3.4.0)
-Remotes: hypertidy/reproj, hypertidy/silicate
 Imports: 
-    silicate (>= 0.3.0.9020),
+    silicate (>= 0.3.0.9030),
     dplyr,
     gibble (>= 0.2.0),
     methods,
@@ -52,4 +51,4 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.0
 VignetteBuilder: knitr
-
+Remotes: hypertidy/reproj, hypertidy/silicate

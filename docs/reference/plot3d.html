@@ -119,37 +119,7 @@ anything can be plotted in a 3D scene, polygons, lines, rasters, matrix.
 These objects from sp, sf, raster, trip, and silicate should all work.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for Spatial</span>
-<span class='fu'><a href='dot3d.html'>dot3d</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for TRI</span>
-<span class='fu'>persp3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for TRI0</span>
-<span class='fu'>persp3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='co'># S3 method for DEL</span>
-<span class='fu'>persp3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='co'># S3 method for DEL0</span>
-<span class='fu'>persp3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for QUAD</span>
-<span class='fu'>persp3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='co'># S3 method for QUAD</span>
-<span class='fu'>persp3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='co'># S3 method for matrix</span>
-<span class='fu'>persp3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='co'># S3 method for sf</span>
-<span class='fu'>persp3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='co'># S3 method for Spatial</span>
-<span class='fu'>persp3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='co'># S3 method for TRI</span>
+    <pre class="usage"><span class='co'># S3 method for TRI</span>
 <span class='fu'>plot3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for TRI0</span>
@@ -195,46 +165,7 @@ These objects from sp, sf, raster, trip, and silicate should all work.</p>
 <span class='fu'>plot3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for ARC</span>
-<span class='fu'>plot3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='co'># S3 method for sc</span>
-<span class='fu'>wire3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for TRI</span>
-<span class='fu'>wire3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for TRI0</span>
-<span class='fu'>wire3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='co'># S3 method for DEL</span>
-<span class='fu'>wire3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='co'># S3 method for DEL0</span>
-<span class='fu'>wire3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for QUAD</span>
-<span class='fu'>wire3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='co'># S3 method for QUAD</span>
-<span class='fu'>wire3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='co'># S3 method for matrix</span>
-<span class='fu'>wire3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='co'># S3 method for sf</span>
-<span class='fu'>wire3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='co'># S3 method for Spatial</span>
-<span class='fu'>wire3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='co'># S3 method for triangulation</span>
-<span class='fu'>wire3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='co'># S3 method for trip</span>
-<span class='fu'>wire3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='co'># S3 method for BasicRaster</span>
-<span class='fu'>wire3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+<span class='fu'>plot3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -261,7 +192,7 @@ shape3d type)</p>
 
     <p>The function <code>plot3d()</code> the full suite of mesh and linear type plotting
 functions from <code><a href='https://rdrr.io/pkg/rgl/man/plot3d.html'>rgl::plot3d()</a></code>. This main function includes a broader family
-of <code><a href='dot3d.html'>dot3d()</a></code>, <code>wire3d()</code>, and <code>persp3d()</code> and each works with matrix, raster,
+of <code><a href='dot3d.html'>dot3d()</a></code>, <code><a href='wire3d.html'>wire3d()</a></code>, and <code><a href='persp3d.html'>persp3d()</a></code> and each works with matrix, raster,
 sf, sp, trip, RTriangle, and silicate models. Each of the mesh-surface forms
 rely on <code><a href='as.mesh3d.html'>as.mesh3d()</a></code> conversion behind the scenes, whereas <code>plot3d()</code> for
 the linear types (sf, sp, trip, and from silicate SC, SC0, PATH, PATH0, and
@@ -284,13 +215,13 @@ is used.</p>
 
 <span class='co'>## plot3d anything</span>
 <span class='fu'>plot3d</span>(<span class='no'>volcano</span>)
-<span class='fu'>wire3d</span>(<span class='no'>volcano</span>)
+<span class='fu'><a href='wire3d.html'>wire3d</a></span>(<span class='no'>volcano</span>)
 <span class='fu'><a href='dot3d.html'>dot3d</a></span>(<span class='no'>volcano</span>)
 
 <span class='co'># \donttest{</span>
 <span class='fu'>plot3d</span>(<span class='no'>cad_tas</span>)
-<span class='fu'>persp3d</span>(<span class='no'>cad_tas</span>)
-<span class='fu'>wire3d</span>(<span class='no'>cad_tas</span>)
+<span class='fu'><a href='persp3d.html'>persp3d</a></span>(<span class='no'>cad_tas</span>)
+<span class='fu'><a href='wire3d.html'>wire3d</a></span>(<span class='no'>cad_tas</span>)
 <span class='fu'><a href='dot3d.html'>dot3d</a></span>(<span class='no'>cad_tas</span>)
 <span class='co'># }</span>
 <span class='co'>## add Z elevation to an sf polygon in a mesh</span>

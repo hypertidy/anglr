@@ -1,5 +1,9 @@
 # anglr dev
 
+* Bug fix, now correctl culling invisible triangles for 2D and 3D plots of DEL
+and TRI models, as was working for DEL0 and TRI0 (because they don't store
+invisible triangles)
+ 
 * Now providing the full suite of mesh plotting functions from rgl. `plot3d()`, `dot3d()`, `wire3d()`, and `persp3d()` now work with matrix, raster, sf, sp, trip, RTriangle, and silicate models. Each of the mesh-surface forms rely on `as.mesh3d()` conversion behind the scenes, whereas `plot3d()` on linear types (sf, sp, trip, silicate SC, SC0, PATH, PATH0, and ARC0) all are plotted using rgl segments without going through a triangulated surface form. 
 
 * `as.mesh3d()` has been completely rebuilt, to consolidate

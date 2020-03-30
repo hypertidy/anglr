@@ -79,7 +79,19 @@ plot3d.QUAD <- function(x, ...) {
 #' @export
 #' @name plot3d
 plot3d.matrix <- function(x, ...) {
-  persp3d(x, ...)
+  ## watch out
+  nc <- dim(x)[2L]
+  if (nc %in% c(2, 3)) {
+    ## they probably wanted a scatter plot, not a surface
+    if (nc == 2L) {
+      rgl::plot3d(x = x[, 1L], y = x[, 2L], ...)
+    }
+    if (nc == 3L) {
+      rgl::plot3d(x = x[, 1L], y = x[, 2L], z = x[, 3L], ...)
+    }
+  } else {
+    persp3d(x, ...)
+  }
 }
 #' @export
 #' @name plot3d

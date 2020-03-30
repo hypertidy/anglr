@@ -19,7 +19,7 @@
 #'
 #' @name dot3d
 #' @param x sc, sp, sf, raster, trip, or any other model understood by anglr/silicate
-#' @inheritDotParams rgl::as.mesh3d
+#' @param ... pass [material3d properties][rgl::material3d] to rgl
 #' @importFrom rgl dot3d
 #' @seealso as.mesh3d persp3d wire3d plot3d
 #' @export dot3d
@@ -48,7 +48,7 @@
 dot3d.sf <- function(x, ...) {
   dot3d(as.mesh3d(silicate::TRI0(x)), ...)
 }
-#' @name plot3d
+#' @name dot3d
 #' @export
 dot3d.Spatial <- function(x, ...) {
   dot3d(as.mesh3d(silicate::TRI0(x)), ...)

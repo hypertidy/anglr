@@ -19,8 +19,8 @@ TRI_add_shade <- function(x) {
 TRI_primitives_index <- function(x, keep_all = FALSE) {
   if (inherits(x, "TRI")) {
     pindex <- x$triangle
-    if (!keep_all && !is.null(pindex[["visible_"]])) {
-      pindex <- dplyr::filter(pindex, .data$visible_)
+    if (!keep_all && !is.null(pindex[["visible"]])) {
+      pindex <- dplyr::filter(pindex, .data$visible)
     }
     index <- matrix(match(c(t(as.matrix(pindex[c(".vx0", ".vx1", ".vx2")]))), x$vertex$vertex_),
                     nrow = 3L)
@@ -42,6 +42,11 @@ as.mesh3d_internal <- function(x, z,  smooth = FALSE, normals = NULL, texcoords 
              pass in 'rgl::material3d' arguments directly as part of '...'")
   }
   x <- TRI_add_shade(x)  ## sets color_ if not present
+
+  if (!is.null(x$triangle) && "visible" %in% names(x$triangle)) {
+    x$triangle <- dplyr::filter(x$triangle, .data$visible)
+  }
+
 
   if (is.null(material$color) &&
       is.null(image_texture)) {
