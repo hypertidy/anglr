@@ -1,10 +1,27 @@
-#' Draw points in 3d
+#' Draw a mesh as points in 3D
 #'
-#' Draw points with rgl from any mesh-alike object.
+#' Draw points with rgl from any [shape3d][rgl::dot3d] classed object. Produces
+#' a 3D scatterplot like that produced by [rgl::plot3d()], but from a mesh-alike
+#' object.
+#'
+#' The class [mesh3d][rgl::dot3d] extends 'shape3d' and allows methods to plot
+#' non-surface properties. Note that `dot3d()` will always add to an existing
+#' scene.
+#'
+#' It is not currently *technically defined or clear* how colour properties are
+#' mapped to dots by default ... there is a problem of what property to use from
+#' features that share the same vertex, and we have put that aside and erred on
+#' the side of inaccuracy in favour of getting a pretty plot (hopefully).
+#' (Properties that come later - lower rows - win, I think.
+#'
+#' (For some reason `size` is not vectorized like `col` is, but this is not
+#' explored in detail from an anglr view).
+#'
 #' @name dot3d
 #' @param x sc, sp, sf, raster, trip, or any other model understood by anglr/silicate
 #' @inheritDotParams rgl::as.mesh3d
 #' @importFrom rgl dot3d
+#' @seealso as.mesh3d persp3d wire3d plot3d
 #' @export dot3d
 #' @export
 #' @examples

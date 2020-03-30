@@ -58,7 +58,7 @@ criterion. Edge inclusion is non-negotiable, but other constraints include
 triangle, minimum triangle angle and strict adherence to the Delaunay
 criterion.
 
-The Delaunary criterion forms the basis of this model, and is its definining
+The Delaunay criterion forms the basis of this model, and is its defining
 characteristic without being strictly adhered to. This is awkward to describe
 but is the key property. From Wikipedia: The "Delaunay triangulation (also
 known as a Delone triangulation) for a given set P of discrete points in a

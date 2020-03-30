@@ -66,7 +66,7 @@ The \code{.id} argument must be character and exist as a column name in the obje
 
 If z is a vector it's simply copied down.
 
-No checking is done on the type of the result, and so there's nothing to stop the use of the recyling rule
+No checking is done on the type of the result, and so there's nothing to stop the use of the recycling rule
 to expand out values, and nothing to stop the use of non numeric values being copied down. It's your model.
 }
 \examples{

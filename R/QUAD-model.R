@@ -51,33 +51,5 @@ QUAD.BasicRaster <- function(x, ...) {
   class(l) <- c("QUAD", "sc")
   l
 }
-get_edges <- function(x, ...) {
-  ## assuming a QUAD
-  edges0( do.call(raster::raster, x$object[c("xmx", "xmn", "ymn", "ymx", "nrows", "ncols")]))
-}
-get_index <- function(x, ...) {
-  x <- do.call(raster::raster, as.list(x$object[c("xmx", "xmn", "ymn", "ymx", "nrows", "ncols")]))
-  ind <- apply(prs0(seq(ncol(x) + 1)), 1, p_4, nc = ncol(x) + 1)
-  ## all face indexes
-  ind0 <- as.vector(ind) +
-    rep(seq(0, length = nrow(x), by = ncol(x) + 1), each = 4 * ncol(x))
-  matrix(ind0, nrow = 4L)
 
-}
-get_qXv <- function(x, ...) {
-  ind1 <- get_index(x)
-  tibble(vertex_ = as.vector(ind1), quad_ = rep(seq(ncol(ind1)), each = 4))
-}
 
-p_4 <- function(xp, nc) {
-  (xp + c(0, 0, rep(nc, 2)))[c(1, 2, 4, 3)]
-}
-#' @importFrom utils tail head
-prs0 <- function(x) {
-  cbind(head(x, -1), tail(x, -1))
-}
-edges0 <- function(x) {
-  as.matrix(expand.grid(seq(xmin(x), xmax(x), length = ncol(x) + 1),
-                        seq(ymax(x), ymin(x), length = nrow(x) + 1)
-  ))
-}

@@ -1,21 +1,3 @@
-# v <- out$tXv %>% dplyr::inner_join(out$t) %>%
-#   dplyr::inner_join(out$o %>% dplyr::select(.data$object_, z), "object_") %>%
-#   dplyr::inner_join(out$v %>% dplyr::select(.data$vertex_, .data$x_, .data$y_)) %>%
-#   dplyr::select(.data$x_, .data$y_, z, .data$vertex_, .data$triangle_)
-#
-# names(v)[names(v) == z] <- "z_"
-# names(v)[names(v) == "vertex_"] <- "old"
-#
-# gp <- dplyr::group_indices(v,  .data$x_, .data$y_, .data$z_)
-# v$vertex_ <- silicate::sc_uid(length(unique(gp)))[gp]
-# tXv <- v %>% dplyr::select(.data$vertex_, .data$triangle_)
-# out$tXv <- tXv
-# v$old <- NULL
-#
-#
-
-
-
 #' Copy down values to vertices
 #'
 #' Copy down provides ways to transfer object level data values to
@@ -40,7 +22,7 @@
 #'
 #' If z is a vector it's simply copied down.
 #'
-#' No checking is done on the type of the result, and so there's nothing to stop the use of the recyling rule
+#' No checking is done on the type of the result, and so there's nothing to stop the use of the recycling rule
 #' to expand out values, and nothing to stop the use of non numeric values being copied down. It's your model.
 #' @param x a mesh3d or a silicate object
 #' @param z object specifying values to copy down, a vector of values, a column name, a raster (see details)
@@ -61,37 +43,6 @@ copy_down <- function(x, z = NULL, ..., .id = "z_") {
   stopifnot(is.character(.id))
 
   UseMethod("copy_down", )
-}
-
-find_z <- function(x, z) {
-  if (is.character(z)) {
-    if (length(z) > 1 || !z[1] %in% names(x$object)) stop("z must be a named column on object")
-    z <- x$object[[z]]
-    if (!is.numeric(z)) warning("z is not numeric")
-  }
-  z
-}
-copy_downRaster<- function(x, z = NULL, ..., .id = "z_") {
-    z <- find_z(x, z)
-    xy <- as.matrix(x$vertex[c("x_", "y_")])
-    p1 <- get_proj(x)
-    p2 <- get_proj(z)
-
-    if (!anyNA(c(p1, p2)) && !(p1 == p2)) {
-      if (grepl("longlat", p1) && grepl("longlat", p2)) {
-        warning("both proj are different longlat, no transformation done")
-
-      } else {
-     message("transforming model vertices to raster coordinate system for copy down")
-     xy <- reproj::reproj(xy, source = p1, target = p2)[,c(1L, 2L)]
-      }
-     }
-    z <- raster::extract(z[[1L]], xy, method = "bilinear")
-
-        x$vertex[[.id]] <- z
-
-
-  x
 }
 
 #' @name copy_down

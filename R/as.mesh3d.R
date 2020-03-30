@@ -1,130 +1,4 @@
-TRI_xyz <- function(x, z) {
-  if (missing(z)) z <- 0
-  haveZ <- "z_" %in% names(x$vertex)
-  if (haveZ) {
-    xyz <- as.matrix(x$vertex[c("x_", "y_", "z_")])
-  } else {
-    xyz <- cbind(as.matrix(x$vertex[c("x_", "y_")]), z)
-  }
-  xyz
-}
-TRI_add_shade <- function(x) {
-  if (!"color_" %in% names(x$object)) {
-    x$object$color_ <- grDevices::grey(seq(0.1, 0.9, length.out = nrow(x$object)))
-  }
-  x
-}
-TRI_primitives_index <- function(x, keep_all = FALSE) {
-  if (inherits(x, "TRI")) {
-    pindex <- x$triangle
-    if (!keep_all && !is.null(pindex[["visible_"]])) {
-      pindex <- dplyr::filter(pindex, .data$visible_)
-    }
-    index <- matrix(match(c(t(as.matrix(pindex[c(".vx0", ".vx1", ".vx2")]))), x$vertex$vertex_),
-                    nrow = 3L)
-  }
-  if (inherits(x, "TRI0")) {
-    index <- t(do.call(rbind, lapply(x$object$topology_, function(ix) as.matrix(ix[c(".vx0", ".vx1", ".vx2")]))))
-  }
-  index
-}
 
-# internal function shared by as.mesh3d.TRI and as.mesh3d.TRI0
-as.mesh3d_internal <- function(x, z,  smooth = FALSE, normals = NULL, texcoords = NULL, ...,
-                               keep_all = TRUE,
-                               image_texture = NULL, meshColor = "faces") {
-  material <- list(...)  ## note that rgl has material <- .getMaterialArgs(...)
-  ## for now we just warn if old-stlye material = list() was used
-  if ("material" %in% names(material)) {
-    warning("do not pass in 'material = list(<of properties>)' to as.mesh3d
-             pass in 'rgl::material3d' arguments directly as part of '...'")
-  }
-  x <- TRI_add_shade(x)  ## sets color_ if not present
-
-  if (is.null(material$color) &&
-      is.null(image_texture)) {
-    if (inherits(x, "TRI")) {
-      material$color  <- x$object$color_[match(x$triangle$object_, x$object$object_)]
-    }
-    if (inherits(x, "TRI0")) {
-      ## we need the number of rows of each nested index df
-      ## but below we smash that when getting vindex
-      material$color <- rep(x$object$color_, unlist(lapply(x$object$topology_, function(ix) dim(ix)[1L])))
-    }
-  }
-
-
-  if (!missing(z) && inherits(z, "BasicRaster")) {
-    if (!is.finite(crsmeta::crs_proj(z))) {
-      z <- raster::extract(z[[1]], cbind(x$vertex$x_, x$vertex$y_), method = "bilinear")
-    }  else {
-      z <- raster::extract(z[[1]], reproj::reproj(cbind(x$vertex$x_, x$vertex$y_), crsmeta::crs_proj(z),
-                                                  source = crsmeta::crs_proj(x))[, 1:2, drop = FALSE], method = "bilinear")
-    }
-  }
-
-  ## FIXME: check for sanity in visible triangles
-
-  ## the geometry
-  vb <- TRI_xyz(x, z)
-  ## the topology
-  vindex <- TRI_primitives_index(x, keep_all = keep_all)
-
-  ## use the geometry to remap the texture if needed
-  if (!is.null(image_texture)) {
-    if (!is.null(texcoords)) {
-      warning("must supply only one of 'texcoords' or 'image_texture' argument, 'image_texture' will be ignore")
-    }
-    texcoords <- .texture_map(image_texture,
-                              crsmeta::crs_proj(x),
-                              exy = vb[, 1:2, drop = FALSE])
-    if (is.null(material$texture)) {
-      material$texture <- tempfile(fileext = ".png")
-
-    }
-    if (!grepl("png$", material$texture)) {
-      warning(sprintf("'texture = %s' does not look like a good PNG filename",
-                      material$texture))
-    }
-    message(sprintf("writing texture image to %s", material$texture))
-    png::writePNG(raster::as.array(image_texture) / 255, material$texture)
-  }
-
-  ## NOTE: no partial naming allowed ($col for example cause heisenbugs so it's not negotiable)
-  if (is.null(material$color))   material$color <- "#FFFFFFFF"  ## not black, else texture is invisible
-
-  out <- tmesh3d(rbind(t(vb), h = 1),
-                 vindex,
-                 normals = normals, texcoords = texcoords,
-                 material= material, meshColor = meshColor)
-  if (smooth) {
-    out <- rgl::addNormals(out)
-  }
-
-  out
-}
-
-
-
-
-quad_common <- function(vb, index, normals, texcoords, material, meshColor, triangles, smooth) {
-  ## deal with triangles = TRUE
-  if (!triangles) {
-    out <- do.call(rgl::qmesh3d, list(vertices = vb, indices = index,
-                                      normals = normals, texcoords = texcoords,
-                                      material = material,
-                                      meshColor = "faces"))
-  } else {
-    out <- do.call(rgl::tmesh3d, list(vertices = vb, indices = .quad2tri(index),
-                                      normals = normals, texcoords = texcoords,
-                                      material = material,
-                                      meshColor = "faces"))
-  }
-  if (smooth) {
-    out <- rgl::addNormals(out)
-  }
-  out
-}
 
 #' Convert to mesh object
 #'
@@ -139,7 +13,7 @@ quad_common <- function(vb, index, normals, texcoords, material, meshColor, tria
 #' and [QUAD()].
 #'
 #' The [mesh3d][rgl::tmesh3d] format is the rgl workhorse behind
-#' [plot3d()][rgl::plot3d], [wire3d()][rgl::wire3d], [persp3d()][rgl::perps3d]
+#' [plot3d()][rgl::plot3d], [wire3d()][rgl::wire3d], [persp3d()][rgl::persp3d]
 #' and [dot3d()][rgl::dot3d].'
 #'
 #' A method for a numeric matrix is included, as are methods for sf, sp, raster,
@@ -147,25 +21,24 @@ quad_common <- function(vb, index, normals, texcoords, material, meshColor, tria
 #'
 #' @details
 #'
-#' When converting a matrix to mesh3d it is considered to be quad-based
-#'   (area interpretation) within `xmin = 0, xmax = nrow(x), ymin = 0, ymax =
-#'   ncol(x)`. Note that this differs from the `[0, 1, 0, 1]` interpretation of
-#'   [image()], but shares its orientation. Raster-types from the raster package
-#'   are interpreted in the `t(ranspose), y-flip` orientation used by
-#'   `plot(raster::raster(matrix))`.
+#' When converting a matrix to mesh3d it is considered to be quad-based (area
+#' interpretation) within `xmin = 0, xmax = nrow(x), ymin = 0, ymax = ncol(x)`.
+#' Note that this differs from the `[0, 1, 0, 1]` interpretation of [image()],
+#' but shares its orientation. Raster-types from the raster package are
+#' interpreted in the `t(ranspose), y-flip` orientation used by
+#' `plot(raster::raster(matrix))`.
 #'
-#'   The conversion function [anglr::as.mesh3d()] consolidates code from
-#'   quadmesh and angstroms packages where the basic facilities were developed.
-#'   The function [as.mesh3d()][rgl::as.mesh3d] is imported from rgl and
-#'   re-exported, and understands all of the surface types from sf, sp, raster,
-#'   and silicate, and can accept a raw matrix as input. It can also include a
-#'   `z` argument to extract elevation values from a raster, and an
-#'   `image_texture` argument to drape an image from a raster RGB object onto
-#'   the surface. Map projections are automatically resolved to the coordinate
-#'   system of the `x` argument (as much as possible, there are lingering issues
-#'   with the ongoing changes to crs in PROJ library, and the reproj and proj4
-#'   packages which attempt to smooth over the changes in Spatial and sf and
-#'   raster objects.)
+#' The conversion function [anglr::as.mesh3d()] consolidates code from quadmesh
+#' and angstroms packages where the basic facilities were developed. The
+#' function [as.mesh3d()][rgl::as.mesh3d] is imported from rgl and re-exported,
+#' and understands all of the surface types from sf, sp, raster, and silicate,
+#' and can accept a raw matrix as input. It can also include a `z` argument to
+#' extract elevation values from a raster, and an `image_texture` argument to
+#' drape an image from a raster RGB object onto the surface. Map projections are
+#' automatically resolved to the coordinate system of the `x` argument (as much
+#' as possible, there are lingering issues with the ongoing changes to crs in
+#' PROJ library, and the reproj and proj4 packages which attempt to smooth over
+#' the changes in Spatial and sf and raster objects.)
 #'
 #' @section Implicit versus explicit topology:
 #'
@@ -176,10 +49,12 @@ quad_common <- function(vb, index, normals, texcoords, material, meshColor, tria
 #' inherent nature as much as possible. A mesh is inherently a surface, and so
 #' the method for polygons or lines will first call a surface-generating
 #' function, [silicate::TRI0()] or [DEL0()] in order to created the required
-#' primitives, while [plot3d()][anglr::plot3d] will not do this. The key goal is *flexibility*,
-#' and so we can call a meshing function [as.mesh3d()][anglr::as.mesh3d] (does conversion) or
-#' [persp3d()][anglr::persp3d] (a plot function, but requires conversion to surface) and they
-#' will choose an interpretation.
+#' primitives, while [plot3d()][anglr::plot3d] will not do this. The key goal is
+#' *flexibility*, and so we can call a meshing function
+#' [as.mesh3d()][anglr::as.mesh3d] (does conversion) or
+#' [persp3d()][anglr::persp3d] (a plot function, but requires conversion to
+#' surface) and they will choose an interpretation. An non-formal guideline is
+#' to use the cheapest method possible, i.e. [silicate::TRI0()].
 #'
 #' Much of the above is open for discussion, so please get in touch! Use the
 #' [issues tab](https://github.com/hypertidy/anglr/) or [ping me on
@@ -187,19 +62,19 @@ quad_common <- function(vb, index, normals, texcoords, material, meshColor, tria
 #'
 #' @section Elevation values with `z`:
 #'
-#'   The 'z' argument can be a constant value or a vector of values to be used
-#'   for each vertex. Alternatively, it may be a spatial raster object from
-#'   which 'z' values are derived. If not set, the vertex 'z_' value from
-#'   TRI/TRI0 is used, otherwise z = 0' is assumed.
+#' The 'z' argument can be a constant value or a vector of values to be used for
+#' each vertex. Alternatively, it may be a spatial raster object from which 'z'
+#' values are derived. If not set, the vertex 'z_' value from TRI/TRI0 is used,
+#' otherwise z = 0' is assumed.
 #'
 #' @section Textures:
 #'
-#'   Please see the documentation for rgl textures in `vignette("rgl", package =
-#'   "rgl")`. The most important detail is that the `$material$color` property
-#'   of a `mesh3d` not be set to "black" ("#000000" or equivalent), or it will
-#'   not be visible at all. The only way to add a texture in mesh3d is as a PNG
-#'   file on-disk, so anglr functions take an in-memory object and create the
-#'   file if needed.
+#' Please see the documentation for rgl textures in `vignette("rgl", package =
+#' "rgl")`. The most important detail is that the `$material$color` property of
+#' a `mesh3d` not be set to "black" ("#000000" or equivalent), or it will not be
+#' visible at all. The only way to add a texture in mesh3d is as a PNG file
+#' on-disk, so anglr functions take an in-memory object and create the file if
+#' needed.
 #'
 #' @param x a surface-alike, a matrix, or spatial object from raster, sp, sf, trip, or silicate
 #' @param z numeric vector or raster object (see details)

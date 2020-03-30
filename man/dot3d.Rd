@@ -8,7 +8,7 @@
 \alias{dot3d.sc}
 \alias{dot3d.SC}
 \alias{dot3d.SC0}
-\title{Draw points in 3d}
+\title{Draw a mesh as points in 3D}
 \usage{
 \method{dot3d}{sf}(x, ...)
 
@@ -32,7 +32,23 @@
   }}
 }
 \description{
-Draw points with rgl from any mesh-alike object.
+Draw points with rgl from any \link[rgl:dot3d]{shape3d} classed object. Produces
+a 3D scatterplot like that produced by \code{\link[rgl:plot3d]{rgl::plot3d()}}, but from a mesh-alike
+object.
+}
+\details{
+The class \link[rgl:dot3d]{mesh3d} extends 'shape3d' and allows methods to plot
+non-surface properties. Note that \code{dot3d()} will always add to an existing
+scene.
+
+It is not currently \emph{technically defined or clear} how colour properties are
+mapped to dots by default ... there is a problem of what property to use from
+features that share the same vertex, and we have put that aside and erred on
+the side of inaccuracy in favour of getting a pretty plot (hopefully).
+(Properties that come later - lower rows - win, I think.
+
+(For some reason \code{size} is not vectorized like \code{col} is, but this is not
+explored in detail from an anglr view).
 }
 \examples{
 dot3d(cad_tas)
@@ -55,4 +71,7 @@ auto_3d(z = 14)
 dot3d(silicate::SC(cad_tas))
 auto_3d(z = 14)
 }
+}
+\seealso{
+as.mesh3d persp3d wire3d plot3d
 }

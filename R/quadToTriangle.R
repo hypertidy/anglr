@@ -39,35 +39,3 @@ TRI.QUAD <- function(x, ...) {
 }
 
 
-
-quadToTriangle <- function(x) {
-  exy <- get_edges(x)
-  v <- tibble(x_ = exy[,1], y_ = exy[,2])
-            ## this originally from quadmesh
-    v$z_ <- vxy(matrix(x$quad$value, x$object$ncols[1]))
-
-  v$vertex_ <- seq(nrow(v))
-
-
-  meta <- x$meta
-  qXv <- get_qXv(x)
-  n4 <- nrow(qXv) / 4L
-  tXv_long <- tibble::tibble(vertex_ = qXv$vertex_[rep(c(1, 2, 3, 1, 3, 4), n4) + rep(seq(1, length = n4, by = 4)-1, each = 6)])
-tXv <- tibble::tibble(triangle_ = silicate::sc_uid(nrow(tXv_long)/3))
-
-tXv[c(".vx0", ".vx1", ".vx2")] <- as.data.frame(matrix(as.integer(tXv_long$vertex_), byrow = TRUE, ncol = 3))
-    #tXv$triangle_ <- silicate::sc_uid(nrow(tXv)/3)[rep(seq(nrow(tXv)/3), each = 3)]
-    tXv$visible <- TRUE
-    uid <- silicate::sc_uid(nrow(v))
-    v$vertex_ <- uid[v$vertex_]
-    tXv$.vx0 <- uid[tXv$.vx0]
-    tXv$.vx1 <- uid[tXv$.vx1]
-    tXv$.vx2 <- uid[tXv$.vx2]
-    tXv$object_ <- "1"  ## no link table any more
-  x <- list(object = tibble::tibble(object_ = "1"),
-            triangle = tXv,
-            vertex = v, meta = meta)
-  class(x) <- c("TRI", "sc")
-  x
-}
-

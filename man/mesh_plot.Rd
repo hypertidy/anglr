@@ -45,7 +45,8 @@ mesh_plot(
 
 \item{add}{add to existing plot or start a new one}
 
-\item{zlim}{absolute range of data to use for colour scaling (if \code{NULL} the data range is used)}
+\item{zlim}{absolute range of data to use for colour scaling (if \code{NULL} the
+data range is used)}
 
 \item{...}{passed through to \code{base::plot}}
 
@@ -61,14 +62,17 @@ The input is treated as a mesh and plotted vectorized form using 'grid'.
 The mesh may be reprojected prior to plotting using the 'crs' argument to
 define the target map projection in 'PROJ string' format. (There is no
 "reproject" function for quadmesh, this is performed directly on the x-y
-coordinates of the 'quadmesh' output). The 'col' argument are mapped to the input pplied
-object data as in 'image', and applied relative to 'zlim' if su.
+coordinates of the 'quadmesh' output). The 'col' argument are mapped to the
+input applied object data as in 'image', and applied relative to 'zlim' if
+su.
 
-If \code{coords} is supplied, it is currently assumed to be a 2-layer \code{RasterBrick} with
-longitude and latitude as the \emph{cell values}. These are used to geographically locate
-the resulting mesh, and will be transformed to the \code{crs} if that is supplied. This is
-modelled on the approach to curvilinear grid data used in the \code{angstroms} package. There
-the function \code{angstroms::romsmap()} and `angstroms::romscoords()`` are used to separate the complicated
-grid geometry from the grid data itself. A small fudge is applied to extend the coordinates
-by 1 cell to avoid losing any data due to the half cell outer margin (get in touch if this causes problems!).
+If \code{coords} is supplied, it is currently assumed to be a 2-layer
+\code{RasterBrick} with longitude and latitude as the \emph{cell values}. These are
+used to geographically locate the resulting mesh, and will be transformed to
+the \code{crs} if that is supplied. This is modelled on the approach to
+curvilinear grid data used in the \code{angstroms} package. There the function
+\code{angstroms::romsmap()} and `angstroms::romscoords()`` are used to separate
+the complicated grid geometry from the grid data itself. A small fudge is
+applied to extend the coordinates by 1 cell to avoid losing any data due to
+the half cell outer margin (get in touch if this causes problems!).
 }
