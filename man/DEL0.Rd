@@ -50,6 +50,8 @@ Structural form of Delaunay constrained triangulation
 More compact form of \code{\link[=DEL]{DEL()}} model.
 }
 \examples{
+\donttest{
 a <- DEL0(cad_tas)
 plot(a)
+}
 }

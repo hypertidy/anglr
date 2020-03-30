@@ -18,7 +18,6 @@ Imports:
     rlang,
     RTriangle,
     sp,
-    spbabel (> 0.4.5),
     tibble,
     viridis,
     unjoin,
@@ -30,8 +29,7 @@ Imports:
     crsmeta (>= 0.3.0),
     png,
     utils,
-    palr,
-    spex
+    palr
 Suggests: 
     covr,
     ggplot2,
@@ -40,11 +38,13 @@ Suggests:
     purrr,
     sf,
     sfdct,
+    spbabel (> 0.4.5),
     testthat (>= 2.1.0),
     trip,
     knitr,
     rmarkdown,
-    quadmesh
+    quadmesh,
+    spex
 Roxygen: list(markdown = TRUE)
 SystemRequirements: PROJ.4
 Encoding: UTF-8
