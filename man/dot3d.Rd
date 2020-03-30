@@ -28,10 +28,10 @@
 \arguments{
 \item{x}{sc, sp, sf, raster, trip, or any other model understood by anglr/silicate}
 
-\item{...}{pass \link[rgl:material3d]{material3d properties} to rgl}
+\item{...}{pass \link[rgl:rgl.material]{material3d properties} to rgl}
 }
 \description{
-Draw points with rgl from any \link[rgl:dot3d]{shape3d} classed object. Produces
+Draw points with rgl from any \link[rgl:tmesh3d]{shape3d} classed object. Produces
 a 3D scatterplot like that produced by \code{\link[rgl:plot3d]{rgl::plot3d()}}, but from a mesh-alike
 object.
 }
@@ -72,5 +72,5 @@ auto_3d(z = 14)
 }
 }
 \seealso{
-as.mesh3d persp3d wire3d plot3d
+\link{as.mesh3d} \link{persp3d} \link{wire3d} \link{plot3d}
 }

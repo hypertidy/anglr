@@ -68,8 +68,9 @@
 #'
 #' @section Textures:
 #'
-#' Please see the documentation for rgl textures in `vignette("rgl", package =
-#' "rgl")`. The most important detail is that the `$material$color` property of
+#' Please see the documentation for rgl textures in
+#' `vignette("rgl", package = "rgl")`.
+#' The most important detail is that the `$material$color` property of
 #' a `mesh3d` not be set to "black" ("#000000" or equivalent), or it will not be
 #' visible at all. The only way to add a texture in mesh3d is as a PNG file
 #' on-disk, so anglr functions take an in-memory object and create the file if
@@ -89,7 +90,7 @@
 #' @importFrom rgl as.mesh3d tmesh3d
 #' @export as.mesh3d
 #' @export
-#' @seealso dot3d wire3d persp3d plot3d
+#' @seealso [dot3d] [wire3d] [persp3d] [plot3d]
 #' @examples
 #' sf <- silicate::minimal_mesh
 #' #sf <- silicate::inlandwaters
@@ -169,7 +170,8 @@ as.mesh3d.BasicRaster <- function(x, triangles = FALSE,
                                   ..., keep_all = TRUE, image_texture = NULL, meshColor = "faces") {
   ## consider the case where x has 3 layers (xcrd, ycrd, zval) or we use
   ## arguments of the generic as.mesh3d(x, y, z) with 3 (or 2) separate rasters
-  as.mesh3d(QUAD(x), triangles = triangles, ...)
+  as.mesh3d(QUAD(x), triangles = triangles, smooth = smooth, normals = normals, texcoords = texcoords,
+            keep_all = keep_all, image_texture = image_texture, meshColor = meshColor, ...)
 }
 #' @name as.mesh3d
 #' @export
@@ -225,6 +227,7 @@ as.mesh3d.QUAD <- function(x, triangles = FALSE,
 #' @name as.mesh3d
 #' @export
 as.mesh3d.triangulation <- function(x, ...) {
+  ## FIXME: no support here for textures etc.
   if (dim(x$T)[1L] < 1L) {
     stop("nothing to create a mesh from, no triangles in `x$T`")
   }
@@ -247,7 +250,8 @@ as.mesh3d.sf <-function(x, triangles = FALSE,
                             ..., keep_all = TRUE, image_texture = NULL, meshColor = "faces") {
 
   ## TRI or DEL or SC?
-  as.mesh3d(DEL0(x), ...)
+  as.mesh3d(DEL0(x), triangles = triangles, smooth = smooth, normals = normals, texcoords = texcoords,
+            keep_all = keep_all, image_texture = image_texture, meshColor = meshColor, ...)
 }
 #' @name as.mesh3d
 #' @export
@@ -256,7 +260,8 @@ as.mesh3d.Spatial <-function(x, triangles = FALSE,
                         ..., keep_all = TRUE, image_texture = NULL, meshColor = "faces") {
 
   ## TRI or DEL or SC?
-  as.mesh3d(DEL0(x), ...)
+  as.mesh3d(DEL0(x), triangles = triangles, smooth = smooth, normals = normals, texcoords = texcoords,
+            keep_all = keep_all, image_texture = image_texture, meshColor = meshColor, ...)
 }
 
 #' @name as.mesh3d

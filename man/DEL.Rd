@@ -30,7 +30,7 @@ DEL(x, ..., max_area = NULL)
 \arguments{
 \item{x}{input model}
 
-\item{...}{passed to the underlying Triangle library}
+\item{...}{passed to the underlying Triangle library, see \link[RTriangle:triangulate]{RTriangle::triangulate()}}
 
 \item{max_area}{the maximum area of a triangle}
 }
@@ -73,9 +73,19 @@ This strict criterion is \emph{relaxed} in small measure, to ensure that all
 edge-inputs are preserved and to allow further constraints such as triangle
 size and internal angle to be specified.
 }
+\section{Warning}{
+
+
+Please take care with the \code{max_area} argument. The units are not taken into
+account, the value refers only to the planar area of the x/y coordinates as
+they are so this is not a real world area, but a mathematical property of the
+data. There is a safety check for a very large number of triangles, and this
+may be overridden by replying 'Yes' to the prompt.
+}
+
 \examples{
 plot3d(DEL(simpleworld))
 }
 \seealso{
-DEL0
+\link{DEL0} \link[silicate:TRI]{TRI} \link[silicate:TRI0]{TRI0}
 }

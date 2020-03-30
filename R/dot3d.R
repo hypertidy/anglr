@@ -1,6 +1,6 @@
 #' Draw a mesh as points in 3D
 #'
-#' Draw points with rgl from any [shape3d][rgl::dot3d] classed object. Produces
+#' Draw points with rgl from any [shape3d][rgl::tmesh3d] classed object. Produces
 #' a 3D scatterplot like that produced by [rgl::plot3d()], but from a mesh-alike
 #' object.
 #'
@@ -19,9 +19,9 @@
 #'
 #' @name dot3d
 #' @param x sc, sp, sf, raster, trip, or any other model understood by anglr/silicate
-#' @param ... pass [material3d properties][rgl::material3d] to rgl
+#' @param ... pass [material3d properties][rgl::rgl.material] to rgl
 #' @importFrom rgl dot3d
-#' @seealso as.mesh3d persp3d wire3d plot3d
+#' @seealso [as.mesh3d] [persp3d] [wire3d] [plot3d]
 #' @export dot3d
 #' @export
 #' @examples

@@ -202,7 +202,9 @@ otherwise z = 0' is assumed.
 \section{Textures}{
 
 
-Please see the documentation for rgl textures in \code{vignette("rgl", package = "rgl")}. The most important detail is that the \verb{$material$color} property of
+Please see the documentation for rgl textures in
+\code{vignette("rgl", package = "rgl")}.
+The most important detail is that the \verb{$material$color} property of
 a \code{mesh3d} not be set to "black" ("#000000" or equivalent), or it will not be
 visible at all. The only way to add a texture in mesh3d is as a PNG file
 on-disk, so anglr functions take an in-memory object and create the file if
@@ -266,5 +268,5 @@ rgl::wire3d(as.mesh3d(r1))
 }
 }
 \seealso{
-dot3d wire3d persp3d plot3d
+\link{dot3d} \link{wire3d} \link{persp3d} \link{plot3d}
 }

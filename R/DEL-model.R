@@ -34,11 +34,18 @@
 #' edge-inputs are preserved and to allow further constraints such as triangle
 #' size and internal angle to be specified.
 #' @param x input model
-#' @param ... passed to the underlying Triangle library
+#' @param ... passed to the underlying Triangle library, see [RTriangle::triangulate()][RTriangle::triangulate]
 #' @param max_area the maximum area of a triangle
 #' @return DEL model
-#' @seealso DEL0
+#' @seealso [DEL0] [TRI][silicate::TRI] [TRI0][silicate::TRI0]
 #' @export
+#' @section Warning:
+#'
+#' Please take care with the `max_area` argument. The units are not taken into
+#' account, the value refers only to the planar area of the x/y coordinates as
+#' they are so this is not a real world area, but a mathematical property of the
+#' data. There is a safety check for a very large number of triangles, and this
+#' may be overridden by replying 'Yes' to the prompt.
 #'
 #' @examples
 #' plot3d(DEL(simpleworld))

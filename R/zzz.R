@@ -11,7 +11,7 @@
 
   op <- getOption("anglr.max.triangles")
   if (is.null(op)) {
-    options(anglr.max.triangles = 1e8)
+    options(anglr.max.triangles = 1e7)
   }
 
   invisible()

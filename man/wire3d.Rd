@@ -14,7 +14,7 @@
 \alias{wire3d.triangulation}
 \alias{wire3d.trip}
 \alias{wire3d.BasicRaster}
-\title{wire3}
+\title{Draw a mesh as line segments in 3D}
 \usage{
 \method{wire3d}{sc}(x, ...)
 
@@ -46,8 +46,17 @@
 \item{...}{pass \link[rgl:rgl.material]{material3d properties} to rgl}
 }
 \description{
-plot lines from mesh
+Draw line segments with rgl from any \link[rgl:tmesh3d]{shape3d} classed object. Produces
+a 3D scatterplot like that produced by \code{\link[rgl:plot3d]{rgl::plot3d()}}, but from a mesh-alike
+object.
+}
+\details{
+It is not currently \emph{technically defined or clear} how colour properties are
+mapped to line segments by default ... there is a problem of what property to
+use from features that share the same vertex or edge, and we have put that
+aside and erred on the side of inaccuracy in favour of getting a pretty plot
+(hopefully). (Properties that come later - lower rows - win, I think.
 }
 \seealso{
-plot3d as.mesh3d persp3d dot3d
+\link{plot3d} \link{as.mesh3d} \link{persp3d} \link{dot3d}
 }
