@@ -1,9 +1,13 @@
 
-#' DEL0
+#' Convert object to a constrained-Delaunay triangulation
 #'
-#' Structural form of Delaunay constrained triangulation
+#' This *structural-form* Delaunay-based triangulation model is analogous to the
+#' [TRI()][silicate::TRI] model in the silicate package and formally extends the
+#' class of that model. A primitives-based shape-constrained triangulation. The
+#' Delaunay model is the *mostly Delaunay* scheme used by the provable-quality
+#' meshers.
 #'
-#' More compact form of [DEL()] model.
+#' This is a more compact form of the *relational-form* [DEL()] model.
 #'
 #' @param x object of class [PATH0] or understood by [PATH0()]
 #' @param ... ignored
@@ -11,7 +15,7 @@
 #'
 #' @return DEL0 class
 #' @export
-#'
+#' @seealso DEL
 #' @examples
 #' \donttest{
 #' a <- DEL0(cad_tas)

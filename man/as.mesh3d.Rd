@@ -156,17 +156,18 @@ When converting a matrix to mesh3d it is considered to be quad-based
 are interpreted in the \verb{t(ranspose), y-flip} orientation used by
 \code{plot(raster::raster(matrix))}.
 
-The conversion function \code{as.mesh3d()} consolidates code from quadmesh and
-angstroms packages where the basic facilities were developed. The function
-\code{as.mesh3d()} is imported from rgl and re-exported, and understands all of
-the surface types from sf, sp, raster, and silicate, and can accept a raw
-matrix as input. It can also include a \code{z} argument to extract elevation
-values from a raster, and an \code{image_texture} argument to drape an image
-from a raster RGB object onto the surface. Map projections are
-automatically resolved to the coordinate system of the \code{x} argument (as
-much as possible, there are lingering issues with the ongoing changes to
-crs in PROJ library, and the reproj and proj4 packages which attempt to
-smooth over the changes in Spatial and sf and raster objects.)
+The conversion function \code{\link[anglr:as.mesh3d]{anglr::as.mesh3d()}} consolidates code from
+quadmesh and angstroms packages where the basic facilities were developed.
+The function \link[rgl:as.mesh3d]{as.mesh3d()} is imported from rgl and
+re-exported, and understands all of the surface types from sf, sp, raster,
+and silicate, and can accept a raw matrix as input. It can also include a
+\code{z} argument to extract elevation values from a raster, and an
+\code{image_texture} argument to drape an image from a raster RGB object onto
+the surface. Map projections are automatically resolved to the coordinate
+system of the \code{x} argument (as much as possible, there are lingering issues
+with the ongoing changes to crs in PROJ library, and the reproj and proj4
+packages which attempt to smooth over the changes in Spatial and sf and
+raster objects.)
 }
 \section{Implicit versus explicit topology}{
 
@@ -178,9 +179,9 @@ surfaces} and so conversion and plotting functions try to reflect this
 inherent nature as much as possible. A mesh is inherently a surface, and so
 the method for polygons or lines will first call a surface-generating
 function, \code{\link[silicate:TRI0]{silicate::TRI0()}} or \code{\link[=DEL0]{DEL0()}} in order to created the required
-primitives, while \code{\link[=plot3d]{plot3d()}} will not do this. The key goal is \emph{flexibility},
-and so we can call a meshing function \code{\link[=as.mesh3d]{as.mesh3d()}} (does conversion) or
-\code{\link[=persp3d]{persp3d()}} (a plot function, but requires conversion to surface) and they
+primitives, while \link[anglr:plot3d]{plot3d()} will not do this. The key goal is \emph{flexibility},
+and so we can call a meshing function \link[anglr:as.mesh3d]{as.mesh3d()} (does conversion) or
+\link[anglr:persp3d]{persp3d()} (a plot function, but requires conversion to surface) and they
 will choose an interpretation.
 
 Much of the above is open for discussion, so please get in touch! Use the

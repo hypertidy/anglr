@@ -11,7 +11,7 @@
 \alias{DEL0.ARC}
 \alias{DEL0.PATH}
 \alias{DEL0.PATH0}
-\title{DEL0}
+\title{Convert object to a constrained-Delaunay triangulation}
 \usage{
 DEL0(x, ..., max_area = NULL)
 
@@ -44,14 +44,21 @@ DEL0(x, ..., max_area = NULL)
 DEL0 class
 }
 \description{
-Structural form of Delaunay constrained triangulation
+This \emph{structural-form} Delaunay-based triangulation model is analogous to the
+\link[silicate:TRI]{TRI()} model in the silicate package and formally extends the
+class of that model. A primitives-based shape-constrained triangulation. The
+Delaunay model is the \emph{mostly Delaunay} scheme used by the provable-quality
+meshers.
 }
 \details{
-More compact form of \code{\link[=DEL]{DEL()}} model.
+This is a more compact form of the \emph{relational-form} \code{\link[=DEL]{DEL()}} model.
 }
 \examples{
 \donttest{
 a <- DEL0(cad_tas)
 plot(a)
 }
+}
+\seealso{
+DEL
 }

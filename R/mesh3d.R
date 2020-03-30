@@ -154,17 +154,18 @@ quad_common <- function(vb, index, normals, texcoords, material, meshColor, tria
 #'   are interpreted in the `t(ranspose), y-flip` orientation used by
 #'   `plot(raster::raster(matrix))`.
 #'
-#'   The conversion function `as.mesh3d()` consolidates code from quadmesh and
-#'   angstroms packages where the basic facilities were developed. The function
-#'   `as.mesh3d()` is imported from rgl and re-exported, and understands all of
-#'   the surface types from sf, sp, raster, and silicate, and can accept a raw
-#'   matrix as input. It can also include a `z` argument to extract elevation
-#'   values from a raster, and an `image_texture` argument to drape an image
-#'   from a raster RGB object onto the surface. Map projections are
-#'   automatically resolved to the coordinate system of the `x` argument (as
-#'   much as possible, there are lingering issues with the ongoing changes to
-#'   crs in PROJ library, and the reproj and proj4 packages which attempt to
-#'   smooth over the changes in Spatial and sf and raster objects.)
+#'   The conversion function [anglr::as.mesh3d()] consolidates code from
+#'   quadmesh and angstroms packages where the basic facilities were developed.
+#'   The function [as.mesh3d()][rgl::as.mesh3d] is imported from rgl and
+#'   re-exported, and understands all of the surface types from sf, sp, raster,
+#'   and silicate, and can accept a raw matrix as input. It can also include a
+#'   `z` argument to extract elevation values from a raster, and an
+#'   `image_texture` argument to drape an image from a raster RGB object onto
+#'   the surface. Map projections are automatically resolved to the coordinate
+#'   system of the `x` argument (as much as possible, there are lingering issues
+#'   with the ongoing changes to crs in PROJ library, and the reproj and proj4
+#'   packages which attempt to smooth over the changes in Spatial and sf and
+#'   raster objects.)
 #'
 #' @section Implicit versus explicit topology:
 #'
@@ -175,9 +176,9 @@ quad_common <- function(vb, index, normals, texcoords, material, meshColor, tria
 #' inherent nature as much as possible. A mesh is inherently a surface, and so
 #' the method for polygons or lines will first call a surface-generating
 #' function, [silicate::TRI0()] or [DEL0()] in order to created the required
-#' primitives, while [plot3d()] will not do this. The key goal is *flexibility*,
-#' and so we can call a meshing function [as.mesh3d()] (does conversion) or
-#' [persp3d()] (a plot function, but requires conversion to surface) and they
+#' primitives, while [plot3d()][anglr::plot3d] will not do this. The key goal is *flexibility*,
+#' and so we can call a meshing function [as.mesh3d()][anglr::as.mesh3d] (does conversion) or
+#' [persp3d()][anglr::persp3d] (a plot function, but requires conversion to surface) and they
 #' will choose an interpretation.
 #'
 #' Much of the above is open for discussion, so please get in touch! Use the
