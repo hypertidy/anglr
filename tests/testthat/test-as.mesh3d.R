@@ -1,5 +1,6 @@
 context("as.mesh3d")
-
+library(sp)  ## avoid messages later
+library(raster) ## avoid messages later
 
 test_that("as.mesh3d on trianges is working", {
   ## first object has a hole in it
@@ -75,7 +76,8 @@ test_that("as.mesh3d on quads is working", {
 
   rr <- raster::raster(scales::rescale(volcano, 0, 255))
   expect_silent(as.mesh3d(rr))
-  expect_silent(as.mesh3d(rr, image_texture = raster::brick(rr, rr, rr)))
+  expect_message(as.mesh3d(rr, image_texture = raster::brick(rr, rr, rr)),
+                "writing texture image to")
 library(raster)
   sc <- silicate::TRI0(spex::spex(rr))
   expect_message(as.mesh3d(sc, z = rr * 2, image_texture = raster::brick(rr, rr, rr)),
