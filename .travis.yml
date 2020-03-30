@@ -26,6 +26,12 @@ matrix:
           env:
            - BUILD_NAME=trusty_release
            - DETAILS="release build"
+        - os: linux
+          r: release
+          dist: xenial
+          env:
+           - BUILD_NAME=xenial_release
+           - DETAILS="xenial_release build"
         # - os: osx
         #   r: release
         #   before_install: ''
