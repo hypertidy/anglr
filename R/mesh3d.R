@@ -126,42 +126,80 @@ quad_common <- function(vb, index, normals, texcoords, material, meshColor, tria
   out
 }
 
-#' Mesh3d objects
+#' Convert to mesh object
 #'
-#' Methods for the mesh3d type from package rgl
+#' @description
 #'
+#' The `as.mesh3d()` generic function converts various objects to
+#' [mesh3d][rgl::tmesh3d] objects. Methods are added to support a variety of
+#' spatial formats, which will include triangles or quads according to their
+#' inherent form. For quad-types the argument `triangles` can be specified to
+#' generate triangles from quads. The majority of conversions are done by model
+#' functions in the silicate package, and anglr adds models [DEL()], [DEL0()],
+#' and [QUAD()].
 #'
-#' The anglr package adds methods for the [rgl::as.mesh3d()] generic for
-#' sf, sp, raster, RTriangle, silicate, and for a matrix. The `mesh3d` format
-#' is the rgl workhorse behind [rgl::plot3d()], [rgl::wire3d()], [rgl::persp3d()] and
-#' [rgl::dot3d()].
+#' The [mesh3d][rgl::tmesh3d] format is the rgl workhorse behind
+#' [plot3d()][rgl::plot3d], [wire3d()][rgl::wire3d], [persp3d()][rgl::perps3d]
+#' and [dot3d()][rgl::dot3d].'
 #'
-#' The conversion function `as.mesh3d()` consolidates code from quadmesh and
-#' angstroms packages where the basic facilities were developed. The function
-#' `as.mesh3d()` is imported from rgl and re-exported, and understands all of
-#' the surface types from sf, sp, raster, and silicate, and can accept a raw
-#' matrix as input. It can also include a `z` argument to extract elevation
-#' values from a raster, and an `image_texture` argument to drape an image from
-#' a raster RGB object onto the surface. Map projections are automatically
-#' resolved to the coordinate system of the `x` argument (as much as possible,
-#' there are lingering issues with the ongoing changes to crs in PROJ library,
-#' and the reproj and proj4 packages which attempt to smooth over the changes
-#' in Spatial and sf and raster objects.)
+#' A method for a numeric matrix is included, as are methods for sf, sp, raster,
+#' RTriangle, and silicate types. and for a matrix.
+#'
+#' @details
+#'
+#' When converting a matrix to mesh3d it is considered to be quad-based
+#'   (area interpretation) within `xmin = 0, xmax = nrow(x), ymin = 0, ymax =
+#'   ncol(x)`. Note that this differs from the `[0, 1, 0, 1]` interpretation of
+#'   [image()], but shares its orientation. Raster-types from the raster package
+#'   are interpreted in the `t(ranspose), y-flip` orientation used by
+#'   `plot(raster::raster(matrix))`.
+#'
+#'   The conversion function `as.mesh3d()` consolidates code from quadmesh and
+#'   angstroms packages where the basic facilities were developed. The function
+#'   `as.mesh3d()` is imported from rgl and re-exported, and understands all of
+#'   the surface types from sf, sp, raster, and silicate, and can accept a raw
+#'   matrix as input. It can also include a `z` argument to extract elevation
+#'   values from a raster, and an `image_texture` argument to drape an image
+#'   from a raster RGB object onto the surface. Map projections are
+#'   automatically resolved to the coordinate system of the `x` argument (as
+#'   much as possible, there are lingering issues with the ongoing changes to
+#'   crs in PROJ library, and the reproj and proj4 packages which attempt to
+#'   smooth over the changes in Spatial and sf and raster objects.)
+#'
+#' @section Implicit versus explicit topology:
+#'
+#' We support conversion to mesh for strictly linear types such as sf 'POLYGON',
+#' 'MULTIPOLYGON', 'MULTILINESTRING', 'LINESTRING' and their sp counterparts
+#' 'SpatialPolygons' and 'SpatialLines'. Even polygons are only *implicit
+#' surfaces* and so conversion and plotting functions try to reflect this
+#' inherent nature as much as possible. A mesh is inherently a surface, and so
+#' the method for polygons or lines will first call a surface-generating
+#' function, [silicate::TRI0()] or [DEL0()] in order to created the required
+#' primitives, while [plot3d()] will not do this. The key goal is *flexibility*,
+#' and so we can call a meshing function [as.mesh3d()] (does conversion) or
+#' [persp3d()] (a plot function, but requires conversion to surface) and they
+#' will choose an interpretation.
+#'
+#' Much of the above is open for discussion, so please get in touch! Use the
+#' [issues tab](https://github.com/hypertidy/anglr/) or [ping me on
+#' twitter](https://twitter.com/mdsumner) to clarify or discuss anything.
 #'
 #' @section Elevation values with `z`:
 #'
-#' The 'z' argument can be a constant value or a vector of values to be
-#' used for each vertex. Alternatively, it may be a spatial raster object
-#' from which 'z' values are derived. If not set, the vertex 'z_' value
-#' from TRI/TRI0 is used, otherwise z = 0' is assumed.
+#'   The 'z' argument can be a constant value or a vector of values to be used
+#'   for each vertex. Alternatively, it may be a spatial raster object from
+#'   which 'z' values are derived. If not set, the vertex 'z_' value from
+#'   TRI/TRI0 is used, otherwise z = 0' is assumed.
 #'
 #' @section Textures:
 #'
-#' Please see the documentation for rgl textures in `vignette("rgl", package = "rgl")`.
-#' The most important detail is that the `$material$color` property of a `mesh3d` not
-#' be set to "black" ("#000000" or equivalent), or it will not be visible at all.
-#' The only way to add a texture in mesh3d is as a PNG file on-disk, so anglr
-#' functions take an in-memory object and create the file if needed.
+#'   Please see the documentation for rgl textures in `vignette("rgl", package =
+#'   "rgl")`. The most important detail is that the `$material$color` property
+#'   of a `mesh3d` not be set to "black" ("#000000" or equivalent), or it will
+#'   not be visible at all. The only way to add a texture in mesh3d is as a PNG
+#'   file on-disk, so anglr functions take an in-memory object and create the
+#'   file if needed.
+#'
 #' @param x a surface-alike, a matrix, or spatial object from raster, sp, sf, trip, or silicate
 #' @param z numeric vector or raster object (see details)
 #' @inheritParams rgl::as.mesh3d.tri

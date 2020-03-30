@@ -11,7 +11,7 @@
 \alias{as.mesh3d.Spatial}
 \alias{as.mesh3d.matrix}
 \alias{as.mesh3d.sc}
-\title{Mesh3d objects}
+\title{Convert to mesh object}
 \usage{
 \method{as.mesh3d}{TRI}(
   x,
@@ -134,43 +134,76 @@ details see \link[rgl:tmesh3d]{rgl::tmesh3d}.}
 a \href{rgl::mesh3d}{mesh3d object}
 }
 \description{
-Methods for the mesh3d type from package rgl
+The \code{as.mesh3d()} generic function converts various objects to
+\link[rgl:tmesh3d]{mesh3d} objects. Methods are added to support a variety of
+spatial formats, which will include triangles or quads according to their
+inherent form. For quad-types the argument \code{triangles} can be specified to
+generate triangles from quads. The majority of conversions are done by model
+functions in the silicate package, and anglr adds models \code{\link[=DEL]{DEL()}}, \code{\link[=DEL0]{DEL0()}},
+and \code{\link[=QUAD]{QUAD()}}.
+
+The \link[rgl:tmesh3d]{mesh3d} format is the rgl workhorse behind
+\link[rgl:plot3d]{plot3d()}, \link[rgl:wire3d]{wire3d()}, \link[rgl:perps3d]{persp3d()}
+and \link[rgl:dot3d]{dot3d()}.'
+
+A method for a numeric matrix is included, as are methods for sf, sp, raster,
+RTriangle, and silicate types. and for a matrix.
 }
 \details{
-The anglr package adds methods for the \code{\link[rgl:as.mesh3d]{rgl::as.mesh3d()}} generic for
-sf, sp, raster, RTriangle, silicate, and for a matrix. The \code{mesh3d} format
-is the rgl workhorse behind \code{\link[rgl:plot3d]{rgl::plot3d()}}, \code{\link[rgl:wire3d]{rgl::wire3d()}}, \code{\link[rgl:persp3d]{rgl::persp3d()}} and
-\code{\link[rgl:dot3d]{rgl::dot3d()}}.
+When converting a matrix to mesh3d it is considered to be quad-based
+(area interpretation) within \verb{xmin = 0, xmax = nrow(x), ymin = 0, ymax = ncol(x)}. Note that this differs from the \verb{[0, 1, 0, 1]} interpretation of
+\code{\link[=image]{image()}}, but shares its orientation. Raster-types from the raster package
+are interpreted in the \verb{t(ranspose), y-flip} orientation used by
+\code{plot(raster::raster(matrix))}.
 
 The conversion function \code{as.mesh3d()} consolidates code from quadmesh and
 angstroms packages where the basic facilities were developed. The function
 \code{as.mesh3d()} is imported from rgl and re-exported, and understands all of
 the surface types from sf, sp, raster, and silicate, and can accept a raw
 matrix as input. It can also include a \code{z} argument to extract elevation
-values from a raster, and an \code{image_texture} argument to drape an image from
-a raster RGB object onto the surface. Map projections are automatically
-resolved to the coordinate system of the \code{x} argument (as much as possible,
-there are lingering issues with the ongoing changes to crs in PROJ library,
-and the reproj and proj4 packages which attempt to smooth over the changes
-in Spatial and sf and raster objects.)
+values from a raster, and an \code{image_texture} argument to drape an image
+from a raster RGB object onto the surface. Map projections are
+automatically resolved to the coordinate system of the \code{x} argument (as
+much as possible, there are lingering issues with the ongoing changes to
+crs in PROJ library, and the reproj and proj4 packages which attempt to
+smooth over the changes in Spatial and sf and raster objects.)
 }
+\section{Implicit versus explicit topology}{
+
+
+We support conversion to mesh for strictly linear types such as sf 'POLYGON',
+'MULTIPOLYGON', 'MULTILINESTRING', 'LINESTRING' and their sp counterparts
+'SpatialPolygons' and 'SpatialLines'. Even polygons are only \emph{implicit
+surfaces} and so conversion and plotting functions try to reflect this
+inherent nature as much as possible. A mesh is inherently a surface, and so
+the method for polygons or lines will first call a surface-generating
+function, \code{\link[silicate:TRI0]{silicate::TRI0()}} or \code{\link[=DEL0]{DEL0()}} in order to created the required
+primitives, while \code{\link[=plot3d]{plot3d()}} will not do this. The key goal is \emph{flexibility},
+and so we can call a meshing function \code{\link[=as.mesh3d]{as.mesh3d()}} (does conversion) or
+\code{\link[=persp3d]{persp3d()}} (a plot function, but requires conversion to surface) and they
+will choose an interpretation.
+
+Much of the above is open for discussion, so please get in touch! Use the
+\href{https://github.com/hypertidy/anglr/}{issues tab} or \href{https://twitter.com/mdsumner}{ping me on twitter} to clarify or discuss anything.
+}
+
 \section{Elevation values with \code{z}}{
 
 
-The 'z' argument can be a constant value or a vector of values to be
-used for each vertex. Alternatively, it may be a spatial raster object
-from which 'z' values are derived. If not set, the vertex 'z_' value
-from TRI/TRI0 is used, otherwise z = 0' is assumed.
+The 'z' argument can be a constant value or a vector of values to be used
+for each vertex. Alternatively, it may be a spatial raster object from
+which 'z' values are derived. If not set, the vertex 'z_' value from
+TRI/TRI0 is used, otherwise z = 0' is assumed.
 }
 
 \section{Textures}{
 
 
-Please see the documentation for rgl textures in \code{vignette("rgl", package = "rgl")}.
-The most important detail is that the \verb{$material$color} property of a \code{mesh3d} not
-be set to "black" ("#000000" or equivalent), or it will not be visible at all.
-The only way to add a texture in mesh3d is as a PNG file on-disk, so anglr
-functions take an in-memory object and create the file if needed.
+Please see the documentation for rgl textures in \code{vignette("rgl", package = "rgl")}. The most important detail is that the \verb{$material$color} property
+of a \code{mesh3d} not be set to "black" ("#000000" or equivalent), or it will
+not be visible at all. The only way to add a texture in mesh3d is as a PNG
+file on-disk, so anglr functions take an in-memory object and create the
+file if needed.
 }
 
 \examples{
