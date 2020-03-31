@@ -6,7 +6,7 @@
 #' @param x sp, sf, raster, trip, or any other model understood by anglr/silicate
 #' @param ... pass [material3d properties][rgl::rgl.material] to rgl
 #' @param add add to existing plot or start a new one (the default)
-#' @seealso plot3d as.mesh3d wire3d dot3d
+#' @seealso [plot3d] [as.mesh3d] [wire3d] [dot3d] [shade3d]
 #' @export
 persp3d.TRI <- function(x, ..., add = FALSE) {
   plot3d(as.mesh3d(x, ...), add = add)

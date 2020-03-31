@@ -2,7 +2,7 @@ context("as.mesh3d")
 library(sp)  ## avoid messages later
 library(raster) ## avoid messages later
 
-test_that("as.mesh3d on trianges is working", {
+test_that("as.mesh3d on triangles is working", {
   ## first object has a hole in it
   mintri <- DEL(silicate::minimal_mesh)
   mintri0 <- silicate::TRI0(silicate::minimal_mesh)

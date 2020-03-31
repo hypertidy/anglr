@@ -25,7 +25,7 @@
 #' @param x silicate model, SC, TRI, ARC, or PATH
 #' @param ... passed to material properties
 #' @param add add to plot or not
-#'
+#' @seealso [wire3d] [as.mesh3d] [persp3d] [dot3d] [shade3d]
 #' @return rgl shape3d types (note that "segment3d" is currently an imaginary
 #'   shape3d type)
 #' @importFrom rgl plot3d persp3d

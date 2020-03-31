@@ -1,3 +1,9 @@
+## --- silicate
+
+.n_geometry <- function(x) {
+  length(intersect(c("x_", "y_", "z_", "t_", "m_"), names(x$vertex)))
+}
+
 ## --- as.mesh3d
 
 TRI_xyz <- function(x, z) {

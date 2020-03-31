@@ -108,3 +108,6 @@ dot3d(cad_tas)
 ## add Z elevation to an sf polygon in a mesh
 plot3d(copy_down(as.mesh3d(silicate::minimal_mesh), raster::raster(volcano)))
 }
+\seealso{
+\link{wire3d} \link{as.mesh3d} \link{persp3d} \link{dot3d} \link{shade3d}
+}

@@ -72,5 +72,5 @@ auto_3d(z = 14)
 }
 }
 \seealso{
-\link{as.mesh3d} \link{persp3d} \link{wire3d} \link{plot3d}
+\link{as.mesh3d} \link{persp3d} \link{wire3d} \link{plot3d} \link{shade3d}
 }

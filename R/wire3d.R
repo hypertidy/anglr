@@ -15,7 +15,7 @@
 #' @param ... pass [material3d properties][rgl::rgl.material] to rgl
 #' @importFrom rgl wire3d
 #' @export wire3d
-#' @seealso [plot3d] [as.mesh3d] [persp3d] [dot3d]
+#' @seealso [plot3d] [as.mesh3d] [persp3d] [dot3d] [shade3d]
 #' @export
 wire3d.sc <- function(x, ...) {
   wire3d(as.mesh3d(x, ...))

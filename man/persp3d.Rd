@@ -39,5 +39,5 @@
 Plot surface
 }
 \seealso{
-plot3d as.mesh3d wire3d dot3d
+\link{plot3d} \link{as.mesh3d} \link{wire3d} \link{dot3d} \link{shade3d}
 }

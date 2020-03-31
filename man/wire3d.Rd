@@ -58,5 +58,5 @@ aside and erred on the side of inaccuracy in favour of getting a pretty plot
 (hopefully). (Properties that come later - lower rows - win, I think.
 }
 \seealso{
-\link{plot3d} \link{as.mesh3d} \link{persp3d} \link{dot3d}
+\link{plot3d} \link{as.mesh3d} \link{persp3d} \link{dot3d} \link{shade3d}
 }

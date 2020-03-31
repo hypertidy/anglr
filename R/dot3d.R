@@ -21,7 +21,7 @@
 #' @param x sc, sp, sf, raster, trip, or any other model understood by anglr/silicate
 #' @param ... pass [material3d properties][rgl::rgl.material] to rgl
 #' @importFrom rgl dot3d
-#' @seealso [as.mesh3d] [persp3d] [wire3d] [plot3d]
+#' @seealso [as.mesh3d] [persp3d] [wire3d] [plot3d] [shade3d]
 #' @export dot3d
 #' @export
 #' @examples
