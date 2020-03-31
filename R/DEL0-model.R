@@ -94,8 +94,66 @@ DEL0.PATH0 <- function(x, ..., max_area = NULL) {
   .check_area(x$vertex$x_, x$vertex$y_, max_area)
   dots <- list(...)
   dots[["a"]] <- max_area
+
+  #-------------------------------
+  if (all(unlist(lapply(x$object$path_, function(xa) dim(xa)[1L] == length(unique(xa$path_))), use.names = FALSE))) {
+    ## bail out with a point-triangulation
+    vv <- silicate::sc_vertex(x)
+
+    for (i in seq_along(names(vv))) {
+      if (!names(vv)[i] %in% c("x_", "y_", "z_", "m_", "t_")) {
+        vv[[names(vv)[i]]] <- NULL
+      }
+    }
+
+    vv <- vv %>% dplyr::distinct(.data$x_, .data$y_, .keep_all = TRUE)  ## we can't keep unique z, so for the guiding principles this needs mention
+
+    dots$p <- RTriangle::pslg(as.matrix(vv[c("x_", "y_")]))
+    cnames <- c()
+    if ("z_" %in% names(vv)) {
+      ## better document this, pretty powerful
+      dots$p$PA <- cbind(NULL, z_ = vv$z_)
+      cnames <- c(cnames, "z_")
+    }
+    if ("m_" %in% names(vv)) {
+      ## better document this, pretty powerful
+      dots$p$PA <- cbind(dots$p$PA, m_ = vv$m_)
+      cnames <- c(cnames, "m_")
+    }
+    if ("t_" %in% names(vv)) {
+      ## better document this, pretty powerful
+      dots$p$PA <- cbind(dots$p$PA, t_ = vv$t_)
+      cnames <- c(cnames, "t_")
+    }
+
+
+    tri <- do.call(RTriangle::triangulate, dots)
+
+    object <- tibble::tibble(del0 = 1L,
+                             color_ = "#111111FF",
+                             path0 = list(dplyr::select(x$object, -.data$path_)),
+                             topology_ = list(tibble::tibble(.vx0 = tri$T[,1L,drop = TRUE],
+                                                             .vx1 = tri$T[,2L, drop = TRUE],
+                                                             .vx2 = tri$T[,3L, drop = TRUE])))
+    meta <- tibble(proj = get_proj(x), ctime = Sys.time())
+
+   out <-  structure(list(object = object,
+                   vertex = tibble::tibble(x_ = tri$P[,1L, drop = TRUE],
+                                           y_ = tri$P[,2L, drop = TRUE]),
+                   meta = meta), class = c("DEL0", "TRI0", "sc"))
+   cn <- dim(tri$PA)[2L]
+   ## must do this above cnames <- colnames(tri$PA)
+   if (cn > 0) {
+     for (i in seq_len(cn)) {
+       out$vertex[[cnames[i]]] <- tri$PA[,i, drop = TRUE]
+     }
+   }
+    return(out)
+  }
+
   dots[["x"]] <- x
 
+  #----------------
   ## TRIANGULATE with PATH-identity
   RTri <- do.call(edge_RTriangle0, dots)
  # x## object/path_link_triangle (path_triangle_map)

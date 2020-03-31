@@ -12,21 +12,21 @@
 \alias{shade3d.Spatial}
 \title{shade3d}
 \usage{
-shade3d.TRI(x, ..., add = FALSE)
+\method{shade3d}{TRI}(x, ..., add = FALSE)
 
-shade3d.TRI0(x, ..., add = FALSE)
+\method{shade3d}{TRI0}(x, ..., add = FALSE)
 
-shade3d.DEL(x, ..., add = FALSE)
+\method{shade3d}{DEL}(x, ..., add = FALSE)
 
-shade3d.DEL0(x, ..., add = FALSE)
+\method{shade3d}{DEL0}(x, ..., add = FALSE)
 
-shade3d.QUAD(x, ..., add = FALSE)
+\method{shade3d}{QUAD}(x, ..., add = FALSE)
 
-shade3d.matrix(x, ..., add = FALSE)
+\method{shade3d}{matrix}(x, ..., add = FALSE)
 
-shade3d.sf(x, ..., add = FALSE)
+\method{shade3d}{sf}(x, ..., add = FALSE)
 
-shade3d.Spatial(x, ..., add = FALSE)
+\method{shade3d}{Spatial}(x, ..., add = FALSE)
 }
 \arguments{
 \item{x}{sp, sf, raster, trip, or any other model understood by anglr/silicate}
