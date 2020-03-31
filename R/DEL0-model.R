@@ -13,9 +13,9 @@
 #' @param ... ignored
 #' @inheritParams DEL
 #'
-#' @return DEL0 class
+#' @return [DEL0 class][DEL0]
 #' @export
-#' @seealso DEL
+#' @seealso [DEL]
 #' @examples
 #' \donttest{
 #' a <- DEL0(cad_tas)
@@ -96,7 +96,7 @@ DEL0.PATH0 <- function(x, ..., max_area = NULL) {
   dots[["a"]] <- max_area
 
   #-------------------------------
-  if (all(unlist(lapply(x$object$path_, function(xa) dim(xa)[1L] == length(unique(xa$path_))), use.names = FALSE))) {
+  if ( all(unlist(lapply(x$object$path_, function(xa) dim(xa)[1L] == length(unique(xa$path_))), use.names = FALSE))) {
     ## bail out with a point-triangulation
     vv <- silicate::sc_vertex(x)
 
