@@ -8,6 +8,7 @@
 \alias{copy_down.TRI}
 \alias{copy_down.TRI0}
 \alias{copy_down.PATH}
+\alias{copy_down.PATH0}
 \alias{copy_down.ARC}
 \alias{copy_down.QUAD}
 \title{Copy down values to vertices}
@@ -25,6 +26,8 @@ copy_down(x, z = NULL, ..., .id = "z_")
 \method{copy_down}{TRI0}(x, z = NULL, ..., .id = "z_")
 
 \method{copy_down}{PATH}(x, z = NULL, ..., .id = "z_")
+
+\method{copy_down}{PATH0}(x, z = NULL, ..., .id = "z_")
 
 \method{copy_down}{ARC}(x, z = NULL, ..., .id = "z_")
 

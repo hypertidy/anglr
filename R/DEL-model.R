@@ -47,6 +47,12 @@
 #' data. There is a safety check for a very large number of triangles, and this
 #' may be overridden by replying 'Yes' to the prompt.
 #'
+#' @section Topology:
+#'
+#' The DEL model cannot currently mesh point features, and it cannot mesh
+#' linear features if they include z or other vertex attributes - for now use
+#' [DEL0()] which can do those.
+#'
 #' @examples
 #' plot3d(DEL(simpleworld))
 DEL <- function(x, ..., max_area = NULL) {

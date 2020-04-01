@@ -53,6 +53,42 @@ meshers.
 \details{
 This is a more compact form of the \emph{relational-form} \code{\link[=DEL]{DEL()}} model.
 }
+\section{Topology}{
+
+
+Note that for explicitly linear features, these still use a post-meshing
+identification for which triangles belong in which feature. This can't make
+sense for many line layers, but we leave it for now.
+
+For point features, the mesher unproblematically creates a triangulation in
+the convex hull of the points, any attributes names \code{z_}, \code{m_}, or \code{t_} are
+automatically interpolated and include in the output. See the help for
+\code{\link[RTriangle:triangulate]{RTriangle::triangulate()}} for how this works via the \verb{$PA} element.
+}
+
+\examples{
+a <- DEL0(cad_tas)
+plot(a)
+
+## ---- intepolate via triangulation, sample points from volcano
+rgl::clear3d()
+n <- 150
+max_area <- .005 ## we working in x 0,1 y 0,1
+library(anglr)
+library(dplyr)
+d <-
+  data.frame(x = runif(n), y = runif(n), multipoint_id = 1) \%>\%
+  dplyr::mutate(
+    z = raster::extract(raster::raster(volcano), cbind(x, y)),
+    multipoint_id = 1
+  )
+\donttest{
+mesh <- DEL0(
+  sfheaders::sf_multipoint(d, x = "x", y = "y", z = "z", multipoint_id = "multipoint_id"), max_area = max_area)
+
+plot3d(mesh , color = "darkgrey", specular = "darkgrey") #sample(grey.colors(5)))
+}
+}
 \seealso{
 \link{DEL}
 }

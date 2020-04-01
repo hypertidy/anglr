@@ -108,7 +108,12 @@ copy_down.PATH <- function(x, z = NULL, ..., .id = "z_") {
 
   denorm_SEQ_addZ(x, z = z, ..., .id = .id)
 }
-
+#' @name copy_down
+#' @export
+copy_down.PATH0 <- function(x, z = NULL, ..., .id = "z_") {
+  ## FIXME: obvsly inefficient, should work the other way
+  copy_down(silicate::PATH(x), z  = z, ..., .id = .id)
+}
 #' @name copy_down
 #' @export
 copy_down.ARC <- function(x, z = NULL, ..., .id = "z_") {

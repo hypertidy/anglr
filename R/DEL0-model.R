@@ -4,8 +4,8 @@
       vv[[names(vv)[i]]] <- NULL
     }
   }
-#  vv <- vv %>% dplyr::distinct(.data$x_, .data$y_, .keep_all = TRUE)  ## we can't keep unique z, so for the guiding principles this needs mention
-vv <- vv[!duplicated(vv[c("x_", "y_")]), ]
+  #  vv <- vv %>% dplyr::distinct(.data$x_, .data$y_, .keep_all = TRUE)  ## we can't keep unique z, so for the guiding principles this needs mention
+  vv <- vv[!duplicated(vv[c("x_", "y_")]), ]
   dots$p <- RTriangle::pslg(as.matrix(vv[c("x_", "y_")]))
   cnames <- c()
   if ("z_" %in% names(vv)) {
@@ -36,6 +36,17 @@ vv <- vv[!duplicated(vv[c("x_", "y_")]), ]
 #'
 #' This is a more compact form of the *relational-form* [DEL()] model.
 #'
+#' @section Topology:
+#'
+#' Note that for explicitly linear features, these still use a post-meshing
+#' identification for which triangles belong in which feature. This can't make
+#' sense for many line layers, but we leave it for now.
+#'
+#' For point features, the mesher unproblematically creates a triangulation in
+#' the convex hull of the points, any attributes names `z_`, `m_`, or `t_` are
+#' automatically interpolated and include in the output. See the help for
+#' [RTriangle::triangulate()] for how this works via the `$PA` element.
+#'
 #' @param x object of class [PATH0] or understood by [PATH0()]
 #' @param ... ignored
 #' @inheritParams DEL
@@ -44,7 +55,6 @@ vv <- vv[!duplicated(vv[c("x_", "y_")]), ]
 #' @export
 #' @seealso [DEL]
 #' @examples
-#' \donttest{
 #' a <- DEL0(cad_tas)
 #' plot(a)
 #'
@@ -173,11 +183,22 @@ DEL0.PATH0 <- function(x, ..., max_area = NULL) {
     return(out)
   }
 
-  dots[["x"]] <- x
+  vv <- silicate::sc_vertex(x)
+  zmt <- .add_zmt_dots(vv, dots)
+ # browser()
+
+ vv <- zmt[["vv"]]
+  dots <- zmt[["dots"]]
+  cnames <- zmt[["cnames"]]
+
+ # dots[["x"]] <- x
+ # dots[["x"]] <- dots[["p"]]
+#  dots[["p"]] <- NULL
 
   #----------------
   ## TRIANGULATE with PATH-identity
-  RTri <- do.call(edge_RTriangle0, dots)
+ # RTri <- do.call(edge_RTriangle0, dots)
+  RTri <- do.call(RTriangle::triangulate, dots)
  # x## object/path_link_triangle (path_triangle_map)
   ptm <- path_triangle_map(x, RTri)
   omap <- dplyr::bind_rows(x$object$path_)%>% dplyr::distinct(.data$object_, .data$path_)
@@ -190,12 +211,26 @@ DEL0.PATH0 <- function(x, ..., max_area = NULL) {
   tridf <- setNames(as.data.frame(RTri$T), c(".vx0", ".vx1", ".vx2"))[ptm$triangle_idx, ]
   tridf$path_ <- as.integer(ptm$path_)
   tridf$object_ <- as.integer(ptm$object_)
- topology <- split(tridf, tridf$object_)
+ topology <- split(tridf, tridf$object_)[unique(tridf$object_)]
+ ## really we should just get one object, the pfft stuff is not relevant for lines
+ ids <- unique(tridf$object_)
+ ## we don't always get triangles for a line
+ object <- x$object[ids, ]
+ object$topology_ <- topology
+
   meta <- tibble(proj = get_proj(x), ctime = Sys.time())
-  object <- x$object
-  object$topology_ <- topology
-  structure(list(object = object,
+
+  out <- structure(list(object = object,
                  vertex = vertex,
                  meta = meta), class = c("DEL0", "TRI0", "sc"))
 
+
+  cn <- dim(RTri$PA)[2L]
+  ## must do this above cnames <- colnames(tri$PA)
+  if (cn > 0) {
+    for (i in seq_len(cn)) {
+      out$vertex[[cnames[i]]] <- RTri$PA[,i, drop = TRUE]
+    }
+  }
+  out
 }
