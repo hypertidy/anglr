@@ -4,6 +4,9 @@
 #' a 3D scatterplot like that produced by [rgl::plot3d()], but from a mesh-alike
 #' object.
 #'
+#' Objects that are not explicitly surfaces will be triangulated in order to produce the
+#' mesh. Whether this is a good idea or not is an open question.
+#'
 #' It is not currently *technically defined or clear* how colour properties are
 #' mapped to line segments by default ... there is a problem of what property to
 #' use from features that share the same vertex or edge, and we have put that

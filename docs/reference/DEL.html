@@ -75,7 +75,7 @@ is the mostly Delaunay scheme used by the provable-quality meshers." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">anglr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9500</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9600</span>
       </span>
     </div>
 
@@ -153,7 +153,7 @@ is the <em>mostly Delaunay</em> scheme used by the provable-quality meshers.</p>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>passed to the underlying Triangle library</p></td>
+      <td><p>passed to the underlying Triangle library, see <a href='https://rdrr.io/pkg/RTriangle/man/triangulate.html'>RTriangle::triangulate()</a></p></td>
     </tr>
     <tr>
       <th>max_area</th>
@@ -191,9 +191,19 @@ to the dual graph of the Voronoi diagram of P"
 <p>This strict criterion is <em>relaxed</em> in small measure, to ensure that all
 edge-inputs are preserved and to allow further constraints such as triangle
 size and internal angle to be specified.</p>
+    <h2 class="hasAnchor" id="warning"><a class="anchor" href="#warning"></a>Warning</h2>
+
+    
+
+
+<p>Please take care with the <code>max_area</code> argument. The units are not taken into
+account, the value refers only to the planar area of the x/y coordinates as
+they are so this is not a real world area, but a mathematical property of the
+data. There is a safety check for a very large number of triangles, and this
+may be overridden by replying 'Yes' to the prompt.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>DEL0</p></div>
+    <div class='dont-index'><p><a href='DEL0.html'>DEL0</a> <a href='https://rdrr.io/pkg/silicate/man/TRI.html'>TRI</a> <a href='https://rdrr.io/pkg/silicate/man/TRI0.html'>TRI0</a></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'>DEL</span>(<span class='no'>simpleworld</span>))</div></pre>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>wire3 — wire3d • anglr</title>
+<title>Draw a mesh as line segments in 3D — wire3d • anglr</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,10 @@
 
 
 
-<meta property="og:title" content="wire3 — wire3d" />
-<meta property="og:description" content="plot lines from mesh" />
+<meta property="og:title" content="Draw a mesh as line segments in 3D — wire3d" />
+<meta property="og:description" content="Draw line segments with rgl from any shape3d classed object. Produces
+a 3D scatterplot like that produced by rgl::plot3d(), but from a mesh-alike
+object." />
 
 
 
@@ -72,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">anglr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9500</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9600</span>
       </span>
     </div>
 
@@ -106,13 +108,15 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>wire3</h1>
+    <h1>Draw a mesh as line segments in 3D</h1>
     
     <div class="hidden name"><code>wire3d.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>plot lines from mesh</p>
+    <p>Draw line segments with rgl from any <a href='https://rdrr.io/pkg/rgl/man/mesh3d.html'>shape3d</a> classed object. Produces
+a 3D scatterplot like that produced by <code><a href='https://rdrr.io/pkg/rgl/man/plot3d.html'>rgl::plot3d()</a></code>, but from a mesh-alike
+object.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for sc</span>
@@ -164,9 +168,16 @@
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>It is not currently <em>technically defined or clear</em> how colour properties are
+mapped to line segments by default ... there is a problem of what property to
+use from features that share the same vertex or edge, and we have put that
+aside and erred on the side of inaccuracy in favour of getting a pretty plot
+(hopefully). (Properties that come later - lower rows - win, I think.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>plot3d as.mesh3d persp3d dot3d</p></div>
+    <div class='dont-index'><p><a href='plot3d.html'>plot3d</a> <a href='as.mesh3d.html'>as.mesh3d</a> <a href='persp3d.html'>persp3d</a> <a href='dot3d.html'>dot3d</a> <a href='shade3d.html'>shade3d</a></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

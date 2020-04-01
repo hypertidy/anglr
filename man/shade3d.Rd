@@ -10,7 +10,7 @@
 \alias{shade3d.matrix}
 \alias{shade3d.sf}
 \alias{shade3d.Spatial}
-\title{shade3d}
+\title{Draw a mesh as surfaces in 3D}
 \usage{
 \method{shade3d}{TRI}(x, ..., add = FALSE)
 
@@ -29,14 +29,22 @@
 \method{shade3d}{Spatial}(x, ..., add = FALSE)
 }
 \arguments{
-\item{x}{sp, sf, raster, trip, or any other model understood by anglr/silicate}
+\item{x}{sp, sf, raster, or any other surface model understood by anglr/silicate}
 
-\item{...}{pass \link[rgl:rgl.material]{material3d properties} to rgl}
+\item{...}{pass \link[rgl:material3d]{material3d properties} to rgl}
 
 \item{add}{add to existing plot or start a new one (the default)}
 }
 \description{
-Plot surface
+Draw surfaces with rgl from any \link[rgl:tmesh3d]{shape3d} classed object. Produces
+a 3D surface plot from a mesh-alike object.
+}
+\details{
+Objects that are not explicitly surfaces will be triangulated in order to
+produce the mesh. Whether this is a good idea or not is an open question, and
+some conversions will fail due to "extra" attributes like z or time stored on
+vertices. Polygons are only implicit surfaces but these are usually
+unproblematic to triangulate so this is done.
 }
 \seealso{
 \link{plot3d} \link{as.mesh3d} \link{persp3d} \link{dot3d} \link{wire3d}

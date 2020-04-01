@@ -51,6 +51,9 @@ a 3D scatterplot like that produced by \code{\link[rgl:plot3d]{rgl::plot3d()}}, 
 object.
 }
 \details{
+Objects that are not explicitly surfaces will be triangulated in order to produce the
+mesh. Whether this is a good idea or not is an open question.
+
 It is not currently \emph{technically defined or clear} how colour properties are
 mapped to line segments by default ... there is a problem of what property to
 use from features that share the same vertex or edge, and we have put that

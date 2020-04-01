@@ -41,7 +41,7 @@ DEL0(x, ..., max_area = NULL)
 \item{max_area}{the maximum area of a triangle}
 }
 \value{
-DEL0 class
+\link[=DEL0]{DEL0 class}
 }
 \description{
 This \emph{structural-form} Delaunay-based triangulation model is analogous to the
@@ -53,12 +53,6 @@ meshers.
 \details{
 This is a more compact form of the \emph{relational-form} \code{\link[=DEL]{DEL()}} model.
 }
-\examples{
-\donttest{
-a <- DEL0(cad_tas)
-plot(a)
-}
-}
 \seealso{
-DEL
+\link{DEL}
 }

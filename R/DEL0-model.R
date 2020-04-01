@@ -1,3 +1,30 @@
+.add_zmt_dots <- function(vv, dots)  {
+  for (i in seq_along(names(vv))) {
+    if (!names(vv)[i] %in% c("x_", "y_", "z_", "m_", "t_")) {
+      vv[[names(vv)[i]]] <- NULL
+    }
+  }
+#  vv <- vv %>% dplyr::distinct(.data$x_, .data$y_, .keep_all = TRUE)  ## we can't keep unique z, so for the guiding principles this needs mention
+vv <- vv[!duplicated(vv[c("x_", "y_")]), ]
+  dots$p <- RTriangle::pslg(as.matrix(vv[c("x_", "y_")]))
+  cnames <- c()
+  if ("z_" %in% names(vv)) {
+    ## better document this, pretty powerful
+    dots$p$PA <- cbind(NULL, z_ = vv$z_)
+    cnames <- c(cnames, "z_")
+  }
+  if ("m_" %in% names(vv)) {
+    ## better document this, pretty powerful
+    dots$p$PA <- cbind(dots$p$PA, m_ = vv$m_)
+    cnames <- c(cnames, "m_")
+  }
+  if ("t_" %in% names(vv)) {
+    ## better document this, pretty powerful
+    dots$p$PA <- cbind(dots$p$PA, t_ = vv$t_)
+    cnames <- c(cnames, "t_")
+  }
+  list(vv = vv, dots = dots, cnames = cnames)
+}
 
 #' Convert object to a constrained-Delaunay triangulation
 #'
@@ -20,6 +47,24 @@
 #' \donttest{
 #' a <- DEL0(cad_tas)
 #' plot(a)
+#'
+#' ## ---- intepolate via triangulation, sample points from volcano
+#' rgl::clear3d()
+#' n <- 150
+#' max_area <- .005 ## we working in x 0,1 y 0,1
+#' library(anglr)
+#' library(dplyr)
+#' d <-
+#'   data.frame(x = runif(n), y = runif(n), multipoint_id = 1) %>%
+#'   dplyr::mutate(
+#'     z = raster::extract(raster::raster(volcano), cbind(x, y)),
+#'     multipoint_id = 1
+#'   )
+#' \donttest{
+#' mesh <- DEL0(
+#'   sfheaders::sf_multipoint(d, x = "x", y = "y", z = "z", multipoint_id = "multipoint_id"), max_area = max_area)
+#'
+#' plot3d(mesh , color = "darkgrey", specular = "darkgrey") #sample(grey.colors(5)))
 #' }
 DEL0 <- function(x, ..., max_area = NULL) {
   UseMethod("DEL0")
@@ -100,33 +145,10 @@ DEL0.PATH0 <- function(x, ..., max_area = NULL) {
     ## bail out with a point-triangulation
     vv <- silicate::sc_vertex(x)
 
-    for (i in seq_along(names(vv))) {
-      if (!names(vv)[i] %in% c("x_", "y_", "z_", "m_", "t_")) {
-        vv[[names(vv)[i]]] <- NULL
-      }
-    }
-
-    vv <- vv %>% dplyr::distinct(.data$x_, .data$y_, .keep_all = TRUE)  ## we can't keep unique z, so for the guiding principles this needs mention
-
-    dots$p <- RTriangle::pslg(as.matrix(vv[c("x_", "y_")]))
-    cnames <- c()
-    if ("z_" %in% names(vv)) {
-      ## better document this, pretty powerful
-      dots$p$PA <- cbind(NULL, z_ = vv$z_)
-      cnames <- c(cnames, "z_")
-    }
-    if ("m_" %in% names(vv)) {
-      ## better document this, pretty powerful
-      dots$p$PA <- cbind(dots$p$PA, m_ = vv$m_)
-      cnames <- c(cnames, "m_")
-    }
-    if ("t_" %in% names(vv)) {
-      ## better document this, pretty powerful
-      dots$p$PA <- cbind(dots$p$PA, t_ = vv$t_)
-      cnames <- c(cnames, "t_")
-    }
-
-
+    zmt <- .add_zmt_dots(vv, dots)
+    vv <- zmt[["vv"]]
+    dots <- zmt[["dots"]]
+   cnames <- zmt[["cnames"]]
     tri <- do.call(RTriangle::triangulate, dots)
 
     object <- tibble::tibble(del0 = 1L,
