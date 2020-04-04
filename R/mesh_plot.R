@@ -120,12 +120,7 @@ mesh_plot.BasicRaster  <- function (x,
 
   if (is.null(coords) && !is.null(crs)) {
     coords <- .raster_to_coords(x)
-    coords <- raster::setValues(coords,
-                                reproj::reproj(cbind(raster::values(coords[[1L]]),
-                                                     raster::values(coords[[1L]])),
-                                               target = crs, source = crsmeta::crs_proj(x))[, 1:2])
-    crs <- NULL
-  }
+ }
 
   if (!is.null(coords)) {
     nl <- raster::nlayers(coords)
@@ -151,7 +146,7 @@ mesh_plot.BasicRaster  <- function (x,
   atst <- mesh$ib
   atst[] <- atst %in% which(bad)
   mesh$ib <- mesh$ib[, colSums(atst) < 1]
-  browser()
+
   mesh$vb[1:2, ] <- t(xy)
 
   }

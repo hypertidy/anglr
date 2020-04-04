@@ -21,6 +21,7 @@ gebco <- gebco1
 #writeRaster(gebco, "gebco.tif", datatype = "INT2S",  options = "COMPRESS=DEFLATE", overwrite = TRUE)
 saveRDS(gebco, "xz.rds" ,compress = "xz")
 gebco <- readRDS("data-raw/xz.rds")
+gebco@crs@projargs <- "+proj=longlat +datum=WGS84"
 usethis::use_data(gebco, compress = "xz")
 
 #system(sprintf("gdalinfo %s", raadtools::topofile("gebco_19")))

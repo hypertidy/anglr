@@ -1,5 +1,8 @@
 # anglr dev
 
+
+* `mesh_plot()` now correctly reprojects a mesh to a `crs` argument, or accepts coordinates for a plot with `coords` argumnet. 
+
 * Replaced data set `gebco1` with `gebco`, a cleaner version derived from 
 GEBCO 2019, at 0.5 resolution and stored as integers. 
 
