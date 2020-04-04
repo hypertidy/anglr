@@ -153,7 +153,10 @@ edges_xy <- function(x, ...) {
   ## corner coordinates from a matrix in 0,nrow 0,ncol
   dm <- dim(x)
   xx <- seq(0, dm[1L], length = dm[1L] + 1L)
-  yy <- seq(dm[2L], 0, length = dm[2L] + 1L)
+  #yy <- seq(dm[2L], 0, length = dm[2L] + 1L)
+  ## image() orientation
+  yy <- seq(0, dm[2L], length = dm[2L] + 1L)
+
   expand_xy(x = xx, y = yy)
 }
 

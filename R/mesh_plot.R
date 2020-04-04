@@ -1,3 +1,13 @@
+.raster_to_coords <- function(x, crs = NULL) {
+  xy <- sp::coordinates(x)
+  if (!is.null(crs)) {
+    xy <- reproj::reproj(xy, target  = crs,
+                         source= raster::projection(x))[, 1:2]
+  }
+  raster::setValues(raster::brick(x, x),
+                    xy)
+}
+
 
 #' Plot a mesh
 #'
@@ -9,6 +19,13 @@
 #' coordinates of the 'quadmesh' output). The 'col' argument are mapped to the
 #' input applied object data as in 'image', and applied relative to 'zlim' if
 #' su.
+#'
+#' The `coords` argument only applies to a raster object. The `crs` argument
+#' only applies to a spatial object that has a crs projection metadata string
+#' understood by anglr (works, but still work in progress). There is a
+#' change from the previous [quadmesh::mesh_plot()] function that requires
+#' both crs and coords to be named. In quadmesh, crs was the second argument
+#' to the `mesh_plot()` function and so in usage was normally not named.
 #'
 #' If `coords` is supplied, it is currently assumed to be a 2-layer
 #' `RasterBrick` with longitude and latitude as the *cell values*. These are
@@ -38,10 +55,13 @@ mesh_plot <- function(x, crs = NULL, col = NULL, add = FALSE, zlim = NULL, ..., 
 #' @export
 mesh_plot.mesh3d <-
   function (x,
-            crs = NULL, col = NULL,
+            col = NULL,
             add = FALSE, zlim = NULL,
-            ..., coords = NULL) {
+            ..., coords = NULL, crs = NULL) {
 
+    if (!is.null(coords)) {
+      warning("argument 'coords' is only used for 'mesh_plot(Raster)', ignoring")
+    }
     if (!is.null(x$ib)) {
       id <- x$ib
     }
@@ -91,16 +111,87 @@ mesh_plot.mesh3d <-
 
 #' @name mesh_plot
 #' @export
-mesh_plot.default  <- function (x,
+mesh_plot.BasicRaster  <- function (x,
                                 crs = NULL, col = NULL,
                                 add = FALSE, zlim = NULL,
                                 ..., coords = NULL) {
+
+  mesh <- as.mesh3d(x, ...)
+
+  if (is.null(coords) && !is.null(crs)) {
+    coords <- .raster_to_coords(x)
+    coords <- raster::setValues(coords,
+                                reproj::reproj(cbind(raster::values(coords[[1L]]),
+                                                     raster::values(coords[[1L]])),
+                                               target = crs, source = crsmeta::crs_proj(x))[, 1:2])
+    crs <- NULL
+  }
+
+  if (!is.null(coords)) {
+    nl <- raster::nlayers(coords)
+    dm <- dim(x)[1:2]
+    if (!nl >= 2L) {
+      stop("coords must be a 2-layer raster matching the dimensions of 'x'")
+    }
+    if (nl > 2) warning("'coords' has more than 2 layers, ignoring layers 3+")
+   if (!all(dim(coords)[1:2] == dm)) {
+     stop("dimensions of 'x' and 'coords' do not match")
+   }
+    xy <- cbind(vxy(t(raster::as.matrix(coords[[1]]))),
+                vxy(t(raster::as.matrix(coords[[2]]))))
+
+    if (!is.null(crs)) {
+      ## we were given coords, and a crs so we assume they are longlat
+      xy <- reproj::reproj(xy,
+                           target = crs, source = "+proj=longlat +datum=WGS84")[, 1:2]
+    }
+    ## drop primitives with missing vertices
+  bad <- (!is.finite(xy[,1]) | !is.finite(xy[,2]))
+  ## generalize to triangles also/either
+  atst <- mesh$ib
+  atst[] <- atst %in% which(bad)
+  mesh$ib <- mesh$ib[, colSums(atst) < 1]
+  browser()
+  mesh$vb[1:2, ] <- t(xy)
+
+  }
+ mesh_plot(mesh, crs = NULL, col = col, add = add, zlim = zlim)
+}
+
+#' @name mesh_plot
+#' @export
+mesh_plot.sc <- function (x,
+                               crs = NULL, col = NULL,
+                               add = FALSE, zlim = NULL,
+                               ..., coords = NULL) {
+  if (!is.null(coords)) {
+    warning("argument 'coords' is only used for 'mesh_plot(Raster)', ignoring")
+  }
+  if (!is.null(crs)) {
+    x <- reproj::reproj(x, target = crs)  ## not sure this is even worth doing
+  }
   mesh_plot(as.mesh3d(x, ...),
             crs = crs,
             col = col,
             add = add,
-            zlim = zlim,
-            coords = coords)
+            zlim = zlim)
+}
+
+#' @name mesh_plot
+#' @export
+mesh_plot.default <- function (x,
+                               crs = NULL, col = NULL,
+                               add = FALSE, zlim = NULL,
+                               ..., coords = NULL) {
+  if (!is.null(coords)) {
+    warning("argument 'coords' is only used for 'mesh_plot(Raster)', ignoring")
+  }
+
+  mesh_plot(as.mesh3d(x, ...),
+            crs = crs,
+            col = col,
+            add = add,
+            zlim = zlim)
 }
 
 
