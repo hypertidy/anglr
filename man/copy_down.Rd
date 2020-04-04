@@ -81,6 +81,6 @@ plot3d(copy_down(cl, r))
 auto_3d(z = 15)
 
 \donttest{
-
+ plot3d(copy_down(SC(cont_tas), "ELEVATION"), col = "grey")
 }
 }

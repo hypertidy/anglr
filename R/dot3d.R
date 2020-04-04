@@ -30,7 +30,7 @@
 #' auto_3d(z = 14)
 #'
 #'
-#' rgl::clear3d()
+#' rgl::open3d()
 #' ## from ?persp
 #' y <- x <- seq(-10, 10, length= 80)
 #' z <- outer(x, y,
@@ -44,8 +44,17 @@
 #' \donttest{
 #' dot3d(silicate::SC(cad_tas))
 #' auto_3d(z = 14)
+#'
+#' rgl::open3d()
+#' dot3d(as.mesh3d(copy_down(DEL(cad_tas, max_area = 1e3), "CID")))
+#' auto_3d(z = 150)
 #' }
 dot3d.sf <- function(x, ...) {
+  dot3d(as.mesh3d(silicate::TRI0(x)), ...)
+}
+#' @name dot3d
+#' @export
+dot3d.sfc <- function(x, ...) {
   dot3d(as.mesh3d(silicate::TRI0(x)), ...)
 }
 #' @name dot3d

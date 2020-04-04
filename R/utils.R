@@ -32,7 +32,12 @@ TRI_primitives_index <- function(x, keep_all = FALSE) {
                     nrow = 3L)
   }
   if (inherits(x, "TRI0")) {
-    index <- t(do.call(rbind, lapply(x$object$topology_, function(ix) as.matrix(ix[c(".vx0", ".vx1", ".vx2")]))))
+  ## flush out duds
+    topology_ <- x$object$topology_
+    tst <- unlist(lapply(topology_, is.null))
+
+    if (any(tst)) topology_ <- topology_[!tst]
+    index <- t(do.call(rbind, lapply(topology_, function(ix) as.matrix(ix[c(".vx0", ".vx1", ".vx2")]))))
   }
   index
 }
@@ -62,7 +67,15 @@ as.mesh3d_internal <- function(x, z,  smooth = FALSE, normals = NULL, texcoords 
     if (inherits(x, "TRI0")) {
       ## we need the number of rows of each nested index df
       ## but below we smash that when getting vindex
-      material$color <- rep(x$object$color_, unlist(lapply(x$object$topology_, function(ix) dim(ix)[1L])))
+
+      nrs <- lapply(x$object$topology_, function(ix) dim(ix)[1L])
+      tst <- unlist(lapply(nrs, is.null))
+      #if (any(tst)) nrs[tst] <- 0
+      color_ <- x$object$color_
+      if (any(tst)) {
+        color_ <- color_[!tst]
+      }
+      material$color <- rep(color_, unlist(nrs))
     }
   }
   ## workaround for https://github.com/hypertidy/anglr/issues/121

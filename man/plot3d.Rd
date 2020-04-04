@@ -69,15 +69,15 @@ anything can be plotted in a 3D scene, polygons, lines, rasters, matrix.
 These objects from sp, sf, raster, trip, and silicate should all work.
 }
 \details{
-The function \code{\link[=plot3d]{plot3d()}} the full suite of mesh and linear type plotting
-functions from \code{\link[rgl:plot3d]{rgl::plot3d()}}. This main function includes a broader family
-of \code{\link[=dot3d]{dot3d()}}, \code{\link[=wire3d]{wire3d()}}, and \code{\link[=persp3d]{persp3d()}} and each works with matrix, raster,
-sf, sp, trip, RTriangle, and silicate models. Each of the mesh-surface forms
-rely on \code{\link[=as.mesh3d]{as.mesh3d()}} conversion behind the scenes, whereas \code{\link[=plot3d]{plot3d()}} for
-the linear types (sf, sp, trip, and from silicate SC, SC0, PATH, PATH0, and
-ARC0) all are plotted using rgl segments without going through a triangulated
-surface form. This reflects their underlying topology when it comes to 3D
-visualization and analysis.
+The function \code{\link[=plot3d]{plot3d()}} covers the full suite of plotting functions from
+\code{\link[rgl:plot3d]{rgl::plot3d()}} for meshes, points, and lines. This main function includes the
+family of \code{\link[=dot3d]{dot3d()}}, \code{\link[=wire3d]{wire3d()}}, and \code{\link[=persp3d]{persp3d()}} and each works with
+matrix, raster, sf, sp, trip, RTriangle, and silicate models. Each of the
+mesh-surface forms rely on \code{\link[=as.mesh3d]{as.mesh3d()}} conversion behind the scenes,
+whereas \code{\link[=plot3d]{plot3d()}} for the linear types (sf, sp, trip, and from silicate SC,
+SC0, PATH, PATH0, and ARC0) all are plotted using rgl segments without going
+through a triangulated surface form. This reflects their underlying topology
+when it comes to 3D visualization and analysis.
 
 If the scene looks funny the aspect ratio might be poor, we've decided not to
 automatically update this with normal plots, but running \code{auto_3d()} will

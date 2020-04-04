@@ -173,7 +173,13 @@ mesh_plot.default <- function(x,  col = NULL, add = FALSE, zlim = NULL, ...,
   if (!is.null(coords)) {
     warning("argument 'coords' is only used for 'mesh_plot(Raster)', ignoring")
   }
-
+  if (!is.null(crs)) {
+    xx <- try(reproj::reproj(PATH0(x), target = crs), silent  = TRUE)
+    if (inherits(xx, "try-error")) {
+      stop("unable to reproject 'x' with 'crs'")
+    }
+    x <- xx
+  }
   mesh_plot(as.mesh3d(x, ...),
             crs = crs,
             col = col,

@@ -50,6 +50,11 @@ persp3d.sf <- function(x, ..., add = FALSE) {
 }
 #' @name persp3d
 #' @export
+persp3d.sfc <- function(x, ..., add = FALSE) {
+  plot3d(as.mesh3d(x, ...), add = add)
+}
+#' @name persp3d
+#' @export
 persp3d.Spatial <- function(x, ..., add = FALSE) {
   plot3d(as.mesh3d(x, ...), add = add)
 }

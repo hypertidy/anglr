@@ -3,6 +3,7 @@
 \name{dot3d}
 \alias{dot3d}
 \alias{dot3d.sf}
+\alias{dot3d.sfc}
 \alias{dot3d.Spatial}
 \alias{dot3d.matrix}
 \alias{dot3d.BasicRaster}
@@ -13,6 +14,8 @@
 \title{Draw a mesh as points in 3D}
 \usage{
 \method{dot3d}{sf}(x, ...)
+
+\method{dot3d}{sfc}(x, ...)
 
 \method{dot3d}{Spatial}(x, ...)
 
@@ -58,7 +61,7 @@ dot3d(volcano, size = 10)
 auto_3d(z = 14)
 
 
-rgl::clear3d()
+rgl::open3d()
 ## from ?persp
 y <- x <- seq(-10, 10, length= 80)
 z <- outer(x, y,
@@ -72,6 +75,10 @@ auto_3d(z = 14)
 \donttest{
 dot3d(silicate::SC(cad_tas))
 auto_3d(z = 14)
+
+rgl::open3d()
+dot3d(as.mesh3d(copy_down(DEL(cad_tas, max_area = 1e3), "CID")))
+auto_3d(z = 150)
 }
 }
 \seealso{

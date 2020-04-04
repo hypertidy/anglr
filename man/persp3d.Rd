@@ -10,6 +10,7 @@
 \alias{persp3d.QUAD}
 \alias{persp3d.matrix}
 \alias{persp3d.sf}
+\alias{persp3d.sfc}
 \alias{persp3d.Spatial}
 \alias{persp3d.triangulation}
 \title{persp3d}
@@ -29,6 +30,8 @@
 \method{persp3d}{matrix}(x, ..., add = FALSE)
 
 \method{persp3d}{sf}(x, ..., add = FALSE)
+
+\method{persp3d}{sfc}(x, ..., add = FALSE)
 
 \method{persp3d}{Spatial}(x, ..., add = FALSE)
 
