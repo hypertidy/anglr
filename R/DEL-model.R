@@ -216,6 +216,7 @@ DEL.PATH <- function(x, ..., max_area = NULL) {
   object_link_triangle <- ptm %>% dplyr::group_by(.data$object_, .data$triangle_) %>%
     dplyr::mutate(visible = !(dplyr::n() %% 2 == 0)) %>%
     dplyr::ungroup()
+
   vertex <- tibble::tibble(x_ = RTri$P[,1], y_ = RTri$P[,2],
                            vertex_ = silicate::sc_uid(nrow(RTri$P)))
 

@@ -65,7 +65,10 @@ as.mesh3d_internal <- function(x, z,  smooth = FALSE, normals = NULL, texcoords 
       material$color <- rep(x$object$color_, unlist(lapply(x$object$topology_, function(ix) dim(ix)[1L])))
     }
   }
-
+  ## workaround for https://github.com/hypertidy/anglr/issues/121
+  if (all(is.na(material$color))) {
+    material$color[] <- "#00000000"
+  }
 
   if (!missing(z) && inherits(z, "BasicRaster")) {
     if (!is.finite(crsmeta::crs_proj(z))) {
