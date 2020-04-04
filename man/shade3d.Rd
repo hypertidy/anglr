@@ -46,6 +46,18 @@ some conversions will fail due to "extra" attributes like z or time stored on
 vertices. Polygons are only implicit surfaces but these are usually
 unproblematic to triangulate so this is done.
 }
+\examples{
+shade3d(volcano)
+
+\donttest{
+## create a globe plot of land areas with elevation
+rgl::open3d()
+world <- copy_down(DEL(simpleworld, max_area = 0.5), gebco * 50)
+shade3d(globe(world), specular = "black", color = "white")
+rgl::spheres3d(0, 0, 0, radius = 6378000, col = "dodgerblue", alpha = 0.75)
+rgl::bg3d("black")
+}
+}
 \seealso{
 \link{plot3d} \link{as.mesh3d} \link{persp3d} \link{dot3d} \link{wire3d}
 }

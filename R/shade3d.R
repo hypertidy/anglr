@@ -16,6 +16,17 @@
 #' @importFrom rgl shade3d
 #' @export shade3d
 #' @export
+#' @examples
+#' shade3d(volcano)
+#'
+#' \donttest{
+#' ## create a globe plot of land areas with elevation
+#' rgl::open3d()
+#' world <- copy_down(DEL(simpleworld, max_area = 0.5), gebco * 50)
+#' shade3d(globe(world), specular = "black", color = "white")
+#' rgl::spheres3d(0, 0, 0, radius = 6378000, col = "dodgerblue", alpha = 0.75)
+#' rgl::bg3d("black")
+#' }
 shade3d.TRI <- function(x, ..., add = FALSE) {
   shade3d(as.mesh3d(x, ...), add = add)
 }

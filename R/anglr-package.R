@@ -49,10 +49,33 @@ NULL
 #'
 #' The [reproj()] function is imported from the [reproj::reproj()] package
 #' and re-exported.
+#'
 #' @importFrom reproj reproj
 #' @export reproj
 #' @name reproj
 NULL
+
+# @export
+# @name reproj
+# @examples
+# plot3d(reproj(QUAD(raster::crop(gebco, raster::extent(100, 120, -50, 0))), "+proj=geocent +datum=WGS84"))
+# rgl::aspect3d(1, 1, 1)
+
+# reproj.QUAD <- function(x, target = NULL, ..., source = NULL) {
+#   vv <- get_vertex(x)
+#   if (!"z_" %in% names(vv)) {
+#     vv$z_ <-
+#   }
+#   v <- reproj::reproj(vv, source = get_proj(x), target = target)
+#   x$vertex <- tibble::tibble(x_ = v[,1L], y_ = v[,2L], z_ = v[,3])
+#   meta <- x$meta
+#   row <- x$meta[1, ]
+#   row$proj <- target
+#   row$ctime <- Sys.time()
+#   x
+# }
+
+
 
 #' sf data frame zoo.
 #'

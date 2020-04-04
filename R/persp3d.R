@@ -16,7 +16,11 @@ persp3d.TRI <- function(x, ..., add = FALSE) {
 persp3d.TRI0 <- function(x, ..., add = FALSE) {
   plot3d(as.mesh3d(x, ...), add = add)
 }
-
+#' @name persp3d
+#' @export
+persp3d.BasicRaster <- function(x, ..., add = FALSE) {
+  plot3d(as.mesh3d(x, ...), add = add)
+}
 #' @name persp3d
 #' @export
 persp3d.DEL <- function(x, ..., add = FALSE) {

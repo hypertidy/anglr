@@ -4,6 +4,7 @@
 \alias{persp3d}
 \alias{persp3d.TRI}
 \alias{persp3d.TRI0}
+\alias{persp3d.BasicRaster}
 \alias{persp3d.DEL}
 \alias{persp3d.DEL0}
 \alias{persp3d.QUAD}
@@ -15,6 +16,8 @@
 \method{persp3d}{TRI}(x, ..., add = FALSE)
 
 \method{persp3d}{TRI0}(x, ..., add = FALSE)
+
+\method{persp3d}{BasicRaster}(x, ..., add = FALSE)
 
 \method{persp3d}{DEL}(x, ..., add = FALSE)
 

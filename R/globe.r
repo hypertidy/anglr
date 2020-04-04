@@ -14,7 +14,8 @@
 #' g <- globe(silicate::PATH(as(simpleworld, "SpatialLinesDataFrame")))
 #' if (interactive()) {
 #'  plot(g, lwd = 3)
-#'  }
+#'  plot3d(g)
+#'}
 globe <- function(x, ...) {
   UseMethod("globe")
 }
