@@ -83,3 +83,8 @@ dot3d.SC0 <- function(x, ...) {
   dot3d(as.mesh3d(x), ...)
 }
 
+#' @name dot3d
+#' @export
+dot3d.triangulation <- function(x, ...) {
+  dot3d(as.mesh3d(x), ...)
+}

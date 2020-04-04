@@ -162,7 +162,14 @@ as.mesh3d.TRI0 <- function(x, z,  smooth = FALSE, normals = NULL, texcoords = NU
                      keep_all = keep_all, image_texture = image_texture,
                      meshColor = meshColor)
 }
-
+#' @name as.mesh3d
+#' @export
+as.mesh3d.ARC <- function(x, triangles = FALSE,
+                                  smooth = FALSE, normals = NULL, texcoords = NULL,
+                                  ..., keep_all = TRUE, image_texture = NULL, meshColor = "faces") {
+ as.mesh3d(DEL(x), triangles = triangles, smooth = smooth, normals = normals, texcoords = texcoords,
+           keep_all = keep_all, image_texture = image_texture, meshColor = meshColor, ...)
+}
 #' @name as.mesh3d
 #' @export
 as.mesh3d.BasicRaster <- function(x, triangles = FALSE,
@@ -242,7 +249,16 @@ as.mesh3d.triangulation <- function(x, ...) {
                t(x$T))
 }
 
+#' @name as.mesh3d
+#' @export
+as.mesh3d.sfc <-function(x, triangles = FALSE,
+                        smooth = FALSE, normals = NULL, texcoords = NULL,
+                        ..., keep_all = TRUE, image_texture = NULL, meshColor = "faces") {
 
+  ## TRI or DEL or SC?
+  as.mesh3d(DEL0(x), triangles = triangles, smooth = smooth, normals = normals, texcoords = texcoords,
+            keep_all = keep_all, image_texture = image_texture, meshColor = meshColor, ...)
+}
 #' @name as.mesh3d
 #' @export
 as.mesh3d.sf <-function(x, triangles = FALSE,

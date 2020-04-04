@@ -68,3 +68,8 @@ shade3d.sf <- function(x, ..., add = FALSE) {
 shade3d.Spatial <- function(x, ..., add = FALSE) {
   shade3d(as.mesh3d(x, ...), add = add)
 }
+#' @name shade3d
+#' @export
+shade3d.triangulation <- function(x, ..., add = FALSE) {
+  shade3d(as.mesh3d(x, ...), add = add)
+}

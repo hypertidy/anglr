@@ -11,6 +11,7 @@
 \alias{persp3d.matrix}
 \alias{persp3d.sf}
 \alias{persp3d.Spatial}
+\alias{persp3d.triangulation}
 \title{persp3d}
 \usage{
 \method{persp3d}{TRI}(x, ..., add = FALSE)
@@ -30,6 +31,8 @@
 \method{persp3d}{sf}(x, ..., add = FALSE)
 
 \method{persp3d}{Spatial}(x, ..., add = FALSE)
+
+\method{persp3d}{triangulation}(x, ..., add = FALSE)
 }
 \arguments{
 \item{x}{sp, sf, raster, trip, or any other model understood by anglr/silicate}

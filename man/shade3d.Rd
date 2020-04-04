@@ -10,6 +10,7 @@
 \alias{shade3d.matrix}
 \alias{shade3d.sf}
 \alias{shade3d.Spatial}
+\alias{shade3d.triangulation}
 \title{Draw a mesh as surfaces in 3D}
 \usage{
 \method{shade3d}{TRI}(x, ..., add = FALSE)
@@ -27,6 +28,8 @@
 \method{shade3d}{sf}(x, ..., add = FALSE)
 
 \method{shade3d}{Spatial}(x, ..., add = FALSE)
+
+\method{shade3d}{triangulation}(x, ..., add = FALSE)
 }
 \arguments{
 \item{x}{sp, sf, raster, or any other surface model understood by anglr/silicate}

@@ -9,6 +9,7 @@
 \alias{dot3d.sc}
 \alias{dot3d.SC}
 \alias{dot3d.SC0}
+\alias{dot3d.triangulation}
 \title{Draw a mesh as points in 3D}
 \usage{
 \method{dot3d}{sf}(x, ...)
@@ -24,6 +25,8 @@
 \method{dot3d}{SC}(x, ...)
 
 \method{dot3d}{SC0}(x, ...)
+
+\method{dot3d}{triangulation}(x, ...)
 }
 \arguments{
 \item{x}{sc, sp, sf, raster, trip, or any other model understood by anglr/silicate}
