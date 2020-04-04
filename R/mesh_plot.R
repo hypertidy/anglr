@@ -46,7 +46,7 @@
 #' @return nothing, used for the side-effect of creating or adding to a plot
 #' @name mesh_plot
 #' @export
-mesh_plot <- function(x, crs = NULL, col = NULL, add = FALSE, zlim = NULL, ..., coords = NULL) {
+mesh_plot <- function(x,  col = NULL, add = FALSE, zlim = NULL, ..., coords = NULL, crs = NULL) {
   UseMethod("mesh_plot")
 }
 #' @name mesh_plot
@@ -109,10 +109,8 @@ mesh_plot.mesh3d <-
 
 #' @name mesh_plot
 #' @export
-mesh_plot.BasicRaster  <- function (x,
-                                crs = NULL, col = NULL,
-                                add = FALSE, zlim = NULL,
-                                ..., coords = NULL) {
+mesh_plot.BasicRaster  <- function(x,  col = NULL, add = FALSE, zlim = NULL, ...,
+                                   coords = NULL, crs = NULL) {
 
   mesh <- as.mesh3d(x, ...)
 
@@ -153,10 +151,8 @@ mesh_plot.BasicRaster  <- function (x,
 
 #' @name mesh_plot
 #' @export
-mesh_plot.sc <- function (x,
-                               crs = NULL, col = NULL,
-                               add = FALSE, zlim = NULL,
-                               ..., coords = NULL) {
+mesh_plot.sc <- function(x,  col = NULL, add = FALSE, zlim = NULL, ...,
+                         coords = NULL, crs = NULL) {
   if (!is.null(coords)) {
     warning("argument 'coords' is only used for 'mesh_plot(Raster)', ignoring")
   }
@@ -172,10 +168,8 @@ mesh_plot.sc <- function (x,
 
 #' @name mesh_plot
 #' @export
-mesh_plot.default <- function (x,
-                               crs = NULL, col = NULL,
-                               add = FALSE, zlim = NULL,
-                               ..., coords = NULL) {
+mesh_plot.default <- function(x,  col = NULL, add = FALSE, zlim = NULL, ...,
+                              coords = NULL, crs = NULL) {
   if (!is.null(coords)) {
     warning("argument 'coords' is only used for 'mesh_plot(Raster)', ignoring")
   }

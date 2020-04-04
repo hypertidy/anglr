@@ -39,6 +39,10 @@
 #' plot3d(copy_down(cl, r))
 #' ## looks funny?
 #' auto_3d(z = 15)
+#'
+#' \donttest{
+#'
+#' }
 copy_down <- function(x, z = NULL, ..., .id = "z_") {
   stopifnot(is.character(.id))
 

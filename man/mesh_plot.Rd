@@ -10,12 +10,12 @@
 \usage{
 mesh_plot(
   x,
-  crs = NULL,
   col = NULL,
   add = FALSE,
   zlim = NULL,
   ...,
-  coords = NULL
+  coords = NULL,
+  crs = NULL
 )
 
 \method{mesh_plot}{mesh3d}(
@@ -30,38 +30,36 @@ mesh_plot(
 
 \method{mesh_plot}{BasicRaster}(
   x,
-  crs = NULL,
   col = NULL,
   add = FALSE,
   zlim = NULL,
   ...,
-  coords = NULL
+  coords = NULL,
+  crs = NULL
 )
 
 \method{mesh_plot}{sc}(
   x,
-  crs = NULL,
   col = NULL,
   add = FALSE,
   zlim = NULL,
   ...,
-  coords = NULL
+  coords = NULL,
+  crs = NULL
 )
 
 \method{mesh_plot}{default}(
   x,
-  crs = NULL,
   col = NULL,
   add = FALSE,
   zlim = NULL,
   ...,
-  coords = NULL
+  coords = NULL,
+  crs = NULL
 )
 }
 \arguments{
 \item{x}{object to convert to mesh and plot}
-
-\item{crs}{target map projection}
 
 \item{col}{colours to use, defaults to that used by \code{\link[graphics:image]{graphics::image()}}}
 
@@ -73,6 +71,8 @@ data range is used)}
 \item{...}{passed through to \code{base::plot}}
 
 \item{coords}{optional input raster of coordinates of each cell, see details}
+
+\item{crs}{target map projection}
 }
 \value{
 nothing, used for the side-effect of creating or adding to a plot
