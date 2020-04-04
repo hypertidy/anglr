@@ -19,7 +19,7 @@
 #' @export
 #'
 #' @examples
-#' topo <- copy_down(silicate::SC(simpleworld), gebco1)
+#' topo <- copy_down(silicate::SC(simpleworld), gebco)
 #' plot3d(topo)
 #'
 #' auto_3d(z = 4)

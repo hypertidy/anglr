@@ -33,7 +33,7 @@ This is typically used to rescale data in different units, for example longitude
 latitude in degrees and elevation in metres.
 }
 \examples{
-topo <- copy_down(silicate::SC(simpleworld), gebco1)
+topo <- copy_down(silicate::SC(simpleworld), gebco)
 plot3d(topo)
 
 auto_3d(z = 4)

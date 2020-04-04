@@ -72,7 +72,8 @@
 #'   )
 #' \donttest{
 #' mesh <- DEL0(
-#'   sfheaders::sf_multipoint(d, x = "x", y = "y", z = "z", multipoint_id = "multipoint_id"), max_area = max_area)
+#'   sfheaders::sf_multipoint(d, x = "x", y = "y", z = "z",
+#'     multipoint_id = "multipoint_id"), max_area = max_area)
 #'
 #' plot3d(mesh , color = "darkgrey", specular = "darkgrey") #sample(grey.colors(5)))
 #' }

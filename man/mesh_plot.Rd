@@ -3,6 +3,8 @@
 \name{mesh_plot}
 \alias{mesh_plot}
 \alias{mesh_plot.mesh3d}
+\alias{mesh_plot.BasicRaster}
+\alias{mesh_plot.sc}
 \alias{mesh_plot.default}
 \title{Plot a mesh}
 \usage{
@@ -17,6 +19,26 @@ mesh_plot(
 )
 
 \method{mesh_plot}{mesh3d}(
+  x,
+  col = NULL,
+  add = FALSE,
+  zlim = NULL,
+  ...,
+  coords = NULL,
+  crs = NULL
+)
+
+\method{mesh_plot}{BasicRaster}(
+  x,
+  crs = NULL,
+  col = NULL,
+  add = FALSE,
+  zlim = NULL,
+  ...,
+  coords = NULL
+)
+
+\method{mesh_plot}{sc}(
   x,
   crs = NULL,
   col = NULL,
@@ -65,6 +87,13 @@ define the target map projection in 'PROJ string' format. (There is no
 coordinates of the 'quadmesh' output). The 'col' argument are mapped to the
 input applied object data as in 'image', and applied relative to 'zlim' if
 su.
+
+The \code{coords} argument only applies to a raster object. The \code{crs} argument
+only applies to a spatial object that has a crs projection metadata string
+understood by anglr (works, but still work in progress). There is a
+change from the previous \code{\link[quadmesh:mesh_plot]{quadmesh::mesh_plot()}} function that requires
+both crs and coords to be named. In quadmesh, crs was the second argument
+to the \code{mesh_plot()} function and so in usage was normally not named.
 
 If \code{coords} is supplied, it is currently assumed to be a 2-layer
 \code{RasterBrick} with longitude and latitude as the \emph{cell values}. These are

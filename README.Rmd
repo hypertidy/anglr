@@ -133,7 +133,7 @@ An [example of merging vector and raster](https://hypertidy.github.io/anglr-demo
 
 ```{r merge-raster, eval=FALSE}
 ## a global DEM
-data("gebco1", package = "anglr")
+data("gebco", package = "anglr")
 library(sf)
 ## North Carolina, the sf boilerplate polygon layer
 nc <- read_sf(system.file("shape/nc.shp", package="sf"))
@@ -145,7 +145,7 @@ library(silicate)
 
 p_mesh <- DEL(nc, max_area = 0.002)
 ## a relief map, composed of triangles grouped by polygon with ##  interpolated raster elevation 
-p_mesh <- copy_down(p_mesh, z = gebco1)
+p_mesh <- copy_down(p_mesh, z = gebco)
 
 
 ## plot the scene

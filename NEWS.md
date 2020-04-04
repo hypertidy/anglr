@@ -1,5 +1,8 @@
 # anglr dev
 
+* Replaced data set `gebco1` with `gebco`, a cleaner version derived from 
+GEBCO 2019, at 0.5 resolution and stored as integers. 
+
 * Added degenerate path surface interpolation (i.e. triangulation for POINT or MULTIPOINT with xy, xyz, xyzm, or xym), wish of https://github.com/hypertidy/anglr/issues/115. 
 
 * Bug fix, now correctly culling invisible triangles for 2D and 3D plots of DEL

@@ -84,13 +84,13 @@ NULL
 #'
 #' A simple raster map of world topography, elevation relative to sea level in metres. Source
 #' data is Gebco 2014, converted to a much reduced 1 degree resolution global map.
-#' @name gebco1
+#' @name gebco
 #' @docType data
 #' @examples
-#' data("gebco1", package = "anglr")
+#' data("gebco", package = "anglr")
 #' library(silicate)
 #' laea <- "+proj=laea +lon_0=147 +lat_0=-42"
-#' longlat <- "+init=epsg:4326"
-#' x <- SC(simpleworld) %>% copy_down(gebco1 + 500)
+#' longlat <- "+proj=longlat +datum=WGS84"
+#' x <- SC(simpleworld) %>% copy_down(gebco + 500)
 #' plot3d(x); rgl::aspect3d(1, 1, 0.07)
 NULL
