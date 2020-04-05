@@ -1,0 +1,97 @@
+---
+title: "anglr"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{anglr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(anglr)
+```
+
+The anglr package is about *data structures* and *3D visualization*. 
+
+Key aspects of data structures are: 
+
+* mesh-topology with a common vertex-pool for connected shapes.
+* line segments.
+* path-based geometry.
+* triangulated surfaces.
+* high-quality triangulations, meshes.
+* relational vs. structural forms. 
+
+All of these aspects are related to ease of visualization and flexibility. The anglr package extends the core [silicate data structures](https://hypertidy.github.io/silicate/) SC, SC0, PATH, PATH0, TRI, and TRI0 with models [DEL](https://hypertidy.github.io/anglr/reference/DEL.html), [DEL0](https://hypertidy.github.io/anglr/reference/DEL0.html) and [QUAD](https://hypertidy.github.io/anglr/reference/QUAD.html). `DEL()` and `DEL0()` provide high-quality Delaunay-constrained edge-based triangulations for a wide variety of inputs. Polygon layers can be triangulated into mesh structures while maintaining all internal shape consistency and attribute metadata. `QUAD()` provides an efficient representation of raster data, it is quite experimental and only works within a limited set of workflows in anglr. 
+
+There is no single best data structure for all applications, and so as much as possible the models (SC, SC0, PATH, PATH0, TRI, TRI0, ARC, DEL, DEL0, and QUAD) are interoperable and will endeavour to maintain the input information and simply interpret it in terms of the desired format. Not all pathways are possible or sensible, but it depends on the required application and the form of the input data, so the key feature is flexibility and control. 
+
+As well as the data strucutre models, anglr includes the following visualization functions. 
+
+* [mesh_plot()] this is a 2D graphics plot of a mesh structure (an example being a curvilinear raster, but simple polygon layers are also supported)
+* [shade3d()] 3D surface plot from mesh 
+* [persp3d()] 3D surface plot from mesh
+* [wire3d()] 3D line plot from mesh
+* [dot3d()] 3D point plot from mesh
+* [plot3d()] general 3D plot
+
+Each of these will attempt to convert any given input to an appropriate type, not all are sensible but we have attempted to err on the side of convenience. 
+
+## Print format of silicate/anglr models
+
+Object, vertex, meta, and primitives and link tables for *relational models*.
+
+Embedded index list `topology_` for *structural models*. 
+
+```{r print}
+library(anglr)
+library(silicate)
+data("minimal_mesh", package = "silicate")
+DEL(minimal_mesh)
+
+DEL0(minimal_mesh)
+```
+
+A triangulation preserves its original polygon identity, plotting in 2D in the obvious way. 
+
+```{r plot}
+mesh_plot(DEL(minimal_mesh))
+```
+
+But, because under the hood it is composed of simple primitives we can address them by separate colours. 
+
+```{r plot-triangles}
+mesh0 <- DEL(minimal_mesh)
+mesh_plot(mesh0, col = viridis::viridis(nrow(mesh0$triangle)))
+```
+
+The density can be controlled by setting `max_area` (other controls are available via arguments to [RTriangle::triangulate]). Note that we now have new vertices that did not exist in the original polygon layer, both interal to the surface of the polygon and along its boundary. This is the "mesh-quality" aspect mentioned above. 
+
+```{r plot-denser}
+mesh1 <- DEL(minimal_mesh, max_area = 0.01)
+mesh_plot(mesh1, col = viridis::viridis(nrow(mesh1$triangle)))
+
+```
+
+In the silicate package, we only have access to ear-cutting triangulations, with the `TRI()` or `TRI0()` function.
+
+
+```{r TRI-mesh}
+tri0 <- TRI(minimal_mesh)
+mesh_plot(tri0, col = viridis::viridis(nrow(tri0$triangle)))
+```
+
+(Note that "high" or "low" quality of a triangulation really depends on the requirements for the task, but this is a real mathematical quantity with a strong theoretical basis). 
+
+For our purposes, primarily we want denser meshes because they will look better in 3D when combined with other data that varies in z as well as x-y. 
+
+
+
+

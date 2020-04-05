@@ -86,6 +86,9 @@ a 3D surface plot from a mesh-alike object." />
   </a>
 </li>
 <li>
+  <a href="../articles/anglr.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -118,31 +121,49 @@ a 3D surface plot from a mesh-alike object.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for TRI</span>
-<span class='fu'>shade3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>shade3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for TRI0</span>
-<span class='fu'>shade3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>shade3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for PATH</span>
+<span class='fu'>shade3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for PATH0</span>
+<span class='fu'>shade3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for DEL</span>
-<span class='fu'>shade3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>shade3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for DEL0</span>
-<span class='fu'>shade3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>shade3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for QUAD</span>
-<span class='fu'>shade3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>shade3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for BasicRaster</span>
+<span class='fu'>shade3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for matrix</span>
-<span class='fu'>shade3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>shade3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for sfc</span>
+<span class='fu'>shade3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for sf</span>
-<span class='fu'>shade3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>shade3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for SC</span>
+<span class='fu'>shade3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for SC0</span>
+<span class='fu'>shade3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for Spatial</span>
-<span class='fu'>shade3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>shade3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for triangulation</span>
-<span class='fu'>shade3d</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+<span class='fu'>shade3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -155,10 +176,6 @@ a 3D surface plot from a mesh-alike object.</p>
       <th>...</th>
       <td><p>pass <a href='https://rdrr.io/pkg/rgl/man/material.html'>material3d properties</a> to rgl</p></td>
     </tr>
-    <tr>
-      <th>add</th>
-      <td><p>add to existing plot or start a new one (the default)</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -170,15 +187,16 @@ vertices. Polygons are only implicit surfaces but these are usually
 unproblematic to triangulate so this is done.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><a href='plot3d.html'>plot3d</a> <a href='as.mesh3d.html'>as.mesh3d</a> <a href='persp3d.html'>persp3d</a> <a href='dot3d.html'>dot3d</a> <a href='wire3d.html'>wire3d</a></p></div>
+    <div class='dont-index'><p><a href='plot3d.html'>plot3d</a> <a href='as.mesh3d.html'>as.mesh3d</a> <a href='persp3d.html'>persp3d</a> <a href='dot3d.html'>dot3d</a> <a href='wire3d.html'>wire3d</a> <a href='mesh_plot.html'>mesh_plot</a></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>shade3d</span>(<span class='no'>volcano</span>)
+    <pre class="examples"><div class='input'><span class='kw pkg'>rgl</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/rgl/man/par3d.html'>open3d</a></span>()</div><div class='output co'>#&gt; wgl 
+#&gt;   4 </div><div class='input'><span class='fu'>shade3d</span>(<span class='no'>volcano</span>)
 
 <span class='co'># \donttest{</span>
 <span class='co'>## create a globe plot of land areas with elevation</span>
 <span class='kw pkg'>rgl</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/rgl/man/par3d.html'>open3d</a></span>()</div><div class='output co'>#&gt; wgl 
-#&gt;   4 </div><div class='input'><span class='no'>world</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='copy_down.html'>copy_down</a></span>(<span class='fu'><a href='DEL.html'>DEL</a></span>(<span class='no'>simpleworld</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='fl'>0.5</span>), <span class='no'>gebco</span> * <span class='fl'>50</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: both proj are different longlat, no transformation done</span></div><div class='input'><span class='fu'>shade3d</span>(<span class='fu'><a href='globe.html'>globe</a></span>(<span class='no'>world</span>), <span class='kw'>specular</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"white"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: towgs84 element removed from source projection string</span></div><div class='input'><span class='kw pkg'>rgl</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/rgl/man/spheres.html'>spheres3d</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='kw'>radius</span> <span class='kw'>=</span> <span class='fl'>6378000</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"dodgerblue"</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.75</span>)
+#&gt;   5 </div><div class='input'><span class='no'>world</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='copy_down.html'>copy_down</a></span>(<span class='fu'><a href='DEL.html'>DEL</a></span>(<span class='no'>simpleworld</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='fl'>0.5</span>), <span class='no'>gebco</span> * <span class='fl'>50</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: both proj are different longlat, no transformation done</span></div><div class='input'><span class='fu'>shade3d</span>(<span class='fu'><a href='globe.html'>globe</a></span>(<span class='no'>world</span>), <span class='kw'>specular</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"white"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: towgs84 element removed from source projection string</span></div><div class='input'><span class='kw pkg'>rgl</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/rgl/man/spheres.html'>spheres3d</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='kw'>radius</span> <span class='kw'>=</span> <span class='fl'>6378000</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"dodgerblue"</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.75</span>)
 <span class='kw pkg'>rgl</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/rgl/man/bg.html'>bg3d</a></span>(<span class='st'>"black"</span>)
 <span class='co'># }</span></div></pre>
   </div>
