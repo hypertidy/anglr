@@ -53,13 +53,12 @@ as.mesh3d_internal <- function(x, z,  smooth = FALSE, normals = NULL, texcoords 
              pass in 'rgl::material3d' arguments directly as part of '...'")
   }
   x <- TRI_add_shade(x)  ## sets color_ if not present
-
   if (!is.null(x$triangle) && "visible" %in% names(x$triangle)) {
     x$triangle <- dplyr::filter(x$triangle, .data$visible)
   }
 
 
-  if (is.null(material$color) &&
+  if (is.null(material[["color"]]) &&
       is.null(image_texture)) {
     if (inherits(x, "TRI")) {
       material$color  <- x$object$color_[match(x$triangle$object_, x$object$object_)]
@@ -79,8 +78,12 @@ as.mesh3d_internal <- function(x, z,  smooth = FALSE, normals = NULL, texcoords 
     }
   }
   ## workaround for https://github.com/hypertidy/anglr/issues/121
+  if (length(material[["color"]]) < 1 || is.null(material[["color"]])) {
+    material$color <- "#BBBBBBFF"
+  }
+
   if (all(is.na(material$color))) {
-    material$color[] <- "#00000000"
+    material$color[] <- "##BBBBBBFF"
   }
 
   if (!missing(z) && inherits(z, "BasicRaster")) {

@@ -95,6 +95,7 @@ copy_down.TRI <- function(x, z = NULL, ..., .id = "z_") {
   }
 
   denorm_PRIM_addZ(x, z = z, ..., .id = .id)
+
 }
 #' @name copy_down
 #' @export

@@ -1,5 +1,8 @@
 # anglr dev
 
+* Align to obscured bug fix for silicate, #119. 
+
+* Fixed `mesh_plot()` default colours for a textured mesh. 
 
 * `mesh_plot()` now correctly reprojects a mesh to a `crs` argument, or accepts coordinates for a plot with `coords` argumnet. 
 

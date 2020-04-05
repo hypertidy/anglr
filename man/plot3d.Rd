@@ -107,6 +107,13 @@ dot3d(cad_tas)
 }
 ## add Z elevation to an sf polygon in a mesh
 plot3d(copy_down(as.mesh3d(silicate::minimal_mesh), raster::raster(volcano)))
+
+## but make it much more interesting
+\donttest{
+plot3d(copy_down(as.mesh3d(DEL(silicate::minimal_mesh, max_area = 0.0001)),
+  raster::raster(-volcano)), col = c("black", "orange")); auto_3d(z = 35)
+wire3d(silicate::minimal_mesh)
+}
 }
 \seealso{
 \link{wire3d} \link{as.mesh3d} \link{persp3d} \link{dot3d} \link{shade3d}
