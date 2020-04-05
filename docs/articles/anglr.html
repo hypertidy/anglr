@@ -142,6 +142,17 @@ DEL0(minimal_mesh)
 <p>(Note that “high” or “low” quality of a triangulation really depends on the requirements for the task, but this is a real mathematical quantity with a strong theoretical basis).</p>
 <p>For our purposes, primarily we want denser meshes because they will look better in 3D when combined with other data that varies in z as well as x-y.</p>
 </div>
+<div id="plot-3d" class="section level2">
+<h2 class="hasAnchor">
+<a href="#plot-3d" class="anchor"></a>Plot 3D</h2>
+<p>The 3D plot functions are very flexible.</p>
+<div class="sourceCode" id="cb7"><html><body><pre class="r">wire3d(mesh1)
+
+#rgl::snapshot3d("wire.png")</pre></body></html></div>
+<div class="figure">
+<img src="wire.png" title="Wire 3D" alt=""><p class="caption">wire 3d</p>
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

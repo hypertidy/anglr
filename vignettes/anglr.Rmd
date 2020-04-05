@@ -93,5 +93,21 @@ mesh_plot(tri0, col = viridis::viridis(nrow(tri0$triangle)))
 For our purposes, primarily we want denser meshes because they will look better in 3D when combined with other data that varies in z as well as x-y. 
 
 
+## Plot 3D
+
+The 3D plot functions are very flexible. 
+
+```{r plot3d}
+wire3d(mesh1)
+
+#rgl::snapshot3d("wire.png")
+```
+
+![wire 3d][wire3d]
+
+
+
+
+[wire3d]: wire.png "Wire 3D"
 
 
