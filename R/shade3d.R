@@ -35,7 +35,16 @@ shade3d.TRI <- function(x, ...) {
 shade3d.TRI0 <- function(x, ...) {
   shade3d(as.mesh3d(x), ...)
 }
-
+#' @name shade3d
+#' @export
+shade3d.PATH <- function(x, ...) {
+  shade3d(as.mesh3d(x), ...)
+}
+#' @name shade3d
+#' @export
+shade3d.PATH0 <- function(x, ...) {
+  shade3d(as.mesh3d(x), ...)
+}
 #' @name shade3d
 #' @export
 shade3d.DEL <- function(x, ...) {
@@ -51,7 +60,11 @@ shade3d.DEL0 <- function(x, ...) {
 shade3d.QUAD <- function(x, ...) {
   shade3d(as.mesh3d(x), ...)
 }
-
+#' @name shade3d
+#' @export
+shade3d.BasicRaster <- function(x, ...) {
+  shade3d(as.mesh3d(x), ...)
+}
 #' @name shade3d
 #' @export
 shade3d.matrix <- function(x, ...) {
