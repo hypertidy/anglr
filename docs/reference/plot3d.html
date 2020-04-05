@@ -74,7 +74,7 @@ These objects from sp, sf, raster, trip, and silicate should all work." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">anglr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9600</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9602</span>
       </span>
     </div>
 
@@ -190,15 +190,15 @@ These objects from sp, sf, raster, trip, and silicate should all work.</p>
 shape3d type)</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The function <code>plot3d()</code> the full suite of mesh and linear type plotting
-functions from <code><a href='https://rdrr.io/pkg/rgl/man/plot3d.html'>rgl::plot3d()</a></code>. This main function includes a broader family
-of <code><a href='dot3d.html'>dot3d()</a></code>, <code><a href='wire3d.html'>wire3d()</a></code>, and <code><a href='persp3d.html'>persp3d()</a></code> and each works with matrix, raster,
-sf, sp, trip, RTriangle, and silicate models. Each of the mesh-surface forms
-rely on <code><a href='as.mesh3d.html'>as.mesh3d()</a></code> conversion behind the scenes, whereas <code>plot3d()</code> for
-the linear types (sf, sp, trip, and from silicate SC, SC0, PATH, PATH0, and
-ARC0) all are plotted using rgl segments without going through a triangulated
-surface form. This reflects their underlying topology when it comes to 3D
-visualization and analysis.</p>
+    <p>The function <code>plot3d()</code> covers the full suite of plotting functions from
+<code><a href='https://rdrr.io/pkg/rgl/man/plot3d.html'>rgl::plot3d()</a></code> for meshes, points, and lines. This main function includes the
+family of <code><a href='dot3d.html'>dot3d()</a></code>, <code><a href='wire3d.html'>wire3d()</a></code>, and <code><a href='persp3d.html'>persp3d()</a></code> and each works with
+matrix, raster, sf, sp, trip, RTriangle, and silicate models. Each of the
+mesh-surface forms rely on <code><a href='as.mesh3d.html'>as.mesh3d()</a></code> conversion behind the scenes,
+whereas <code>plot3d()</code> for the linear types (sf, sp, trip, and from silicate SC,
+SC0, PATH, PATH0, and ARC0) all are plotted using rgl segments without going
+through a triangulated surface form. This reflects their underlying topology
+when it comes to 3D visualization and analysis.</p>
 <p>If the scene looks funny the aspect ratio might be poor, we've decided not to
 automatically update this with normal plots, but running <code><a href='auto_3d.html'>auto_3d()</a></code> will
 attempt to set a reasonable aspect ratio. It can also be used to set
@@ -228,7 +228,13 @@ is used.</p>
 <span class='fu'><a href='dot3d.html'>dot3d</a></span>(<span class='no'>cad_tas</span>)
 <span class='co'># }</span>
 <span class='co'>## add Z elevation to an sf polygon in a mesh</span>
-<span class='fu'>plot3d</span>(<span class='fu'><a href='copy_down.html'>copy_down</a></span>(<span class='fu'><a href='as.mesh3d.html'>as.mesh3d</a></span>(<span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/silicate/man/minimal_mesh.html'>minimal_mesh</a></span>), <span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span>(<span class='no'>volcano</span>)))</div></pre>
+<span class='fu'>plot3d</span>(<span class='fu'><a href='copy_down.html'>copy_down</a></span>(<span class='fu'><a href='as.mesh3d.html'>as.mesh3d</a></span>(<span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/silicate/man/minimal_mesh.html'>minimal_mesh</a></span>), <span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span>(<span class='no'>volcano</span>)))
+
+<span class='co'>## but make it much more interesting</span>
+<span class='co'># \donttest{</span>
+<span class='fu'>plot3d</span>(<span class='fu'><a href='copy_down.html'>copy_down</a></span>(<span class='fu'><a href='as.mesh3d.html'>as.mesh3d</a></span>(<span class='fu'><a href='DEL.html'>DEL</a></span>(<span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/silicate/man/minimal_mesh.html'>minimal_mesh</a></span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='fl'>0.0001</span>)),
+  <span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span>(-<span class='no'>volcano</span>)), <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"black"</span>, <span class='st'>"orange"</span>)); <span class='fu'><a href='auto_3d.html'>auto_3d</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>35</span>)</div><div class='output co'>#&gt; <span class='message'>original axis lengths x,y,z:  1.23000, 1.00000,99.14469</span></div><div class='output co'>#&gt; <span class='message'>applying 'aspect3d(1.000, 1.000, 0.353)'</span></div><div class='input'><span class='fu'><a href='wire3d.html'>wire3d</a></span>(<span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/silicate/man/minimal_mesh.html'>minimal_mesh</a></span>)
+<span class='co'># }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -75,7 +75,7 @@ is the mostly Delaunay scheme used by the provable-quality meshers." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">anglr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9600</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9602</span>
       </span>
     </div>
 
@@ -201,6 +201,14 @@ account, the value refers only to the planar area of the x/y coordinates as
 they are so this is not a real world area, but a mathematical property of the
 data. There is a safety check for a very large number of triangles, and this
 may be overridden by replying 'Yes' to the prompt.</p>
+    <h2 class="hasAnchor" id="topology"><a class="anchor" href="#topology"></a>Topology</h2>
+
+    
+
+
+<p>The DEL model cannot currently mesh point features, and it cannot mesh
+linear features if they include z or other vertex attributes - for now use
+<code><a href='DEL0.html'>DEL0()</a></code> which can do those.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='DEL0.html'>DEL0</a> <a href='https://rdrr.io/pkg/silicate/man/TRI.html'>TRI</a> <a href='https://rdrr.io/pkg/silicate/man/TRI0.html'>TRI0</a></p></div>

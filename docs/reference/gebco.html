@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Draw a mesh as line segments in 3D — wire3d • anglr</title>
+<title>simple world elevation raster — gebco • anglr</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,9 @@
 
 
 
-<meta property="og:title" content="Draw a mesh as line segments in 3D — wire3d" />
-<meta property="og:description" content="Draw line segments with rgl from any shape3d classed object. Produces
-a 3D scatterplot like that produced by rgl::plot3d(), but from a mesh-alike
-object." />
+<meta property="og:title" content="simple world elevation raster — gebco" />
+<meta property="og:description" content="A simple raster map of world topography, elevation relative to sea level in metres. Source
+data is Gebco 2014, converted to a much reduced 1 degree resolution global map." />
 
 
 
@@ -108,79 +107,27 @@ object." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Draw a mesh as line segments in 3D</h1>
+    <h1>simple world elevation raster</h1>
     
-    <div class="hidden name"><code>wire3d.Rd</code></div>
+    <div class="hidden name"><code>gebco.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Draw line segments with rgl from any <a href='https://rdrr.io/pkg/rgl/man/mesh3d.html'>shape3d</a> classed object. Produces
-a 3D scatterplot like that produced by <code><a href='https://rdrr.io/pkg/rgl/man/plot3d.html'>rgl::plot3d()</a></code>, but from a mesh-alike
-object.</p>
+    <p>A simple raster map of world topography, elevation relative to sea level in metres. Source
+data is Gebco 2014, converted to a much reduced 1 degree resolution global map.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for sc</span>
-<span class='fu'>wire3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
-<span class='co'># S3 method for TRI</span>
-<span class='fu'>wire3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
-<span class='co'># S3 method for TRI0</span>
-<span class='fu'>wire3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
-<span class='co'># S3 method for DEL</span>
-<span class='fu'>wire3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for DEL0</span>
-<span class='fu'>wire3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for QUAD</span>
-<span class='fu'>wire3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for matrix</span>
-<span class='fu'>wire3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for sf</span>
-<span class='fu'>wire3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for Spatial</span>
-<span class='fu'>wire3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for triangulation</span>
-<span class='fu'>wire3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for trip</span>
-<span class='fu'>wire3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for BasicRaster</span>
-<span class='fu'>wire3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
-
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>x</th>
-      <td><p>sp, sf, raster, trip, or any other model understood by anglr/silicate</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>pass <a href='https://rdrr.io/pkg/rgl/man/material.html'>material3d properties</a> to rgl</p></td>
-    </tr>
-    </table>
-
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Objects that are not explicitly surfaces will be triangulated in order to produce the
-mesh. Whether this is a good idea or not is an open question.</p>
-<p>It is not currently <em>technically defined or clear</em> how colour properties are
-mapped to line segments by default ... there is a problem of what property to
-use from features that share the same vertex or edge, and we have put that
-aside and erred on the side of inaccuracy in favour of getting a pretty plot
-(hopefully). (Properties that come later - lower rows - win, I think.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><a href='plot3d.html'>plot3d</a> <a href='as.mesh3d.html'>as.mesh3d</a> <a href='persp3d.html'>persp3d</a> <a href='dot3d.html'>dot3d</a> <a href='shade3d.html'>shade3d</a></p></div>
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"gebco"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"anglr"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>silicate</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: 'silicate'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:stats':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    filter</span></div><div class='input'><span class='no'>laea</span> <span class='kw'>&lt;-</span> <span class='st'>"+proj=laea +lon_0=147 +lat_0=-42"</span>
+<span class='no'>longlat</span> <span class='kw'>&lt;-</span> <span class='st'>"+proj=longlat +datum=WGS84"</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/silicate/man/SC.html'>SC</a></span>(<span class='no'>simpleworld</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='copy_down.html'>copy_down</a></span>(<span class='no'>gebco</span> + <span class='fl'>500</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: both proj are different longlat, no transformation done</span></div><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>x</span>); <span class='kw pkg'>rgl</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/rgl/man/aspect3d.html'>aspect3d</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0.07</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

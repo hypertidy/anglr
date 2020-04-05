@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">anglr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9600</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9602</span>
       </span>
     </div>
 
@@ -117,34 +117,56 @@
 
     <pre class="usage"><span class='fu'>mesh_plot</span>(
   <span class='no'>x</span>,
-  <span class='kw'>crs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>zlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='no'>...</span>,
-  <span class='kw'>coords</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+  <span class='kw'>coords</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>crs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
 )
 
 <span class='co'># S3 method for mesh3d</span>
 <span class='fu'>mesh_plot</span>(
   <span class='no'>x</span>,
-  <span class='kw'>crs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>zlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='no'>...</span>,
-  <span class='kw'>coords</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+  <span class='kw'>coords</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>crs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)
+
+<span class='co'># S3 method for BasicRaster</span>
+<span class='fu'>mesh_plot</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>zlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>coords</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>crs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)
+
+<span class='co'># S3 method for sc</span>
+<span class='fu'>mesh_plot</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>zlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>coords</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>crs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
 )
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>mesh_plot</span>(
   <span class='no'>x</span>,
-  <span class='kw'>crs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>zlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='no'>...</span>,
-  <span class='kw'>coords</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+  <span class='kw'>coords</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>crs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -153,10 +175,6 @@
     <tr>
       <th>x</th>
       <td><p>object to convert to mesh and plot</p></td>
-    </tr>
-    <tr>
-      <th>crs</th>
-      <td><p>target map projection</p></td>
     </tr>
     <tr>
       <th>col</th>
@@ -179,6 +197,10 @@ data range is used)</p></td>
       <th>coords</th>
       <td><p>optional input raster of coordinates of each cell, see details</p></td>
     </tr>
+    <tr>
+      <th>crs</th>
+      <td><p>target map projection</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -192,15 +214,19 @@ define the target map projection in 'PROJ string' format. (There is no
 coordinates of the 'quadmesh' output). The 'col' argument are mapped to the
 input applied object data as in 'image', and applied relative to 'zlim' if
 su.</p>
+<p>The <code>coords</code> argument only applies to a raster object. The <code>crs</code> argument
+only applies to a spatial object that has a crs projection metadata string
+understood by anglr (works, but still work in progress). There is a
+change from the previous <code><a href='https://rdrr.io/pkg/quadmesh/man/mesh_plot.html'>quadmesh::mesh_plot()</a></code> function that requires
+both crs and coords to be named. In quadmesh, crs was the second argument
+to the <code>mesh_plot()</code> function and so in usage was normally not named.</p>
 <p>If <code>coords</code> is supplied, it is currently assumed to be a 2-layer
 <code>RasterBrick</code> with longitude and latitude as the <em>cell values</em>. These are
 used to geographically locate the resulting mesh, and will be transformed to
 the <code>crs</code> if that is supplied. This is modelled on the approach to
 curvilinear grid data used in the <code>angstroms</code> package. There the function
 <code><a href='https://rdrr.io/pkg/angstroms/man/romsmap.html'>angstroms::romsmap()</a></code> and `angstroms::romscoords()`` are used to separate
-the complicated grid geometry from the grid data itself. A small fudge is
-applied to extend the coordinates by 1 cell to avoid losing any data due to
-the half cell outer margin (get in touch if this causes problems!).</p>
+the complicated grid geometry from the grid data itself.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
