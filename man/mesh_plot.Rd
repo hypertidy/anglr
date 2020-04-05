@@ -2,10 +2,17 @@
 % Please edit documentation in R/mesh_plot.R
 \name{mesh_plot}
 \alias{mesh_plot}
+\alias{[plot3d]}
+\alias{[as.mesh3d]}
+\alias{[persp3d]}
+\alias{[dot3d]}
+\alias{[wire3d]}
+\alias{[shade3d]}
 \alias{mesh_plot.mesh3d}
 \alias{mesh_plot.BasicRaster}
 \alias{mesh_plot.sc}
 \alias{mesh_plot.default}
+\alias{mesh_plot.triangulation}
 \title{Plot a mesh}
 \usage{
 mesh_plot(
@@ -57,6 +64,8 @@ mesh_plot(
   coords = NULL,
   crs = NULL
 )
+
+\method{mesh_plot}{triangulation}(x, col = NULL, add = FALSE)
 }
 \arguments{
 \item{x}{object to convert to mesh and plot}

@@ -11,12 +11,12 @@
 #' @name shade3d
 #' @param x sp, sf, raster, or any other surface model understood by anglr/silicate
 #' @param ... pass [material3d properties][rgl::material3d] to rgl
-#' @param add add to existing plot or start a new one (the default)
-#' @seealso [plot3d] [as.mesh3d] [persp3d] [dot3d] [wire3d]
+#' @seealso [plot3d] [as.mesh3d] [persp3d] [dot3d] [wire3d] [mesh_plot]
 #' @importFrom rgl shade3d
 #' @export shade3d
 #' @export
 #' @examples
+#' rgl::open3d()
 #' shade3d(volcano)
 #'
 #' \donttest{
@@ -27,49 +27,53 @@
 #' rgl::spheres3d(0, 0, 0, radius = 6378000, col = "dodgerblue", alpha = 0.75)
 #' rgl::bg3d("black")
 #' }
-shade3d.TRI <- function(x, ..., add = FALSE) {
-  shade3d(as.mesh3d(x, ...), add = add)
+shade3d.TRI <- function(x, ...) {
+  shade3d(as.mesh3d(x), ...)
 }
 #' @name shade3d
 #' @export
-shade3d.TRI0 <- function(x, ..., add = FALSE) {
-  shade3d(as.mesh3d(x, ...), add = add)
-}
-
-#' @name shade3d
-#' @export
-shade3d.DEL <- function(x, ..., add = FALSE) {
-  shade3d(as.mesh3d(x, ...), add = add)
-}
-#' @name shade3d
-#' @export
-shade3d.DEL0 <- function(x, ..., add = FALSE) {
-  shade3d(as.mesh3d(x, ...), add = add)
-}
-#' @name shade3d
-#' @export
-shade3d.QUAD <- function(x, ..., add = FALSE) {
-  shade3d(as.mesh3d(x, ...), add = add)
+shade3d.TRI0 <- function(x, ...) {
+  shade3d(as.mesh3d(x), ...)
 }
 
 #' @name shade3d
 #' @export
-shade3d.matrix <- function(x, ..., add = FALSE) {
-  shade3d(as.mesh3d(x, ...), add = add)
+shade3d.DEL <- function(x, ...) {
+  shade3d(as.mesh3d(x), ...)
+}
+#' @name shade3d
+#' @export
+shade3d.DEL0 <- function(x, ...) {
+  shade3d(as.mesh3d(x), ...)
+}
+#' @name shade3d
+#' @export
+shade3d.QUAD <- function(x, ...) {
+  shade3d(as.mesh3d(x), ...)
 }
 
 #' @name shade3d
 #' @export
-shade3d.sf <- function(x, ..., add = FALSE) {
-  shade3d(as.mesh3d(x, ...), add = add)
+shade3d.matrix <- function(x, ...) {
+  shade3d(as.mesh3d(x), ...)
 }
 #' @name shade3d
 #' @export
-shade3d.Spatial <- function(x, ..., add = FALSE) {
-  shade3d(as.mesh3d(x, ...), add = add)
+shade3d.sfc <- function(x, ...) {
+  shade3d(as.mesh3d(x), ...)
 }
 #' @name shade3d
 #' @export
-shade3d.triangulation <- function(x, ..., add = FALSE) {
-  shade3d(as.mesh3d(x, ...), add = add)
+shade3d.sf <- function(x, ...) {
+  shade3d(as.mesh3d(x), ...)
+}
+#' @name shade3d
+#' @export
+shade3d.Spatial <- function(x, ...) {
+  shade3d(as.mesh3d(x), ...)
+}
+#' @name shade3d
+#' @export
+shade3d.triangulation <- function(x, ...) {
+  shade3d(as.mesh3d(x), ...)
 }

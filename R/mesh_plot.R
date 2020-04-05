@@ -45,6 +45,7 @@
 #' @param coords optional input raster of coordinates of each cell, see details
 #' @return nothing, used for the side-effect of creating or adding to a plot
 #' @name mesh_plot
+#' @aliases [plot3d] [as.mesh3d] [persp3d] [dot3d] [wire3d] [shade3d]
 #' @export
 mesh_plot <- function(x,  col = NULL, add = FALSE, zlim = NULL, ..., coords = NULL, crs = NULL) {
   UseMethod("mesh_plot")
@@ -190,5 +191,10 @@ mesh_plot.default <- function(x,  col = NULL, add = FALSE, zlim = NULL, ...,
             zlim = zlim)
 }
 
-
+#' @name mesh_plot
+#' @export
+mesh_plot.triangulation <- function(x,  col = NULL, add = FALSE, zlim = NULL, ...,
+                                    coords = NULL, crs = NULL) {
+  mesh_plot(as.mesh3d(x), col = col, add = add )
+}
 

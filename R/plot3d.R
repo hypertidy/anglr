@@ -209,6 +209,11 @@ plot3d.sfc <- function(x, ..., add = FALSE) {
 }
 #' @export
 #' @name plot3d
+plot3d.triangulation <- function(x, ..., add = FALSE) {
+  plot3d(as.mesh3d(x), ..., add = add)
+}
+#' @export
+#' @name plot3d
 plot3d.Spatial <- function(x, ..., add = FALSE) {
   plot3d(silicate::SC0(x), ..., add = add)
 }

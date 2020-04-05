@@ -15,6 +15,7 @@
 \alias{plot3d.PATH}
 \alias{plot3d.sf}
 \alias{plot3d.sfc}
+\alias{plot3d.triangulation}
 \alias{plot3d.Spatial}
 \alias{plot3d.trip}
 \alias{plot3d.ARC}
@@ -45,6 +46,8 @@
 \method{plot3d}{sf}(x, ..., add = FALSE)
 
 \method{plot3d}{sfc}(x, ..., add = FALSE)
+
+\method{plot3d}{triangulation}(x, ..., add = FALSE)
 
 \method{plot3d}{Spatial}(x, ..., add = FALSE)
 

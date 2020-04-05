@@ -8,35 +8,36 @@
 \alias{shade3d.DEL0}
 \alias{shade3d.QUAD}
 \alias{shade3d.matrix}
+\alias{shade3d.sfc}
 \alias{shade3d.sf}
 \alias{shade3d.Spatial}
 \alias{shade3d.triangulation}
 \title{Draw a mesh as surfaces in 3D}
 \usage{
-\method{shade3d}{TRI}(x, ..., add = FALSE)
+\method{shade3d}{TRI}(x, ...)
 
-\method{shade3d}{TRI0}(x, ..., add = FALSE)
+\method{shade3d}{TRI0}(x, ...)
 
-\method{shade3d}{DEL}(x, ..., add = FALSE)
+\method{shade3d}{DEL}(x, ...)
 
-\method{shade3d}{DEL0}(x, ..., add = FALSE)
+\method{shade3d}{DEL0}(x, ...)
 
-\method{shade3d}{QUAD}(x, ..., add = FALSE)
+\method{shade3d}{QUAD}(x, ...)
 
-\method{shade3d}{matrix}(x, ..., add = FALSE)
+\method{shade3d}{matrix}(x, ...)
 
-\method{shade3d}{sf}(x, ..., add = FALSE)
+\method{shade3d}{sfc}(x, ...)
 
-\method{shade3d}{Spatial}(x, ..., add = FALSE)
+\method{shade3d}{sf}(x, ...)
 
-\method{shade3d}{triangulation}(x, ..., add = FALSE)
+\method{shade3d}{Spatial}(x, ...)
+
+\method{shade3d}{triangulation}(x, ...)
 }
 \arguments{
 \item{x}{sp, sf, raster, or any other surface model understood by anglr/silicate}
 
 \item{...}{pass \link[rgl:material3d]{material3d properties} to rgl}
-
-\item{add}{add to existing plot or start a new one (the default)}
 }
 \description{
 Draw surfaces with rgl from any \link[rgl:tmesh3d]{shape3d} classed object. Produces
@@ -50,6 +51,7 @@ vertices. Polygons are only implicit surfaces but these are usually
 unproblematic to triangulate so this is done.
 }
 \examples{
+rgl::open3d()
 shade3d(volcano)
 
 \donttest{
@@ -62,5 +64,5 @@ rgl::bg3d("black")
 }
 }
 \seealso{
-\link{plot3d} \link{as.mesh3d} \link{persp3d} \link{dot3d} \link{wire3d}
+\link{plot3d} \link{as.mesh3d} \link{persp3d} \link{dot3d} \link{wire3d} \link{mesh_plot}
 }
