@@ -221,29 +221,35 @@ plot3d.trip <- function(x, ..., add = FALSE) {
 #' @name plot3d
 #' @export
 plot3d.ARC <- function(x, ..., add = FALSE) {
-  if (!"color_" %in% names(x$object)) {
-    x$object$color_ <- trimesh_cols(nrow(x$object))
-  }
+  # if (!"color_" %in% names(x$object)) {
+  #   x$object$color_ <- trimesh_cols(nrow(x$object))
+  # }
   haveZ <- "z_" %in% names(x$vertex)
   if (haveZ) {
     vb <- cbind(x$vertex$x_, x$vertex$y_, x$vertex$z_)
   } else {
     vb <- cbind(x$vertex$x_, x$vertex$y_, 0)
   }
-  pindex <- dplyr::inner_join(x$object_link_arc, x$object[, c("object_", "color_")], "object_")
-  vindex <- dplyr::inner_join(x$arc_link_vertex, x$vertex, "vertex_")
- v_id <- lapply(split(vindex, vindex$arc_), function(x) as.vector(path2seg(x$vertex_)))
+  pindex <- dplyr::inner_join(x$object[, c("object_")], x$object_link_arc, "object_")
+  vindex <- pindex %>% dplyr::inner_join(x$arc_link_vertex, "arc_") %>% dplyr::inner_join(x$vertex, "vertex_")
+  vindex[["color_"]] <- viridis::viridis(length(unique(vindex$arc_)))[as.integer(factor(vindex$arc_))]
+ v_id <- lapply(split(vindex, vindex$arc_)[unique(vindex$arc_)], function(x) as.vector(t(path2seg(x$vertex_))))
+ ## super dodgy but I just can't see this through rn MDS 2020-04-05
+ c_id <- lapply(split(vindex, vindex$arc_)[unique(vindex$arc_)], function(x) as.vector(t(path2seg(x$color_))))
+#browser()
   if (!add) {
     rgl::rgl.clear()
   }
- vindex <- match(unlist(v_id), x$vertex$vertex_)
-  rgl::segments3d(vb[vindex,],
-                  col = rep(pindex$color_[match(x$arc_link_vertex$arc_, pindex$arc_)], each = 2))
+ vidx <- match(unlist(v_id), x$vertex$vertex_)
+  rgl::segments3d(vb[vidx,],
+                  col = unlist(c_id))
+
+#                  col = rep(pindex$color_[match(x$arc_link_vertex$arc_, pindex$arc_)], each = 2))
   ## there's no shape3d for segments
   invisible(structure(list(vb = rbind(t(vb), 0),
                            is = matrix(vindex, nrow = 2),
 
-                           material = list(col = pindex$color_)),
+                           material = list(col = unlist(c_id))),
                       class = c("segment3d", "shape3d")))
 
 }
