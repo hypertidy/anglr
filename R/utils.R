@@ -83,7 +83,7 @@ as.mesh3d_internal <- function(x, z,  smooth = FALSE, normals = NULL, texcoords 
   }
 
   if (all(is.na(material$color))) {
-    material$color[] <- "##BBBBBBFF"
+    material$color[] <- "#BBBBBBFF"
   }
 
   if (!missing(z) && inherits(z, "BasicRaster")) {
