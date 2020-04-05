@@ -4,12 +4,17 @@
 \alias{shade3d}
 \alias{shade3d.TRI}
 \alias{shade3d.TRI0}
+\alias{shade3d.PATH}
+\alias{shade3d.PATH0}
 \alias{shade3d.DEL}
 \alias{shade3d.DEL0}
 \alias{shade3d.QUAD}
+\alias{shade3d.BasicRaster}
 \alias{shade3d.matrix}
 \alias{shade3d.sfc}
 \alias{shade3d.sf}
+\alias{shade3d.SC}
+\alias{shade3d.SC0}
 \alias{shade3d.Spatial}
 \alias{shade3d.triangulation}
 \title{Draw a mesh as surfaces in 3D}
@@ -18,17 +23,27 @@
 
 \method{shade3d}{TRI0}(x, ...)
 
+\method{shade3d}{PATH}(x, ...)
+
+\method{shade3d}{PATH0}(x, ...)
+
 \method{shade3d}{DEL}(x, ...)
 
 \method{shade3d}{DEL0}(x, ...)
 
 \method{shade3d}{QUAD}(x, ...)
 
+\method{shade3d}{BasicRaster}(x, ...)
+
 \method{shade3d}{matrix}(x, ...)
 
 \method{shade3d}{sfc}(x, ...)
 
 \method{shade3d}{sf}(x, ...)
+
+\method{shade3d}{SC}(x, ...)
+
+\method{shade3d}{SC0}(x, ...)
 
 \method{shade3d}{Spatial}(x, ...)
 

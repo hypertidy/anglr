@@ -65,7 +65,15 @@ mesh_plot(
   crs = NULL
 )
 
-\method{mesh_plot}{triangulation}(x, col = NULL, add = FALSE)
+\method{mesh_plot}{triangulation}(
+  x,
+  col = NULL,
+  add = FALSE,
+  zlim = NULL,
+  ...,
+  coords = NULL,
+  crs = NULL
+)
 }
 \arguments{
 \item{x}{object to convert to mesh and plot}

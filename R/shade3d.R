@@ -82,6 +82,16 @@ shade3d.sf <- function(x, ...) {
 }
 #' @name shade3d
 #' @export
+shade3d.SC <- function(x, ...) {
+  shade3d(as.mesh3d(x), ...)
+}
+#' @name shade3d
+#' @export
+shade3d.SC0 <- function(x, ...) {
+  shade3d(as.mesh3d(x), ...)
+}
+#' @name shade3d
+#' @export
 shade3d.Spatial <- function(x, ...) {
   shade3d(as.mesh3d(x), ...)
 }
