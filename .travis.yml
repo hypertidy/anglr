@@ -16,7 +16,8 @@ addons:
       - libgeos-dev
       - libgdal-dev
       - netcdf-bin
-
+      - mesa-common-dev
+      - libglu1-mesa-dev
 
 matrix:
     include:
@@ -26,19 +27,20 @@ matrix:
           env:
            - BUILD_NAME=trusty_release
            - DETAILS="release build"
-        # - os: linux
+        - os: osx
+          r: release
+          before_install: ''
+          disable_homebrew: true
+          env:
+           - BUILD_NAME=osx_release
+           - DETAILS="osx_release build"
+
+   # - os: linux
         #   r: release
         #   dist: xenial
         #   env:
         #    - BUILD_NAME=xenial_release
         #    - DETAILS="xenial_release build"
-        # - os: osx
-        #   r: release
-        #   before_install: ''
-        #   disable_homebrew: true
-        #   env:
-        #    - BUILD_NAME=osx_release
-        #    - DETAILS="release build"
 
 
 
