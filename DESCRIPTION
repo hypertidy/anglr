@@ -1,7 +1,7 @@
 Package: anglr
 Type: Package
 Title: Elevating Spatial Data with Topology
-Version: 0.4.8.9602
+Version: 0.4.8.9603
 Authors@R: c(person("Michael D.","Sumner", role = c("aut", "cre"), email ="mdsumner@gmail.com"), 
              person("Miles", "McBain", role = c("ctb")))
 Description: Tidy topological approaches to spatial data, illustrated with plotting using Open Graphics Library. 
@@ -22,7 +22,6 @@ Imports:
     viridis,
     unjoin,
     magrittr,
-    tidyr,
     polyclip,
     gridBase,
     scales,

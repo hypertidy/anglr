@@ -44,31 +44,60 @@ denorm_PRIM_addZ <- function(x, z, ..., .id = "z_") {
     ## instances of primitives
     priminst <- x$edge %>% inner_join(x$object_link_edge, "edge_")
     ## note that silicate/SC doesn't have a labelled edge, only object_ and .vx0 ,.vx1
-    #priminst[["edge_"]] <- silicate::sc_uid(priminst)
-    prim_long <- priminst %>%
-      tidyr::gather("edge_vertex", "vertex", -.data$object_, -.data$edge_)
+    verts <- c(as.matrix(priminst[c(".vx0", ".vx1")]))  ## avoid gather()
+    priminst$.vx0 <- priminst$.vx1 <- priminst$path_ <- priminst$native_ <- NULL
+    prim_long <- tibble::tibble(vertex = verts, priminst[rep(seq_len(nrow(priminst)), 2L), ])
+    prim_long$edge_vertex <- rep(c(".vx0", ".vx1"), each = nrow(priminst))
+
     prim_long[[.id]] <- z[match(prim_long$object_, x$object$object_)]
     prim_long <- prim_long %>% inner_join(x$vertex, c("vertex" = "vertex_"))
     prim_long$vertex <- NULL
     prim_long$vertex_ <- silicate::sc_uid(nrow(prim_long))
 
-    x$edge <- prim_long[c("edge_vertex", "vertex_", "edge_", "object_")] %>%
-      tidyr::spread(.data$edge_vertex, .data$vertex_)
-    x$edge$object_ <- NULL
+vx <- split(prim_long, prim_long[["edge_vertex"]])
+#vx[[1]]$.vx0 <- vx[[1]][["vertex_"]]
+#vx[[2]]$.vx1 <- vx[[2]][["vertex_"]]
+i <- 1; j <- 2
+if (vx[[1]]$edge_vertex[1] == ".vx1") {
+  j <- 1; i <- 2
+}
+## avoid spread()
+x$edge <- tibble(.vx0 = vx[[i]][["vertex_"]],
+                 .vx1 = vx[[j]][["vertex_"]],
+                 edge_ = vx[[1]][["edge_"]])
+
+    # x$edge <- prim_long[c("edge_vertex", "vertex_", "edge_", "object_")] %>%
+    #   tidyr::spread(.data$edge_vertex, .data$vertex_)
+    #
+    #x$edge$object_ <- NULL
 
     }
   if (inherits(x, "TRI")) {
 
     priminst <- x$triangle
     priminst[["triangle_"]] <- silicate::sc_uid(priminst)  ## FIXME: temporary triangle_ id not needed
-    prim_long <- priminst %>% tidyr::gather("tri_vertex", "vertex", -.data$object_, -.data$triangle_)
+    #prim_long <- priminst %>% tidyr::gather("tri_vertex", "vertex", -.data$object_, -.data$triangle_)
+
+    verts <- c(as.matrix(priminst[c(".vx0", ".vx1", ".vx2")]))  ## avoid gather()
+    priminst$.vx0 <- priminst$.vx1 <- priminst$path_ <- priminst$native_ <- NULL
+    prim_long <- tibble::tibble(vertex = verts, priminst[rep(seq_len(nrow(priminst)), 3L), ])
+    prim_long$tri_vertex <- rep(c(".vx0", ".vx1", ".vx2"), each = nrow(priminst))
+
     z <- rep(z, nrow(silicate::sc_object(x)))
     prim_long[[.id]] <- z[match(prim_long$object_, x$object$object_)]
     prim_long <- prim_long %>% inner_join(x$vertex, c("vertex" = "vertex_"))
     prim_long$vertex <- NULL
     prim_long$vertex_ <- silicate::sc_uid(nrow(prim_long))
-    prim_wide <-  prim_long[c("tri_vertex", "vertex_", "triangle_", "object_")] %>%
-      tidyr::spread("tri_vertex", "vertex_")
+    # prim_wide <-  prim_long[c("tri_vertex", "vertex_", "triangle_", "object_")] %>%
+    #   tidyr::spread("tri_vertex", "vertex_")
+    ## avoid spread()
+    vx <- split(prim_long, prim_long[["tri_vertex"]])
+
+    prim_wide <- tibble(.vx0 = vx[[1]][["vertex_"]],
+                     .vx1 = vx[[2]][["vertex_"]],
+                     .vx2 = vx[[3]][["vertex_"]],
+                     triangle_ = vx[[1]][["triangle_"]],
+                     object_ = vx[[1]][["object_"]])
 
     x$triangle <- dplyr::distinct(prim_wide, .data$object_, .data$.vx0, .data$.vx1, .data$.vx2)
 
