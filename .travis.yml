@@ -30,15 +30,6 @@ matrix:
            - BUILD_NAME=osx_release
            - DETAILS="osx_release build"
 
-   # - os: linux
-        #   r: release
-        #   dist: xenial
-        #   env:
-        #    - BUILD_NAME=xenial_release
-        #    - DETAILS="xenial_release build"
-
-
-
 after_success:
   - Rscript -e 'covr::codecov()'
 
