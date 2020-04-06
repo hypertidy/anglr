@@ -12,7 +12,6 @@ Imports:
     dplyr,
     gridBase,
     magrittr,
-    methods,
     palr,
     png,
     polyclip,
