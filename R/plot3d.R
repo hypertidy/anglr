@@ -33,8 +33,8 @@
 #' @export persp3d
 #' @examples
 #' library(silicate)
-#' x <- SC(sf::read_sf(system.file("shape", "nc.shp", package = "sf")) %>%
-#'    dplyr::mutate(color_ = rainbow(100)))
+#' cad_tas$color_ <- rainbow(nrow(cad_tas))
+#' x <- SC(cad_tas)
 #' plot3d(x)
 #'
 #' ## plot3d anything

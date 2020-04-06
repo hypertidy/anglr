@@ -29,15 +29,6 @@ denorm_SEQ_addZ <- function(x, z, ..., .id = "z_") {
 #'  PRIM works for SC, TRI
 #'
 #' @noRd
-#' @examples
-##' fifty <- fiftystater::fifty_states %>%
-##' dplyr::transmute(x_ = long, y_ = lat, branch_ = group, object_ = id, order_ = order, island_ = !hole) %>%
-##'   spbabel::sp() %>% sf::st_as_sf()
-##' #plot(PATH(fifty))
-##' fifty$height <- rnorm(nrow(fifty))
-##' x <- denorm_PRIM_addZ(silicate::SC(fifty), z = fifty$height)
-##'
-##' plot3d(x)
 denorm_PRIM_addZ <- function(x, z, ..., .id = "z_") {
 
   if (inherits(x, "SC")) {
