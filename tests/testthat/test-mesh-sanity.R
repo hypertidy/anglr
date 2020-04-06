@@ -21,7 +21,7 @@ test_that("vertex de-duplication is sane", {
 
 })
 
-ntriangles <- nrow(gibble::gibble(tp))
+ntriangles <- nrow(sc_path(tp))
 test_that("triangle set is equivalent", {
   expect_equal(ntriangles, 18L)
 

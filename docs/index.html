@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">anglr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9602</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.9603</span>
       </span>
     </div>
 
@@ -105,10 +105,11 @@
 install.packages("RTriangle")
 install.packages("sf")
 install.packages("devtools")
+install.packages("remotes")
 install.packages("silicate")
 install.packages("reproj")</pre></div>
-<p>With that out of the way, install from Github using devtools.</p>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"hypertidy/anglr"</span>)</pre></div>
+<p>With that out of the way, install from Github using remotes.</p>
+<div class="sourceCode" id="cb2"><pre class="r"><span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"hypertidy/anglr"</span>)</pre></div>
 <p>Feel free to contact me via the <a href="https://github.com/hypertidy/anglr/issues/">Issues</a> if you have problems, or these notes don’t make sense.</p>
 <div id="ubuntudebian" class="section level3">
 <h3 class="hasAnchor">
@@ -128,9 +129,9 @@ install.packages("reproj")</pre></div>
 <span id="cb3-12"><a href="#cb3-12"></a><span class="co">## install R, if you need to</span></span>
 <span id="cb3-13"><a href="#cb3-13"></a><span class="co">## apt install r-base r-base-dev </span></span></code></pre></div>
 <p>Then in R</p>
-<div class="sourceCode" id="cb4"><pre class="r">install.packages("devtools")
-install.packages(c("dplyr", "proj4", "raster",  "rgl", "rlang", "RTriangle", "spbabel", "tibble", "viridis", "reproj", "silicate"))
-devtools::install_github("hypertidy/anglr")</pre></div>
+<div class="sourceCode" id="cb4"><pre class="r">install.packages("remotes")
+remotes::install_cran(c("dplyr", "proj4", "raster",  "rgl", "rlang", "RTriangle", "tibble", "viridis", "reproj"))
+remotes::install_github(c("hypertidy/silicate", "hypertidy/anglr"))</pre></div>
 </div>
 </div>
 <div id="get-involved" class="section level2">

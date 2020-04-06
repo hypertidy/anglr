@@ -99,14 +99,15 @@ install.packages("rgl")
 install.packages("RTriangle")
 install.packages("sf")
 install.packages("devtools")
+install.packages("remotes")
 install.packages("silicate")
 install.packages("reproj")
 ```
 
-With that out of the way, install from Github using devtools.
+With that out of the way, install from Github using remotes.
 
 ``` r
-devtools::install_github("hypertidy/anglr")
+remotes::install_github("hypertidy/anglr")
 ```
 
 Feel free to contact me via the
@@ -138,9 +139,9 @@ apt install libproj-dev libgdal-dev libgeos-dev  libssl-dev libgl1-mesa-dev libg
 Then in R
 
 ``` r
-install.packages("devtools")
-install.packages(c("dplyr", "proj4", "raster",  "rgl", "rlang", "RTriangle", "spbabel", "tibble", "viridis", "reproj", "silicate"))
-devtools::install_github("hypertidy/anglr")
+install.packages("remotes")
+remotes::install_cran(c("dplyr", "proj4", "raster",  "rgl", "rlang", "RTriangle", "tibble", "viridis", "reproj"))
+remotes::install_github(c("hypertidy/silicate", "hypertidy/anglr"))
 ```
 
 ## Get involved\!

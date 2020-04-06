@@ -8,41 +8,39 @@ Description: Tidy topological approaches to spatial data, illustrated with plott
 License: GPL-3
 Depends: R (>= 3.4.0)
 Imports: 
-    silicate (>= 0.3.0.9040),
+    crsmeta (>= 0.3.0),
     dplyr,
-    gibble (>= 0.2.0),
+    gridBase,
+    magrittr,
     methods,
-    reproj (>= 0.4.0),
+    palr,
+    png,
+    polyclip,
     raster,
+    reproj (>= 0.4.0),
     rgl,
     rlang,
     RTriangle,
+    scales,
+    silicate (>= 0.3.0.9040),
     sp,
     tibble,
-    viridis,
     unjoin,
-    magrittr,
-    polyclip,
-    gridBase,
-    scales,
-    crsmeta (>= 0.3.0),
-    png,
     utils,
-    palr
+    viridis,
 Suggests: 
     covr,
     ggplot2,
     ggpolypath,
     graticule,
+    knitr,
     purrr,
+    rmarkdown,
     sf,
     sfdct,
-    spbabel (> 0.4.5),
+    sfheaders,
     testthat (>= 2.1.0),
-    trip,
-    knitr,
-    rmarkdown,
-    sfheaders
+    trip
 Roxygen: list(markdown = TRUE)
 SystemRequirements: PROJ.4
 Encoding: UTF-8
