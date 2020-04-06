@@ -62,7 +62,7 @@ test_that("as.mesh3d on triangles is working", {
 
 
   ## dunno what they are ../
-  expect_warning(dem <- as.mesh3d(silicate::TRI0(cad_tas), z = quadmesh::etopo))
+  expect_warning(dem <- as.mesh3d(silicate::TRI0(cad_tas), z = gebco))
 })
 
 
@@ -79,7 +79,7 @@ test_that("as.mesh3d on quads is working", {
   expect_message(as.mesh3d(rr, image_texture = raster::brick(rr, rr, rr)),
                 "writing texture image to")
 library(raster)
-  sc <- silicate::TRI0(spex::spex(rr))
+  sc <- silicate::TRI0(as(extent(rr), "SpatialPolygons"))
   expect_message(as.mesh3d(sc, z = rr * 2, image_texture = raster::brick(rr, rr, rr)),
                  "writing texture image to")
 

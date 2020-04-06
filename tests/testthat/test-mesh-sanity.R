@@ -5,7 +5,7 @@ library(sf)
 library(silicate)
 library(dplyr)
 v <- raster(diag(3))
-p <- spex::polygonize(v) %>% group_by(layer) %>% summarize()
+p <- raster::rasterToPolygons(v) %>% sf::st_as_sf() %>% group_by(layer) %>% summarize()
 tp <- st_cast(sfdct::ct_triangulate(p), warn = FALSE)
 nverts <- 16
 

@@ -23,7 +23,7 @@
 #' The `coords` argument only applies to a raster object. The `crs` argument
 #' only applies to a spatial object that has a crs projection metadata string
 #' understood by anglr (works, but still work in progress). There is a
-#' change from the previous [quadmesh::mesh_plot()] function that requires
+#' change from the previous `quadmesh::mesh_plot()` function that requires
 #' both crs and coords to be named. In quadmesh, crs was the second argument
 #' to the `mesh_plot()` function and so in usage was normally not named.
 #'

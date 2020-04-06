@@ -13,12 +13,12 @@ test_that("auto_3d does something", {
 
   expect_message({
       plot3d(copy_down(SC(inlandwaters),
-                   quadmesh::etopo))
+                   gebco))
   auto_3d()
 }, "applying")
 
     plot3d(copy_down(SC(inlandwaters),
-                     quadmesh::etopo))
+                     gebco))
     auto_3d(verbose = FALSE)
 
 

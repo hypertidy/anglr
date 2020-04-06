@@ -5,7 +5,7 @@ test_that("copy down works", {
   expect_message({
 
     tri <- silicate::TRI(cad_tas)
-    x <- copy_down(tri, quadmesh::etopo)
+    x <- copy_down(tri, gebco)
     expect_true(!anyNA(sc_vertex(x)))
 
     x <- copy_down(tri, 10)

@@ -108,7 +108,7 @@ su.
 The \code{coords} argument only applies to a raster object. The \code{crs} argument
 only applies to a spatial object that has a crs projection metadata string
 understood by anglr (works, but still work in progress). There is a
-change from the previous \code{\link[quadmesh:mesh_plot]{quadmesh::mesh_plot()}} function that requires
+change from the previous \code{quadmesh::mesh_plot()} function that requires
 both crs and coords to be named. In quadmesh, crs was the second argument
 to the \code{mesh_plot()} function and so in usage was normally not named.
 
