@@ -14,9 +14,6 @@ addons:
       - libudunits2-dev
       - libproj-dev
       - libgeos-dev
-      - libgdal-dev
-      - gdal-bin
-      - netcdf-bin
       - mesa-common-dev
       - libglu1-mesa-dev
 

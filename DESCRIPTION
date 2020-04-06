@@ -36,7 +36,6 @@ Suggests:
     knitr,
     purrr,
     rmarkdown,
-    sf,
     sfdct,
     sfheaders,
     testthat (>= 2.1.0),
