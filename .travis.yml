@@ -10,9 +10,7 @@ addons:
     sources:
       - sourceline: 'ppa:ubuntugis/ubuntugis-unstable'
     packages:
-      - libv8-dev
       - libproj-dev
-      - libgeos-dev
       - mesa-common-dev
       - libglu1-mesa-dev
 

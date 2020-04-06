@@ -4,8 +4,10 @@ context("test-extent-example.R")
 library(anglr)
 library(raster)
 library(sfheaders)
-my_extent <- sf_poly(data.frame(x = c(154, 155, 155, 154), y = c(-27, -27, -26, -27),
-                                polygon_id = 1, linestring_id = 1))
+my_extent <- sf_polygon(data.frame(x = c(154, 155, 155, 154), y = c(-27, -27, -26, -27),
+                                polygon_id = 1, linestring_id = 1),
+                        x = "x", y = "y",
+                        polygon_id = "polygon_id", linestring_id = "linestring_id")
 
 test_that("setting max area makes more triangles", {
   ## no change
