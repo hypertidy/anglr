@@ -1,5 +1,8 @@
 # anglr dev
 
+
+* Remove non-ascii columns (and others) from 'simpleworld', thanks to help by Michael Chirico @michael_chirico. 
+
 * Align to obscured bug fix for silicate, #119. 
 
 * Fixed `mesh_plot()` default colours for a textured mesh. 
