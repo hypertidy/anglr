@@ -34,7 +34,7 @@ test_that("mesh_plot works", {
 
   x <- raster::aggregate(gebco, fact = 4)
   coords <- .raster_to_coords(x)
-  crs <- "+proj=laea +lon_0=147 +lat_0=-43"
+  crs <- "+proj=laea +lon_0=147 +lat_0=-43 +datum=WGS84"
   ## it works to give the coords, on their own
   mesh_plot(x,
             coords = coords)
