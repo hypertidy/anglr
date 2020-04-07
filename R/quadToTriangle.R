@@ -5,9 +5,8 @@
 #' @param x QUAD
 #' @param ... reserved
 #' @export
-#' @importFrom silicate TRI
-#' @export TRI
-#' @name TRI
+#' @name TRI.QUAD
+#' @aliases TRI
 #' @examples
 #' library(anglr)
 #' library(raster)

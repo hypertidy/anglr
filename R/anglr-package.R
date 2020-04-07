@@ -55,6 +55,36 @@ NULL
 #' @name reproj
 NULL
 
+#' silicate models
+#'
+#' The anglr functions [DEL()], [DEL0()] and [QUAD()] extend the models
+#' of the silicate package. In particular `DEL()` and `DEL0()` are high
+#' quality Delaunay-constrained triangulation meshers analogous to the
+#' ear-cutting algorithms used by [silicate::TRI()] and [silicate::TRI0()].
+#'
+#' All models in silicate are imported by anglr and re-exported.
+#' @name silicate-models
+#' @param x any data format understood by the model
+#' @param ... unused
+#' @aliases PATH PATH0 SC SC0  TRI0 ARC
+#' @seealso [DEL()] [DEL0()] [QUAD()] [silicate::PATH()] [silicate::TRI()] [silicate::ARC()] [silicate::SC()] [silicate::PATH0()] [silicate::TRI0()] [silicate::SC0()]
+#' @importFrom silicate PATH
+#' @export PATH
+#' @importFrom silicate PATH0
+#' @export PATH0
+#' @importFrom silicate SC
+#' @export SC
+#' @importFrom silicate SC0
+#' @export SC0
+#' @importFrom silicate TRI
+#' @export TRI
+#' @importFrom silicate TRI0
+#' @export TRI0
+#' @importFrom silicate ARC
+#' @export ARC
+NULL
+
+
 # @export
 # @name reproj
 # @examples

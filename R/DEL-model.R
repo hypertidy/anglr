@@ -59,7 +59,6 @@ DEL <- function(x, ..., max_area = NULL) {
   UseMethod("DEL")
 }
 #' @name DEL
-#' @importFrom silicate PATH
 #' @importFrom rlang .data
 #' @export
 DEL.default <- function(x, ..., max_area = NULL) {
@@ -71,7 +70,6 @@ DEL.default <- function(x, ..., max_area = NULL) {
   DEL(p, ..., max_area = max_area)
 }
 #' @name DEL
-#' @importFrom silicate SC
 #' @export
 DEL.PATH0 <- function(x, ..., max_area = NULL) {
   DEL(PATH(x),  ..., max_area = max_area)
