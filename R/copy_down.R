@@ -52,7 +52,7 @@ copy_down <- function(x, z = NULL, ..., .id = "z_") {
 #' @name copy_down
 #' @export
 copy_down.mesh3d <- function(x, z = NULL, ..., .id = "z_") {
-  z <- find_z(x, z)
+  #z <- find_z(x, z)
   if (inherits(z, "BasicRaster")) {
     zz <- raster::extract(z, t(x$vb[1:2, ]), method = "bilinear")
     if (mean(is.na(zz)) > 0.8) {

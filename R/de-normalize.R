@@ -38,10 +38,14 @@ denorm_PRIM_addZ <- function(x, z, ..., .id = "z_") {
     verts <- c(as.matrix(priminst[c(".vx0", ".vx1")]))  ## avoid gather()
     priminst$.vx0 <- priminst$.vx1 <- priminst$path_ <- priminst$native_ <- NULL
     prim_long <- tibble::tibble(vertex = verts)
-    prim_long <- dplyr::bind_cols(tibble::as_tibble(priminst[rep(seq_len(nrow(priminst)), 2L), ]))
+    prim_long <- dplyr::bind_cols(prim_long, tibble::as_tibble(priminst[rep(seq_len(nrow(priminst)), 2L), ]))
     prim_long$edge_vertex <- rep(c(".vx0", ".vx1"), each = nrow(priminst))
 
+    z <- rep(z, nrow(silicate::sc_object(x)))
+    
     prim_long[[.id]] <- z[match(prim_long$object_, x$object$object_)]
+
+    
     prim_long <- prim_long %>% inner_join(x$vertex, c("vertex" = "vertex_"))
     prim_long$vertex <- NULL
     prim_long$vertex_ <- silicate::sc_uid(nrow(prim_long))
@@ -78,8 +82,8 @@ x$edge <- tibble(.vx0 = vx[[i]][["vertex_"]],
     prim_long$tri_vertex <- rep(c(".vx0", ".vx1", ".vx2"), each = nrow(priminst))
 
     z <- rep(z, nrow(silicate::sc_object(x)))
-    #browser()
     prim_long[[.id]] <- z[match(prim_long$object_, x$object$object_)]
+  
     prim_long <- prim_long %>% inner_join(x$vertex, c("vertex" = "vertex_"))
     prim_long$vertex <- NULL
     prim_long$vertex_ <- silicate::sc_uid(nrow(prim_long))
