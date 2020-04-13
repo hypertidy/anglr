@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 
 # anglr  
 
-<a href="https://gist.github.com/mdsumner/81be7955ab19c052cea753230d91a20c"><img align="right"  src="https://gist.githubusercontent.com/mdsumner/81be7955ab19c052cea753230d91a20c/raw/08c5c533d5a60f7b1192be35b024c89708666a7e/anglr.gif" /></a>
+<a href="https://gist.github.com/mdsumner/81be7955ab19c052cea753230d91a20c"><img align="right"  src="https://gist.githubusercontent.com/mdsumner/81be7955ab19c052cea753230d91a20c/raw/1331ae0d38eaf03003bfe9e210ee9fc74cf5de8d/anglr.gif" /></a>
 
 
 
