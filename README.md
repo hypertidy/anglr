@@ -13,7 +13,9 @@ Status](https://img.shields.io/codecov/c/github/hypertidy/anglr/master.svg)](htt
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# anglr <a href="https://gist.github.com/mdsumner/81be7955ab19c052cea753230d91a20c"><img align="right" width="256" src="https://gist.github.com/mdsumner/81be7955ab19c052cea753230d91a20c/raw/59401d2476660e698a84c3fc6d17c3943c0b6515/anglr.gif" /></a>
+# anglr
+
+<a href="https://gist.github.com/mdsumner/81be7955ab19c052cea753230d91a20c"><img align="right"  src="https://gist.githubusercontent.com/mdsumner/81be7955ab19c052cea753230d91a20c/raw/08c5c533d5a60f7b1192be35b024c89708666a7e/anglr.gif" /></a>
 
 The anglr package aims to provide direct access to generic 3D tools.
 
