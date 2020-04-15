@@ -16,12 +16,12 @@ Imports:
     png,
     polyclip,
     raster,
-    reproj (>= 0.4.0),
+    reproj (>= 0.4.2),
     rgl,
     rlang,
     RTriangle,
     scales,
-    silicate (>= 0.3.0.9040),
+    silicate (>= 0.4.0),
     sp,
     tibble,
     unjoin,
@@ -44,4 +44,4 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.0
 VignetteBuilder: knitr
-Remotes:  hypertidy/silicate
+
