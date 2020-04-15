@@ -1,5 +1,6 @@
-# anglr dev
+# anglr 0.4.9
 
+* Tightened up behaviour of QUAD, being lazy and copying down the z. 
 
 * Remove non-ascii columns (and others) from 'simpleworld', thanks to help by Michael Chirico @michael_chirico. 
 

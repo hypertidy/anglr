@@ -15,4 +15,6 @@ Thank you very much.
 
 * This is a new release.
 
-* There is a note about use of a restrictive license in package RTriangle. This package hopes to use an alternative library in future that is compatible with the GPL-3, so I though this appropriate to use for now. 
+* There is a note about use of a restrictive license in package RTriangle. I
+hope to use an alternative library in future that is compatible with the GPL-3,
+so I thought this appropriate to use for now.
