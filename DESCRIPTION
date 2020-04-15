@@ -34,7 +34,7 @@ Imports:
     rlang,
     RTriangle,
     scales,
-    silicate (>= 0.4.0),
+    silicate (>= 0.3.0),
     sp,
     tibble,
     unjoin,

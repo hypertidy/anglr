@@ -203,10 +203,11 @@ as.mesh3d.QUAD <- function(x, triangles = FALSE,
   }
 
   v <- get_vertex(x)
-  m <- matrix(x$quad$value, x$object$ncols)
-  zz <- vxy(m)
-  vb <- rbind(v$x_, v$y_, zz, 1)
-
+  if (is.null(v[["z_"]])) {  ## we might have already globe()d
+    m <- matrix(x$quad$value, x$object$ncols)
+    v$z <- vxy(m)
+  }
+  vb <- rbind(x = v$x_, y = v$y_, z = v$z_, h = 1)
 
   ## use the geometry to remap the texture if needed
   if (!is.null(image_texture)) {
