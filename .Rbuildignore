@@ -8,7 +8,6 @@
 ^codecov\.yml$
 ^readme-figure/.*png$
 ^example_topo.r$
-^docs$
 ^prepare_package.r$
 ^data-raw$
 ^inst/examples$
@@ -17,3 +16,4 @@
 ^_pkgdown\.yml$
 ^anglr\.Rproj$
 ^cran-comments\.md$
+^\.github$

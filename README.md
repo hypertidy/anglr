@@ -1,4 +1,8 @@
 
+<!-- badges: start -->
+
+[![R build
+status](https://github.com/hypertidy/anglr/workflows/R-CMD-check/badge.svg)](https://github.com/hypertidy/anglr/actions)
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![Travis-CI Build
 Status](http://badges.herokuapp.com/travis/hypertidy/anglr?branch=master&env=BUILD_NAME=trusty_release&label=linux)](https://travis-ci.org/hypertidy/anglr)
@@ -10,6 +14,11 @@ Status](https://ci.appveyor.com/api/projects/status/github/hypertidy/anglr?branc
 Status](https://img.shields.io/codecov/c/github/hypertidy/anglr/master.svg)](https://codecov.io/github/hypertidy/anglr?branch=master)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/anglr)](https://cran.r-project.org/package=anglr)
 [![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/anglr)](https://cran.r-project.org/package=anglr)
+[![R build
+status](https://github.com/hypertidy/anglr/workflows/test-coverage/badge.svg)](https://github.com/hypertidy/anglr/actions)
+[![R build
+status](https://github.com/hypertidy/anglr/workflows/test-pkgdown/badge.svg)](https://github.com/hypertidy/anglr/actions)
+<!-- badges: end -->
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
