@@ -1,4 +1,4 @@
-## anglr 0.5.0
+## anglr 0.4.9
 
 New package anglr. 
 
