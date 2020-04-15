@@ -1,7 +1,7 @@
 .onAttach <- function(libname, pkgname) {
-  msg <- sprintf("This is an early developmental version of anglr (%s),\n still in an experimental state with changes pending.",
-                 utils::packageVersion("anglr"))
-  packageStartupMessage(msg)
+ #  msg <- sprintf("This is an early developmental version of anglr (%s),\n still in an experimental state with changes pending.",
+ #                 utils::packageVersion("anglr"))
+ #  packageStartupMessage(msg)
  invisible()
 }
 .onLoad <- function(libname, pkgname) {
