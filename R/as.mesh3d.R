@@ -86,7 +86,7 @@
 #' @param keep_all whether to keep non-visible triangles
 #' @param triangles for quad input types, the quads may optionally be split into triangles
 #' @name as.mesh3d
-#' @return a [mesh3d object](rgl::mesh3d)
+#' @return a [mesh3d object][rgl::mesh3d]
 #' @importFrom rgl as.mesh3d tmesh3d
 #' @export as.mesh3d
 #' @export
@@ -205,7 +205,7 @@ as.mesh3d.QUAD <- function(x, triangles = FALSE,
   v <- get_vertex(x)
   if (is.null(v[["z_"]])) {  ## we might have already globe()d
     m <- matrix(x$quad$value, x$object$ncols)
-    v$z <- vxy(m)
+    v$z_ <- vxy(m)
   }
   vb <- rbind(x = v$x_, y = v$y_, z = v$z_, h = 1)
 

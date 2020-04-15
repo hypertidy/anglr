@@ -157,7 +157,7 @@ details see \link[rgl:tmesh3d]{rgl::tmesh3d}.}
 \item{triangles}{for quad input types, the quads may optionally be split into triangles}
 }
 \value{
-a \href{rgl::mesh3d}{mesh3d object}
+a \link[rgl:mesh3d]{mesh3d object}
 }
 \description{
 The \code{as.mesh3d()} generic function converts various objects to
