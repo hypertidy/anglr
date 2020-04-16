@@ -32,7 +32,19 @@ of spatial data is intended to be supported, not just the geographic ones:
 \item TBD n-dimensional rasters with curvilinear coordinates, and the discrete-continuous distinction
 }
 }
-\section{I. Creation}{
+\section{I. Licensing}{
+
+
+The anglr package is released with license GPL-3. There is one dependency
+RTriangle that has a more restrictive license 'CC BY-NC-SA 4.0'. Please note
+and respect the license of the RTriangle package if using the \code{\link[=DEL]{DEL()}} or
+\code{\link[=DEL0]{DEL0()}} functions in anglr. These return high-quality constrained Delaunay
+triangulations of polygonal regions, with the ability to control mesh
+characteristics including maximum triangle area, minimum internal angle, and
+conformance to the Delaunay criterion.
+}
+
+\section{II. Creation}{
 
 \tabular{ll}{
 \code{\link[rgl]{as.mesh3d}} \tab coercion function to convert most spatial data to mesh forms \cr
@@ -42,7 +54,7 @@ of spatial data is intended to be supported, not just the geographic ones:
 }
 }
 
-\section{II. Plotting}{
+\section{III. Plotting}{
 
 
 As much as possible plotting with represent the true nature of the data given.
@@ -55,7 +67,7 @@ As much as possible plotting with represent the true nature of the data given.
 }
 }
 
-\section{III. Options and technicalities}{
+\section{IIII. Options and technicalities}{
 
 
 There is an option set for the maximum number of triangles that can be

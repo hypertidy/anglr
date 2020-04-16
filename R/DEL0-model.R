@@ -53,6 +53,17 @@
 #'
 #' @return [DEL0 class][DEL0]
 #' @export
+#'
+#' @section Licensing:
+#'
+#' The anglr package is released with license GPL-3. There is one dependency
+#' RTriangle that has a more restrictive license 'CC BY-NC-SA 4.0'. Please note
+#' and respect the license of the RTriangle package if using the [DEL()] or
+#' [DEL0()] functions in anglr. These return high-quality constrained Delaunay
+#' triangulations of polygonal regions, with the ability to control mesh
+#' characteristics including maximum triangle area, minimum internal angle, and
+#' conformance to the Delaunay criterion.
+#'
 #' @seealso [DEL]
 #' @examples
 #' a <- DEL0(cad_tas)

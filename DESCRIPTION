@@ -17,7 +17,9 @@ Description: The 'anglr' package gives direct access to generic 3D
  have material properties based on data values or with image textures. Textures
  and other data combinations use projection transformations to map between 
  coordinate systems, and objects can be easily visualized in an interactive
- scene at any stage. 
+ scene at any stage. This package relies on the 'RTriangle' package for 
+ high-quality triangular meshing which is licensed more restrictively under
+ 'CC BY-NC-SA 4.0'. 
 License: GPL-3
 Depends: R (>= 3.4.0)
 Imports: 

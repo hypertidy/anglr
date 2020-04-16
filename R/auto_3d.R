@@ -15,7 +15,7 @@
 #'
 #' @return the original value of [rgl::par3d()] before update
 #' @export
-#'
+#' @param ... unused, check for input of arguments which are ignored with a message
 #' @examples
 #' topo <- copy_down(silicate::SC(simpleworld), gebco)
 #' plot3d(topo)

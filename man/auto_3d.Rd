@@ -6,6 +6,9 @@
 \usage{
 auto_3d(...)
 }
+\arguments{
+\item{...}{unused, check for input of arguments which are ignored with a message}
+}
 \value{
 the original value of \code{\link[rgl:par3d]{rgl::par3d()}} before update
 }

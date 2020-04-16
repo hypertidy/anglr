@@ -73,6 +73,18 @@ This strict criterion is \emph{relaxed} in small measure, to ensure that all
 edge-inputs are preserved and to allow further constraints such as triangle
 size and internal angle to be specified.
 }
+\section{Licensing}{
+
+
+The anglr package is released with license GPL-3. There is one dependency
+RTriangle that has a more restrictive license 'CC BY-NC-SA 4.0'. Please note
+and respect the license of the RTriangle package if using the \code{\link[=DEL]{DEL()}} or
+\code{\link[=DEL0]{DEL0()}} functions in anglr. These return high-quality constrained Delaunay
+triangulations of polygonal regions, with the ability to control mesh
+characteristics including maximum triangle area, minimum internal angle, and
+conformance to the Delaunay criterion.
+}
+
 \section{Warning}{
 
 
