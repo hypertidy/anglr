@@ -31,13 +31,12 @@
 #' and angstroms packages where the basic facilities were developed. The
 #' function [as.mesh3d()][rgl::as.mesh3d] is imported from rgl and re-exported,
 #' and understands all of the surface types from sf, sp, raster, and silicate,
-#' and can accept a raw matrix as input. It can also include a `z` argument to
-#' extract elevation values from a raster, and an `image_texture` argument to
-#' drape an image from a raster RGB object onto the surface. Map projections are
-#' automatically resolved to the coordinate system of the `x` argument (as much
-#' as possible, there are lingering issues with the ongoing changes to crs in
-#' PROJ library, and the reproj and proj4 packages which attempt to smooth over
-#' the changes in Spatial and sf and raster objects.)
+#' and can accept a raw matrix as input.
+#'
+#' When creating a surface mesh there is an optional `z` argument to extract
+#' elevation values from a raster, and/or an `image_texture` argument to drape
+#' an image from a raster RGB object onto the surface. Map projections are
+#' automatically resolved to the coordinate system of the `x` argument.
 #'
 #' @section Implicit versus explicit topology:
 #'

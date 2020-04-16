@@ -1,13 +1,27 @@
-#' Tidy tables for topological spatial data structures.
+#' Mesh topology and visualization for spatial mesh structures.
 #'
-#' The 'anglr' package show-cases getting past limitations in spatial data by
-#' extending models in the `silicate`` package:
+#' The  anglr package gives direct access to generic 3D tools and provides a
+#' full suite of mesh-creation and 3D plotting functions. By extending the rgl
+#' package conversion and visualization functions for the `mesh3d` class a wide
+#' variety of complex spatial data can be brought into 3D scenes. These tools
+#' allow for spatial raster, polygons, and lines that are common in GIS
+#' contexts to be converted into mesh forms with high flexibility and the
+#' ability to integrate disparate data types. Vector and raster data can be
+#' seamlessly combined as meshes, and surfaces can be set to have material
+#' properties based on data values or with image textures. Textures and other
+#' data combinations use projection transformations to map between coordinate
+#' systems, and objects can be easily visualized in an interactive scene at any
+#' stage.
+#'
+#' The 'anglr' package show-cases extended features for *geo*-spatial data by
+#' extending and supporting the data models of the silicate package. Any kind
+#' of spatial data is intended to be supported, not just the geographic ones:
 #' \itemize{
 #'  \item coordinates beyond X and Y, or longitude and latitude
 #'  \item storing attributes on vertices, primitives, branches (parts), or objects
-#'  \item topology and geometry are properly separated
-#'  \item spatial data can be properly represented as a graph of spatial primitives
-#'  \item polygons as true surfaces, not just glorified lines with a path-filling rule
+#'  \item topology and geometry are distinguishable and not conflated
+#'  \item spatial data can be represented as a graph of spatial primitives
+#'  \item polygons as true surfaces, not just path structures with a 2D-only region-filling rule
 #'  \item TBD higher dimensional primitives are possible
 #'  \item TBD n-dimensional rasters with curvilinear coordinates, and the discrete-continuous distinction
 #' }
@@ -16,14 +30,18 @@
 #' @docType package
 #' @section I. Creation:
 #' \tabular{ll}{
-#'   \code{\link[silicate]{SC}}, \code{\link[silicate]{PATH}}, \code{\link[silicate]{TRI}}, and
-#'    \code{\link[silicate]{ARC}} silicate models are all supported, including the structural forms SC0, TRI0, PATH0 \cr
-#'   \code{Spatial} \tab most spatial types can be used directly \cr
+#'  \code{\link[rgl]{as.mesh3d}} \tab coercion function to convert most spatial data to mesh forms \cr
+#'   \code{\link[silicate]{SC}}  \tab and other silicate models are all supported, including the structural forms SC0, TRI0, PATH0 \cr
+#'   \code{\link[sp]{Spatial}} \tab most spatial types can be used directly including raster and sf \cr
 #'   \code{\link{DEL}} \tab create a mostly-Delaunay shape-preserving constrained triangulation  \cr
 #'  }
 #'
 #' @section II. Plotting:
+#'
+#' As much as possible plotting with represent the true nature of the data given.
+#'
 #' \tabular{ll}{
+#' \code{\link[rgl]{plot3d}} \tab and related 3D plot functions in rgl can be used directly on most input types \cr
 #'  \code{\link{globe}} \tab convert X,Y planar or angular to 3D on the surface of a globe, based on the data in longitude-latitude form \cr
 #'  \code{\link{plot3d.SC}} \tab plot 1D topology in 3D geometry space \cr
 #'  \code{\link{plot3d.TRI}} \tab plot 2D topology in 3D geometry space (DEL or TRI) \cr
@@ -39,9 +57,9 @@
 #' In terms of the [RTriangle::triangulate()] function the `max_area` argument
 #' controls and masks the `a` argument for RTriangle. It's possible to pass in
 #' values for `q`, `Y`, `j`, `D`, `S`, `V`, and `Q` - but we don't recommend
-#' experimenting with these unless you know what they are for. There are no
-#' checks for the limit on the number of triangles that can be created and
-#' several of these do affect that.
+#' experimenting with these unless you know what they are for. There is a
+#' coarse check for a limit on the number of triangles that can be created but
+#' general caution is advised when experimenting.
 #'
 NULL
 
