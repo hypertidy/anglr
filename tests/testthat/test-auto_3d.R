@@ -1,25 +1,13 @@
-inlandwaters <- silicate::inlandwaters[1:2, ]
 
 test_that("auto_3d does something", {
-  expect_message({
-    plot3d(QUAD(volcano))
-    auto_3d()
-}, "applying")
-
-  expect_silent({
-    plot3d(QUAD(volcano))
-    auto_3d(verbose = FALSE)
-  })
-
-  expect_message({
-      plot3d(copy_down(SC(inlandwaters),
-                   gebco))
-  auto_3d()
-}, "applying")
-
-    plot3d(copy_down(SC(inlandwaters),
-                     gebco))
-    auto_3d(verbose = FALSE)
 
 
+    rgl::open3d()
+    suppressWarnings(topo <- copy_down(silicate::SC(simpleworld), gebco))
+    plot3d(topo)
+
+    #expect_true(all(rgl::par3d("scale") == c(1, 1, 1)))
+    scl <- auto_3d()
+    expect_equivalent(rgl::par3d("scale") > scl, c(TRUE, TRUE, FALSE))
+    rgl::rgl.close()
 })

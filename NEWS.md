@@ -1,5 +1,7 @@
 # anglr 0.4.9
 
+* Changed behaviour of `auto_3d()`, now simply an alias to `rgl::aspect3d(1)`
+ and any previous used arguments now ignored, with a message. 
 * Tightened up behaviour of QUAD, being lazy and copying down the z. 
 
 * Remove non-ascii columns (and others) from 'simpleworld', thanks to help by Michael Chirico @michael_chirico. 

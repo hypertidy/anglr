@@ -2,44 +2,31 @@
 % Please edit documentation in R/auto_3d.R
 \name{auto_3d}
 \alias{auto_3d}
-\alias{iso_3d}
 \title{Auto aspect ratio}
 \usage{
-auto_3d(x = 1, y = 1, z = 1, keep_xy = TRUE, exag = TRUE, verbose = TRUE)
-}
-\arguments{
-\item{x}{exaggeration for x}
-
-\item{y}{exaggeration for y}
-
-\item{z}{exaggeration for z}
-
-\item{keep_xy}{should xy be forced to maintain their current aspect ratio}
-
-\item{exag}{should the x, y, z factors be applied, set to \code{FALSE} to ignore}
-
-\item{verbose}{keep shush}
+auto_3d(...)
 }
 \value{
-the output of \code{rgl::par3d} invisibly
+the original value of \code{\link[rgl:par3d]{rgl::par3d()}} before update
 }
 \description{
 Automatically modify the aspect ratio of a scene to
-rescale drastically different data ranges into something more
-pleasing.
+rescale drastically different data ranges into a cube.
 }
 \details{
-This is typically used to rescale data in different units, for example longitude and
-latitude in degrees and elevation in metres.
+This is a simple alias to \link[rgl:aspect3d]{rgl::aspect3d(1)}.
+
+This is typically used to rescale data in different units, for example
+longitude and latitude in degrees and elevation in metres.
+
+Note that running \code{rgl::aspect3d("iso")} which show the realistic ratio of
+the plot axes, ignoring units. Running this function is equivalent to
+\code{rgl::aspectd(1)} (or \code{rgl::aspect(x = 1, y = 1, z = 1)}) which sets the
+\emph{apparent} ratios of the current bounding box.
 }
 \examples{
 topo <- copy_down(silicate::SC(simpleworld), gebco)
 plot3d(topo)
-
-auto_3d(z = 4)
-plot3d(volcano)
-auto_3d(z = 0.1)
-auto_3d(x = 5)
-auto_3d(y  = 10)
-auto_3d(0.2, 1, keep_xy = FALSE)
+## update aspect ratio to be an apparent cube, not a needle
+auto_3d()
 }

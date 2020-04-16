@@ -1,48 +1,29 @@
 #' Auto aspect ratio
 #'
 #' Automatically modify the aspect ratio of a scene to
-#' rescale drastically different data ranges into something more
-#' pleasing.
+#' rescale drastically different data ranges into a cube.
 #'
-#' This is typically used to rescale data in different units, for example longitude and
-#' latitude in degrees and elevation in metres.
+#' This is a simple alias to [rgl::aspect3d(1)][rgl::aspect3d].
 #'
-#' @param x exaggeration for x
-#' @param y exaggeration for y
-#' @param z exaggeration for z
-#' @param keep_xy should xy be forced to maintain their current aspect ratio
-#' @param exag should the x, y, z factors be applied, set to `FALSE` to ignore
-#' @param verbose keep shush
+#' This is typically used to rescale data in different units, for example
+#' longitude and latitude in degrees and elevation in metres.
 #'
-#' @return the output of `rgl::par3d` invisibly
-#' @aliases iso_3d
+#' Note that running `rgl::aspect3d("iso")` which show the realistic ratio of
+#' the plot axes, ignoring units. Running this function is equivalent to
+#' `rgl::aspectd(1)` (or `rgl::aspect(x = 1, y = 1, z = 1)`) which sets the
+#' _apparent_ ratios of the current bounding box.
+#'
+#' @return the original value of [rgl::par3d()] before update
 #' @export
 #'
 #' @examples
 #' topo <- copy_down(silicate::SC(simpleworld), gebco)
 #' plot3d(topo)
-#'
-#' auto_3d(z = 4)
-#' plot3d(volcano)
-#' auto_3d(z = 0.1)
-#' auto_3d(x = 5)
-#' auto_3d(y  = 10)
-#' auto_3d(0.2, 1, keep_xy = FALSE)
-auto_3d <- function(x = 1, y = 1, z = 1, keep_xy = TRUE, exag = TRUE, verbose = TRUE) {
-  thr <- apply(matrix(rgl::par3d()$bbox, 2), 2, function(a) diff(a))
-  zz <- !is.finite(thr)
-  if (any(zz)) thr[zz] <- mean(thr[!zz])
-  dxy <- thr[2]/thr[1]
-  asp <- 1/(thr/min(thr))
-  if (keep_xy) asp[1:2] <- 1
-  if (exag) asp <- asp * c(x, y, z)
-  #if (!is.null(getOption("rgl.useNULL")) && interactive() && runif(1, 0, 1) > 0.96) {
-  #  message("rgl NULL device in use, do you need to run rgl::rglwidget()?")
-  #}
-  if (verbose) {
-    psp <- format(asp, digits = 3)
-    message(sprintf("original axis lengths x,y,z: %s", paste(format(thr), collapse = ",", sep = "")))
-    message(sprintf("applying 'aspect3d(%s, %s, %s)'", psp[1], psp[2], psp[3]))
-  }
-  rgl::aspect3d(asp[1], asp[2], asp[3])
+#' ## update aspect ratio to be an apparent cube, not a needle
+#' auto_3d()
+auto_3d <- function(...) {
+  p3d <- rgl::par3d("scale")
+  rgl::aspect3d(1L)
+  if (length(list(...)) > 0) .Deprecated("auto3d", new = "auto3d", msg = "use only 'auto_3d()', arguments to 'auto_3d()' are no longer accepted")
+  invisible(p3d)
 }
