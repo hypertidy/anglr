@@ -37,9 +37,9 @@
 \item{...}{pass \link[rgl:rgl.material]{material3d properties} to rgl}
 }
 \description{
-Draw points with rgl from any \link[rgl:tmesh3d]{shape3d} classed object. Produces
-a 3D scatterplot like that produced by \code{\link[rgl:plot3d]{rgl::plot3d()}}, but from a mesh-alike
-object.
+Draw points with rgl from any mesh-alike or \link[rgl:tmesh3d]{shape3d} classed
+object. Produces a 3D scatterplot like that of \code{\link[rgl:points3d]{rgl::points3d()}}, but
+from a mesh-alike object.
 }
 \details{
 The class \link[rgl:dot3d]{mesh3d} extends 'shape3d' and allows methods to plot

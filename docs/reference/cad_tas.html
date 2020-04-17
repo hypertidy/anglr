@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Cadastre and Contour — cad_tas" />
-<meta property="og:description" content="Sympatric cadastre layer and line contour layer." />
+<meta property="og:description" content="Coincident polygon cadastre layer and line contour layer." />
 
 
 
@@ -115,12 +115,29 @@
     </div>
 
     <div class="ref-description">
-    <p>Sympatric cadastre layer and line contour layer.</p>
+    <p>Coincident polygon cadastre layer and line contour layer.</p>
     </div>
 
 
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
+    <p>These two sf layers are cad_tas a sf polygons layer of a small region
+of cadastral parcels, and cont_tas a sf lines layer of the same
+region with elevation contours of the underlying topography.</p>
+<p>These layers are fused together in an <a href='https://github.com/hypertidy/anglr/issues/16'>in-progress example</a>.</p>
+<p><code>cont_tas</code> has an elevation value for each line in <code>cont_tas[["ELEVATION"]]</code>.</p>
+<p>These data sets are derived from the LIST Cadastral Parcels and LIST
+Contours 5m from <a href='https://www.thelist.tas.gov.au/app/content/home'>theLIST</a>
+Copyright State of Tasmania. These data are distributed under the
+<a href='http://creativecommons.org/licenses/by/3.0/au/'>Creative Commons Attribution 3.0 Australia License</a>.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>cont_tas</span>)
+<span class='co'># \donttest{</span>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'><a href='copy_down.html'>copy_down</a></span>(<span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/silicate/man/SC0.html'>SC0</a></span>(<span class='no'>cont_tas</span>), <span class='st'>"ELEVATION"</span>))
+<span class='fu'><a href='auto_3d.html'>auto_3d</a></span>()
+<span class='co'># }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

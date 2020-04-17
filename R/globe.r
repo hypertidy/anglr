@@ -1,12 +1,16 @@
 
-#' Convert map coordinates to Geocentric (XYZ) coordinates.
+#' Geocentric (XYZ) coordinates
 #'
+#' Convert longitude/latitude coordinates to geocentric coordinates.
 #'
-#' @param x list of tibbles, in silicate form
+#' With silicate data checks are made for the projection in use, but
+#' not for mesh3d. In that case data are assumed to be
+#' 'longitude,latitude,elevation'.
+#' @param x a silicate model or mesh3d
 #' @param gproj Geocentric PROJ.4 string, defaults to WGS84
 #' @param ... arguments to methods (none used)
 #'
-#' @return anglr object with vertices table modified
+#' @return object with vertices table modified
 #' @export
 #' @importFrom reproj reproj
 #' @examples
@@ -35,6 +39,12 @@ globe <- function(x, ...) {
   cbind(x, y, z)
 }
 
+#' @export
+#' @rdname globe
+globe.mesh3d <- function(x, gproj = NULL, ...) {
+  x$vb[1:3, ] <- .ll_to_globe(t(x$vb[1:3, ]))
+  x
+}
 #' @export
 #' @rdname globe
 globe.default <- function(x, gproj = "+proj=geocent +datum=WGS84", ...) {

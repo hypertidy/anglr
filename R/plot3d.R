@@ -22,6 +22,10 @@
 #' For SC edges are matched to their object/s. One object's properties is
 #' applied as colour. If `color_` column is present on the data object table it
 #' is used.
+#'
+#' If the argument 'color' is used, this is passed down to the rgl plot function  -
+#' and will be applied per primitive, not per silicate object. This provides flexibility
+#' but does require knowledge of the underlying structures in use.
 #' @param x silicate model, SC, TRI, ARC, or PATH
 #' @param ... passed to material properties
 #' @param add add to plot or not
@@ -176,11 +180,11 @@ plot3d.SC0 <- function(x, ..., add = FALSE) {
   if (!add) {
     rgl::rgl.clear()
   }
-  if ("col" %in% names(list(...))) {
+  if ("color" %in% names(list(...))) {
     rgl::segments3d(vb[vindex,], ...)
   } else {
     rgl::segments3d(vb[vindex,],
-                    col = rep(pindex, each = 2), ...)
+                    color = rep(pindex, each = 2), ...)
 
   }
 

@@ -1,8 +1,8 @@
 #' Draw a mesh as points in 3D
 #'
-#' Draw points with rgl from any [shape3d][rgl::tmesh3d] classed object. Produces
-#' a 3D scatterplot like that produced by [rgl::plot3d()], but from a mesh-alike
-#' object.
+#' Draw points with rgl from any mesh-alike or [shape3d][rgl::tmesh3d] classed
+#' object. Produces a 3D scatterplot like that of [rgl::points3d()], but
+#' from a mesh-alike object.
 #'
 #' The class [mesh3d][rgl::dot3d] extends 'shape3d' and allows methods to plot
 #' non-surface properties. Note that `dot3d()` will always add to an existing

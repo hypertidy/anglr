@@ -143,10 +143,29 @@ NULL
 
 #' Cadastre and Contour
 #'
-#' Sympatric cadastre layer and line contour layer.
+#' Coincident polygon cadastre layer and line contour layer.
+#'
+#' These two sf layers are [cad_tas] a sf polygons layer of a small region
+#' of cadastral parcels, and [cont_tas] a sf lines layer of the same
+#' region with elevation contours of the underlying topography.
+#'
+#' These layers are fused together in an [in-progress example](https://github.com/hypertidy/anglr/issues/16).
+#'
+#' `cont_tas` has an elevation value for each line in `cont_tas[["ELEVATION"]]`.
+#'
+#' These data sets are derived from the LIST Cadastral Parcels and LIST
+#' Contours 5m from [theLIST](https://www.thelist.tas.gov.au/app/content/home)
+#' Copyright State of Tasmania. These data are distributed under the
+#' [Creative Commons Attribution 3.0 Australia License](http://creativecommons.org/licenses/by/3.0/au/).
 #' @name cad_tas
 #' @aliases cont_tas
 #' @docType data
+#' @examples
+#' plot3d(cont_tas)
+#' \donttest{
+#' plot3d(copy_down(silicate::SC0(cont_tas), "ELEVATION"))
+#' auto_3d()
+#' }
 NULL
 
 #' simple world
@@ -160,10 +179,15 @@ NULL
 NULL
 
 
-#' simple world elevation raster
+#' world elevation raster
 #'
-#' A simple raster map of world topography, elevation relative to sea level in metres. Source
-#' data is Gebco 2014, converted to a much reduced 1 degree resolution global map.
+#' A simple raster map of world topography, elevation relative to sea level in
+#' metres. Source data is Gebco 2014, converted to a much reduced 1 degree
+#' resolution global map.
+#'
+#'  Data downloaded from GEBCO 2014 (0.0083 degrees = 30sec arcmin resolution)
+#'  and set at resolution 1 degrees.
+#'  [GEBCO 2014](https://www.gebco.net/data_and_products/gridded_bathymetry_data/).
 #' @name gebco
 #' @docType data
 #' @examples

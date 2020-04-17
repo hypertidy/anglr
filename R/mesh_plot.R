@@ -9,9 +9,14 @@
 }
 
 
-#' Plot a mesh
+#' Plot a mesh surface in 2D
 #'
-#' The input is treated as a mesh and plotted vectorized form using 'grid'.
+#' Draw a 2D interpretation of a mesh object, or a mesh-alike object.
+#' This is very fast and can be used to created _approximately_ continuously
+#' varying surface plots.
+#'
+#' The input is treated as a mesh and plotted in vectorized form using
+#' 'grid'.
 #'
 #' The mesh may be reprojected prior to plotting using the 'crs' argument to
 #' define the target map projection in 'PROJ string' format. (There is no

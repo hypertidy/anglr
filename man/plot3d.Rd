@@ -90,6 +90,10 @@ exaggerations in different axes.
 For SC edges are matched to their object/s. One object's properties is
 applied as colour. If \code{color_} column is present on the data object table it
 is used.
+
+If the argument 'color' is used, this is passed down to the rgl plot function  -
+and will be applied per primitive, not per silicate object. This provides flexibility
+but does require knowledge of the underlying structures in use.
 }
 \examples{
 library(silicate)

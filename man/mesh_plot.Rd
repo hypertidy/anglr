@@ -13,7 +13,7 @@
 \alias{mesh_plot.sc}
 \alias{mesh_plot.default}
 \alias{mesh_plot.triangulation}
-\title{Plot a mesh}
+\title{Plot a mesh surface in 2D}
 \usage{
 mesh_plot(
   x,
@@ -95,9 +95,14 @@ data range is used)}
 nothing, used for the side-effect of creating or adding to a plot
 }
 \description{
-The input is treated as a mesh and plotted vectorized form using 'grid'.
+Draw a 2D interpretation of a mesh object, or a mesh-alike object.
+This is very fast and can be used to created \emph{approximately} continuously
+varying surface plots.
 }
 \details{
+The input is treated as a mesh and plotted in vectorized form using
+'grid'.
+
 The mesh may be reprojected prior to plotting using the 'crs' argument to
 define the target map projection in 'PROJ string' format. (There is no
 "reproject" function for quadmesh, this is performed directly on the x-y

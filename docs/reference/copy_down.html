@@ -172,25 +172,21 @@ vertex level.</p>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>silicate model with vertex values copied to vertices</p>
+    <p>a mesh3d or silicate model with vertex values copied to vertices (depending
+on the input argument 'x')</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Various methods are used depending on the second argument <code>z</code>.</p>
-<p>If z is a raster (<code>BasicRaster</code>) a numeric value for each vertex is found by bilinear
+<p>If <code>z</code> is a raster (<code>BasicRaster</code>) a numeric value for each vertex is found by bilinear
 interpolation using <code><a href='https://rdrr.io/pkg/raster/man/extract.html'>raster::extract(raster, vertex, method = "bilinear")</a></code>. Vertices
-are transformed into the space used by the raster if possible. (WIP ... Otherwise a warning is issued if
-there's not overlap ... WIP)</p>
-<p>Beware, the CRS (coordinate reference system) space is fraught at the moment,
-proj4strings are out of favour, '+init=epsg:4326' doesn't work but 'EPSG:4326' does
-and sf will only give '$proj4string' <em>dynamically</em>, but it might
-be copied in the '$input' element, so the crs input lookup tries all these things
-(One day soon we'll just <em>a crs</em> and let PROJ sort it out, but for now
-we have to send all these messages around, it'll calm down in a few years (2024-ish)).
-If z is a character value, that column is taken from the object table.</p>
+are transformed into the space used by the raster if possible.</p>
+<p>If <code>z</code> is a character value, that column is taken from the object table.</p>
 <p>The <code>.id</code> argument must be character and exist as a column name in the object table.</p>
-<p>If z is a vector it's simply copied down.</p>
+<p>If z is a vector or a constant value it's simply copied down.</p>
 <p>No checking is done on the type of the result, and so there's nothing to stop the use of the recycling rule
-to expand out values, and nothing to stop the use of non numeric values being copied down. It's your model.</p>
+to expand out values, and nothing to stop the use of non numeric values being copied down.</p>
+<p>Use <a href='https://rdrr.io/pkg/silicate/man/TRI0.html'>silicate::TRI0()</a> or <code><a href='DEL0.html'>DEL0()</a></code> or <code><a href='https://rdrr.io/pkg/silicate/man/SC0.html'>silicate::SC0()</a></code> to convert
+various spatial formats into suitable forms for this function.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>raster</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: package 'raster' was built under R version 3.6.3</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: sp</span></div><div class='output co'>#&gt; <span class='warning'>Warning: package 'sp' was built under R version 3.6.3</span></div><div class='input'><span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span>(<span class='no'>volcano</span>)
@@ -199,8 +195,17 @@ to expand out values, and nothing to stop the use of non numeric values being co
 <span class='co'>## looks funny?</span>
 <span class='fu'><a href='auto_3d.html'>auto_3d</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>15</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: use only 'auto_3d()', arguments to 'auto_3d()' are no longer accepted</span></div><div class='input'>
 <span class='co'># \donttest{</span>
- <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'>copy_down</span>(<span class='fu'><a href='silicate-models.html'>SC</a></span>(<span class='no'>cont_tas</span>), <span class='st'>"ELEVATION"</span>), <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"grey"</span>)
-<span class='co'># }</span></div></pre>
+<span class='no'>sc</span> <span class='kw'>&lt;-</span> <span class='fu'>copy_down</span>(<span class='fu'><a href='silicate-models.html'>SC0</a></span>(<span class='no'>cont_tas</span>), <span class='st'>"ELEVATION"</span>)
+<span class='no'>sc</span>$<span class='no'>object</span>$<span class='no'>color_</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/palettes.html'>hcl.colors</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/raster/man/ncell.html'>nrow</a></span>(<span class='no'>sc</span>$<span class='no'>object</span>), <span class='st'>"YlOrRd"</span>)
+ <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>sc</span>)
+
+ <span class='co'>## a planar straight line graph with x, y (UTM) and ELEVATION (metres)</span>
+ <span class='no'>sc</span></div><div class='output co'>#&gt; class       : SC
+#&gt; type        : Primitive
+#&gt; vertices    : 7544 (3-space)
+#&gt; primitives  : 3772 (1-space)
+#&gt; crs         : +proj=utm +zone=55 +south +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</div><div class='input'># }
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

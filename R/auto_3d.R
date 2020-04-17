@@ -24,6 +24,6 @@
 auto_3d <- function(...) {
   p3d <- rgl::par3d("scale")
   rgl::aspect3d(1L)
-  if (length(list(...)) > 0) .Deprecated("auto3d", new = "auto3d", msg = "use only 'auto_3d()', arguments to 'auto_3d()' are no longer accepted")
+  if (length(list(...)) > 0) .Deprecated("auto_3d", new = "auto_3d", msg = "use only 'auto_3d()', arguments to 'auto_3d()' are no longer accepted")
   invisible(p3d)
 }

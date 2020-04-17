@@ -3,10 +3,16 @@
 \docType{data}
 \name{gebco}
 \alias{gebco}
-\title{simple world elevation raster}
+\title{world elevation raster}
 \description{
-A simple raster map of world topography, elevation relative to sea level in metres. Source
-data is Gebco 2014, converted to a much reduced 1 degree resolution global map.
+A simple raster map of world topography, elevation relative to sea level in
+metres. Source data is Gebco 2014, converted to a much reduced 1 degree
+resolution global map.
+}
+\details{
+Data downloaded from GEBCO 2014 (0.0083 degrees = 30sec arcmin resolution)
+and set at resolution 1 degrees.
+\href{https://www.gebco.net/data_and_products/gridded_bathymetry_data/}{GEBCO 2014}.
 }
 \examples{
 data("gebco", package = "anglr")

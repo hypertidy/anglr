@@ -43,7 +43,8 @@ copy_down(x, z = NULL, ..., .id = "z_")
 \item{.id}{character value, the name of the resulting column in the vertices, default is "z_"}
 }
 \value{
-silicate model with vertex values copied to vertices
+a mesh3d or silicate model with vertex values copied to vertices (depending
+on the input argument 'x')
 }
 \description{
 Copy down provides ways to transfer object level data values to
@@ -52,25 +53,21 @@ vertex level.
 \details{
 Various methods are used depending on the second argument \code{z}.
 
-If z is a raster (\code{BasicRaster}) a numeric value for each vertex is found by bilinear
+If \code{z} is a raster (\code{BasicRaster}) a numeric value for each vertex is found by bilinear
 interpolation using \code{raster::extract(raster, vertex, method = "bilinear")}. Vertices
-are transformed into the space used by the raster if possible. (WIP ... Otherwise a warning is issued if
-there's not overlap ... WIP)
+are transformed into the space used by the raster if possible.
 
-Beware, the CRS (coordinate reference system) space is fraught at the moment,
-proj4strings are out of favour, '+init=epsg:4326' doesn't work but 'EPSG:4326' does
-and sf will only give '$proj4string' \emph{dynamically}, but it might
-be copied in the '$input' element, so the crs input lookup tries all these things
-(One day soon we'll just \emph{a crs} and let PROJ sort it out, but for now
-we have to send all these messages around, it'll calm down in a few years (2024-ish)).
-If z is a character value, that column is taken from the object table.
+If \code{z} is a character value, that column is taken from the object table.
 
 The \code{.id} argument must be character and exist as a column name in the object table.
 
-If z is a vector it's simply copied down.
+If z is a vector or a constant value it's simply copied down.
 
 No checking is done on the type of the result, and so there's nothing to stop the use of the recycling rule
-to expand out values, and nothing to stop the use of non numeric values being copied down. It's your model.
+to expand out values, and nothing to stop the use of non numeric values being copied down.
+
+Use \link[silicate:TRI0]{silicate::TRI0()} or \code{\link[=DEL0]{DEL0()}} or \code{\link[silicate:SC0]{silicate::SC0()}} to convert
+various spatial formats into suitable forms for this function.
 }
 \examples{
 library(raster)
@@ -81,6 +78,11 @@ plot3d(copy_down(cl, r))
 auto_3d(z = 15)
 
 \donttest{
- plot3d(copy_down(SC(cont_tas), "ELEVATION"), col = "grey")
+sc <- copy_down(SC0(cont_tas), "ELEVATION")
+sc$object$color_ <- hcl.colors(nrow(sc$object), "YlOrRd")
+ plot3d(sc)
+
+ ## a planar straight line graph with x, y (UTM) and ELEVATION (metres)
+ sc
 }
 }

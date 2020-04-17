@@ -5,31 +5,28 @@
 #'
 #' Various methods are used depending on the second argument `z`.
 #'
-#' If z is a raster (`BasicRaster`) a numeric value for each vertex is found by bilinear
+#' If `z` is a raster (`BasicRaster`) a numeric value for each vertex is found by bilinear
 #' interpolation using `raster::extract(raster, vertex, method = "bilinear")`. Vertices
-#' are transformed into the space used by the raster if possible. (WIP ... Otherwise a warning is issued if
-#' there's not overlap ... WIP)
+#' are transformed into the space used by the raster if possible.
 #'
-#' Beware, the CRS (coordinate reference system) space is fraught at the moment,
-#' proj4strings are out of favour, '+init=epsg:4326' doesn't work but 'EPSG:4326' does
-#' and sf will only give '$proj4string' *dynamically*, but it might
-#' be copied in the '$input' element, so the crs input lookup tries all these things
-#' (One day soon we'll just *a crs* and let PROJ sort it out, but for now
-#' we have to send all these messages around, it'll calm down in a few years (2024-ish)).
-#' If z is a character value, that column is taken from the object table.
+#' If `z` is a character value, that column is taken from the object table.
 #'
 #' The `.id` argument must be character and exist as a column name in the object table.
 #'
-#' If z is a vector it's simply copied down.
+#' If z is a vector or a constant value it's simply copied down.
 #'
 #' No checking is done on the type of the result, and so there's nothing to stop the use of the recycling rule
-#' to expand out values, and nothing to stop the use of non numeric values being copied down. It's your model.
+#' to expand out values, and nothing to stop the use of non numeric values being copied down.
+#'
+#' Use [silicate::TRI0()][silicate::TRI0] or [DEL0()] or [silicate::SC0()] to convert
+#' various spatial formats into suitable forms for this function.
 #' @param x a mesh3d or a silicate object
 #' @param z object specifying values to copy down, a vector of values, a column name, a raster (see details)
 #' @param ... currently ignored
 #' @param .id character value, the name of the resulting column in the vertices, default is "z_"
 #'
-#' @return silicate model with vertex values copied to vertices
+#' @return a mesh3d or silicate model with vertex values copied to vertices (depending
+#' on the input argument 'x')
 #' @export
 #'
 #' @examples
@@ -41,7 +38,12 @@
 #' auto_3d(z = 15)
 #'
 #' \donttest{
-#'  plot3d(copy_down(SC(cont_tas), "ELEVATION"), col = "grey")
+#' sc <- copy_down(SC0(cont_tas), "ELEVATION")
+#' sc$object$color_ <- hcl.colors(nrow(sc$object), "YlOrRd")
+#'  plot3d(sc)
+#'
+#'  ## a planar straight line graph with x, y (UTM) and ELEVATION (metres)
+#'  sc
 #' }
 copy_down <- function(x, z = NULL, ..., .id = "z_") {
   stopifnot(is.character(.id))

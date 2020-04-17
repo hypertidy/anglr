@@ -2,25 +2,33 @@
 % Please edit documentation in R/globe.R
 \name{globe}
 \alias{globe}
+\alias{globe.mesh3d}
 \alias{globe.default}
-\title{Convert map coordinates to Geocentric (XYZ) coordinates.}
+\title{Geocentric (XYZ) coordinates}
 \usage{
 globe(x, ...)
+
+\method{globe}{mesh3d}(x, gproj = NULL, ...)
 
 \method{globe}{default}(x, gproj = "+proj=geocent +datum=WGS84", ...)
 }
 \arguments{
-\item{x}{list of tibbles, in silicate form}
+\item{x}{a silicate model or mesh3d}
 
 \item{...}{arguments to methods (none used)}
 
 \item{gproj}{Geocentric PROJ.4 string, defaults to WGS84}
 }
 \value{
-anglr object with vertices table modified
+object with vertices table modified
 }
 \description{
-Convert map coordinates to Geocentric (XYZ) coordinates.
+Convert longitude/latitude coordinates to geocentric coordinates.
+}
+\details{
+With silicate data checks are made for the projection in use, but
+not for mesh3d. In that case data are assumed to be
+'longitude,latitude,elevation'.
 }
 \examples{
 data(simpleworld)
