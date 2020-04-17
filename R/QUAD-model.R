@@ -1,11 +1,14 @@
 #' QUAD model
 #'
-#' The QUAD model
+#' The QUAD model is a silicate-like model for raster data, with
+#' implicit geomtry.
 #'
-#' This is lazy, object table only stores the raster extent.
+#' The object table only stores the raster extent, and the pixel values
+#' are on the 'quad' table. This is only supported for single-layer 2D
+#' regular rasters.
 #'
 #' The 'color_' idiom works, but must be put on the '$quad' table.
-#' Very WIP.
+#' Very much still in-development.
 #' @param x raster alike, or a matrix
 #' @param ... ignored
 #'

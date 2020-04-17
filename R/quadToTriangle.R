@@ -7,6 +7,7 @@
 #' @export
 #' @name TRI.QUAD
 #' @aliases TRI
+#' @return a TRI model, as per silicate package
 #' @examples
 #' library(anglr)
 #' library(raster)
