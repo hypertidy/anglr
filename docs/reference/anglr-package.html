@@ -156,19 +156,22 @@ of spatial data is intended to be supported, not just the geographic ones:</p><u
 <li><p>TBD n-dimensional rasters with curvilinear coordinates, and the discrete-continuous distinction</p></li>
 </ul>
 
-    <h2 class="hasAnchor" id="i-licensing"><a class="anchor" href="#i-licensing"></a>I. Licensing</h2>
+    <h2 class="hasAnchor" id="licensing"><a class="anchor" href="#licensing"></a>Licensing</h2>
 
     
 
 
-<p>The anglr package is released with license GPL-3. There is one dependency
-RTriangle that has a more restrictive license 'CC BY-NC-SA 4.0'. Please note
-and respect the license of the RTriangle package if using the <code><a href='DEL.html'>DEL()</a></code> or
-<code><a href='DEL0.html'>DEL0()</a></code> functions in anglr. These return high-quality constrained Delaunay
+<p>The anglr package is released with license CC BY-NC-SA 4.0 to match the one
+dependency RTriangle. Please note and respect the license of the RTriangle
+package used by the <code><a href='DEL.html'>DEL()</a></code> or <code><a href='DEL0.html'>DEL0()</a></code> functions in anglr, and invoked
+within 3D plot methods. These return high-quality constrained Delaunay
 triangulations of polygonal regions, with the ability to control mesh
 characteristics including maximum triangle area, minimum internal angle, and
-conformance to the Delaunay criterion.</p>
-    <h2 class="hasAnchor" id="ii-creation"><a class="anchor" href="#ii-creation"></a>II. Creation</h2>
+conformance to the Delaunay criterion. If you are interested in
+a less restrictive license for high-quality meshing in R please
+get involved with <a href='https://github.com/hypertidy/laridae'>the laridae package</a>
+which aims to provide access to <a href='https://www.cgal.org/'>CGAL</a>.</p>
+    <h2 class="hasAnchor" id="creation"><a class="anchor" href="#creation"></a>Creation</h2>
 
     
 
@@ -185,8 +188,9 @@ conformance to the Delaunay criterion.</p>
     
 
 
-<p>As much as possible plotting with represent the true nature of the data given.</p>
+<p>As much as possible plotting will represent the true nature of the data given.</p>
 <table class='table'>
+<tr><td><code><a href='mesh_plot.html'>mesh_plot</a></code></td><td>plot in 2D, including curvilinear reprojections with rasters</td></tr>
 <tr><td><code><a href='https://rdrr.io/pkg/rgl/man/plot3d.html'>plot3d</a></code></td><td>and related 3D plot functions in rgl can be used directly on most input types</td></tr>
 <tr><td><code><a href='globe.html'>globe</a></code></td><td>convert X,Y planar or angular to 3D on the surface of a globe, based on the data in longitude-latitude form</td></tr>
 <tr><td><code><a href='plot3d.html'>plot3d.SC</a></code></td><td>plot 1D topology in 3D geometry space</td></tr>
@@ -194,7 +198,7 @@ conformance to the Delaunay criterion.</p>
 </table>
 
 
-    <h2 class="hasAnchor" id="iiii-options-and-technicalities"><a class="anchor" href="#iiii-options-and-technicalities"></a>IIII. Options and technicalities</h2>
+    <h2 class="hasAnchor" id="options-and-technicalities"><a class="anchor" href="#options-and-technicalities"></a>Options and technicalities</h2>
 
     
 

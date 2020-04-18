@@ -195,13 +195,16 @@ automatically interpolated and include in the output. See the help for
     
 
 
-<p>The anglr package is released with license GPL-3. There is one dependency
-RTriangle that has a more restrictive license 'CC BY-NC-SA 4.0'. Please note
-and respect the license of the RTriangle package if using the <code><a href='DEL.html'>DEL()</a></code> or
-<code>DEL0()</code> functions in anglr. These return high-quality constrained Delaunay
+<p>The anglr package is released with license CC BY-NC-SA 4.0 to match the one
+dependency RTriangle. Please note and respect the license of the RTriangle
+package used by the <code><a href='DEL.html'>DEL()</a></code> or <code>DEL0()</code> functions in anglr, and invoked
+within 3D plot methods. These return high-quality constrained Delaunay
 triangulations of polygonal regions, with the ability to control mesh
 characteristics including maximum triangle area, minimum internal angle, and
-conformance to the Delaunay criterion.</p>
+conformance to the Delaunay criterion. If you are interested in
+a less restrictive license for high-quality meshing in R please
+get involved with <a href='https://github.com/hypertidy/laridae'>the laridae package</a>
+which aims to provide access to <a href='https://www.cgal.org/'>CGAL</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='DEL.html'>DEL</a></p></div>

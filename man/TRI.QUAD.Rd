@@ -12,6 +12,9 @@
 
 \item{...}{reserved}
 }
+\value{
+a TRI model, as per silicate package
+}
 \description{
 TRI model from silicate is extended by methods for QUAD.
 }

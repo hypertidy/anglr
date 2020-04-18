@@ -18,9 +18,9 @@ Description: The 'anglr' package gives direct access to generic 3D
  and other data combinations use projection transformations to map between 
  coordinate systems, and objects can be easily visualized in an interactive
  scene at any stage. This package relies on the 'RTriangle' package for 
- high-quality triangular meshing which is licensed more restrictively under
+ high-quality triangular meshing which is licensed restictively under
  'CC BY-NC-SA 4.0'. 
-License: GPL-3
+License: CC BY-NC-SA 4.0
 Depends: R (>= 3.4.0)
 Imports: 
     crsmeta (>= 0.3.0),
@@ -54,7 +54,7 @@ Suggests:
     testthat (>= 2.1.0),
     trip
 Roxygen: list(markdown = TRUE)
-SystemRequirements: PROJ library, OpenGL, GLU Library
+SystemRequirements: PROJ library, OpenGL and GLU Library
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.0

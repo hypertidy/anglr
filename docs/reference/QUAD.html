@@ -40,7 +40,8 @@
 
 
 <meta property="og:title" content="QUAD model — QUAD" />
-<meta property="og:description" content="The QUAD model" />
+<meta property="og:description" content="The QUAD model is a silicate-like model for raster data, with
+implicit geomtry." />
 
 
 
@@ -115,7 +116,8 @@
     </div>
 
     <div class="ref-description">
-    <p>The QUAD model</p>
+    <p>The QUAD model is a silicate-like model for raster data, with
+implicit geomtry.</p>
     </div>
 
     <pre class="usage"><span class='fu'>QUAD</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -144,9 +146,11 @@
     <p>QUAD model</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This is lazy, object table only stores the raster extent.</p>
+    <p>The object table only stores the raster extent, and the pixel values
+are on the 'quad' table. This is only supported for single-layer 2D
+regular rasters.</p>
 <p>The 'color_' idiom works, but must be put on the '$quad' table.
-Very WIP.</p>
+Very much still in-development.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>qq</span> <span class='kw'>&lt;-</span>  <span class='fu'>QUAD</span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span>(<span class='no'>volcano</span>))

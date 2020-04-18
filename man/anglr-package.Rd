@@ -32,19 +32,22 @@ of spatial data is intended to be supported, not just the geographic ones:
 \item TBD n-dimensional rasters with curvilinear coordinates, and the discrete-continuous distinction
 }
 }
-\section{I. Licensing}{
+\section{Licensing}{
 
 
-The anglr package is released with license GPL-3. There is one dependency
-RTriangle that has a more restrictive license 'CC BY-NC-SA 4.0'. Please note
-and respect the license of the RTriangle package if using the \code{\link[=DEL]{DEL()}} or
-\code{\link[=DEL0]{DEL0()}} functions in anglr. These return high-quality constrained Delaunay
+The anglr package is released with license CC BY-NC-SA 4.0 to match the one
+dependency RTriangle. Please note and respect the license of the RTriangle
+package used by the \code{\link[=DEL]{DEL()}} or \code{\link[=DEL0]{DEL0()}} functions in anglr, and invoked
+within 3D plot methods. These return high-quality constrained Delaunay
 triangulations of polygonal regions, with the ability to control mesh
 characteristics including maximum triangle area, minimum internal angle, and
-conformance to the Delaunay criterion.
+conformance to the Delaunay criterion. If you are interested in
+a less restrictive license for high-quality meshing in R please
+get involved with \href{https://github.com/hypertidy/laridae}{the laridae package}
+which aims to provide access to \href{https://www.cgal.org/}{CGAL}.
 }
 
-\section{II. Creation}{
+\section{Creation}{
 
 \tabular{ll}{
 \code{\link[rgl]{as.mesh3d}} \tab coercion function to convert most spatial data to mesh forms \cr
@@ -57,9 +60,10 @@ conformance to the Delaunay criterion.
 \section{III. Plotting}{
 
 
-As much as possible plotting with represent the true nature of the data given.
+As much as possible plotting will represent the true nature of the data given.
 
 \tabular{ll}{
+\code{\link{mesh_plot}} \tab plot in 2D, including curvilinear reprojections with rasters \cr
 \code{\link[rgl]{plot3d}} \tab and related 3D plot functions in rgl can be used directly on most input types \cr
 \code{\link{globe}} \tab convert X,Y planar or angular to 3D on the surface of a globe, based on the data in longitude-latitude form \cr
 \code{\link{plot3d.SC}} \tab plot 1D topology in 3D geometry space \cr
@@ -67,7 +71,7 @@ As much as possible plotting with represent the true nature of the data given.
 }
 }
 
-\section{IIII. Options and technicalities}{
+\section{Options and technicalities}{
 
 
 There is an option set for the maximum number of triangles that can be

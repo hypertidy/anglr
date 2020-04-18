@@ -1,6 +1,7 @@
 ## anglr 0.4.9
 
-New package anglr. 
+New package anglr. I have adopted the more restrictive license of the
+RTriangle package, which this imports (CC BY-NC-SA 4.0). 
 
 Thank you very much. 
 
@@ -11,12 +12,9 @@ Thank you very much.
 
 ## R CMD check results
 
-0 errors | 0 warnings | 2 note
+0 errors | 0 warnings | 1 note
 
 * This is a new release.
 
-* There is a note about use of a restrictive license in package RTriangle.  I
-have added mention of the more restrictive requirements for RTriangle in the
-package documentation, the Description, and in the help for relevant functions
-'DEL()' and 'DEL0()'.
+
 

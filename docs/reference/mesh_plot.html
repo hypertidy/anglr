@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot a mesh — mesh_plot • anglr</title>
+<title>Plot a mesh surface in 2D — mesh_plot • anglr</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,10 @@
 
 
 
-<meta property="og:title" content="Plot a mesh — mesh_plot" />
-<meta property="og:description" content="The input is treated as a mesh and plotted vectorized form using 'grid'." />
+<meta property="og:title" content="Plot a mesh surface in 2D — mesh_plot" />
+<meta property="og:description" content="Draw a 2D interpretation of a mesh object, or a mesh-alike object.
+This is very fast and can be used to created approximately continuously
+varying surface plots." />
 
 
 
@@ -109,13 +111,15 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot a mesh</h1>
+    <h1>Plot a mesh surface in 2D</h1>
     
     <div class="hidden name"><code>mesh_plot.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The input is treated as a mesh and plotted vectorized form using 'grid'.</p>
+    <p>Draw a 2D interpretation of a mesh object, or a mesh-alike object.
+This is very fast and can be used to created <em>approximately</em> continuously
+varying surface plots.</p>
     </div>
 
     <pre class="usage"><span class='fu'>mesh_plot</span>(
@@ -222,7 +226,9 @@ data range is used)</p></td>
     <p>nothing, used for the side-effect of creating or adding to a plot</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The mesh may be reprojected prior to plotting using the 'crs' argument to
+    <p>The input is treated as a mesh and plotted in vectorized form using
+'grid'.</p>
+<p>The mesh may be reprojected prior to plotting using the 'crs' argument to
 define the target map projection in 'PROJ string' format. (There is no
 "reproject" function for quadmesh, this is performed directly on the x-y
 coordinates of the 'quadmesh' output). The 'col' argument are mapped to the

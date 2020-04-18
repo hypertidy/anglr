@@ -73,18 +73,6 @@ This strict criterion is \emph{relaxed} in small measure, to ensure that all
 edge-inputs are preserved and to allow further constraints such as triangle
 size and internal angle to be specified.
 }
-\section{Licensing}{
-
-
-The anglr package is released with license GPL-3. There is one dependency
-RTriangle that has a more restrictive license 'CC BY-NC-SA 4.0'. Please note
-and respect the license of the RTriangle package if using the \code{\link[=DEL]{DEL()}} or
-\code{\link[=DEL0]{DEL0()}} functions in anglr. These return high-quality constrained Delaunay
-triangulations of polygonal regions, with the ability to control mesh
-characteristics including maximum triangle area, minimum internal angle, and
-conformance to the Delaunay criterion.
-}
-
 \section{Warning}{
 
 
@@ -101,6 +89,21 @@ may be overridden by replying 'Yes' to the prompt.
 The DEL model cannot currently mesh point features, and it cannot mesh
 linear features if they include z or other vertex attributes - for now use
 \code{\link[=DEL0]{DEL0()}} which can do those.
+}
+
+\section{Licensing}{
+
+
+The anglr package is released with license CC BY-NC-SA 4.0 to match the one
+dependency RTriangle. Please note and respect the license of the RTriangle
+package used by the \code{\link[=DEL]{DEL()}} or \code{\link[=DEL0]{DEL0()}} functions in anglr, and invoked
+within 3D plot methods. These return high-quality constrained Delaunay
+triangulations of polygonal regions, with the ability to control mesh
+characteristics including maximum triangle area, minimum internal angle, and
+conformance to the Delaunay criterion. If you are interested in
+a less restrictive license for high-quality meshing in R please
+get involved with \href{https://github.com/hypertidy/laridae}{the laridae package}
+which aims to provide access to \href{https://www.cgal.org/}{CGAL}.
 }
 
 \examples{
