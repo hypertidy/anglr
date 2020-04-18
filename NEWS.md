@@ -21,11 +21,23 @@ GEBCO 2019, at 0.5 resolution and stored as integers.
 and TRI models, as was working for DEL0 and TRI0 (because they don't store
 invisible triangles).
 
- 
-* Now providing the full suite of mesh plotting functions from rgl. `plot3d()`, `dot3d()`, `wire3d()`, and `persp3d()` now work with matrix, raster, sf, sp, trip, RTriangle, and silicate models. Each of the mesh-surface forms rely on `as.mesh3d()` conversion behind the scenes, whereas `plot3d()` on linear types (sf, sp, trip, silicate SC, SC0, PATH, PATH0, and ARC0) all are plotted using rgl segments without going through a triangulated surface form. 
+* Now providing the full suite of mesh plotting functions from rgl. `plot3d()`,
+`dot3d()`, `wire3d()`, and `persp3d()` now work with matrix, raster, sf, sp,
+trip, RTriangle, and silicate models. Each of the mesh-surface forms rely on
+`as.mesh3d()` conversion behind the scenes, whereas `plot3d()` on linear types
+(sf, sp, trip, silicate SC, SC0, PATH, PATH0, and ARC0) all are plotted using
+rgl segments without going through a triangulated surface form.
 
-* `as.mesh3d()` has been completely rebuilt, to consolidate
- code from quadmesh and angstroms on a firmer basis. `as.mesh3d()` now understands all of the surface types from sf, sp, raster, and silicate, and can accept a raw matrix as input. It can also include a `z` argument to extract elevation values from a raster, and an `image_texture` argument to drape an image from a raster RGB object onto the surface. Map projections are automatically resolved to the coordinate system of the `x` argument (as much as possible, there are lingering issues with the ongoing changes to crs in PROJ library, and the reproj and proj4 packages which attempt to smoooth over the changes in Spatial and sf and raster objects.)
+* `as.mesh3d()` has been completely rebuilt, to consolidate code from quadmesh
+and angstroms on a firmer basis. `as.mesh3d()` now understands all of the
+surface types from sf, sp, raster, and silicate, and can accept a raw matrix as
+input. It can also include a `z` argument to extract elevation values from a
+raster, and an `image_texture` argument to drape an image from a raster RGB
+object onto the surface. Map projections are automatically resolved to the
+coordinate system of the `x` argument (as much as possible, there are lingering
+issues with the ongoing changes to crs in PROJ library, and the reproj and proj4
+packages which attempt to smooth over the changes in Spatial and sf and raster
+objects.)
  
  
 * `QUAD()` is now exported but still considered experimental. 
@@ -76,13 +88,14 @@ invisible triangles).
 * Added `copy_down` generic to dispatch on `sc` and subclasses, to  
  transfer raw values, object column data, or raster values to vertices. 
 
-* Added `plot3d` methods to (eventually) replace `plot(anglr(x))` and `linemesh with `plot3d(silicate_model)` - currently only `SC` supported
- and plots as (object-grouped) edges. Returns `rgl` form silently. 
+* Added `plot3d` methods to (eventually) replace `plot(anglr(x))` and `linemesh
+with `plot3d(silicate_model)` - currently only `SC` supported and plots as
+(object-grouped) edges. Returns `rgl` form silently.
 
 * Removed use of maptools wrld_simpl, replaced by in-built `simpleworld`. 
 
 * Big update for new silicate-based approach, thanks to Andreja Stojic for 
- the feeback. 
+ the feedback. 
 
 * New approach for polygons now using pfft package, identifying triangle
  centroids by polygon. 

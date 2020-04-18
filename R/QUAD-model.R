@@ -1,7 +1,7 @@
 #' QUAD model
 #'
 #' The QUAD model is a silicate-like model for raster data, with
-#' implicit geomtry.
+#' implicit geometry.
 #'
 #' The object table only stores the raster extent, and the pixel values
 #' are on the 'quad' table. This is only supported for single-layer 2D

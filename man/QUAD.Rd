@@ -22,7 +22,7 @@ QUAD model
 }
 \description{
 The QUAD model is a silicate-like model for raster data, with
-implicit geomtry.
+implicit geometry.
 }
 \details{
 The object table only stores the raster extent, and the pixel values

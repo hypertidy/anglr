@@ -18,7 +18,7 @@ Description: The 'anglr' package gives direct access to generic 3D
  and other data combinations use projection transformations to map between 
  coordinate systems, and objects can be easily visualized in an interactive
  scene at any stage. This package relies on the 'RTriangle' package for 
- high-quality triangular meshing which is licensed restictively under
+ high-quality triangular meshing which is licensed restrictively under
  'CC BY-NC-SA 4.0'. 
 License: CC BY-NC-SA 4.0
 Depends: R (>= 3.4.0)

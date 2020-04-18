@@ -107,8 +107,8 @@ The mesh may be reprojected prior to plotting using the 'crs' argument to
 define the target map projection in 'PROJ string' format. (There is no
 "reproject" function for quadmesh, this is performed directly on the x-y
 coordinates of the 'quadmesh' output). The 'col' argument are mapped to the
-input applied object data as in 'image', and applied relative to 'zlim' if
-su.
+inputdata as in \code{\link[graphics:image]{graphics::image()}}, and applied relative to 'zlim' if
+also supplied.
 
 The \code{coords} argument only applies to a raster object. The \code{crs} argument
 only applies to a spatial object that has a crs projection metadata string

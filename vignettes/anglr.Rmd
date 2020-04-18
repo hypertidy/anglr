@@ -33,7 +33,7 @@ All of these aspects are related to ease of visualization and flexibility. The a
 
 There is no single best data structure for all applications, and so as much as possible the models (SC, SC0, PATH, PATH0, TRI, TRI0, ARC, DEL, DEL0, and QUAD) are interoperable and will endeavour to maintain the input information and simply interpret it in terms of the desired format. Not all pathways are possible or sensible, but it depends on the required application and the form of the input data, so the key feature is flexibility and control. 
 
-As well as the data strucutre models, anglr includes the following visualization functions. 
+As well as the data structure models, anglr includes the following visualization functions. 
 
 * [mesh_plot()] this is a 2D graphics plot of a mesh structure (an example being a curvilinear raster, but simple polygon layers are also supported)
 * [shade3d()] 3D surface plot from mesh 
@@ -72,7 +72,11 @@ mesh0 <- DEL(minimal_mesh)
 mesh_plot(mesh0, col = viridis::viridis(nrow(mesh0$triangle)))
 ```
 
-The density can be controlled by setting `max_area` (other controls are available via arguments to [RTriangle::triangulate]). Note that we now have new vertices that did not exist in the original polygon layer, both interal to the surface of the polygon and along its boundary. This is the "mesh-quality" aspect mentioned above. 
+The density can be controlled by setting `max_area` (other controls are
+available via arguments to [RTriangle::triangulate]). Note that we now have new
+vertices that did not exist in the original polygon layer, both internal to the
+surface of the polygon and along its boundary. This is the "mesh-quality" aspect
+mentioned above.
 
 ```{r plot-denser}
 mesh1 <- DEL(minimal_mesh, max_area = 0.01)
