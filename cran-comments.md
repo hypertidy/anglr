@@ -1,4 +1,4 @@
-## anglr 0.4.9
+## anglr 0.5.0
 
 New package anglr. I have adopted the more restrictive license of the
 RTriangle package, which this imports (CC BY-NC-SA 4.0). 
