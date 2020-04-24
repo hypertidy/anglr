@@ -6,20 +6,19 @@ Authors@R: c(person("Michael D.","Sumner",
              role = c("aut", "cre"), 
              email ="mdsumner@gmail.com"), 
              person("Miles", "McBain", role = c("ctb")))
-Description: The 'anglr' package gives direct access to generic 3D 
- tools and provides a full suite of mesh-creation and 3D plotting functions. By 
- extending the 'rgl' package conversion and visualization functions for the 
- 'mesh3d' class a wide variety of complex spatial data can be brought into 3D 
- scenes. These tools allow for spatial raster, polygons, and lines 
- that are common in 'GIS' contexts to be converted into mesh forms with high
- flexibility and the ability to integrate disparate data types. Vector and
- raster data can be seamlessly combined as meshes, and surfaces can be set to 
- have material properties based on data values or with image textures. Textures
- and other data combinations use projection transformations to map between 
- coordinate systems, and objects can be easily visualized in an interactive
- scene at any stage. This package relies on the 'RTriangle' package for 
- high-quality triangular meshing which is licensed restrictively under
- 'CC BY-NC-SA 4.0'. 
+Description: Gives direct access to generic 3D tools and provides a full suite 
+ of mesh-creation and 3D plotting functions. By extending the 'rgl' package 
+ conversion and visualization functions for the 'mesh3d' class a wide variety of
+ complex spatial data can be brought into 3D scenes. These tools allow for 
+ spatial raster, polygons, and lines that are common in 'GIS' contexts to be 
+ converted into mesh forms with high flexibility and the ability to integrate 
+ disparate data types. Vector and raster data can be seamlessly combined as 
+ meshes, and surfaces can be set to have material properties based on data 
+ values or with image textures. Textures and other data combinations use 
+ projection transformations to map between coordinate systems, and objects can 
+ be easily visualized in an interactive scene at any stage. This package relies 
+ on the 'RTriangle' package for high-quality triangular meshing which is 
+ licensed restrictively under 'CC BY-NC-SA 4.0'. 
 License: CC BY-NC-SA 4.0
 Depends: R (>= 3.4.0)
 Imports: 

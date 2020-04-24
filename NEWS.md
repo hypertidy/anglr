@@ -1,5 +1,7 @@
 # anglr 0.5.0
 
+* Fixed beginning of Description, thanks to CRAN feedback. 
+
 * Changed behaviour of `auto_3d()`, now simply an alias to `rgl::aspect3d(1)`
  and any previous used arguments now ignored, with a message. 
  

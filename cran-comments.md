@@ -1,6 +1,10 @@
 ## anglr 0.5.0
 
-New package anglr. I have adopted the more restrictive license of the
+New package anglr. 
+
+* Fixed Description, no more "This package"  thanks!
+
+I have adopted the more restrictive license of the
 RTriangle package, which this imports (CC BY-NC-SA 4.0). 
 
 Thank you very much. 
