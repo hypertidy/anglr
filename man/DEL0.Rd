@@ -11,6 +11,7 @@
 \alias{DEL0.ARC}
 \alias{DEL0.PATH}
 \alias{DEL0.PATH0}
+\alias{DEL0.BasicRaster}
 \title{Convert object to a constrained-Delaunay triangulation}
 \usage{
 DEL0(x, ..., max_area = NULL)
@@ -32,6 +33,8 @@ DEL0(x, ..., max_area = NULL)
 \method{DEL0}{PATH}(x, ..., max_area = NULL)
 
 \method{DEL0}{PATH0}(x, ..., max_area = NULL)
+
+\method{DEL0}{BasicRaster}(x, ..., max_triangles = NULL)
 }
 \arguments{
 \item{x}{object of class \link{PATH0} or understood by \code{\link[=PATH0]{PATH0()}}}
