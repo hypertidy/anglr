@@ -163,7 +163,7 @@ as.mesh3d.TRI0 <- function(x, z,  smooth = FALSE, normals = NULL, texcoords = NU
 }
 #' @name as.mesh3d
 #' @export
-as.mesh3d.ARC <- function(x, triangles = FALSE,
+as.mesh3d.ARC <- function(x, triangles = TRUE,
                                   smooth = FALSE, normals = NULL, texcoords = NULL,
                                   ..., keep_all = TRUE, image_texture = NULL, meshColor = "faces") {
  as.mesh3d(DEL(x), triangles = triangles, smooth = smooth, normals = normals, texcoords = texcoords,
@@ -171,13 +171,21 @@ as.mesh3d.ARC <- function(x, triangles = FALSE,
 }
 #' @name as.mesh3d
 #' @export
-as.mesh3d.BasicRaster <- function(x, triangles = FALSE,
+as.mesh3d.BasicRaster <- function(x, triangles = TRUE,
                                   smooth = FALSE, normals = NULL, texcoords = NULL,
-                                  ..., keep_all = TRUE, image_texture = NULL, meshColor = "faces") {
+                                  ..., keep_all = TRUE, image_texture = NULL, meshColor = "faces",
+                                  max_triangles = NULL) {
   ## consider the case where x has 3 layers (xcrd, ycrd, zval) or we use
   ## arguments of the generic as.mesh3d(x, y, z) with 3 (or 2) separate rasters
-  as.mesh3d(QUAD(x), triangles = triangles, smooth = smooth, normals = normals, texcoords = texcoords,
+  if (triangles) {
+  out <-   as.mesh3d(DEL0(x, max_triangles = max_triangles), triangles = triangles, smooth = smooth, normals = normals, texcoords = texcoords,
             keep_all = keep_all, image_texture = image_texture, meshColor = meshColor, ...)
+  } else {
+    out <-   as.mesh3d(QUAD(x), triangles = triangles, smooth = smooth, normals = normals, texcoords = texcoords,
+                       keep_all = keep_all, image_texture = image_texture, meshColor = meshColor, ...)
+
+  }
+  out
 }
 #' @name as.mesh3d
 #' @export
