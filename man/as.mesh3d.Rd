@@ -41,7 +41,7 @@
 
 \method{as.mesh3d}{ARC}(
   x,
-  triangles = FALSE,
+  triangles = TRUE,
   smooth = FALSE,
   normals = NULL,
   texcoords = NULL,
@@ -53,14 +53,15 @@
 
 \method{as.mesh3d}{BasicRaster}(
   x,
-  triangles = FALSE,
+  triangles = TRUE,
   smooth = FALSE,
   normals = NULL,
   texcoords = NULL,
   ...,
   keep_all = TRUE,
   image_texture = NULL,
-  meshColor = "faces"
+  meshColor = "faces",
+  max_triangles = NULL
 )
 
 \method{as.mesh3d}{QUAD}(

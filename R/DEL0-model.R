@@ -238,3 +238,39 @@ DEL0.PATH0 <- function(x, ..., max_area = NULL) {
   }
   out
 }
+
+
+#' @name DEL0
+#' @export
+DEL0.BasicRaster <- function(x, ..., max_triangles = NULL) {
+  heightmap <- t(raster::as.matrix(x))[,nrow(x):1]
+  if (is.null(max_triangles)) max_triangles <- prod(dim(heightmap))/20
+  ## if missing data you have to sentinelize them
+
+  dosentinel <- FALSE
+  if (anyNA(heightmap)) {
+    dosentinel <- TRUE
+    sentinel <- as.integer(min(heightmap, na.rm  = TRUE) -100)
+    heightmap[is.na(heightmap)] <- sentinel
+  }
+  hmm <- terrainmeshr::triangulate_matrix(heightmap, maxTriangles = max_triangles)
+  if (dosentinel) {
+    #browser()
+    hmm <- hmm[hmm[,2] > sentinel, ]
+    bad <- table(hmm[,4]) < 3
+    if (any(bad)) {
+      hmm <- hmm[!hmm[,4] %in% as.integer(names(bad[which(bad)])), ]
+    }
+  }
+  ## respatialize
+  cell <- raster::cellFromRowCol(x, hmm[,3], hmm[,1])
+
+  topology <- tibble::tibble(.vx0 = seq(1, dim(hmm)[1], by = 3L),
+                             .vx1 = .vx0 + 1L,
+                             .vx2 = .vx1 + 1L)
+  meta <- tibble::tibble(proj = crsmeta::crs_proj(x), ctime = Sys.time())
+  structure(list(object = tibble(a = 1, topology_ = list(topology)),
+                 vertex = tibble::tibble(x_ = hmm[,1], y_ = hmm[,3], z_ = hmm[,2]),
+                 meta = meta),
+            class = c("TRI0", "sc"))
+}
