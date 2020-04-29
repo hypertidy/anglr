@@ -1,3 +1,10 @@
+# anglr dev
+
+* Fixed missing github links. 
+
+* Now importing terrainmeshr, for experimental hmm support (efficient conversion
+of raster to triangles with triangle density where needed based on curvature). 
+
 # anglr 0.5.0
 
 * Fixed beginning of Description, thanks to CRAN feedback. 
