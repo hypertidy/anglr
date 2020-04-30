@@ -246,7 +246,6 @@ DEL0.BasicRaster <- function(x, ..., max_triangles = NULL) {
   heightmap <- t(raster::as.matrix(x))[,nrow(x):1]
   if (is.null(max_triangles)) max_triangles <- prod(dim(heightmap))/20
   ## if missing data you have to sentinelize them
-
   dosentinel <- FALSE
   if (anyNA(heightmap)) {
     dosentinel <- TRUE
@@ -262,15 +261,17 @@ DEL0.BasicRaster <- function(x, ..., max_triangles = NULL) {
       hmm <- hmm[!hmm[,4] %in% as.integer(names(bad[which(bad)])), ]
     }
   }
-  ## respatialize
-  cell <- raster::cellFromRowCol(x, hmm[,3], hmm[,1])
-
+  ## remember rgl.surface is x, z, y despite names
+  cell <- raster::cellFromRowCol(x,hmm[,"z"], hmm[,"x"])
+  xyz <- cbind(x = raster::xFromCell(x, cell),
+               y = raster::yFromCell(x, cell),
+               z = hmm[, "y"])
   topology <- tibble::tibble(.vx0 = seq(1, dim(hmm)[1], by = 3L),
                              .vx1 = .vx0 + 1L,
                              .vx2 = .vx1 + 1L)
   meta <- tibble::tibble(proj = crsmeta::crs_proj(x), ctime = Sys.time())
   structure(list(object = tibble(a = 1, topology_ = list(topology)),
-                 vertex = tibble::tibble(x_ = hmm[,1], y_ = hmm[,3], z_ = hmm[,2]),
+                 vertex = tibble::tibble(x_ = xyz[,1], y_ = xyz[,2], z_ = xyz[,3]),
                  meta = meta),
             class = c("TRI0", "sc"))
 }
