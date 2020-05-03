@@ -266,9 +266,12 @@ as.mesh3d.triangulation <- function(x, ...) {
 as.mesh3d.sfc <-function(x, triangles = FALSE,
                         smooth = FALSE, normals = NULL, texcoords = NULL,
                         ..., keep_all = TRUE, image_texture = NULL, meshColor = "faces") {
+ ## before we get to here we might have hit
+  ## TRI0.sfc_GEOMETRYCOLLECTION, TRI0.sfc_POLYGON, TRI0.sfc_MULTIPOLYGON
 
+  ## which check for four cornered triangles and build the mesh more directly
   ## TRI or DEL or SC?
-  as.mesh3d(DEL0(x), triangles = triangles, smooth = smooth, normals = normals, texcoords = texcoords,
+  as.mesh3d(TRI0(x), triangles = triangles, smooth = smooth, normals = normals, texcoords = texcoords,
             keep_all = keep_all, image_texture = image_texture, meshColor = meshColor, ...)
 }
 #' @name as.mesh3d
@@ -278,7 +281,7 @@ as.mesh3d.sf <-function(x, triangles = FALSE,
                             ..., keep_all = TRUE, image_texture = NULL, meshColor = "faces") {
 
   ## TRI or DEL or SC?
-  as.mesh3d(DEL0(x), triangles = triangles, smooth = smooth, normals = normals, texcoords = texcoords,
+  as.mesh3d(TRI0(x[[attr(x, "sf_column")]]), triangles = triangles, smooth = smooth, normals = normals, texcoords = texcoords,
             keep_all = keep_all, image_texture = image_texture, meshColor = meshColor, ...)
 }
 #' @name as.mesh3d
@@ -288,7 +291,7 @@ as.mesh3d.Spatial <-function(x, triangles = FALSE,
                         ..., keep_all = TRUE, image_texture = NULL, meshColor = "faces") {
 
   ## TRI or DEL or SC?
-  as.mesh3d(DEL0(x), triangles = triangles, smooth = smooth, normals = normals, texcoords = texcoords,
+  as.mesh3d(TRI0(x), triangles = triangles, smooth = smooth, normals = normals, texcoords = texcoords,
             keep_all = keep_all, image_texture = image_texture, meshColor = meshColor, ...)
 }
 
