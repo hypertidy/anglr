@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">anglr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9002</span>
       </span>
     </div>
 
@@ -94,7 +94,12 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/hypertidy/anglr/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -109,17 +114,19 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1 data-toc-skip>Changelog <small></small></h1>
-      
+      <small>Source: <a href='https://github.com/hypertidy/anglr/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
     <div id="anglr-050" class="section level1">
 <h1 class="page-header" data-toc-text="0.5.0">
-<a href="#anglr-050" class="anchor"></a>anglr 0.5.0</h1>
+<a href="#anglr-050" class="anchor"></a>anglr 0.5.0<small> 2020-04-28 </small>
+</h1>
 <ul>
+<li><p>Fixed beginning of Description, thanks to CRAN feedback.</p></li>
 <li><p>Changed behaviour of <code><a href="../reference/auto_3d.html">auto_3d()</a></code>, now simply an alias to <code><a href="https://rdrr.io/pkg/rgl/man/aspect3d.html">rgl::aspect3d(1)</a></code> and any previous used arguments now ignored, with a message.</p></li>
 <li><p>Tightened up behaviour of QUAD, being lazy and copying down the z.</p></li>
-<li><p>Remove non-ascii columns (and others) from ‘simpleworld’, thanks to help by Michael Chirico @michael_chirico.</p></li>
-<li><p>Align to obscured bug fix for silicate, #119.</p></li>
+<li><p>Remove non-ascii columns (and others) from ‘simpleworld’, thanks to help by Michael Chirico <a href='https://github.com/michael_chirico'>@michael_chirico</a>.</p></li>
+<li><p>Align to obscured bug fix for silicate, <a href='https://github.com/hypertidy/anglr/issues/119'>#119</a>.</p></li>
 <li><p>Fixed <code><a href="../reference/mesh_plot.html">mesh_plot()</a></code> default colours for a textured mesh.</p></li>
 <li><p><code><a href="../reference/mesh_plot.html">mesh_plot()</a></code> now correctly reprojects a mesh to a <code>crs</code> argument, or accepts coordinates for a plot with <code>coords</code> argument.</p></li>
 <li><p>Replaced data set <code>gebco1</code> with <code>gebco</code>, a cleaner version derived from GEBCO 2019, at 0.5 resolution and stored as integers.</p></li>
@@ -139,7 +146,8 @@
 </div>
     <div id="anglr-047" class="section level1">
 <h1 class="page-header" data-toc-text="0.4.7">
-<a href="#anglr-047" class="anchor"></a>anglr 0.4.7</h1>
+<a href="#anglr-047" class="anchor"></a>anglr 0.4.7<small> Unreleased </small>
+</h1>
 <ul>
 <li><p>Added a <code>TRI</code> method for <code>QUAD</code>.</p></li>
 <li><p><code>DEL.SC</code> now removes duplicate vertices like <code>DEL.PATH</code> always did, but triangulation is still done per object since we don’t yet have edge to path logic required for object classification within the mesh.</p></li>
@@ -151,7 +159,7 @@
 <li><p>Internal function <code>anglr_lines</code> is now deprecated, and points to the silicate and plot3d approach.</p></li>
 <li><p>Added <code>copy_down</code> generic to dispatch on <code>sc</code> and subclasses, to<br>
 transfer raw values, object column data, or raster values to vertices.</p></li>
-<li><p>Added <code>plot3d</code> methods to (eventually) replace <code><a href="https://rdrr.io/r/graphics/plot.html">plot(anglr(x))</a></code> and <code>linemesh with</code>plot3d(silicate_model)<code>- currently only</code>SC<code>supported and plots as (object-grouped) edges. Returns</code>rgl` form silently.</p></li>
+<li><p>Added <code>plot3d</code> methods to (eventually) replace <code><a href="https://rdrr.io/r/base/plot.html">plot(anglr(x))</a></code> and <code>linemesh with</code>plot3d(silicate_model)` - currently only <code>SC</code> supported and plots as (object-grouped) edges. Returns <code>rgl</code> form silently.</p></li>
 <li><p>Removed use of maptools wrld_simpl, replaced by in-built <code>simpleworld</code>.</p></li>
 <li><p>Big update for new silicate-based approach, thanks to Andreja Stojic for the feedback.</p></li>
 <li><p>New approach for polygons now using pfft package, identifying triangle centroids by polygon.</p></li>
@@ -159,7 +167,8 @@ transfer raw values, object column data, or raster values to vertices.</p></li>
 </div>
     <div id="anglr-046" class="section level1">
 <h1 class="page-header" data-toc-text="0.4.6">
-<a href="#anglr-046" class="anchor"></a>anglr 0.4.6</h1>
+<a href="#anglr-046" class="anchor"></a>anglr 0.4.6<small> Unreleased </small>
+</h1>
 <ul>
 <li><p>new “z =” support in <code>anglr</code> for a feature name (to copy as a constant) or a raster object (to extract values onto vertices), for now the raster must be in the same coordinate system as the input object</p></li>
 <li><p>new <code>add_normals</code> argument for plotting triangulations</p></li>
@@ -169,7 +178,8 @@ transfer raw values, object column data, or raster values to vertices.</p></li>
 </div>
     <div id="rangl-045" class="section level1">
 <h1 class="page-header" data-toc-text="0.4.5">
-<a href="#rangl-045" class="anchor"></a>rangl 0.4.5</h1>
+<a href="#rangl-045" class="anchor"></a>rangl 0.4.5<small> Unreleased </small>
+</h1>
 <ul>
 <li><p>release codename Just Work in Master, Dude</p></li>
 <li><p>old functions made defunct</p></li>
@@ -183,7 +193,8 @@ transfer raw values, object column data, or raster values to vertices.</p></li>
 </div>
     <div id="rangl-030" class="section level1">
 <h1 class="page-header" data-toc-text="0.3.0">
-<a href="#rangl-030" class="anchor"></a>rangl 0.3.0</h1>
+<a href="#rangl-030" class="anchor"></a>rangl 0.3.0<small> Unreleased </small>
+</h1>
 <ul>
 <li><p>rename again, main function is called ‘rangl’, the term ‘mesh’ is too often used across R</p></li>
 <li><p>rangl method for trip</p></li>
@@ -192,7 +203,8 @@ transfer raw values, object column data, or raster values to vertices.</p></li>
 </div>
     <div id="rangl-020" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.0">
-<a href="#rangl-020" class="anchor"></a>rangl 0.2.0</h1>
+<a href="#rangl-020" class="anchor"></a>rangl 0.2.0<small> Unreleased </small>
+</h1>
 <ul>
 <li><p>removed old globe() plot behaviour, this function now just converts coordinates to geocentric XYZ</p></li>
 <li><p>added generic “mesh()” function to convert SpatialPolygons, SpatialLines, and rgl ‘mesh3d’ objects (only those that use triangle primitives)</p></li>
@@ -207,7 +219,8 @@ transfer raw values, object column data, or raster values to vertices.</p></li>
 </div>
     <div id="trimesh-010" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.0">
-<a href="#trimesh-010" class="anchor"></a>trimesh 0.1.0</h1>
+<a href="#trimesh-010" class="anchor"></a>trimesh 0.1.0<small> Unreleased </small>
+</h1>
 <ul>
 <li>first release to Github</li>
 </ul>

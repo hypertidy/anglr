@@ -39,7 +39,7 @@ package](https://CRAN.r-project.org/package=rgl) functions
 Key working examples are in
 [?anglr::as.mesh3d](https://hypertidy.github.io/anglr/reference/as.mesh3d.html)
 and
-[?anglr::as.plot3d](https://hypertidy.github.io/anglr/reference/plot3d.html).
+[?anglr::plot3d](https://hypertidy.github.io/anglr/reference/plot3d.html).
 
 ## Features
 

@@ -42,7 +42,7 @@ The anglr package aims to provide direct access to generic 3D tools.
 The anglr package provides a full suite of mesh-creation and 3D plotting functions, extending
 the [rgl package](https://CRAN.r-project.org/package=rgl) functions `as.mesh3d()`, `plot3d()`, `persp3d()`, `wire3d()`, and `dot3d()`. 
 
-Key working examples are in  [?anglr::as.mesh3d](https://hypertidy.github.io/anglr/reference/as.mesh3d.html) and [?anglr::as.plot3d](https://hypertidy.github.io/anglr/reference/plot3d.html). 
+Key working examples are in  [?anglr::as.mesh3d](https://hypertidy.github.io/anglr/reference/as.mesh3d.html) and [?anglr::plot3d](https://hypertidy.github.io/anglr/reference/plot3d.html). 
 
 ## Features 
 

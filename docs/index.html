@@ -12,20 +12,19 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Mesh Topology and Visualization for Spatial Data">
-<meta property="og:description" content="The anglr package gives direct access to generic 3D 
- tools and provides a full suite of mesh-creation and 3D plotting functions. By 
- extending the rgl package conversion and visualization functions for the 
- mesh3d class a wide variety of complex spatial data can be brought into 3D 
- scenes. These tools allow for spatial raster, polygons, and lines 
- that are common in GIS contexts to be converted into mesh forms with high
- flexibility and the ability to integrate disparate data types. Vector and
- raster data can be seamlessly combined as meshes, and surfaces can be set to 
- have material properties based on data values or with image textures. Textures
- and other data combinations use projection transformations to map between 
- coordinate systems, and objects can be easily visualized in an interactive
- scene at any stage. This package relies on the RTriangle package for 
- high-quality triangular meshing which is licensed restrictively under
- CC BY-NC-SA 4.0. ">
+<meta property="og:description" content="Gives direct access to generic 3D tools and provides a full suite 
+ of mesh-creation and 3D plotting functions. By extending the rgl package 
+ conversion and visualization functions for the mesh3d class a wide variety of
+ complex spatial data can be brought into 3D scenes. These tools allow for 
+ spatial raster, polygons, and lines that are common in GIS contexts to be 
+ converted into mesh forms with high flexibility and the ability to integrate 
+ disparate data types. Vector and raster data can be seamlessly combined as 
+ meshes, and surfaces can be set to have material properties based on data 
+ values or with image textures. Textures and other data combinations use 
+ projection transformations to map between coordinate systems, and objects can 
+ be easily visualized in an interactive scene at any stage. This package relies 
+ on the RTriangle package for high-quality triangular meshing which is 
+ licensed restrictively under CC BY-NC-SA 4.0. ">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -44,7 +43,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">anglr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9002</span>
       </span>
     </div>
 
@@ -66,7 +65,14 @@
   <a href="news/index.html">Changelog</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/hypertidy/anglr/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -88,7 +94,7 @@
 <p>The anglr package aims to provide direct access to generic 3D tools.</p>
 <p>… geospatial is cool … 3D is cool … putting them together is <em>challenging</em> …</p>
 <p>The anglr package provides a full suite of mesh-creation and 3D plotting functions, extending the <a href="https://CRAN.r-project.org/package=rgl">rgl package</a> functions <code><a href="reference/as.mesh3d.html">as.mesh3d()</a></code>, <code><a href="reference/plot3d.html">plot3d()</a></code>, <code><a href="reference/persp3d.html">persp3d()</a></code>, <code><a href="reference/wire3d.html">wire3d()</a></code>, and <code><a href="reference/dot3d.html">dot3d()</a></code>.</p>
-<p>Key working examples are in <a href="https://hypertidy.github.io/anglr/reference/as.mesh3d.html">?anglr::as.mesh3d</a> and <a href="https://hypertidy.github.io/anglr/reference/plot3d.html">?anglr::as.plot3d</a>.</p>
+<p>Key working examples are in <a href="https://hypertidy.github.io/anglr/reference/as.mesh3d.html">?anglr::as.mesh3d</a> and <a href="https://hypertidy.github.io/anglr/reference/plot3d.html">?anglr::plot3d</a>.</p>
 <div id="features" class="section level2">
 <h2 class="hasAnchor">
 <a href="#features" class="anchor"></a>Features</h2>
@@ -219,7 +225,18 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <div class="license">
+    <div class="links">
+<h2>Links</h2>
+<ul class="list-unstyled">
+<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=anglr">https://​cloud.r-project.org/​package=anglr</a>
+</li>
+<li>Browse source code at <br><a href="https://github.com/hypertidy/anglr/">https://​github.com/​hypertidy/​anglr/​</a>
+</li>
+<li>Report a bug at <br><a href="https://github.com/hypertidy/anglr/issues">https://​github.com/​hypertidy/​anglr/​issues</a>
+</li>
+</ul>
+</div>
+<div class="license">
 <h2>License</h2>
 <ul class="list-unstyled">
 <li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a></li>

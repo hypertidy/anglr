@@ -83,7 +83,7 @@ RTriangle, and silicate types. and for a matrix." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">anglr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9002</span>
       </span>
     </div>
 
@@ -106,7 +106,12 @@ RTriangle, and silicate types. and for a matrix." />
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/hypertidy/anglr/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -121,7 +126,7 @@ RTriangle, and silicate types. and for a matrix." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Convert to mesh object</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/hypertidy/anglr/blob/master/R/as.mesh3d.R'><code>R/as.mesh3d.R</code></a></small>
     <div class="hidden name"><code>as.mesh3d.Rd</code></div>
     </div>
 
@@ -169,7 +174,7 @@ RTriangle, and silicate types. and for a matrix.</p>
 <span class='co'># S3 method for ARC</span>
 <span class='fu'>as.mesh3d</span>(
   <span class='no'>x</span>,
-  <span class='kw'>triangles</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>triangles</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>smooth</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>normals</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>texcoords</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -182,14 +187,15 @@ RTriangle, and silicate types. and for a matrix.</p>
 <span class='co'># S3 method for BasicRaster</span>
 <span class='fu'>as.mesh3d</span>(
   <span class='no'>x</span>,
-  <span class='kw'>triangles</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>triangles</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>smooth</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>normals</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>texcoords</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='no'>...</span>,
   <span class='kw'>keep_all</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>image_texture</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>meshColor</span> <span class='kw'>=</span> <span class='st'>"faces"</span>
+  <span class='kw'>meshColor</span> <span class='kw'>=</span> <span class='st'>"faces"</span>,
+  <span class='kw'>max_triangles</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
 )
 
 <span class='co'># S3 method for QUAD</span>
@@ -320,7 +326,7 @@ interpretation) within <code>xmin = 0, xmax = nrow(x), ymin = 0, ymax = ncol(x)<
 Note that this differs from the <code>[0, 1, 0, 1]</code> interpretation of <code><a href='https://rdrr.io/r/graphics/image.html'>image()</a></code>,
 but shares its orientation. Raster-types from the raster package are
 interpreted in the <code>t(ranspose), y-flip</code> orientation used by
-<code><a href='https://rdrr.io/r/graphics/plot.html'>plot(raster::raster(matrix))</a></code>.</p>
+<code><a href='https://rdrr.io/r/base/plot.html'>plot(raster::raster(matrix))</a></code>.</p>
 <p>The conversion function <code>anglr::as.mesh3d()</code> consolidates code from quadmesh
 and angstroms packages where the basic facilities were developed. The
 function <a href='https://rdrr.io/pkg/rgl/man/as.mesh3d.default.html'>as.mesh3d()</a> is imported from rgl and re-exported,
@@ -379,7 +385,8 @@ needed.</p>
     <pre class="examples"><div class='input'><span class='no'>sf</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/silicate/man/minimal_mesh.html'>minimal_mesh</a></span>
 <span class='co'>#sf &lt;- silicate::inlandwaters</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/silicate/man/TRI.html'>TRI</a></span>(<span class='no'>sf</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rgl</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: package 'rgl' was built under R version 3.6.3</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>(); <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>x</span>); <span class='fu'><a href='https://rdrr.io/pkg/rgl/man/viewpoint.html'>view3d</a></span>(<span class='kw'>phi</span> <span class='kw'>=</span> -<span class='fl'>10</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rgl</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>(); <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>x</span>); <span class='fu'><a href='https://rdrr.io/pkg/rgl/man/viewpoint.html'>view3d</a></span>(<span class='kw'>phi</span> <span class='kw'>=</span> -<span class='fl'>10</span>)
 <span class='co'>## simple convention to carry feature colours</span>
 <span class='no'>sf</span>$<span class='no'>color_</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"firebrick"</span>, <span class='st'>"dodgerblue"</span>)
 <span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>(); <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/silicate/man/TRI.html'>TRI</a></span>(<span class='no'>sf</span>)); <span class='fu'><a href='https://rdrr.io/pkg/rgl/man/viewpoint.html'>view3d</a></span>(<span class='kw'>phi</span> <span class='kw'>=</span> -<span class='fl'>10</span>)

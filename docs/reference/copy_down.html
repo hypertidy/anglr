@@ -73,7 +73,7 @@ vertex level." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">anglr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9002</span>
       </span>
     </div>
 
@@ -96,7 +96,12 @@ vertex level." />
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/hypertidy/anglr/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -111,7 +116,7 @@ vertex level." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Copy down values to vertices</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/hypertidy/anglr/blob/master/R/copy_down.R'><code>R/copy_down.R</code></a></small>
     <div class="hidden name"><code>copy_down.Rd</code></div>
     </div>
 
@@ -189,7 +194,7 @@ to expand out values, and nothing to stop the use of non numeric values being co
 various spatial formats into suitable forms for this function.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>raster</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: package 'raster' was built under R version 3.6.3</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: sp</span></div><div class='output co'>#&gt; <span class='warning'>Warning: package 'sp' was built under R version 3.6.3</span></div><div class='input'><span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span>(<span class='no'>volcano</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>raster</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: sp</span></div><div class='input'><span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span>(<span class='no'>volcano</span>)
 <span class='no'>cl</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/silicate/man/SC.html'>SC</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/raster/man/rasterToContour.html'>rasterToContour</a></span>(<span class='no'>r</span>))
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'>copy_down</span>(<span class='no'>cl</span>, <span class='no'>r</span>))
 <span class='co'>## looks funny?</span>
