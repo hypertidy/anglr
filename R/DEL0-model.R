@@ -243,7 +243,8 @@ DEL0.PATH0 <- function(x, ..., max_area = NULL) {
 #' @name DEL0
 #' @export
 DEL0.BasicRaster <- function(x, ..., max_triangles = NULL) {
-  heightmap <- t(raster::as.matrix(x))[,nrow(x):1]
+  ## use [[]] to avoid the as.matrix crazy with RasterBrick
+  heightmap <- t(raster::as.matrix(x[[1L]]))[,nrow(x):1]
   if (is.null(max_triangles)) max_triangles <- prod(dim(heightmap))/20
   ## if missing data you have to sentinelize them
   dosentinel <- FALSE
