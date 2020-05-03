@@ -50,7 +50,7 @@
 #' @param x object of class [PATH0] or understood by [PATH0()]
 #' @param ... ignored
 #' @inheritParams DEL
-#'
+#' @param max_triangles limit on triangles to create, passed to terrainmeshr
 #' @return [DEL0 class][DEL0]
 #' @export
 #'
@@ -242,6 +242,7 @@ DEL0.PATH0 <- function(x, ..., max_area = NULL) {
 
 #' @name DEL0
 #' @export
+#' @importFrom raster as.matrix cellFromRowCol xFromCell yFromCell
 DEL0.BasicRaster <- function(x, ..., max_triangles = NULL) {
   ## use [[]] to avoid the as.matrix crazy with RasterBrick
   heightmap <- t(raster::as.matrix(x[[1L]]))[,nrow(x):1]
@@ -268,8 +269,8 @@ DEL0.BasicRaster <- function(x, ..., max_triangles = NULL) {
                y = raster::yFromCell(x, cell),
                z = hmm[, "y"])
   topology <- tibble::tibble(.vx0 = seq(1, dim(hmm)[1], by = 3L),
-                             .vx1 = .vx0 + 1L,
-                             .vx2 = .vx1 + 1L)
+                             .vx1 = .data$.vx0 + 1L,
+                             .vx2 = .data$.vx1 + 1L)
   meta <- tibble::tibble(proj = crsmeta::crs_proj(x), ctime = Sys.time())
   structure(list(object = tibble(a = 1, topology_ = list(topology)),
                  vertex = tibble::tibble(x_ = xyz[,1], y_ = xyz[,2], z_ = xyz[,3]),

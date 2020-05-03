@@ -58,7 +58,7 @@ explored in detail from an anglr view).
 \examples{
 dot3d(cad_tas)
 dot3d(volcano, size = 10)
-auto_3d(z = 14)
+auto_3d()
 
 
 rgl::open3d()
@@ -69,16 +69,15 @@ z <- outer(x, y,
         r <- sqrt(x^2+y^2); 10 * sin(r)/r
         })
 dot3d(z)
-auto_3d()
 dot3d(raster::raster(volcano), size = 10)
-auto_3d(z = 14)
+auto_3d()
 \donttest{
 dot3d(silicate::SC(cad_tas))
-auto_3d(z = 14)
+
 
 rgl::open3d()
 dot3d(as.mesh3d(copy_down(DEL(cad_tas, max_area = 1e3), "CID")))
-auto_3d(z = 150)
+auto_3d()
 }
 }
 \seealso{

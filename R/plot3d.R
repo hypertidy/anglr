@@ -58,7 +58,7 @@
 #' ## but make it much more interesting
 #' \donttest{
 #' plot3d(copy_down(as.mesh3d(DEL(silicate::minimal_mesh, max_area = 0.0001)),
-#'   raster::raster(-volcano)), col = c("black", "orange")); auto_3d(z = 35)
+#'   raster::raster(-volcano)), col = c("black", "orange")); auto_3d()
 #' wire3d(silicate::minimal_mesh)
 #' }
 #' @export

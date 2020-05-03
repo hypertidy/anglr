@@ -75,7 +75,7 @@ r <- raster(volcano)
 cl <- silicate::SC(rasterToContour(r))
 plot3d(copy_down(cl, r))
 ## looks funny?
-auto_3d(z = 15)
+auto_3d()
 
 \donttest{
 sc <- copy_down(SC0(cont_tas), "ELEVATION")

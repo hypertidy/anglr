@@ -294,6 +294,7 @@ quadToTriangle <- function(x) {
 .zero_one <- function(x) {
   raster::setExtent(x, raster::extent(0, 1, 0, 1))
 }
+#' @importFrom raster xyFromCell
 .texture_coordinates <- function (x, vertices) {
   raster::xyFromCell(.zero_one(x),
                      raster::cellFromXY(x, vertices))

@@ -1,3 +1,4 @@
+#' @importFrom raster projection setValues brick
 .raster_to_coords <- function(x, crs = NULL) {
   xy <- sp::coordinates(x)
   if (!is.null(crs)) {
@@ -118,10 +119,11 @@ mesh_plot.mesh3d <-
 
 #' @name mesh_plot
 #' @export
+#' @importFrom raster nlayers
 mesh_plot.BasicRaster  <- function(x,  col = NULL, add = FALSE, zlim = NULL, ...,
                                    coords = NULL, crs = NULL) {
 
-  mesh <- as.mesh3d(x, ...)
+  mesh <- as.mesh3d(x, triangles = FALSE,  ...)
 
   if (is.null(coords) && !is.null(crs)) {
     coords <- .raster_to_coords(x)

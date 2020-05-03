@@ -138,7 +138,9 @@
 #'
 #' \donttest{
 #' library(rgl)
-#' r1 <- raster::setExtent(raster::raster(volcano), raster::extent(silicate::inlandwaters))
+#' ## get sf extent
+#' ext <- sf_extent(silicate::inlandwaters)
+#' r1 <- raster::setExtent(raster::raster(volcano), ext)
 #' clear3d();shade3d(as.mesh3d(DEL(silicate::inlandwaters, max_area = 1e9), z =r1))
 #' aspect3d(1, 1, .2)
 #'
@@ -189,6 +191,7 @@ as.mesh3d.BasicRaster <- function(x, triangles = TRUE,
 }
 #' @name as.mesh3d
 #' @export
+#' @importFrom raster as.array
 as.mesh3d.QUAD <- function(x, triangles = FALSE,
                            smooth = FALSE, normals = NULL, texcoords = NULL,
                            ..., keep_all = TRUE, image_texture = NULL, meshColor = "faces") {

@@ -27,6 +27,7 @@ QUAD <- function(x, ...) {
 }
 #' @name QUAD
 #' @export
+#' @importFrom raster setExtent extent
 QUAD.matrix <- function(x, ...) {
   r <- raster::setExtent(raster::raster(t(x)[ncol(x):1, ]),
                          raster::extent(0, nrow(x), 0, ncol(x)))

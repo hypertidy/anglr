@@ -42,6 +42,8 @@ DEL0(x, ..., max_area = NULL)
 \item{...}{ignored}
 
 \item{max_area}{the maximum area of a triangle}
+
+\item{max_triangles}{limit on triangles to create, passed to terrainmeshr}
 }
 \value{
 \link[=DEL0]{DEL0 class}

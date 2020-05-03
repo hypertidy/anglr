@@ -35,7 +35,7 @@
 #' cl <- silicate::SC(rasterToContour(r))
 #' plot3d(copy_down(cl, r))
 #' ## looks funny?
-#' auto_3d(z = 15)
+#' auto_3d()
 #'
 #' \donttest{
 #' sc <- copy_down(SC0(cont_tas), "ELEVATION")
@@ -53,6 +53,7 @@ copy_down <- function(x, z = NULL, ..., .id = "z_") {
 
 #' @name copy_down
 #' @export
+#' @importFrom raster extract
 copy_down.mesh3d <- function(x, z = NULL, ..., .id = "z_") {
   #z <- find_z(x, z)
   if (inherits(z, "BasicRaster")) {

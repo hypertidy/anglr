@@ -45,7 +45,7 @@ get_proj.default <- function(x, ...) {
 }
 
 ## --- QUAD
-
+#' @importFrom raster raster
 get_edges <- function(x, ...) {
   ## assuming a QUAD
   edges0( do.call(raster::raster, x$object[c("xmx", "xmn", "ymn", "ymx", "nrows", "ncols")]))

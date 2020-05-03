@@ -285,7 +285,9 @@ aspect3d(1, 1, 0.5)
 
 \donttest{
 library(rgl)
-r1 <- raster::setExtent(raster::raster(volcano), raster::extent(silicate::inlandwaters))
+## get sf extent
+ext <- sf_extent(silicate::inlandwaters)
+r1 <- raster::setExtent(raster::raster(volcano), ext)
 clear3d();shade3d(as.mesh3d(DEL(silicate::inlandwaters, max_area = 1e9), z =r1))
 aspect3d(1, 1, .2)
 

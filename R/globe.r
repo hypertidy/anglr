@@ -47,6 +47,7 @@ globe.mesh3d <- function(x, gproj = NULL, ...) {
 }
 #' @export
 #' @rdname globe
+#' @importFrom raster isLonLat
 globe.default <- function(x, gproj = "+proj=geocent +datum=WGS84", ...) {
   p4 <- x$meta$proj[1]
   vertex <- get_vertex(x)
