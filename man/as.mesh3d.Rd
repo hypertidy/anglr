@@ -156,6 +156,8 @@ Texture coordinates at each vertex.
 details see \link[rgl:tmesh3d]{rgl::tmesh3d}.}
 
 \item{triangles}{for quad input types, the quads may optionally be split into triangles}
+
+\item{max_triangles}{limit on triangles to create, passed to terrainmeshr}
 }
 \value{
 a \link[rgl:mesh3d]{mesh3d object}

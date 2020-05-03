@@ -1,5 +1,7 @@
 # anglr dev
 
+* Fixed everything broken by raster using sf. 
+
 * Fixed missing github links. 
 
 * Now importing terrainmeshr, for experimental hmm support (efficient conversion

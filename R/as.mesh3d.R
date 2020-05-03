@@ -78,6 +78,7 @@
 #' @param x a surface-alike, a matrix, or spatial object from raster, sp, sf, trip, or silicate
 #' @param z numeric vector or raster object (see details)
 #' @inheritParams rgl::as.mesh3d.tri
+#' @param max_triangles limit on triangles to create, passed to terrainmeshr
 #' @param ... arguments collected and passed to [rgl::tmesh3d()] as the `material` argument
 #' @param image_texture an rgb object to texture the surface
 #' @param meshColor how should colours be interpreted? 'vertices' or 'faces', for more
