@@ -73,7 +73,7 @@ vertex level." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">anglr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -198,7 +198,8 @@ various spatial formats into suitable forms for this function.</p>
 <span class='no'>cl</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/silicate/man/SC.html'>SC</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/raster/man/rasterToContour.html'>rasterToContour</a></span>(<span class='no'>r</span>))
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'>copy_down</span>(<span class='no'>cl</span>, <span class='no'>r</span>))
 <span class='co'>## looks funny?</span>
-<span class='fu'><a href='auto_3d.html'>auto_3d</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>15</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: use only 'auto_3d()', arguments to 'auto_3d()' are no longer accepted</span></div><div class='input'>
+<span class='fu'><a href='auto_3d.html'>auto_3d</a></span>()
+
 <span class='co'># \donttest{</span>
 <span class='no'>sc</span> <span class='kw'>&lt;-</span> <span class='fu'>copy_down</span>(<span class='fu'><a href='silicate-models.html'>SC0</a></span>(<span class='no'>cont_tas</span>), <span class='st'>"ELEVATION"</span>)
 <span class='no'>sc</span>$<span class='no'>object</span>$<span class='no'>color_</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/palettes.html'>hcl.colors</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/raster/man/ncell.html'>nrow</a></span>(<span class='no'>sc</span>$<span class='no'>object</span>), <span class='st'>"YlOrRd"</span>)

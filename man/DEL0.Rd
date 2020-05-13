@@ -69,6 +69,12 @@ For point features, the mesher unproblematically creates a triangulation in
 the convex hull of the points, any attributes names \code{z_}, \code{m_}, or \code{t_} are
 automatically interpolated and include in the output. See the help for
 \code{\link[RTriangle:triangulate]{RTriangle::triangulate()}} for how this works via the \verb{$PA} element.
+
+Note that for a raster input the terrainmeshr package is used to determine
+a sensible number of triangles based on local curvature. To avoid creating
+this adative mesh and use \code{as.mesh3d(QUAD(raster))} to get quad primitives or
+\code{as.mesh3d(QUAD(raster), triangles = TRUE)} to get triangle primitives directly
+from raster cells.
 }
 
 \section{Licensing}{

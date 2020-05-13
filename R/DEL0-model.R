@@ -47,6 +47,11 @@
 #' automatically interpolated and include in the output. See the help for
 #' [RTriangle::triangulate()] for how this works via the `$PA` element.
 #'
+#' Note that for a raster input the terrainmeshr package is used to determine
+#' a sensible number of triangles based on local curvature. To avoid creating
+#' this adative mesh and use `as.mesh3d(QUAD(raster))` to get quad primitives or
+#' `as.mesh3d(QUAD(raster), triangles = TRUE)` to get triangle primitives directly
+#' from raster cells.
 #' @param x object of class [PATH0] or understood by [PATH0()]
 #' @param ... ignored
 #' @inheritParams DEL

@@ -76,7 +76,7 @@ meshers." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">anglr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -178,6 +178,10 @@ meshers.</p>
       <th>max_area</th>
       <td><p>the maximum area of a triangle</p></td>
     </tr>
+    <tr>
+      <th>max_triangles</th>
+      <td><p>limit on triangles to create, passed to terrainmeshr</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -198,6 +202,11 @@ sense for many line layers, but we leave it for now.</p>
 the convex hull of the points, any attributes names <code>z_</code>, <code>m_</code>, or <code>t_</code> are
 automatically interpolated and include in the output. See the help for
 <code><a href='https://rdrr.io/pkg/RTriangle/man/triangulate.html'>RTriangle::triangulate()</a></code> for how this works via the <code>$PA</code> element.</p>
+<p>Note that for a raster input the terrainmeshr package is used to determine
+a sensible number of triangles based on local curvature. To avoid creating
+this adative mesh and use <code><a href='as.mesh3d.html'>as.mesh3d(QUAD(raster))</a></code> to get quad primitives or
+<code><a href='as.mesh3d.html'>as.mesh3d(QUAD(raster), triangles = TRUE)</a></code> to get triangle primitives directly
+from raster cells.</p>
     <h2 class="hasAnchor" id="licensing"><a class="anchor" href="#licensing"></a>Licensing</h2>
 
     

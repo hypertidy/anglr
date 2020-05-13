@@ -83,7 +83,7 @@ RTriangle, and silicate types. and for a matrix." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">anglr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -314,6 +314,10 @@ details see <a href='https://rdrr.io/pkg/rgl/man/mesh3d.html'>rgl::tmesh3d</a>.<
       <th>triangles</th>
       <td><p>for quad input types, the quads may optionally be split into triangles</p></td>
     </tr>
+    <tr>
+      <th>max_triangles</th>
+      <td><p>limit on triangles to create, passed to terrainmeshr</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -429,7 +433,10 @@ needed.</p>
 
 <span class='co'># \donttest{</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rgl</span>)
-<span class='no'>r1</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/setExtent.html'>setExtent</a></span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span>(<span class='no'>volcano</span>), <span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span>(<span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/silicate/man/inlandwaters.html'>inlandwaters</a></span>))</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: sf</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>();<span class='fu'><a href='shade3d.html'>shade3d</a></span>(<span class='fu'>as.mesh3d</span>(<span class='fu'><a href='DEL.html'>DEL</a></span>(<span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/silicate/man/inlandwaters.html'>inlandwaters</a></span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='fl'>1e9</span>), <span class='kw'>z</span> <span class='kw'>=</span><span class='no'>r1</span>))
+<span class='co'>## get sf extent</span>
+<span class='no'>ext</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='sf_extent.html'>sf_extent</a></span>(<span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/silicate/man/inlandwaters.html'>inlandwaters</a></span>)
+<span class='no'>r1</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/setExtent.html'>setExtent</a></span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span>(<span class='no'>volcano</span>), <span class='no'>ext</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/rgl/man/scene.html'>clear3d</a></span>();<span class='fu'><a href='shade3d.html'>shade3d</a></span>(<span class='fu'>as.mesh3d</span>(<span class='fu'><a href='DEL.html'>DEL</a></span>(<span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/silicate/man/inlandwaters.html'>inlandwaters</a></span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='fl'>1e9</span>), <span class='kw'>z</span> <span class='kw'>=</span><span class='no'>r1</span>))
 <span class='fu'><a href='https://rdrr.io/pkg/rgl/man/aspect3d.html'>aspect3d</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>.2</span>)
 
 <span class='co'>## fake news</span>

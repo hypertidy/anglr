@@ -1,4 +1,4 @@
-## anglr 0.7.0
+## anglr 0.6.0
 
 Apologies for quick release, fixed a major bug in the `DEL0()` function
 and ensured compliance with upcoming dplyr 1.0.0. 

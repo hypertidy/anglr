@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">anglr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -159,9 +159,13 @@ not for mesh3d. In that case data are assumed to be
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>simpleworld</span>)
-<span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'>globe</span>(<span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/silicate/man/PATH.html'>PATH</a></span>(<span class='fu'>as</span>(<span class='no'>simpleworld</span>, <span class='st'>"SpatialLinesDataFrame"</span>)))</div><div class='output co'>#&gt; <span class='warning'>Warning: towgs84 element removed from source projection string</span></div><div class='input'><span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()) {
+<span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'>globe</span>(<span class='kw pkg'>silicate</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/silicate/man/PATH.html'>PATH</a></span>(<span class='fu'>as</span>(<span class='no'>simpleworld</span>, <span class='st'>"SpatialLinesDataFrame"</span>)))</div><div class='output co'>#&gt; <span class='warning'>Warning: Discarded datum WGS_1984 in CRS definition,</span>
+#&gt; <span class='warning'> but +towgs84= values preserved</span></div><div class='input'><span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()) {
  <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>g</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>3</span>)
  <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>g</span>)
+ <span class='kw pkg'>rgl</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/rgl/man/par3d.html'>open3d</a></span>()
+ <span class='fu'><a href='wire3d.html'>wire3d</a></span>(<span class='fu'>globe</span>(<span class='fu'><a href='DEL0.html'>DEL0</a></span>(<span class='no'>gebco</span>*<span class='fl'>50</span>)), <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"grey"</span>);
+ <span class='kw pkg'>rgl</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/rgl/man/spheres.html'>spheres3d</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='kw'>rad</span> <span class='kw'>=</span> <span class='fl'>6000000</span>,<span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"aliceblue"</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

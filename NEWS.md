@@ -1,4 +1,4 @@
-# anglr 0.7.0
+# anglr 0.6.0
 
 * Fixed DEL0() for polygons. https://github.com/hypertidy/anglr/issues/138
 

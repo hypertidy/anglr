@@ -36,5 +36,8 @@ g <- globe(silicate::PATH(as(simpleworld, "SpatialLinesDataFrame")))
 if (interactive()) {
  plot(g, lwd = 3)
  plot3d(g)
+ rgl::open3d()
+ wire3d(globe(DEL0(gebco*50)), col = "grey");
+ rgl::spheres3d(0, 0, 0, rad = 6000000,col = "aliceblue")
 }
 }

@@ -19,6 +19,9 @@
 #' if (interactive()) {
 #'  plot(g, lwd = 3)
 #'  plot3d(g)
+#'  rgl::open3d()
+#'  wire3d(globe(DEL0(gebco*50)), col = "grey");
+#'  rgl::spheres3d(0, 0, 0, rad = 6000000,col = "aliceblue")
 #'}
 globe <- function(x, ...) {
   UseMethod("globe")
@@ -81,17 +84,18 @@ globe.default <- function(x, gproj = "+proj=geocent +datum=WGS84", ...) {
   #xyz <- .ll_to_globe(ll)
 #print(head(xyz))
   ## BS, it doesn't work any more
-  # xyz <- reproj::reproj(ll[,1:3], source = p4, target = gproj)
+ # xyz <- reproj::reproj(ll[,1:3], source = p4, target = gproj)
   # xyz <- do.call(cbind, PROJ::proj_trans_generic(ll[,1:2],
   #                                                 source = p4, target = gproj,
   #                                                z_ = ll[,3, drop = TRUE])[c("x_", "y_", "z_")])
 
 
   ## use proj4 as ever
-  op <- options(reproj.mock.noproj6 = TRUE)
- suppressMessages( suppressWarnings(xyz <- reproj::reproj(ll[,1:3], source = p4, target = gproj)))
-  options(op)
+  # op <- options(reproj.mock.noproj6 = TRUE)
+  #suppressMessages( suppressWarnings(xyz <- reproj::reproj(ll[,1:3], source = p4, target = gproj)))
+  # options(op)
 
+  xyz <- .ll_to_globe(ll[,1:3, drop = FALSE])
 vertex[["x_"]] <- xyz[,1]
 vertex[["y_"]] <- xyz[,2]
 vertex[["z_"]] <- xyz[,3]
