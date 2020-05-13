@@ -113,7 +113,7 @@ DEL0.DEL <- function(x, ..., max_area = NULL) {
 #' @name DEL0
 #' @export
 DEL0.default <- function(x, ..., max_area = NULL) {
-  DEL0(silicate::PATH0(x), ..., max_area)
+  DEL0(silicate::PATH0(x), ..., max_area = max_area)
 }
 
 #' @name DEL0
@@ -145,17 +145,19 @@ DEL0.ARC <- function(x, ..., max_area = NULL) {
 #' @name DEL0
 #' @export
 DEL0.PATH <- function(x, ..., max_area = NULL) {
-  DEL(silicate::PATH0(x), max_area = NULL)
+  DEL(silicate::PATH0(x), max_area = max_area)
 }
 #' @name DEL0
 #' @export
 DEL0.PATH0 <- function(x, ..., max_area = NULL) {
   .check_area(x$vertex$x_, x$vertex$y_, max_area)
   dots <- list(...)
+
   dots[["a"]] <- max_area
 
   #-------------------------------
   if ( all(unlist(lapply(x$object$path_, function(xa) dim(xa)[1L] == length(unique(xa$path_))), use.names = FALSE))) {
+   # print("NO")
     ## bail out with a point-triangulation
     vv <- silicate::sc_vertex(x)
 
@@ -194,16 +196,13 @@ DEL0.PATH0 <- function(x, ..., max_area = NULL) {
  vv <- zmt[["vv"]]
   dots <- zmt[["dots"]]
   cnames <- zmt[["cnames"]]
-
- # dots[["x"]] <- x
- # dots[["x"]] <- dots[["p"]]
-#  dots[["p"]] <- NULL
-
   #----------------
   ## TRIANGULATE with PATH-identity
- # RTri <- do.call(edge_RTriangle0, dots)
+
+  ## get the edges (doh!!) https://github.com/hypertidy/anglr/issues/138
+  dots$p$S <- do.call(rbind, lapply(SC0(x)$object$topology_, function(a) as.matrix(a)[, c(".vx0", ".vx1"), drop = FALSE]))
   RTri <- do.call(RTriangle::triangulate, dots)
- # x## object/path_link_triangle (path_triangle_map)
+  # x## object/path_link_triangle (path_triangle_map)
   ptm <- path_triangle_map(x, RTri)
   omap <- dplyr::bind_rows(x$object$path_)%>% dplyr::distinct(.data$object_, .data$path_)
   ptm$object_ <- omap$object_[match(ptm$path_, omap$path_)]
