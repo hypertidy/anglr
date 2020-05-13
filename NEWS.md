@@ -4,7 +4,7 @@
 
 * Checks for alignment to dplyr 1.0.0. 
 
-* Fixed raster stuff. 
+* Fixed raster and new projection handling problems. 
 
 * Fixed missing github links. 
 

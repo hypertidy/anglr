@@ -49,6 +49,7 @@ globe.mesh3d <- function(x, gproj = NULL, ...) {
 #' @rdname globe
 #' @importFrom raster isLonLat
 globe.default <- function(x, gproj = "+proj=geocent +datum=WGS84", ...) {
+ # browser()
   p4 <- x$meta$proj[1]
   vertex <- get_vertex(x)
   if (inherits(x, "QUAD")) {
@@ -61,15 +62,10 @@ globe.default <- function(x, gproj = "+proj=geocent +datum=WGS84", ...) {
 
   ## zap towgs84 if present
   if ( !is.null(p4) && grepl("\\+towgs84=", p4, ignore.case = TRUE)) {
-    warning("towgs84 element removed from source projection string")
-    toks <- as.list(strsplit(p4, "\\s+")[[1L]])
-    for (i in seq_along(toks)) {
-      if (grepl("\\+towgs84=", toks[[i]])) {
-        toks[[i]] <- NULL
-        }
-        p4 <- paste(unlist(toks), collapse = " ")
-    }
+    p4 <- gsub("\\+towgs84=0,0,0,0,0,0,0", "", p4)
+    p4 <- gsub("\\+towgs84=0,0,0", "", p4)
   }
+
   ## need to handle if we already have a "z_"
   if (haveZ) {
     ll <- as.matrix(vertex[, c("x_", "y_", "z_")])
