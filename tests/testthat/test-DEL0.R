@@ -22,34 +22,35 @@ plot3d(silicate::PATH0(mm))
 })
 
 
+area_sc.sf <- function(x) {
+  area_sc.sfc(x[[attr(x, "sf_column")]])
+}
+area_sc.sfc <- function(x) {
+  ring_area <- rapply(x,
+                      lda)
+  g <- gibble::gibble(x)
+  ## if object changes, it's not a hole
+  ## if subobject changes, it's not a hole so
+  ## parallel max on diff to flip the sign
+  sgn <- c(-1, 1)[(pmax(c(1, diff(g$object)), c(1, diff(g$subobject))) == 1) + 1]
+  sum(ring_area * sgn)
+}
+
 ## area, get every ring but then negate sign according to position in polygon > 1
 ld <- function(x) x[2:(length(x) + 1)]
 lead_area_abs <- function(x, y) {
-  abs(sum(na.omit(ld(x) * y - x * ld(y)))/2)
+  abs(sum(ld(x) * y - x * ld(y), na.rm = TRUE)/2)
 }
 
 ## function for rapply
 lda <-
   function(x) {
     lead_area_abs(x[,1], x[,2])
-}
+  }
 
-area_sc.sf <- function(x) {
-  area_sc.sfc(x[[attr(x, "sf_column")]])
-}
-area_sc.sfc <- function(x) {
-  ring_area <- rapply(x,
-                  lda)
-  g <- gibble::gibble(x)
-  ## not 100% yet, see https://github.com/mdsumner/gibble/issues/1#issuecomment-627961238
-  sgn <- rep(1, dim(g)[1L])
-  idx <- which(diff(c(0, as.integer(factor(paste(g$object, g$subobject)))) ) < 1)
- if (length(idx) > 0) sgn[idx] <- -1
- # browser()
-  sum(ring_area * sgn)
-}
 
 test_that("DEL0 fix works", {
+  ## We Suggest gibble, but it's present because silicate imports it
   if (!requireNamespace("gibble")) {
     skip()
   }
