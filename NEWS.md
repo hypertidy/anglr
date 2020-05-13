@@ -1,6 +1,10 @@
-# anglr dev
+# anglr 0.7.0
 
-* Fixed everything broken by raster using sf. 
+* Fixed DEL0() for polygons. https://github.com/hypertidy/anglr/issues/138
+
+* Checks for alignment to dplyr 1.0.0. 
+
+* Fixed raster stuff. 
 
 * Fixed missing github links. 
 
