@@ -51,7 +51,8 @@ Suggests:
     rmarkdown,
     sfheaders,
     testthat (>= 2.1.0),
-    trip
+    trip,
+    gibble
 Roxygen: list(markdown = TRUE)
 SystemRequirements: PROJ library, OpenGL and GLU Library
 Encoding: UTF-8
