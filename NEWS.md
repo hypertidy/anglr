@@ -1,6 +1,8 @@
 # anglr dev
 
-* plot3() now works for sf POINT and MULTIPOINT (no control with `object$color_` but usual plot3d properties can be controlled. 
+* New sp polygons data set `cst10` for exploring precision issues. 
+
+* plot3d() now works for sf POINT and MULTIPOINT (no control with `object$color_` but usual plot3d properties can be controlled. 
 
 # anglr 0.6.0
 
