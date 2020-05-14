@@ -43,7 +43,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">anglr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9002</span>
       </span>
     </div>
 
@@ -86,7 +86,7 @@
   <div class="contents col-md-9">
 
 
-<!-- badges: end -->
+<p><a href="https://codecov.io/gh/hypertidy/anglr?branch=master"><img src="https://codecov.io/gh/hypertidy/anglr/branch/master/graph/badge.svg" alt="Codecov test coverage"></a> <!-- badges: end --></p>
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <div id="anglr" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
@@ -119,39 +119,19 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>We must use a version of R that is 3.3.2 or later, and <code>anglr</code> can only be installed from Github, and that at least requires the package <code>devtools</code>.</p>
-<p>Also required are packages rgl, RTriangle, sf, silicate, and reproj, so first make sure you can install and use these. On a fresh installation of R these package together require a lot of other contributed packages, and that can take some time.</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"rgl"</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"RTriangle"</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"sf"</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"devtools"</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"remotes"</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"silicate"</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"reproj"</span>)</pre></div>
-<p>With that out of the way, install from Github using remotes.</p>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"hypertidy/anglr"</span>)</pre></div>
+<p>Install from <a href="https://CRAN.r-project.org/package=anglr">CRAN</a> with</p>
+<div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"anglr"</span>)</pre></div>
+<p>To install the development version use</p>
+<div class="sourceCode" id="cb2"><pre class="r"><span class="co">## install.packages("remotes")  ## if required</span>
+<span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"hypertidy/anglr"</span>)</pre></div>
 <p>Feel free to contact me via the <a href="https://github.com/hypertidy/anglr/issues/">Issues</a> if you have problems, or these notes don’t make sense.</p>
 <div id="ubuntudebian" class="section level3">
 <h3 class="hasAnchor">
 <a href="#ubuntudebian" class="anchor"></a>Ubuntu/Debian</h3>
-<p>On Linux you will need at least the following installed by an administrator, here tested on Ubuntu Bionic 18.04 (note the apt/sources.list is specific to version).</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">## key for apt-get update, see http://cran.r-project.org/bin/linux/ubuntu/README</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="co">## up to date GDAL and PROJ.4 and GEOS</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="co">## https://launchpad.net/~ubuntugis/+archive/ubuntu/ubuntugis-unstable</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="ex">add-apt-repository</span> ppa:ubuntugis/ubuntugis-unstable --yes</span>
-<span id="cb3-6"><a href="#cb3-6"></a></span>
-<span id="cb3-7"><a href="#cb3-7"></a><span class="ex">apt</span> update </span>
-<span id="cb3-8"><a href="#cb3-8"></a><span class="ex">apt</span> upgrade --assume-yes</span>
-<span id="cb3-9"><a href="#cb3-9"></a></span>
-<span id="cb3-10"><a href="#cb3-10"></a><span class="co">## Install 3rd parties</span></span>
-<span id="cb3-11"><a href="#cb3-11"></a><span class="ex">apt</span> install libproj-dev libgdal-dev libgeos-dev  libssl-dev libgl1-mesa-dev libglu1-mesa-dev libudunits2-dev</span>
-<span id="cb3-12"><a href="#cb3-12"></a><span class="co">## install R, if you need to</span></span>
-<span id="cb3-13"><a href="#cb3-13"></a><span class="co">## apt install r-base r-base-dev </span></span></code></pre></div>
-<p>Then in R</p>
-<div class="sourceCode" id="cb4"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"remotes"</span>)
-<span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_cran.html">install_cran</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"dplyr"</span>, <span class="st">"proj4"</span>, <span class="st">"raster"</span>,  <span class="st">"rgl"</span>, <span class="st">"rlang"</span>, <span class="st">"RTriangle"</span>, <span class="st">"tibble"</span>, <span class="st">"viridis"</span>, <span class="st">"reproj"</span>))
-<span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"hypertidy/silicate"</span>, <span class="st">"hypertidy/anglr"</span>))</pre></div>
+<p>On Linux you will need at least the following installed.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>libproj<span class="op">-</span>dev \</span>
+<span id="cb3-2"><a href="#cb3-2"></a> libgl1<span class="op">-</span>mesa<span class="op">-</span>dev \</span>
+<span id="cb3-3"><a href="#cb3-3"></a> libglu1<span class="op">-</span>mesa<span class="op">-</span>dev</span></code></pre></div>
 </div>
 </div>
 <div id="get-involved" class="section level2">
@@ -168,7 +148,7 @@
 <h3 class="hasAnchor">
 <a href="#demo-01---merge-vector-and-raster-data" class="anchor"></a>Demo 01 - merge vector and raster data</h3>
 <p>An <a href="https://hypertidy.github.io/anglr-demos/demo01.html">example of merging vector and raster</a>, with a continuous interpretation applied to the polygon mesh and underlying elevation.</p>
-<div class="sourceCode" id="cb5"><pre class="r"><span class="co">## a global DEM</span>
+<div class="sourceCode" id="cb4"><pre class="r"><span class="co">## a global DEM</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"gebco"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"anglr"</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">sf</span>)
 <span class="co">## North Carolina, the sf boilerplate polygon layer</span>
@@ -190,8 +170,7 @@
 <span class="fu"><a href="https://rdrr.io/pkg/rgl/man/scene.html">rgl.clear</a></span>()  <span class="co">## rerun the cycle from clear to widget in browser contexts </span>
 <span class="fu"><a href="reference/plot3d.html">plot3d</a></span>(<span class="no">p_mesh</span>)
 <span class="fu"><a href="https://rdrr.io/pkg/rgl/man/bg.html">bg3d</a></span>(<span class="st">"black"</span>); <span class="fu"><a href="https://rdrr.io/pkg/rgl/man/material.html">material3d</a></span>(<span class="kw">specular</span> <span class="kw">=</span> <span class="st">"black"</span>)
-<span class="fu"><a href="https://rdrr.io/pkg/rgl/man/aspect3d.html">aspect3d</a></span>(<span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">.1</span>)
-<span class="fu"><a href="https://rdrr.io/pkg/rgl/man/rglwidget.html">rglwidget</a></span>()  <span class="co">## not needed if you have a local device</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/pkg/rgl/man/aspect3d.html">aspect3d</a></span>(<span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">.1</span>)</pre></div>
 <p>Follow this link to see the result:</p>
 <p><a href="https://hypertidy.github.io/anglr-demos/demo01.html">Demo01</a></p>
 <p>Here the <code>z</code> argument to <code><a href="reference/copy_down.html">copy_down()</a></code> is a raster, and so the <code>z_</code> coordinate of the mesh is updated by extracting values from the raster using bilinear interpolation.</p>
@@ -202,15 +181,14 @@
 <p>An <a href="https://hypertidy.github.io/anglr-demos/demo02.html">example of elevating polygons with constant attribute values</a>, a discrete interpretation that requires separating the (until-now) continuous mesh of polygon features.</p>
 <p>With argument <code>z</code> set to a column in the layer or a specific vector of values this is used as a constant offset for the <code>z_</code> value, and the mesh is <em>separated by feature</em>.</p>
 <p>(The simpler TRI model is used here because we only need poor quality triangles for planar geometry. )</p>
-<div class="sourceCode" id="cb6"><pre class="r">
+<div class="sourceCode" id="cb5"><pre class="r">
 <span class="co">## either form works</span>
 <span class="co">#c_mesh &lt;- copy_down(TRI(nc), z = p_mesh$object$BIR74)</span>
 <span class="no">c_mesh</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/copy_down.html">copy_down</a></span>(<span class="fu"><a href="reference/TRI.QUAD.html">TRI</a></span>(<span class="no">nc</span>), <span class="kw">z</span> <span class="kw">=</span> <span class="st">"BIR74"</span>)
-<span class="fu"><a href="https://rdrr.io/pkg/rgl/man/scene.html">rgl.clear</a></span>()
+<span class="fu"><a href="https://rdrr.io/pkg/rgl/man/par3d.html">open3d</a></span>()
 <span class="no">a</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/plot3d.html">plot3d</a></span>(<span class="no">c_mesh</span>)
 <span class="fu"><a href="https://rdrr.io/pkg/rgl/man/bg.html">bg3d</a></span>(<span class="st">"black"</span>); <span class="fu"><a href="https://rdrr.io/pkg/rgl/man/material.html">material3d</a></span>(<span class="kw">specular</span> <span class="kw">=</span> <span class="st">"black"</span>)
-<span class="fu"><a href="https://rdrr.io/pkg/rgl/man/aspect3d.html">aspect3d</a></span>(<span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">.2</span>)
-<span class="fu"><a href="https://rdrr.io/pkg/rgl/man/rglwidget.html">rglwidget</a></span>()  <span class="co">## not needed if you have a local device</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/pkg/rgl/man/aspect3d.html">aspect3d</a></span>(<span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">.2</span>)</pre></div>
 <p>Follow this link to see the result:</p>
 <p><a href="https://hypertidy.github.io/anglr-demos/demo02.html">Demo02</a></p>
 <p>In the silicate models, complex objects are decomposed to a set of related, linked tables. Object identity is maintained with attribute metadata and this is carried through to colour and other aesthetics.</p>
@@ -258,7 +236,6 @@
 <li><a href="https://travis-ci.org/hypertidy/anglr"><img src="http://badges.herokuapp.com/travis/hypertidy/anglr?branch=master&amp;env=BUILD_NAME=trusty_release&amp;label=linux" alt="Travis-CI Build Status"></a></li>
 <li><a href="https://travis-ci.org/hypertidy/anglr"><img src="http://badges.herokuapp.com/travis/hypertidy/anglr?branch=master&amp;env=BUILD_NAME=osx_release&amp;label=osx" alt="Build Status"></a></li>
 <li><a href="https://ci.appveyor.com/project/mdsumner/anglr"><img src="https://ci.appveyor.com/api/projects/status/github/hypertidy/anglr?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
-<li><a href="https://codecov.io/github/hypertidy/anglr?branch=master"><img src="https://img.shields.io/codecov/c/github/hypertidy/anglr/master.svg" alt="Coverage Status"></a></li>
 <li><a href="https://cran.r-project.org/package=anglr"><img src="http://www.r-pkg.org/badges/version/anglr" alt="CRAN_Status_Badge"></a></li>
 <li><a href="https://cran.r-project.org/package=anglr"><img src="http://cranlogs.r-pkg.org/badges/anglr" alt="CRAN_Download_Badge"></a></li>
 </ul>

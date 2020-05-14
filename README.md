@@ -14,11 +14,10 @@ Status](http://badges.herokuapp.com/travis/hypertidy/anglr?branch=master&env=BUI
 Status](http://badges.herokuapp.com/travis/hypertidy/anglr?branch=master&env=BUILD_NAME=osx_release&label=osx)](https://travis-ci.org/hypertidy/anglr)
 [![AppVeyor Build
 Status](https://ci.appveyor.com/api/projects/status/github/hypertidy/anglr?branch=master&svg=true)](https://ci.appveyor.com/project/mdsumner/anglr)
-[![Coverage
-Status](https://img.shields.io/codecov/c/github/hypertidy/anglr/master.svg)](https://codecov.io/github/hypertidy/anglr?branch=master)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/anglr)](https://cran.r-project.org/package=anglr)
 [![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/anglr)](https://cran.r-project.org/package=anglr)
-
+[![Codecov test
+coverage](https://codecov.io/gh/hypertidy/anglr/branch/master/graph/badge.svg)](https://codecov.io/gh/hypertidy/anglr?branch=master)
 <!-- badges: end -->
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -97,28 +96,16 @@ curves in any 3D coordinate system.
 
 ## Installation
 
-We must use a version of R that is 3.3.2 or later, and `anglr` can only
-be installed from Github, and that at least requires the package
-`devtools`.
-
-Also required are packages rgl, RTriangle, sf, silicate, and reproj, so
-first make sure you can install and use these. On a fresh installation
-of R these package together require a lot of other contributed packages,
-and that can take some time.
+Install from [CRAN](https://CRAN.r-project.org/package=anglr) with
 
 ``` r
-install.packages("rgl")
-install.packages("RTriangle")
-install.packages("sf")
-install.packages("devtools")
-install.packages("remotes")
-install.packages("silicate")
-install.packages("reproj")
+install.packages("anglr")
 ```
 
-With that out of the way, install from Github using remotes.
+To install the development version use
 
 ``` r
+## install.packages("remotes")  ## if required
 remotes::install_github("hypertidy/anglr")
 ```
 
@@ -128,33 +115,11 @@ problems, or these notes don’t make sense.
 
 ### Ubuntu/Debian
 
-On Linux you will need at least the following installed by an
-administrator, here tested on Ubuntu Bionic 18.04 (note the
-apt/sources.list is specific to version).
+On Linux you will need at least the following installed.
 
-``` bash
-## key for apt-get update, see http://cran.r-project.org/bin/linux/ubuntu/README
-
-## up to date GDAL and PROJ.4 and GEOS
-## https://launchpad.net/~ubuntugis/+archive/ubuntu/ubuntugis-unstable
-add-apt-repository ppa:ubuntugis/ubuntugis-unstable --yes
-
-apt update 
-apt upgrade --assume-yes
-
-## Install 3rd parties
-apt install libproj-dev libgdal-dev libgeos-dev  libssl-dev libgl1-mesa-dev libglu1-mesa-dev libudunits2-dev
-## install R, if you need to
-## apt install r-base r-base-dev 
-```
-
-Then in R
-
-``` r
-install.packages("remotes")
-remotes::install_cran(c("dplyr", "proj4", "raster",  "rgl", "rlang", "RTriangle", "tibble", "viridis", "reproj"))
-remotes::install_github(c("hypertidy/silicate", "hypertidy/anglr"))
-```
+    libproj-dev \
+     libgl1-mesa-dev \
+     libglu1-mesa-dev
 
 ## Get involved\!
 
@@ -200,7 +165,6 @@ rgl.clear()  ## rerun the cycle from clear to widget in browser contexts
 plot3d(p_mesh) 
 bg3d("black"); material3d(specular = "black")
 aspect3d(1, 1, .1)
-rglwidget()  ## not needed if you have a local device
 ```
 
 Follow this link to see the result:
@@ -230,11 +194,10 @@ triangles for planar geometry. )
 ## either form works
 #c_mesh <- copy_down(TRI(nc), z = p_mesh$object$BIR74)
 c_mesh <- copy_down(TRI(nc), z = "BIR74")
-rgl.clear()
+open3d()
 a <- plot3d(c_mesh) 
 bg3d("black"); material3d(specular = "black")
 aspect3d(1, 1, .2)
-rglwidget()  ## not needed if you have a local device
 ```
 
 Follow this link to see the result:
