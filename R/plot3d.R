@@ -176,10 +176,20 @@ plot3d.SC0 <- function(x, ..., add = FALSE) {
   vb <- cbind(vb, h = 1)
   lt <- silicate::sc_object(x)$topology_
   pindex <- rep(x$object$color_, unlist(lapply(lt, nrow)))
-  vindex <- t(do.call(rbind, lapply(lt, function(adf) adf[c(".vx0", ".vx1")])))
+
   if (!add) {
     rgl::rgl.clear()
   }
+#  is_point <- FALSE
+  if (!".vx1" %in% names(lt[[1]])) {
+#    is_point <- TRUE
+    ## shortcut to just plot points, doesn't support object$color_
+    rgl::plot3d(as.matrix(vb[,1:3, drop = FALSE]), ...)
+    return(invisible(NULL)) ## no point structure to return
+    ## could use degenerate segments but dunno ...
+  }
+  vindex <- t(do.call(rbind, lapply(lt, function(adf) adf[c(".vx0", ".vx1")])))
+
   if ("color" %in% names(list(...))) {
     rgl::segments3d(vb[vindex,], ...)
   } else {

@@ -1,3 +1,7 @@
+# anglr dev
+
+* plot3() now works for sf POINT and MULTIPOINT (no control with `object$color_` but usual plot3d properties can be controlled. 
+
 # anglr 0.6.0
 
 * Fixed DEL0() for polygons. https://github.com/hypertidy/anglr/issues/138
