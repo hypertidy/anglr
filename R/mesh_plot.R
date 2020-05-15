@@ -68,7 +68,19 @@ mesh_plot.mesh3d <-
       warning("argument 'coords' is only used for 'mesh_plot(Raster)', ignoring")
     }
     if (!is.null(x$material$texture)) {
-      warning("mesh object has a texture path, but cannot be displayed in 2D graphics (try plot3d)")
+      warning("mesh object has a texture path, but cannot be displayed natively in 2D graphics (try plot3d)")
+      message("mesh plot will be displayed with an approximate colouring from the texture image")
+      ## ensure faces colour
+      x$meshColor <- "faces"
+      b <- raster::brick(x$material$texture)
+      b <- raster::setExtent(b, raster::extent(0, 1, 0, 1))
+      rgb0 <- raster::extract(b, t(x$texcoords[1:2, ]))
+      red <- sqrt(rowMeans(matrix(rgb0[x$it,   1] ^2)))
+      green <- sqrt(rowMeans(matrix(rgb0[x$it, 2] ^2)))
+      blue <- sqrt(rowMeans(matrix(rgb0[x$it,  3] ^2)))
+      x$material$color <- rgb(red, green, blue, maxColorValue = 255)
+      ## cheat with the first vertex only
+#      x$material$color <- matrix(rgb(rgb0[,1], rgb0[,2], rgb0[,3], maxColorValue = 255)[x$it], 3)[1L, , drop = TRUE]
     }
     if (!is.null(x$ib)) {
       id <- x$ib

@@ -42,10 +42,10 @@ denorm_PRIM_addZ <- function(x, z, ..., .id = "z_") {
     prim_long$edge_vertex <- rep(c(".vx0", ".vx1"), each = nrow(priminst))
 
     z <- rep(z, nrow(silicate::sc_object(x)))
-    
+
     prim_long[[.id]] <- z[match(prim_long$object_, x$object$object_)]
 
-    
+
     prim_long <- prim_long %>% inner_join(x$vertex, c("vertex" = "vertex_"))
     prim_long$vertex <- NULL
     prim_long$vertex_ <- silicate::sc_uid(nrow(prim_long))
@@ -69,7 +69,6 @@ x$edge <- tibble(.vx0 = vx[[i]][["vertex_"]],
 
     }
   if (inherits(x, "TRI")) {
-
     priminst <- x$triangle
     priminst[["triangle_"]] <- silicate::sc_uid(priminst)  ## FIXME: temporary triangle_ id not needed
     #prim_long <- priminst %>% tidyr::gather("tri_vertex", "vertex", -.data$object_, -.data$triangle_)
@@ -83,7 +82,7 @@ x$edge <- tibble(.vx0 = vx[[i]][["vertex_"]],
 
     z <- rep(z, nrow(silicate::sc_object(x)))
     prim_long[[.id]] <- z[match(prim_long$object_, x$object$object_)]
-  
+
     prim_long <- prim_long %>% inner_join(x$vertex, c("vertex" = "vertex_"))
     prim_long$vertex <- NULL
     prim_long$vertex_ <- silicate::sc_uid(nrow(prim_long))

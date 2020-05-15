@@ -163,7 +163,7 @@ details see \link[rgl:tmesh3d]{rgl::tmesh3d}.}
 a \link[rgl:mesh3d]{mesh3d object}
 }
 \description{
-The \code{as.mesh3d()} generic function converts various objects to
+The \verb{[as.mesh3d()][rgl::as.mesh3d()]} generic function converts various objects to
 \link[rgl:tmesh3d]{mesh3d} objects. Methods are added to support a variety of
 spatial formats, which will include triangles or quads according to their
 inherent form. For quad-types the argument \code{triangles} can be specified to

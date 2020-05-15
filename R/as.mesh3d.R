@@ -3,7 +3,7 @@
 #'
 #' @description
 #'
-#' The `as.mesh3d()` generic function converts various objects to
+#' The `[as.mesh3d()][rgl::as.mesh3d()]` generic function converts various objects to
 #' [mesh3d][rgl::tmesh3d] objects. Methods are added to support a variety of
 #' spatial formats, which will include triangles or quads according to their
 #' inherent form. For quad-types the argument `triangles` can be specified to
