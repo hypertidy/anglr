@@ -1,5 +1,7 @@
 # anglr dev
 
+* Now importing colourvalues to convert RGB to hex for `mesh_plot()`. 
+
 * Added support to `mesh_plot()` for approximate face colouring
 based on a texture, wish of https://github.com/hypertidy/anglr/issues/90. 
 

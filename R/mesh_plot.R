@@ -90,14 +90,8 @@ mesh_plot.mesh3d <-
       red <- sqrt(colMeans(matrix(rgb0[id,   1] ^2, dim(id)[1L]), na.rm = TRUE))
       green <- sqrt(colMeans(matrix(rgb0[id, 2] ^2, dim(id)[1L]), na.rm = TRUE))
       blue <- sqrt(colMeans(matrix(rgb0[id,  3] ^2, dim(id)[1L]), na.rm = TRUE))
-      bad <- is.na(red) | is.na(blue) | is.na(green)
-      red[bad] <- 0
-      green[bad] <- 0
-      blue[bad] <- 0
-      x$material$color <- rgb(red, green, blue, maxColorValue = 255)
-      x$material$color[bad] <- NA
-      ## cheat with the first vertex only
-#      x$material$color <- matrix(rgb(rgb0[,1], rgb0[,2], rgb0[,3], maxColorValue = 255)[x$it], 3)[1L, , drop = TRUE]
+#      x$material$color <- rgb(red, green, blue, maxColorValue = 255)
+      x$material$color <- colourvalues::convert_colour(cbind(red, green, blue))
     }
 
     xx <- x$vb[1L, id]

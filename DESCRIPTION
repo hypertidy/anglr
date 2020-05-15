@@ -42,6 +42,7 @@ Imports:
     unjoin,
     utils,
     viridis,
+    colourvalues
 Suggests: 
     covr,
     ggplot2,
