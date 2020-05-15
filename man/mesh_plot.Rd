@@ -127,5 +127,6 @@ the complicated grid geometry from the grid data itself.
 
 If the input is a mesh3d and has a material texture image this is \emph{approximated}
 by averaging the RGB values of each primitive's corner into a constant colour
-for that face.
+for that face. If you would like to avoid this texture colour, set the
+'mesh3d$material$color' property to \code{NULL}.
 }

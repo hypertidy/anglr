@@ -2,12 +2,16 @@
 
 * Now importing colourvalues to convert RGB to hex for `mesh_plot()`. 
 
-* Added support to `mesh_plot()` for approximate face colouring
-based on a texture, wish of https://github.com/hypertidy/anglr/issues/90. 
+* New internal function `texture_mesh3d()` adds support to `mesh_plot()` for
+approximate face colouring based on a texture, wish of
+https://github.com/hypertidy/anglr/issues/90. Is named after
+'palr::image_raster()' etc by "what does the colouring"_"what is the output".
+Experimental.
 
 * New sp polygons data set `cst10` for exploring precision issues. 
 
-* plot3d() now works for sf POINT and MULTIPOINT (no control with `object$color_` but usual plot3d properties can be controlled. 
+* plot3d() now works for sf POINT and MULTIPOINT (no control with
+`object$color_` but usual plot3d properties can be controlled.
 
 # anglr 0.6.0
 
