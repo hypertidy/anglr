@@ -83,15 +83,17 @@ mesh_plot.mesh3d <-
       message("mesh plot will be displayed with an approximate colouring from the texture image")
       ## ensure faces colour
       x$meshColor <- "faces"
-      b <- raster::brick(x$material$texture)
-      b <- raster::setExtent(b, raster::extent(0, 1, 0, 1))
+      ## avoid rgdal lol so much pain avoided so easy
+      b <- raster::setExtent(raster::brick(
+        png::readPNG(x$material$texture)),
+                             raster::extent(0, 1, 0, 1))
       rgb0 <- raster::extract(b, t(x$texcoords[1:2, ]))
 
       red <- sqrt(colMeans(matrix(rgb0[id,   1] ^2, dim(id)[1L]), na.rm = TRUE))
       green <- sqrt(colMeans(matrix(rgb0[id, 2] ^2, dim(id)[1L]), na.rm = TRUE))
       blue <- sqrt(colMeans(matrix(rgb0[id,  3] ^2, dim(id)[1L]), na.rm = TRUE))
 #      x$material$color <- rgb(red, green, blue, maxColorValue = 255)
-      x$material$color <- colourvalues::convert_colour(cbind(red, green, blue))
+      x$material$color <- colourvalues::convert_colour(cbind(red, green, blue) * 255)
     }
 
     xx <- x$vb[1L, id]
