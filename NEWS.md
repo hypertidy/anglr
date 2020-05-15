@@ -1,5 +1,8 @@
 # anglr dev
 
+* Added support to `mesh_plot()` for approximate face colouring
+based on a texture, wish of https://github.com/hypertidy/anglr/issues/90. 
+
 * New sp polygons data set `cst10` for exploring precision issues. 
 
 * plot3d() now works for sf POINT and MULTIPOINT (no control with `object$color_` but usual plot3d properties can be controlled. 

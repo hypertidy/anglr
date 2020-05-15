@@ -124,4 +124,8 @@ the \code{crs} if that is supplied. This is modelled on the approach to
 curvilinear grid data used in the \code{angstroms} package. There the function
 \code{angstroms::romsmap()} and `angstroms::romscoords()`` are used to separate
 the complicated grid geometry from the grid data itself.
+
+If the input is a mesh3d and has a material texture image this is \emph{approximated}
+by averaging the RGB values of each primitive's corner into a constant colour
+for that face.
 }

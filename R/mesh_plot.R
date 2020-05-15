@@ -41,6 +41,9 @@
 #' `angstroms::romsmap()` and `angstroms::romscoords()`` are used to separate
 #' the complicated grid geometry from the grid data itself.
 #'
+#' If the input is a mesh3d and has a material texture image this is _approximated_
+#' by averaging the RGB values of each primitive's corner into a constant colour
+#' for that face.
 #' @param x object to convert to mesh and plot
 #' @param crs target map projection
 #' @param col colours to use, defaults to that used by [graphics::image()]
@@ -57,6 +60,7 @@ mesh_plot <- function(x,  col = NULL, add = FALSE, zlim = NULL, ..., coords = NU
   UseMethod("mesh_plot")
 }
 #' @name mesh_plot
+#' @importFrom grDevices rgb
 #' @export
 mesh_plot.mesh3d <-
   function (x,
@@ -67,6 +71,13 @@ mesh_plot.mesh3d <-
     if (!is.null(coords)) {
       warning("argument 'coords' is only used for 'mesh_plot(Raster)', ignoring")
     }
+
+    if (!is.null(x$ib)) {
+      id <- x$ib
+    }
+    if (!is.null(x$it)) {
+      id <- x$it
+    }
     if (!is.null(x$material$texture)) {
       warning("mesh object has a texture path, but cannot be displayed natively in 2D graphics (try plot3d)")
       message("mesh plot will be displayed with an approximate colouring from the texture image")
@@ -75,19 +86,20 @@ mesh_plot.mesh3d <-
       b <- raster::brick(x$material$texture)
       b <- raster::setExtent(b, raster::extent(0, 1, 0, 1))
       rgb0 <- raster::extract(b, t(x$texcoords[1:2, ]))
-      red <- sqrt(rowMeans(matrix(rgb0[x$it,   1] ^2)))
-      green <- sqrt(rowMeans(matrix(rgb0[x$it, 2] ^2)))
-      blue <- sqrt(rowMeans(matrix(rgb0[x$it,  3] ^2)))
+
+      red <- sqrt(colMeans(matrix(rgb0[id,   1] ^2, dim(id)[1L]), na.rm = TRUE))
+      green <- sqrt(colMeans(matrix(rgb0[id, 2] ^2, dim(id)[1L]), na.rm = TRUE))
+      blue <- sqrt(colMeans(matrix(rgb0[id,  3] ^2, dim(id)[1L]), na.rm = TRUE))
+      bad <- is.na(red) | is.na(blue) | is.na(green)
+      red[bad] <- 0
+      green[bad] <- 0
+      blue[bad] <- 0
       x$material$color <- rgb(red, green, blue, maxColorValue = 255)
+      x$material$color[bad] <- NA
       ## cheat with the first vertex only
 #      x$material$color <- matrix(rgb(rgb0[,1], rgb0[,2], rgb0[,3], maxColorValue = 255)[x$it], 3)[1L, , drop = TRUE]
     }
-    if (!is.null(x$ib)) {
-      id <- x$ib
-    }
-    if (!is.null(x$it)) {
-      id <- x$it
-    }
+
     xx <- x$vb[1L, id]
     yy <- x$vb[2L, id]
 
