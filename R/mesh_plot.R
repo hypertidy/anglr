@@ -60,7 +60,7 @@ mesh_plot <- function(x,  col = NULL, add = FALSE, zlim = NULL, ..., coords = NU
   UseMethod("mesh_plot")
 }
 #' @name mesh_plot
-#' @importFrom grDevices rgb
+#' @importFrom colourvalues convert_colour
 #' @export
 mesh_plot.mesh3d <-
   function (x,
