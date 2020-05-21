@@ -147,7 +147,12 @@ quad_common <- function(vb, index, normals, texcoords, material, meshColor, tria
                                       material = material,
                                       meshColor = "faces"))
   } else {
-    out <- do.call(rgl::tmesh3d, list(vertices = vb, indices = .quad2tri(index),
+#    browser()
+    index <- .quad2tri(index)
+    if ("color" %in% names(material)) {
+      material[["color"]] <- rep(material[["color"]], each = 2L)  ## ??
+    }
+    out <- do.call(rgl::tmesh3d, list(vertices = vb, indices = index,
                                       normals = normals, texcoords = texcoords,
                                       material = material,
                                       meshColor = "faces"))

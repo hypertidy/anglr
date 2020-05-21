@@ -1,5 +1,7 @@
 # anglr dev
 
+* Bug fix in triangle colouring for grids (#143). 
+
 * Now importing colourvalues to convert RGB to hex for `mesh_plot()`. 
 
 * New internal function `texture_mesh3d()` adds support to `mesh_plot()` for

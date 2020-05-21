@@ -82,8 +82,7 @@ mesh_plot(
 
 \item{add}{add to existing plot or start a new one}
 
-\item{zlim}{absolute range of data to use for colour scaling (if \code{NULL} the
-data range is used)}
+\item{zlim}{unimplemented (was used in 'quadmesh::mesh_plot')}
 
 \item{...}{passed through to \code{base::plot}}
 
@@ -107,8 +106,7 @@ The mesh may be reprojected prior to plotting using the 'crs' argument to
 define the target map projection in 'PROJ string' format. (There is no
 "reproject" function for quadmesh, this is performed directly on the x-y
 coordinates of the 'quadmesh' output). The 'col' argument are mapped to the
-inputdata as in \code{\link[graphics:image]{graphics::image()}}, and applied relative to 'zlim' if
-also supplied.
+inputdata as in \code{\link[graphics:image]{graphics::image()}}.
 
 The \code{coords} argument only applies to a raster object. The \code{crs} argument
 only applies to a spatial object that has a crs projection metadata string
