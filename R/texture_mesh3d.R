@@ -15,6 +15,7 @@
 #' breaks = raster::quantile(r, seq(0, 1, length = 38)))
 #' x <- as.mesh3d(DEL0(simpleworld, max_area = 1), image_texture = im)
 #' mesh_plot(x, crs = "+proj=laea +datum=WGS84 +lon_0=127 +lat_0=-25")
+#' @importFrom stats runif
 texture_mesh3d <- function(x) {
   if (!is.null(x$ib)) {
     id <- x$ib

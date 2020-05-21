@@ -1,5 +1,7 @@
 # anglr dev
 
+* Bug fix (avoid warning) for degenerate dimensions with matrix input to `as.mesh3d()` (#142). 
+
 * Bug fix in triangle colouring for grids (#143). 
 
 * Now importing colourvalues to convert RGB to hex for `mesh_plot()`. 

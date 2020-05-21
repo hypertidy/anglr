@@ -313,7 +313,6 @@ as.mesh3d.matrix <-function(x, triangles = FALSE,
     material$color <-  palr::image_pal(x)
 
   }
-
   ## from https://github.com/hypertidy/quadmesh/blob/80380db26153615c365dc67b64465448beab2832/R/exy_values.R#L51-L72
   vals <- vxy(x)
   exy <- edges_xy(x)
@@ -324,7 +323,8 @@ as.mesh3d.matrix <-function(x, triangles = FALSE,
   nr <- dm[2L]
   nc1 <- nc + 1
   aa <- t(prs(seq_len(nc1)))
-  ind <- matrix(c(rbind(aa, aa[2:1, ])) + c(0, 0, nc1, nc1), 4)
+  ind <- matrix(c(rbind(aa, aa[2:1, , drop = FALSE])) + c(0, 0, nc1, nc1), 4)
+
   ind0 <- as.integer(as.vector(ind) +
                        rep(seq(0, length = nr, by = nc1), each = 4 * nc))
 
