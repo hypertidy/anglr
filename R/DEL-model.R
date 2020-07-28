@@ -99,8 +99,7 @@ DEL.SC <- function(x, ..., max_area = NULL)  {
   edge_per_object_lt <- x$object["object_"] %>%
     dplyr::inner_join(x$object_link_edge, "object_") %>%
     dplyr::inner_join(x$object_link_edge, "object_") %>%
-
-    dplyr::group_by(.data$object_) %>% dplyr::tally(dplyr::n()) %>% dplyr::filter(.data$n < 3)
+    dplyr::group_by(.data$object_) %>% dplyr::summarise(n = dplyr::n()) %>% dplyr::filter(.data$n < 3)
   if (nrow(edge_per_object_lt) > 0) {
     message("dropping untriangulatable objects")
     ## need anti_join.sc
