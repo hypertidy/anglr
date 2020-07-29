@@ -1,13 +1,12 @@
-## anglr 0.6.0
+## anglr 0.7.0
 
-Apologies for quick release, fixed a major bug in the `DEL0()` function
-and ensured compliance with upcoming dplyr 1.0.0. 
+Release to avoid warnings from upcoming dplyr release. 
 
 Thank you very much. 
 
 ## Test environments
 
-* local windows install, R 4.0.0
+* local windows install, R 4.0.2
 * win-builder (devel and release)
 
 ## R CMD check results

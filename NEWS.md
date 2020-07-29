@@ -1,4 +1,8 @@
-# anglr dev
+# anglr 0.7.0
+
+* Removed rgdal dependency. 
+
+* Use `dpylr::summarise()` not `tally()` to avoid dplyr warning, thanks to Romain Francois (#152). 
 
 * Bug fix (avoid warning) for degenerate dimensions with matrix input to `as.mesh3d()` (#142). 
 

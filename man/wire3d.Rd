@@ -43,10 +43,10 @@
 \arguments{
 \item{x}{sp, sf, raster, trip, or any other model understood by anglr/silicate}
 
-\item{...}{pass \link[rgl:rgl.material]{material3d properties} to rgl}
+\item{...}{pass \link[rgl:material]{material3d properties} to rgl}
 }
 \description{
-Draw line segments with rgl from any \link[rgl:tmesh3d]{shape3d} classed object. Produces
+Draw line segments with rgl from any \link[rgl:mesh3d]{shape3d} classed object. Produces
 a 3D scatterplot like that produced by \code{\link[rgl:plot3d]{rgl::plot3d()}}, but from a mesh-alike
 object.
 }

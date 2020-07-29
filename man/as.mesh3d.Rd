@@ -146,14 +146,14 @@ User-specified normals at each vertex.  Requires \code{smooth = FALSE}.
 Texture coordinates at each vertex.
 }
 
-\item{...}{arguments collected and passed to \code{\link[rgl:tmesh3d]{rgl::tmesh3d()}} as the \code{material} argument}
+\item{...}{arguments collected and passed to \code{\link[rgl:mesh3d]{rgl::tmesh3d()}} as the \code{material} argument}
 
 \item{keep_all}{whether to keep non-visible triangles}
 
 \item{image_texture}{an rgb object to texture the surface}
 
 \item{meshColor}{how should colours be interpreted? 'vertices' or 'faces', for more
-details see \link[rgl:tmesh3d]{rgl::tmesh3d}.}
+details see \link[rgl:mesh3d]{rgl::tmesh3d}.}
 
 \item{triangles}{for quad input types, the quads may optionally be split into triangles}
 
@@ -164,16 +164,16 @@ a \link[rgl:mesh3d]{mesh3d object}
 }
 \description{
 The \verb{[as.mesh3d()][rgl::as.mesh3d()]} generic function converts various objects to
-\link[rgl:tmesh3d]{mesh3d} objects. Methods are added to support a variety of
+\link[rgl:mesh3d]{mesh3d} objects. Methods are added to support a variety of
 spatial formats, which will include triangles or quads according to their
 inherent form. For quad-types the argument \code{triangles} can be specified to
 generate triangles from quads. The majority of conversions are done by model
 functions in the silicate package, and anglr adds models \code{\link[=DEL]{DEL()}}, \code{\link[=DEL0]{DEL0()}},
 and \code{\link[=QUAD]{QUAD()}}.
 
-The \link[rgl:tmesh3d]{mesh3d} format is the rgl workhorse behind
-\link[rgl:plot3d]{plot3d()}, \link[rgl:wire3d]{wire3d()}, \link[rgl:persp3d]{persp3d()}
-and \link[rgl:dot3d]{dot3d()}.'
+The \link[rgl:mesh3d]{mesh3d} format is the rgl workhorse behind
+\link[rgl:plot3d]{plot3d()}, \link[rgl:mesh3d]{wire3d()}, \link[rgl:persp3d]{persp3d()}
+and \link[rgl:mesh3d]{dot3d()}.'
 
 A method for a numeric matrix is included, as are methods for sf, sp, raster,
 RTriangle, and silicate types. and for a matrix.
@@ -186,9 +186,9 @@ but shares its orientation. Raster-types from the raster package are
 interpreted in the \verb{t(ranspose), y-flip} orientation used by
 \code{plot(raster::raster(matrix))}.
 
-The conversion function \code{\link[anglr:as.mesh3d]{anglr::as.mesh3d()}} consolidates code from quadmesh
+The conversion function \code{\link[=as.mesh3d]{as.mesh3d()}} consolidates code from quadmesh
 and angstroms packages where the basic facilities were developed. The
-function \link[rgl:as.mesh3d]{as.mesh3d()} is imported from rgl and re-exported,
+function \link[rgl:as.mesh3d.default]{as.mesh3d()} is imported from rgl and re-exported,
 and understands all of the surface types from sf, sp, raster, and silicate,
 and can accept a raw matrix as input.
 
@@ -207,10 +207,10 @@ surfaces} and so conversion and plotting functions try to reflect this
 inherent nature as much as possible. A mesh is inherently a surface, and so
 the method for polygons or lines will first call a surface-generating
 function, \code{\link[silicate:TRI0]{silicate::TRI0()}} or \code{\link[=DEL0]{DEL0()}} in order to created the required
-primitives, while \link[anglr:plot3d]{plot3d()} will not do this. The key goal is
+primitives, while \link[=plot3d]{plot3d()} will not do this. The key goal is
 \emph{flexibility}, and so we can call a meshing function
-\link[anglr:as.mesh3d]{as.mesh3d()} (does conversion) or
-\link[anglr:persp3d]{persp3d()} (a plot function, but requires conversion to
+\link[=as.mesh3d]{as.mesh3d()} (does conversion) or
+\link[=persp3d]{persp3d()} (a plot function, but requires conversion to
 surface) and they will choose an interpretation. An non-formal guideline is
 to use the cheapest method possible, i.e. \code{\link[silicate:TRI0]{silicate::TRI0()}}.
 

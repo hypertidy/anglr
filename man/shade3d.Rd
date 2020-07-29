@@ -52,10 +52,10 @@
 \arguments{
 \item{x}{sp, sf, raster, or any other surface model understood by anglr/silicate}
 
-\item{...}{pass \link[rgl:material3d]{material3d properties} to rgl}
+\item{...}{pass \link[rgl:material]{material3d properties} to rgl}
 }
 \description{
-Draw surfaces with rgl from any \link[rgl:tmesh3d]{shape3d} classed object. Produces
+Draw surfaces with rgl from any \link[rgl:mesh3d]{shape3d} classed object. Produces
 a 3D surface plot from a mesh-alike object.
 }
 \details{

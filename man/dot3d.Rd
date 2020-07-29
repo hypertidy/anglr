@@ -34,15 +34,15 @@
 \arguments{
 \item{x}{sc, sp, sf, raster, trip, or any other model understood by anglr/silicate}
 
-\item{...}{pass \link[rgl:rgl.material]{material3d properties} to rgl}
+\item{...}{pass \link[rgl:material]{material3d properties} to rgl}
 }
 \description{
-Draw points with rgl from any mesh-alike or \link[rgl:tmesh3d]{shape3d} classed
-object. Produces a 3D scatterplot like that of \code{\link[rgl:points3d]{rgl::points3d()}}, but
+Draw points with rgl from any mesh-alike or \link[rgl:mesh3d]{shape3d} classed
+object. Produces a 3D scatterplot like that of \code{\link[rgl:3dobjects]{rgl::points3d()}}, but
 from a mesh-alike object.
 }
 \details{
-The class \link[rgl:dot3d]{mesh3d} extends 'shape3d' and allows methods to plot
+The class \link[rgl:mesh3d]{mesh3d} extends 'shape3d' and allows methods to plot
 non-surface properties. Note that \code{dot3d()} will always add to an existing
 scene.
 

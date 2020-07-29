@@ -40,7 +40,7 @@
 \arguments{
 \item{x}{sp, sf, raster, trip, or any other model understood by anglr/silicate}
 
-\item{...}{pass \link[rgl:rgl.material]{material3d properties} to rgl}
+\item{...}{pass \link[rgl:material]{material3d properties} to rgl}
 
 \item{add}{add to existing plot or start a new one (the default)}
 }

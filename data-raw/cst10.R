@@ -2,7 +2,8 @@ library(anglr)
 ## https://github.com/hypertidy/anglr/issues/7#issuecomment-628362518
 cst10 <- readRDS(system.file("extdata/cst10_polygon.rds", package = "anglr", mustWork = TRUE))
 
-usethis::use_data(cst10)
+usethis::use_data(cst10, version = 2)
+
 #library(silicate)
 #p <- PATH0(cst10)
 # DEL0(p)  ## fails
