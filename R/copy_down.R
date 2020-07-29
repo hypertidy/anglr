@@ -104,7 +104,7 @@ copy_down.TRI <- function(x, z = NULL, ..., .id = "z_") {
 #' @export
 copy_down.TRI0 <- function(x, z = NULL, ..., .id = "z_") {
   ## FIXME: obvsly inefficient, should work the other way
-  copy_down(silicate::TRI(x), z  = z, ..., .id = .id)
+  TRI0(copy_down(silicate::TRI(x), z  = z, ..., .id = .id))
 }
 #' @name copy_down
 #' @export
