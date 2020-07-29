@@ -47,7 +47,12 @@
 #'   \code{\link{DEL}} \tab create a mostly-Delaunay shape-preserving constrained triangulation  \cr
 #'  }
 #'
-#' @section III. Plotting:
+#' @section Merging disparate data:
+#' \tabular{ll}{
+#'  \code{\link[anglr]{as.mesh3d}} \tab includes an `image_texture` argument to map an Raster RGB image onto surfaces \cr
+#'   \code{\link{copy_down}} \tab copy Z values (from a raster, vector field, or constant) onto the vertices of a mesh \cr
+#'  }
+#' @section Plotting:
 #'
 #' As much as possible plotting will represent the true nature of the data given.
 #'

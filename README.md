@@ -55,6 +55,9 @@ and
   - Drape imagery onto raster or polygon surfaces with `as.mesh3d` -
     `image_texture` argument
 
+  - Copy Z values from a raster, polygon/line field value, or constant
+    onto mesh vertices
+
   - Create any mesh above and reproject to any projection, including
     geocentric
 

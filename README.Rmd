@@ -57,6 +57,8 @@ Key working examples are in  [?anglr::as.mesh3d](https://hypertidy.github.io/ang
 
 * Drape imagery onto raster or polygon surfaces with `as.mesh3d` - `image_texture` argument
 
+* Copy Z values from a raster, polygon/line field value, or constant onto mesh vertices
+
 * Create any mesh above and reproject to any projection, including geocentric
 
 * Use `shade3d()` or `plot3d()` or `wire3d()` from the rgl package to plot any `mesh3d` object created. (`plot3d()` also calls the converters for non-mesh types, so we can quickly get a 3D scene from any spatial data)
