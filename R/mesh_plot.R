@@ -116,7 +116,7 @@ mesh_plot.mesh3d <-
     grid::pushViewport(vps$inner, vps$figure, vps$plot)
 
 
-    grid::grid.polygon(xx$x, xx$y, xx$id, gp = grid::gpar(col = NA, fill = xx$col),
+    grid::grid.polygon(xx$x, xx$y, xx$id, gp = grid::gpar(col = xx$col, fill = xx$col),
                        default.units = "native")
 
 
