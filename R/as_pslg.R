@@ -2,16 +2,18 @@
 #'
 #' Create a 'pslg' which is a mesh of segments used in the RTriangle package.
 #'
-#' We create the pslg from unique vertices x, y and their segments. In the context of
+#' The pslg is constructed from from unique vertices x, y and their segments. In the context of
 #' triangulating the functions [DEL0()] and [DEL()] do more to ensure that input
 #' polygons have their holes culled out (or classified by invisible triangles.)
 #'
+#'
 #' @param x data model (understood by [SC0()])
 #'
-#' @return class pslg, from RTriangle
+#' @return object of class [RTriangle::pslg] from the RTriangle package
 #' @export
 #'
 #' @examples
+#' data("minimal_mesh", package = "silicate")
 #' as_pslg(minimal_mesh)
 as_pslg <- function(x) {
   UseMethod("as_pslg")

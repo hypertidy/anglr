@@ -7,7 +7,9 @@
 # wire3d(mesh)
 #
 
-
+#' texture mesh
+#' @noRd
+#'
 #' @examples
 #' r <- gebco
 #' r[r < 0] <- NA

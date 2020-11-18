@@ -13,16 +13,17 @@ as_pslg(x)
 \item{x}{data model (understood by \code{\link[=SC0]{SC0()}})}
 }
 \value{
-class pslg, from RTriangle
+object of class \link[RTriangle:pslg]{RTriangle::pslg} from the RTriangle package
 }
 \description{
 Create a 'pslg' which is a mesh of segments used in the RTriangle package.
 }
 \details{
-We create the pslg from unique vertices x, y and their segments. In the context of
+The pslg is constructed from from unique vertices x, y and their segments. In the context of
 triangulating the functions \code{\link[=DEL0]{DEL0()}} and \code{\link[=DEL]{DEL()}} do more to ensure that input
 polygons have their holes culled out (or classified by invisible triangles.)
 }
 \examples{
+data("minimal_mesh", package = "silicate")
 as_pslg(minimal_mesh)
 }

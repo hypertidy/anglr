@@ -1,9 +1,13 @@
+# anglr 0.8.0
+
+* Release to restore on CRAN: "Archived on 2020-10-19 as requires archived package 'silicate'". 
+
+
 # anglr 0.7.0
 
 * Removed rgdal dependency. 
 
 * Use `dpylr::summarise()` not `tally()` to avoid dplyr warning, thanks to Romain Francois (#152). 
-
 * Bug fix (avoid warning) for degenerate dimensions with matrix input to `as.mesh3d()` (#142). 
 
 * Bug fix in triangle colouring for grids (#143). 
