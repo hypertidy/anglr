@@ -7,6 +7,7 @@
 \alias{copy_down.SC0}
 \alias{copy_down.TRI}
 \alias{copy_down.TRI0}
+\alias{copy_down.DEL0}
 \alias{copy_down.PATH}
 \alias{copy_down.PATH0}
 \alias{copy_down.ARC}
@@ -24,6 +25,8 @@ copy_down(x, z = NULL, ..., .id = "z_")
 \method{copy_down}{TRI}(x, z = NULL, ..., .id = "z_")
 
 \method{copy_down}{TRI0}(x, z = NULL, ..., .id = "z_")
+
+\method{copy_down}{DEL0}(x, z = NULL, ..., .id = "z_")
 
 \method{copy_down}{PATH}(x, z = NULL, ..., .id = "z_")
 

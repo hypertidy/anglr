@@ -13,23 +13,23 @@
 \alias{dot3d.triangulation}
 \title{Draw a mesh as points in 3D}
 \usage{
-\method{dot3d}{sf}(x, ...)
+dot3d.sf(x, ...)
 
-\method{dot3d}{sfc}(x, ...)
+dot3d.sfc(x, ...)
 
-\method{dot3d}{Spatial}(x, ...)
+dot3d.Spatial(x, ...)
 
-\method{dot3d}{matrix}(x, ...)
+dot3d.matrix(x, ...)
 
-\method{dot3d}{BasicRaster}(x, ...)
+dot3d.BasicRaster(x, ...)
 
-\method{dot3d}{sc}(x, ...)
+dot3d.sc(x, ...)
 
-\method{dot3d}{SC}(x, ...)
+dot3d.SC(x, ...)
 
-\method{dot3d}{SC0}(x, ...)
+dot3d.SC0(x, ...)
 
-\method{dot3d}{triangulation}(x, ...)
+dot3d.triangulation(x, ...)
 }
 \arguments{
 \item{x}{sc, sp, sf, raster, trip, or any other model understood by anglr/silicate}
@@ -42,7 +42,7 @@ object. Produces a 3D scatterplot like that of \code{\link[rgl:3dobjects]{rgl::p
 from a mesh-alike object.
 }
 \details{
-The class \link[rgl:mesh3d]{mesh3d} extends 'shape3d' and allows methods to plot
+The class \link[rgl:shade3d]{mesh3d} extends 'shape3d' and allows methods to plot
 non-surface properties. Note that \code{dot3d()} will always add to an existing
 scene.
 

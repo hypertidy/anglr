@@ -21,39 +21,39 @@
 \alias{plot3d.ARC}
 \title{3D object plot}
 \usage{
-\method{plot3d}{TRI}(x, ...)
+plot3d.TRI(x, ...)
 
-\method{plot3d}{TRI0}(x, ...)
+plot3d.TRI0(x, ...)
 
-\method{plot3d}{DEL}(x, ...)
+plot3d.DEL(x, ...)
 
-\method{plot3d}{DEL0}(x, ...)
+plot3d.DEL0(x, ...)
 
-\method{plot3d}{QUAD}(x, ...)
+plot3d.QUAD(x, ...)
 
-\method{plot3d}{matrix}(x, ...)
+plot3d.matrix(x, ...)
 
-\method{plot3d}{BasicRaster}(x, ...)
+plot3d.BasicRaster(x, ...)
 
-\method{plot3d}{sc}(x, ...)
+plot3d.sc(x, ...)
 
-\method{plot3d}{SC}(x, ..., add = FALSE)
+plot3d.SC(x, ..., add = FALSE)
 
-\method{plot3d}{SC0}(x, ..., add = FALSE)
+plot3d.SC0(x, ..., add = FALSE)
 
-\method{plot3d}{PATH}(x, ..., add = FALSE)
+plot3d.PATH(x, ..., add = FALSE)
 
-\method{plot3d}{sf}(x, ..., add = FALSE)
+plot3d.sf(x, ..., add = FALSE)
 
-\method{plot3d}{sfc}(x, ..., add = FALSE)
+plot3d.sfc(x, ..., add = FALSE)
 
-\method{plot3d}{triangulation}(x, ..., add = FALSE)
+plot3d.triangulation(x, ..., add = FALSE)
 
-\method{plot3d}{Spatial}(x, ..., add = FALSE)
+plot3d.Spatial(x, ..., add = FALSE)
 
-\method{plot3d}{trip}(x, ..., add = FALSE)
+plot3d.trip(x, ..., add = FALSE)
 
-\method{plot3d}{ARC}(x, ..., add = FALSE)
+plot3d.ARC(x, ..., add = FALSE)
 }
 \arguments{
 \item{x}{silicate model, SC, TRI, ARC, or PATH}

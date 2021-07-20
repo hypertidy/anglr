@@ -1,7 +1,7 @@
 Package: anglr
 Type: Package
 Title: Mesh Topology and Visualization for Spatial Data
-Version: 0.8.0
+Version: 0.8.0.9001
 Authors@R: c(person("Michael D.","Sumner", 
              role = c("aut", "cre"), 
              email ="mdsumner@gmail.com"), 
@@ -31,7 +31,7 @@ Imports:
     polyclip,
     raster,
     reproj (>= 0.4.2),
-    rgl,
+    rgl (>= 0.107.8),
     rlang,
     RTriangle,
     scales,

@@ -108,6 +108,14 @@ copy_down.TRI0 <- function(x, z = NULL, ..., .id = "z_") {
 }
 #' @name copy_down
 #' @export
+copy_down.DEL0 <- function(x, z = NULL, ..., .id = "z_") {
+  ## FIXME: obvsly inefficient
+  x <- copy_down(x, z  = z, ..., .id = .id)
+  x
+}
+
+#' @name copy_down
+#' @export
 copy_down.PATH <- function(x, z = NULL, ..., .id = "z_") {
   z <- find_z(x, z)
   if (inherits(z, "BasicRaster")) {

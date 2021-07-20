@@ -15,27 +15,27 @@
 \alias{persp3d.triangulation}
 \title{persp3d}
 \usage{
-\method{persp3d}{TRI}(x, ..., add = FALSE)
+persp3d.TRI(x, ..., add = FALSE)
 
-\method{persp3d}{TRI0}(x, ..., add = FALSE)
+persp3d.TRI0(x, ..., add = FALSE)
 
-\method{persp3d}{BasicRaster}(x, ..., add = FALSE)
+persp3d.BasicRaster(x, ..., add = FALSE)
 
-\method{persp3d}{DEL}(x, ..., add = FALSE)
+persp3d.DEL(x, ..., add = FALSE)
 
-\method{persp3d}{DEL0}(x, ..., add = FALSE)
+persp3d.DEL0(x, ..., add = FALSE)
 
-\method{persp3d}{QUAD}(x, ..., add = FALSE)
+persp3d.QUAD(x, ..., add = FALSE)
 
-\method{persp3d}{matrix}(x, ..., add = FALSE)
+persp3d.matrix(x, ..., add = FALSE)
 
-\method{persp3d}{sf}(x, ..., add = FALSE)
+persp3d.sf(x, ..., add = FALSE)
 
-\method{persp3d}{sfc}(x, ..., add = FALSE)
+persp3d.sfc(x, ..., add = FALSE)
 
-\method{persp3d}{Spatial}(x, ..., add = FALSE)
+persp3d.Spatial(x, ..., add = FALSE)
 
-\method{persp3d}{triangulation}(x, ..., add = FALSE)
+persp3d.triangulation(x, ..., add = FALSE)
 }
 \arguments{
 \item{x}{sp, sf, raster, trip, or any other model understood by anglr/silicate}

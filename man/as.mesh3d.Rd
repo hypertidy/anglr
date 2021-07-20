@@ -15,7 +15,7 @@
 \alias{as.mesh3d.sc}
 \title{Convert to mesh object}
 \usage{
-\method{as.mesh3d}{TRI}(
+as.mesh3d.TRI(
   x,
   z,
   smooth = FALSE,
@@ -27,7 +27,7 @@
   meshColor = "faces"
 )
 
-\method{as.mesh3d}{TRI0}(
+as.mesh3d.TRI0(
   x,
   z,
   smooth = FALSE,
@@ -39,7 +39,7 @@
   meshColor = "faces"
 )
 
-\method{as.mesh3d}{ARC}(
+as.mesh3d.ARC(
   x,
   triangles = TRUE,
   smooth = FALSE,
@@ -51,7 +51,7 @@
   meshColor = "faces"
 )
 
-\method{as.mesh3d}{BasicRaster}(
+as.mesh3d.BasicRaster(
   x,
   triangles = TRUE,
   smooth = FALSE,
@@ -64,7 +64,7 @@
   max_triangles = NULL
 )
 
-\method{as.mesh3d}{QUAD}(
+as.mesh3d.QUAD(
   x,
   triangles = FALSE,
   smooth = FALSE,
@@ -76,9 +76,9 @@
   meshColor = "faces"
 )
 
-\method{as.mesh3d}{triangulation}(x, ...)
+as.mesh3d.triangulation(x, ...)
 
-\method{as.mesh3d}{sfc}(
+as.mesh3d.sfc(
   x,
   triangles = FALSE,
   smooth = FALSE,
@@ -90,7 +90,7 @@
   meshColor = "faces"
 )
 
-\method{as.mesh3d}{sf}(
+as.mesh3d.sf(
   x,
   triangles = FALSE,
   smooth = FALSE,
@@ -102,7 +102,7 @@
   meshColor = "faces"
 )
 
-\method{as.mesh3d}{Spatial}(
+as.mesh3d.Spatial(
   x,
   triangles = FALSE,
   smooth = FALSE,
@@ -114,7 +114,7 @@
   meshColor = "faces"
 )
 
-\method{as.mesh3d}{matrix}(
+as.mesh3d.matrix(
   x,
   triangles = FALSE,
   smooth = FALSE,
@@ -126,7 +126,7 @@
   meshColor = "faces"
 )
 
-\method{as.mesh3d}{sc}(x, ...)
+as.mesh3d.sc(x, ...)
 }
 \arguments{
 \item{x}{a surface-alike, a matrix, or spatial object from raster, sp, sf, trip, or silicate}
@@ -172,8 +172,8 @@ functions in the silicate package, and anglr adds models \code{\link[=DEL]{DEL()
 and \code{\link[=QUAD]{QUAD()}}.
 
 The \link[rgl:mesh3d]{mesh3d} format is the rgl workhorse behind
-\link[rgl:plot3d]{plot3d()}, \link[rgl:mesh3d]{wire3d()}, \link[rgl:persp3d]{persp3d()}
-and \link[rgl:mesh3d]{dot3d()}.'
+\link[rgl:plot3d]{plot3d()}, \link[rgl:shade3d]{wire3d()}, \link[rgl:persp3d]{persp3d()}
+and \link[rgl:shade3d]{dot3d()}.'
 
 A method for a numeric matrix is included, as are methods for sf, sp, raster,
 RTriangle, and silicate types. and for a matrix.

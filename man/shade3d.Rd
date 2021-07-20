@@ -19,35 +19,35 @@
 \alias{shade3d.triangulation}
 \title{Draw a mesh as surfaces in 3D}
 \usage{
-\method{shade3d}{TRI}(x, ...)
+shade3d.TRI(x, ...)
 
-\method{shade3d}{TRI0}(x, ...)
+shade3d.TRI0(x, ...)
 
-\method{shade3d}{PATH}(x, ...)
+shade3d.PATH(x, ...)
 
-\method{shade3d}{PATH0}(x, ...)
+shade3d.PATH0(x, ...)
 
-\method{shade3d}{DEL}(x, ...)
+shade3d.DEL(x, ...)
 
-\method{shade3d}{DEL0}(x, ...)
+shade3d.DEL0(x, ...)
 
-\method{shade3d}{QUAD}(x, ...)
+shade3d.QUAD(x, ...)
 
-\method{shade3d}{BasicRaster}(x, ...)
+shade3d.BasicRaster(x, ...)
 
-\method{shade3d}{matrix}(x, ...)
+shade3d.matrix(x, ...)
 
-\method{shade3d}{sfc}(x, ...)
+shade3d.sfc(x, ...)
 
-\method{shade3d}{sf}(x, ...)
+shade3d.sf(x, ...)
 
-\method{shade3d}{SC}(x, ...)
+shade3d.SC(x, ...)
 
-\method{shade3d}{SC0}(x, ...)
+shade3d.SC0(x, ...)
 
-\method{shade3d}{Spatial}(x, ...)
+shade3d.Spatial(x, ...)
 
-\method{shade3d}{triangulation}(x, ...)
+shade3d.triangulation(x, ...)
 }
 \arguments{
 \item{x}{sp, sf, raster, or any other surface model understood by anglr/silicate}
