@@ -16,29 +16,29 @@
 \alias{wire3d.BasicRaster}
 \title{Draw a mesh as line segments in 3D}
 \usage{
-wire3d.sc(x, ...)
+\method{wire3d}{sc}(x, ...)
 
-wire3d.TRI(x, ...)
+\method{wire3d}{TRI}(x, ...)
 
-wire3d.TRI0(x, ...)
+\method{wire3d}{TRI0}(x, ...)
 
-wire3d.DEL(x, ...)
+\method{wire3d}{DEL}(x, ...)
 
-wire3d.DEL0(x, ...)
+\method{wire3d}{DEL0}(x, ...)
 
-wire3d.QUAD(x, ...)
+\method{wire3d}{QUAD}(x, ...)
 
-wire3d.matrix(x, ...)
+\method{wire3d}{matrix}(x, ...)
 
-wire3d.sf(x, ...)
+\method{wire3d}{sf}(x, ...)
 
-wire3d.Spatial(x, ...)
+\method{wire3d}{Spatial}(x, ...)
 
-wire3d.triangulation(x, ...)
+\method{wire3d}{triangulation}(x, ...)
 
-wire3d.trip(x, ...)
+\method{wire3d}{trip}(x, ...)
 
-wire3d.BasicRaster(x, ...)
+\method{wire3d}{BasicRaster}(x, ...)
 }
 \arguments{
 \item{x}{sp, sf, raster, trip, or any other model understood by anglr/silicate}

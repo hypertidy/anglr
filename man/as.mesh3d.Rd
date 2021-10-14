@@ -5,6 +5,7 @@
 \alias{as.mesh3d.TRI}
 \alias{as.mesh3d.TRI0}
 \alias{as.mesh3d.ARC}
+\alias{as.mesh3d.RasterLayer}
 \alias{as.mesh3d.BasicRaster}
 \alias{as.mesh3d.QUAD}
 \alias{as.mesh3d.triangulation}
@@ -15,7 +16,7 @@
 \alias{as.mesh3d.sc}
 \title{Convert to mesh object}
 \usage{
-as.mesh3d.TRI(
+\method{as.mesh3d}{TRI}(
   x,
   z,
   smooth = FALSE,
@@ -27,7 +28,7 @@ as.mesh3d.TRI(
   meshColor = "faces"
 )
 
-as.mesh3d.TRI0(
+\method{as.mesh3d}{TRI0}(
   x,
   z,
   smooth = FALSE,
@@ -39,19 +40,11 @@ as.mesh3d.TRI0(
   meshColor = "faces"
 )
 
-as.mesh3d.ARC(
-  x,
-  triangles = TRUE,
-  smooth = FALSE,
-  normals = NULL,
-  texcoords = NULL,
-  ...,
-  keep_all = TRUE,
-  image_texture = NULL,
-  meshColor = "faces"
-)
+\method{as.mesh3d}{ARC}(x, ...)
 
-as.mesh3d.BasicRaster(
+\method{as.mesh3d}{RasterLayer}(...)
+
+\method{as.mesh3d}{BasicRaster}(
   x,
   triangles = TRUE,
   smooth = FALSE,
@@ -64,7 +57,7 @@ as.mesh3d.BasicRaster(
   max_triangles = NULL
 )
 
-as.mesh3d.QUAD(
+\method{as.mesh3d}{QUAD}(
   x,
   triangles = FALSE,
   smooth = FALSE,
@@ -76,9 +69,9 @@ as.mesh3d.QUAD(
   meshColor = "faces"
 )
 
-as.mesh3d.triangulation(x, ...)
+\method{as.mesh3d}{triangulation}(x, ...)
 
-as.mesh3d.sfc(
+\method{as.mesh3d}{sfc}(
   x,
   triangles = FALSE,
   smooth = FALSE,
@@ -90,7 +83,7 @@ as.mesh3d.sfc(
   meshColor = "faces"
 )
 
-as.mesh3d.sf(
+\method{as.mesh3d}{sf}(
   x,
   triangles = FALSE,
   smooth = FALSE,
@@ -102,7 +95,7 @@ as.mesh3d.sf(
   meshColor = "faces"
 )
 
-as.mesh3d.Spatial(
+\method{as.mesh3d}{Spatial}(
   x,
   triangles = FALSE,
   smooth = FALSE,
@@ -114,7 +107,7 @@ as.mesh3d.Spatial(
   meshColor = "faces"
 )
 
-as.mesh3d.matrix(
+\method{as.mesh3d}{matrix}(
   x,
   triangles = FALSE,
   smooth = FALSE,
@@ -126,7 +119,7 @@ as.mesh3d.matrix(
   meshColor = "faces"
 )
 
-as.mesh3d.sc(x, ...)
+\method{as.mesh3d}{sc}(x, ...)
 }
 \arguments{
 \item{x}{a surface-alike, a matrix, or spatial object from raster, sp, sf, trip, or silicate}

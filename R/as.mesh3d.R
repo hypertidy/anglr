@@ -174,6 +174,11 @@ as.mesh3d.ARC <- function(x, triangles = TRUE,
 }
 #' @name as.mesh3d
 #' @export
+as.mesh3d.RasterLayer <- function(...) {
+  as.mesh3d.BasicRaster(...)
+}
+#' @name as.mesh3d
+#' @export
 as.mesh3d.BasicRaster <- function(x, triangles = TRUE,
                                   smooth = FALSE, normals = NULL, texcoords = NULL,
                                   ..., keep_all = TRUE, image_texture = NULL, meshColor = "faces",
