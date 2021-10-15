@@ -87,7 +87,14 @@ copy_down.SC <- function(x, z = NULL, ..., .id = "z_") {
 #' @export
 copy_down.SC0 <- function(x, z = NULL, ..., .id = "z_") {
   ## FIXME: obvsly inefficient, should work the other way
- copy_down(SC(x), z  = z, ..., .id = .id)
+ #SC0(copy_down(SC(x), z  = z, ..., .id = .id))
+  z <- find_z(x, z)
+  if (inherits(z, "BasicRaster")) {
+    return(copy_downRaster(x, z = z, ..., .id = .id) )
+  }
+
+  denorm_PRIM_addZ(x, z = z, ..., .id = .id)
+
 }
 #' @name copy_down
 #' @export
@@ -104,14 +111,29 @@ copy_down.TRI <- function(x, z = NULL, ..., .id = "z_") {
 #' @export
 copy_down.TRI0 <- function(x, z = NULL, ..., .id = "z_") {
   ## FIXME: obvsly inefficient, should work the other way
-  TRI0(copy_down(silicate::TRI(x), z  = z, ..., .id = .id))
+  #TRI0(copy_down(silicate::TRI(x), z  = z, ..., .id = .id))
+  z <- find_z(x, z)
+  if (inherits(z, "BasicRaster")) {
+    return(copy_downRaster(x, z = z, ..., .id = .id) )
+  }
+
+  denorm_PRIM_addZ(x, z = z, ..., .id = .id)
+
 }
 #' @name copy_down
 #' @export
 copy_down.DEL0 <- function(x, z = NULL, ..., .id = "z_") {
   ## FIXME: obvsly inefficient
-  x <- copy_down(x, z  = z, ..., .id = .id)
-  x
+  # x <- copy_down(silicate::TRI(x), z  = z, ..., .id = .id)
+  # DEL0(x)
+  z <- find_z(x, z)
+  if (inherits(z, "BasicRaster")) {
+    return(copy_downRaster(x, z = z, ..., .id = .id) )
+  }
+
+  denorm_PRIM_addZ(x, z = z, ..., .id = .id)
+
+
 }
 
 #' @name copy_down

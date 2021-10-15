@@ -80,6 +80,14 @@ mesh_plot.mesh3d <-
       xy <- try(reproj::reproj(t(x$vb[1:2, ]), crs)[,1:2], silent = TRUE)
       if (!inherits(xy, "try-error")) x$vb[1:2, ] <- t(xy)
     }
+    plot_points <- FALSE
+    if (!is.null(x$ip)) {
+      id <- x$ip
+      plot_points <- TRUE
+    }
+    if (!is.null(x$is)) {
+      id <- x$is
+    }
     if (!is.null(x$ib)) {
       id <- x$ib
     }
@@ -115,10 +123,13 @@ mesh_plot.mesh3d <-
 
     grid::pushViewport(vps$inner, vps$figure, vps$plot)
 
-
+    ## just so we get points, we aren't doing lines properly yet, but they draw ok
+if (plot_points) {
+ grid::grid.points(xx$x, xx$y, pch = ".", gp = grid::gpar(col = xx$col), default.units = "native")
+} else {
     grid::grid.polygon(xx$x, xx$y, xx$id, gp = grid::gpar(col = xx$col, fill = xx$col),
                        default.units = "native")
-
+}
 
     grid::popViewport(3)
     #if (debug) return(xx)

@@ -268,6 +268,29 @@ as.mesh3d.triangulation <- function(x, ...) {
 
 #' @name as.mesh3d
 #' @export
+as.mesh3d.SC0 <- function(x,
+                          ..., meshColor = "faces") {
+
+points <- NULL
+segments <- NULL
+  ## handle points
+  if (silicate:::topology_type(x) == "0-space") {
+    points <- unlist(x$object$topology_)
+  } else {
+    segments <- t(do.call(rbind, lapply(x$object$topology_, as.matrix))[, c(".vx0", ".vx1")])
+  }
+  xyz <- as.matrix(silicate::sc_vertex(x))
+  if (dim(xyz)[2] < 3) xyz <- cbind(xyz, 0)
+  if (dim(xyz)[2] > 3) xyz <- xyz[,1:3]
+ rgl::mesh3d(vertices = rbind(t(xyz), 1),
+        material = NULL,
+        normals = NULL, texcoords = NULL,
+        points = points, segments = segments,
+        triangles = NULL, quads = NULL,
+        meshColor = meshColor)
+}
+#' @name as.mesh3d
+#' @export
 as.mesh3d.sfc <-function(x, triangles = FALSE,
                         smooth = FALSE, normals = NULL, texcoords = NULL,
                         ..., keep_all = TRUE, image_texture = NULL, meshColor = "faces") {
@@ -276,18 +299,15 @@ as.mesh3d.sfc <-function(x, triangles = FALSE,
 
   ## which check for four cornered triangles and build the mesh more directly
   ## TRI or DEL or SC?
-  as.mesh3d(TRI0(x), triangles = triangles, smooth = smooth, normals = normals, texcoords = texcoords,
+  as.mesh3d(SC0(x), triangles = triangles, smooth = smooth, normals = normals, texcoords = texcoords,
             keep_all = keep_all, image_texture = image_texture, meshColor = meshColor, ...)
 }
 #' @name as.mesh3d
 #' @export
-as.mesh3d.sf <-function(x, triangles = FALSE,
-                            smooth = FALSE, normals = NULL, texcoords = NULL,
-                            ..., keep_all = TRUE, image_texture = NULL, meshColor = "faces") {
+as.mesh3d.sf <-function(x, ...,  meshColor = "faces") {
 
   ## TRI or DEL or SC?
-  as.mesh3d(TRI0(x[[attr(x, "sf_column")]]), triangles = triangles, smooth = smooth, normals = normals, texcoords = texcoords,
-            keep_all = keep_all, image_texture = image_texture, meshColor = meshColor, ...)
+  as.mesh3d(SC0(x[[attr(x, "sf_column")]]),  meshColor = meshColor, ...)
 }
 #' @name as.mesh3d
 #' @export
@@ -296,7 +316,7 @@ as.mesh3d.Spatial <-function(x, triangles = FALSE,
                         ..., keep_all = TRUE, image_texture = NULL, meshColor = "faces") {
 
   ## TRI or DEL or SC?
-  as.mesh3d(TRI0(x), triangles = triangles, smooth = smooth, normals = normals, texcoords = texcoords,
+  as.mesh3d(SC0(x), triangles = triangles, smooth = smooth, normals = normals, texcoords = texcoords,
             keep_all = keep_all, image_texture = image_texture, meshColor = meshColor, ...)
 }
 
