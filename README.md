@@ -4,7 +4,6 @@
 [![R build status](https://github.com/hypertidy/anglr/workflows/test-coverage/badge.svg)](https://github.com/hypertidy/anglr/actions)
 [![R build status](https://github.com/hypertidy/anglr/workflows/test-pkgdown/badge.svg)](https://github.com/hypertidy/anglr/actions)
 -->
-
 <!-- badges: start -->
 
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
@@ -43,25 +42,25 @@ and
 
 ## Features
 
-  - Convert geospatial objects to 3D with `as.mesh3d()` - works for
+-   Convert geospatial objects to 3D with `as.mesh3d()` - works for
     matrix, raster, sf-polygons, sp-polygons, silicate-triangles
 
-  - Plot geospatial objects with `plot3d()` - works for matrix, raster,
+-   Plot geospatial objects with `plot3d()` - works for matrix, raster,
     sf (any type), sp, trip, silicate
 
-  - Merge raster and vector with `as.mesh3d` - elevate polygons or lines
+-   Merge raster and vector with `as.mesh3d` - elevate polygons or lines
     with a raster dem
 
-  - Drape imagery onto raster or polygon surfaces with `as.mesh3d` -
+-   Drape imagery onto raster or polygon surfaces with `as.mesh3d` -
     `image_texture` argument
 
-  - Copy Z values from a raster, polygon/line field value, or constant
+-   Copy Z values from a raster, polygon/line field value, or constant
     onto mesh vertices
 
-  - Create any mesh above and reproject to any projection, including
+-   Create any mesh above and reproject to any projection, including
     geocentric
 
-  - Use `shade3d()` or `plot3d()` or `wire3d()` from the rgl package to
+-   Use `shade3d()` or `plot3d()` or `wire3d()` from the rgl package to
     plot any `mesh3d` object created. (`plot3d()` also calls the
     converters for non-mesh types, so we can quickly get a 3D scene from
     any spatial data)
@@ -124,7 +123,7 @@ On Linux you will need at least the following installed.
      libgl1-mesa-dev \
      libglu1-mesa-dev
 
-## Get involved\!
+## Get involved!
 
 Let me know if you have problems, or are interested in this work. See
 the issues tab to make suggestions or report bugs.
@@ -149,7 +148,7 @@ elevation.
 data("gebco", package = "anglr")
 library(sf)
 ## North Carolina, the sf boilerplate polygon layer
-nc <- read_sf(system.file("shape/nc.shp", package="sf"))
+nc <- read_sf(system.file("shape/nc.shp", package="sf", mustWork = TRUE))
 
 
 library(raster)
@@ -193,7 +192,6 @@ mesh is *separated by feature*.
 triangles for planar geometry. )
 
 ``` r
-
 ## either form works
 #c_mesh <- copy_down(TRI(nc), z = p_mesh$object$BIR74)
 c_mesh <- copy_down(TRI(nc), z = "BIR74")
@@ -222,7 +220,7 @@ polygons from a civic building footprint.
 
 <http://rpubs.com/cyclemumner/367010>
 
------
+------------------------------------------------------------------------
 
 Please note that this project is released with a [Contributor Code of
 Conduct](https://github.com/hypertidy/anglr/blob/master/CONDUCT.md). By
