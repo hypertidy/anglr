@@ -11,8 +11,8 @@ test_that("as.mesh3d on triangles is working", {
   tri0 <- as.mesh3d(mintri0)
   expect_equal(dimfill <- dim(fill$it), c(3L, 14))
   expect_equal(dimhole <- dim(hole$it), c(3L, 14))
-  expect_named(tri0, c("vb", "it", "material", "normals",
-                       "texcoords", "meshColor"))
+  expect_named(tri0, c("vb",  "material", "normals",
+                       "texcoords", "meshColor", "it"))
 
   expect_equal(dim(tri0$vb), c(4L, 14L))
 
@@ -68,8 +68,8 @@ test_that("as.mesh3d on triangles is working", {
 
 test_that("as.mesh3d on quads is working", {
   qd <- as.mesh3d(volcano)
-  expect_named(qd[1:2], c("vb", "ib"))
-  expect_named(as.mesh3d(volcano, triangles = TRUE)[1:2], c("vb", "it"))
+  expect_named(qd[c(1, 6)], c("vb", "ib"))
+  expect_named(as.mesh3d(volcano, triangles = TRUE)[c(1, 6)], c("vb", "it"))
   m <- matrix(c(2, 4, 5, 1,  3, 10, 9, 8, 7, 6, 12, 11), 3)
   expect_true(is.null(as.mesh3d(m, smooth  = FALSE)$normals))
   expect_true(all(as.mesh3d(m, smooth  = TRUE)$normals < 1.1))
