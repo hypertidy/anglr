@@ -1,7 +1,7 @@
 Package: anglr
 Type: Package
 Title: Mesh Topology and Visualization for Spatial Data
-Version: 0.8.0.9001
+Version: 0.8.0.9002
 Authors@R: c(person("Michael D.","Sumner", 
              role = c("aut", "cre"), 
              email ="mdsumner@gmail.com"), 
@@ -58,7 +58,7 @@ Roxygen: list(markdown = TRUE)
 SystemRequirements: PROJ library, OpenGL and GLU Library
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 VignetteBuilder: knitr
 URL: https://github.com/hypertidy/anglr
 BugReports: https://github.com/hypertidy/anglr/issues

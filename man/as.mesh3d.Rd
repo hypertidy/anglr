@@ -5,15 +5,16 @@
 \alias{as.mesh3d.TRI}
 \alias{as.mesh3d.TRI0}
 \alias{as.mesh3d.ARC}
+\alias{as.mesh3d.RasterLayer}
 \alias{as.mesh3d.BasicRaster}
 \alias{as.mesh3d.QUAD}
 \alias{as.mesh3d.triangulation}
+\alias{as.mesh3d.SC0}
 \alias{as.mesh3d.sfc}
 \alias{as.mesh3d.sf}
 \alias{as.mesh3d.Spatial}
 \alias{as.mesh3d.matrix}
 \alias{as.mesh3d.sc}
-\alias{as.mesh3d.SC0}
 \alias{as.mesh3d.SC}
 \alias{as.mesh3d.PATH0}
 \alias{as.mesh3d.PATH}
@@ -49,6 +50,8 @@
 
 \method{as.mesh3d}{ARC}(x, ...)
 
+\method{as.mesh3d}{RasterLayer}(...)
+
 \method{as.mesh3d}{BasicRaster}(
   x,
   triangles = TRUE,
@@ -76,6 +79,8 @@
 
 \method{as.mesh3d}{triangulation}(x, ...)
 
+\method{as.mesh3d}{SC0}(x, ...)
+
 \method{as.mesh3d}{sfc}(
   x,
   triangles = FALSE,
@@ -88,17 +93,7 @@
   meshColor = "faces"
 )
 
-\method{as.mesh3d}{sf}(
-  x,
-  triangles = FALSE,
-  smooth = FALSE,
-  normals = NULL,
-  texcoords = NULL,
-  ...,
-  keep_all = TRUE,
-  image_texture = NULL,
-  meshColor = "faces"
-)
+\method{as.mesh3d}{sf}(x, ..., meshColor = "faces")
 
 \method{as.mesh3d}{Spatial}(
   x,

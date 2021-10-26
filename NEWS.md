@@ -1,7 +1,9 @@
 # anglr 0.8.0
 
-* Release to restore on CRAN: "Archived on 2020-10-19 as requires archived package 'silicate'". 
 
+* Fix auto-triangulation of sf objects, these now become meshes as per their native type. 
+
+* Update `as.mesh3d()` to generate quads, triangles, segments, points as appropriate (not complete). 
 
 # anglr 0.7.0
 

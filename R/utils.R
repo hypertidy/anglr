@@ -112,6 +112,7 @@ as.mesh3d_internal <- function(x, z,  smooth = FALSE, normals = NULL, texcoords 
                               exy = vb[, 1:2, drop = FALSE])
     if (is.null(material$texture)) {
       material$texture <- tempfile(fileext = ".png")
+      meshColor <- "vertices"
 
     }
     if (!grepl("png$", material$texture)) {
@@ -145,7 +146,7 @@ quad_common <- function(vb, index, normals, texcoords, material, meshColor, tria
     out <- do.call(rgl::qmesh3d, list(vertices = vb, indices = index,
                                       normals = normals, texcoords = texcoords,
                                       material = material,
-                                      meshColor = "faces"))
+                                      meshColor = meshColor))
   } else {
 #    browser()
     index <- .quad2tri(index)
@@ -155,7 +156,7 @@ quad_common <- function(vb, index, normals, texcoords, material, meshColor, tria
     out <- do.call(rgl::tmesh3d, list(vertices = vb, indices = index,
                                       normals = normals, texcoords = texcoords,
                                       material = material,
-                                      meshColor = "faces"))
+                                      meshColor = meshColor))
   }
   if (smooth) {
     out <- rgl::addNormals(out)
