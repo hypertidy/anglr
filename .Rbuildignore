@@ -20,4 +20,4 @@
 ^\.github$
 ^CRAN-RELEASE$
 ^docs$
-
+^gdalwmscache$
