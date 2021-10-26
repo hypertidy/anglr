@@ -104,12 +104,13 @@ copy_down.TRI <- function(x, z = NULL, ..., .id = "z_") {
 #' @name copy_down
 #' @export
 copy_down.TRI0 <- function(x, z = NULL, ..., .id = "z_") {
+   z <- find_z(x, z)
+   if (inherits(z, "BasicRaster")) {
+     return(copy_downRaster(x, z = z, ..., .id = .id) )
+   }
   ## FIXME: obvsly inefficient, should work the other way
   TRI0(copy_down(silicate::TRI(x), z  = z, ..., .id = .id))
-  # z <- find_z(x, z)
-  # if (inherits(z, "BasicRaster")) {
-  #   return(copy_downRaster(x, z = z, ..., .id = .id) )
-  # }
+
   #
   # denorm_PRIM_addZ(x, z = z, ..., .id = .id)
 
