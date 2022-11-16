@@ -279,5 +279,5 @@ DEL0.BasicRaster <- function(x, ..., max_triangles = NULL) {
   structure(list(object = tibble(a = 1, topology_ = list(topology)),
                  vertex = tibble::tibble(x_ = xyz[,1], y_ = xyz[,2], z_ = xyz[,3]),
                  meta = meta),
-            class = c("TRI0", "sc"))
+            class = c("DEL0", "TRI0", "sc"))
 }

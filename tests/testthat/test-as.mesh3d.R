@@ -61,8 +61,8 @@ test_that("as.mesh3d on triangles is working", {
   expect_true(max(dem$vb, na.rm = TRUE) > 160)  ## 161.2 on 2020-03-27
 
 
-  ## dunno what they are ../
-  expect_warning(dem <- as.mesh3d(silicate::TRI0(cad_tas), z = gebco))
+
+  expect_silent(dem <- as.mesh3d(silicate::TRI0(cad_tas), z = gebco))
 })
 
 

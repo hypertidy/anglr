@@ -387,5 +387,6 @@ as.mesh3d.sc <- function(x, ...) {
   if (inherits(tst, "try-error")) {
     stop("not able to generate a surface from 'x'")
   }
+
   as.mesh3d(tst, ...)
 }

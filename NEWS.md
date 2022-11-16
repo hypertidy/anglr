@@ -1,6 +1,10 @@
 # anglr 0.8.0
 
 
+* Fixed bug in 'DEL0()' that neglected subclass 'DEL0'. 
+
+* Fixed bug in 'globe()' that was garbling the vertices. 
+
 * Fix auto-triangulation of sf objects, these now become meshes as per their native type. 
 
 * Update `as.mesh3d()` to generate quads, triangles, segments, points as appropriate (not complete). 
