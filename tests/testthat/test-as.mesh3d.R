@@ -62,7 +62,7 @@ test_that("as.mesh3d on triangles is working", {
 
 
   ## dunno what they are ../
-  expect_warning(dem <- as.mesh3d(silicate::TRI0(cad_tas), z = gebco))
+  expect_silent(dem <- as.mesh3d(silicate::TRI0(cad_tas), z = gebco))
 })
 
 
