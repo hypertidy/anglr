@@ -27,7 +27,7 @@ extents.SC <- function(x) {
 #' @importFrom rlang .data
 #' @importFrom dplyr %>%
 extents.PATH <- function(x) {
-  x[["path"]] %>% dplyr::select(.data$path_) %>%
+  x[["path"]] %>% dplyr::select(path_) %>%
     dplyr::inner_join(x[["path_link_vertex"]], "path_") %>%
     dplyr::inner_join(x[["vertex"]], "vertex_") %>%
     dplyr::group_by(.data$path_) %>%
@@ -39,7 +39,7 @@ extents.PATH <- function(x) {
 edge_RTriangle <- function(x, ...) {
   ps <- RTriangle::pslg(P = as.matrix(x[["vertex"]][c("x_", "y_")]),
                         S = matrix(match(silicate::sc_edge(x) %>%
-                                           dplyr::select(.data$.vx0, .data$.vx1) %>%
+                                           dplyr::select(.vx0, .vx1) %>%
                                            as.matrix() %>% t() %>% as.vector(), x[["vertex"]][["vertex_"]]), ncol = 2, byrow = TRUE))
   RTriangle::triangulate(ps, ...)
 }

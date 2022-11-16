@@ -16,7 +16,8 @@ denorm_SEQ_addZ <- function(x, z, ..., .id = "z_") {
     dplyr::inner_join(x[[group]])
   coords[[.id]] <- z[match(coords$object_, x$object$object_)]
   coords[["vertex"]] <- NULL
-  data <- unjoin::unjoin(coords, .data$x_, .data$y_, .id, key_col = "vertex")
+  # data <- unjoin::unjoin(coords, .data$x_, .data$y_, .id, key_col = "vertex")
+  data <- unjoin::unjoin(coords, x_, y_, .id, key_col = "vertex")
   x$vertex <- data$vertex
   x$vertex$vertex_ <- sc_uid(nrow(x$vertex))
   data$data$vertex_ <- x$vertex$vertex_[match(data$data$vertex, x$vertex$vertex)]
