@@ -1,22 +1,7 @@
 
-<!--
-[![R build status](https://github.com/hypertidy/anglr/workflows/R-CMD-check/badge.svg)](https://github.com/hypertidy/anglr/actions)
-[![R build status](https://github.com/hypertidy/anglr/workflows/test-coverage/badge.svg)](https://github.com/hypertidy/anglr/actions)
-[![R build status](https://github.com/hypertidy/anglr/workflows/test-pkgdown/badge.svg)](https://github.com/hypertidy/anglr/actions)
--->
 <!-- badges: start -->
 
-[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
-[![Travis-CI Build
-Status](http://badges.herokuapp.com/travis/hypertidy/anglr?branch=master&env=BUILD_NAME=trusty_release&label=linux)](https://travis-ci.org/hypertidy/anglr)
-[![Build
-Status](http://badges.herokuapp.com/travis/hypertidy/anglr?branch=master&env=BUILD_NAME=osx_release&label=osx)](https://travis-ci.org/hypertidy/anglr)
-[![AppVeyor Build
-Status](https://ci.appveyor.com/api/projects/status/github/hypertidy/anglr?branch=master&svg=true)](https://ci.appveyor.com/project/mdsumner/anglr)
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/anglr)](https://cran.r-project.org/package=anglr)
-[![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/anglr)](https://cran.r-project.org/package=anglr)
-[![Codecov test
-coverage](https://codecov.io/gh/hypertidy/anglr/branch/master/graph/badge.svg)](https://codecov.io/gh/hypertidy/anglr?branch=master)
+[![R-CMD-check](https://github.com/hypertidy/anglr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/hypertidy/anglr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -192,6 +177,7 @@ mesh is *separated by feature*.
 triangles for planar geometry. )
 
 ``` r
+
 ## either form works
 #c_mesh <- copy_down(TRI(nc), z = p_mesh$object$BIR74)
 c_mesh <- copy_down(TRI(nc), z = "BIR74")
