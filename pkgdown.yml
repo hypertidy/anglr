@@ -1,0 +1,7 @@
+pandoc: 2.19.2
+pkgdown: 2.0.6
+pkgdown_sha: ~
+articles:
+  anglr: anglr.html
+last_built: 2022-11-16T11:07Z
+
