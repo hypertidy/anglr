@@ -1,3 +1,7 @@
+# anglr dev
+
+* Fix problem getting crs from raster. 
+
 # anglr 0.8.0
 
 

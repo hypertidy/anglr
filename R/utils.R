@@ -322,12 +322,17 @@ quadToTriangle <- function(x) {
     stop(errmsg)
   }
   target_proj <- crsmeta::crs_proj(img)
+  if (is.na(target_proj)) {
+    target_proj <- as.character(raster::crs(img))
+  }
+#  browser()
   if (!is.na(target_proj)) {
     verts <- reproj::reproj(exy, target = target_proj,
                             source  = source)[,1:2, drop = FALSE]
   } else {
     verts <- exy
   }
+  message(".texture_coordinates in .texture_map()")
   .texture_coordinates(img, vertices = verts)
 }
 
