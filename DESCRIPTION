@@ -44,6 +44,7 @@ Imports:
     viridis,
     colourvalues
 Suggests: 
+    cdtr,
     covr,
     ggplot2,
     graticule,
@@ -62,3 +63,4 @@ RoxygenNote: 7.2.1
 VignetteBuilder: knitr
 URL: https://github.com/hypertidy/anglr
 BugReports: https://github.com/hypertidy/anglr/issues
+Remotes: hypertidy/cdtr
