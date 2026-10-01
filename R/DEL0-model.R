@@ -170,7 +170,7 @@ DEL0.PATH0 <- function(x, ..., max_area = NULL) {
     vv <- zmt[["vv"]]
     dots <- zmt[["dots"]]
    cnames <- zmt[["cnames"]]
-    tri <- do.call(RTriangle::triangulate, dots)
+    tri <- anglr_triangulate(dots)
 
     object <- tibble::tibble(del0 = 1L,
                              color_ = "#111111FF",
@@ -206,7 +206,7 @@ DEL0.PATH0 <- function(x, ..., max_area = NULL) {
 
   ## get the edges (doh!!) https://github.com/hypertidy/anglr/issues/138
   dots$p$S <- do.call(rbind, lapply(SC0(x)$object$topology_, function(a) as.matrix(a)[, c(".vx0", ".vx1"), drop = FALSE]))
-  RTri <- do.call(RTriangle::triangulate, dots)
+  RTri <- anglr_triangulate(dots)
   # x## object/path_link_triangle (path_triangle_map)
   ptm <- path_triangle_map(x, RTri)
   omap <- dplyr::bind_rows(x$object$path_)%>% dplyr::distinct(.data$object_, .data$path_)

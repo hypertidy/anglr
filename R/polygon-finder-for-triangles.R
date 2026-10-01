@@ -41,13 +41,13 @@ edge_RTriangle <- function(x, ...) {
                         S = matrix(match(silicate::sc_edge(x) %>%
                                            dplyr::select(.vx0, .vx1) %>%
                                            as.matrix() %>% t() %>% as.vector(), x[["vertex"]][["vertex_"]]), ncol = 2, byrow = TRUE))
-  RTriangle::triangulate(ps, ...)
+  anglr_triangulate(c(list(p = ps), list(...)))
 }
 
 edge_RTriangle0 <- function(x, ...) {
   ps <- RTriangle::pslg(P = as.matrix(x[["vertex"]][c("x_", "y_")]),
                         S = as.matrix(silicate::sc_edge(x)[c(".vx0", ".vx1")]))
-  RTriangle::triangulate(ps, ...)
+  anglr_triangulate(c(list(p = ps), list(...)))
 }
 
 path_triangle_map <- function(x, RTri) {
